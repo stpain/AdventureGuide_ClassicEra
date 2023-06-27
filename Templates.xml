@@ -1,0 +1,177 @@
+<Ui>
+
+    <Frame name="AdventureSmallHighlightButton" mixin="AdventureButtonMixin" virtual="true" enableMouse="true">
+        <Size x="25" y="25"/>
+        <Layers>
+            <Layer level="HIGHLIGHT">
+                <Texture atlas="transmog-frame-pink" setAllPoints="true">
+                    <!-- <Size x="25" y="25"/> -->
+                    <!-- <Anchors>
+                        <Anchor point="CENTER"/>
+                    </Anchors> -->
+                </Texture>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnLoad method="OnLoad"/>
+            <OnLeave method="OnLeave"/>
+        </Scripts>
+	</Frame>
+    
+    <Frame name="AdventureGuideEncounterListviewItem" mixin="AdventureGuideListviewItemMixin" virtual="true" enableMouse="true">
+        <Layers>
+			<Layer level="BACKGROUND">
+				<Texture parentKey="Background" atlas="GarrLanding-HeaderBar" useAtlasSize="false" setAllPoints="true"/>
+			</Layer>
+			<Layer level="HIGHLIGHT">
+				<Texture parentKey="Highlight" atlas="PetList-ButtonHighlight" useAtlasSize="false" setAllPoints="true"/>
+			</Layer>
+            <Layer level="OVERLAY">
+				<FontString parentKey="text" inherits="GameFontNormal">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="0" y="0"/>
+						<Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+            </Layer>
+        </Layers>
+
+        <Scripts>
+            <OnLoad method="OnLoad"/>
+        </Scripts>
+    </Frame>
+
+    <Frame name="AdventureGuideHomeGridviewItemTemplate" mixin="AdventureGuideHomeGridviewItemMixin" enableMouse="true" virtual="true">
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture parentKey="background" atlas="ShipMission_FollowerListButton">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="1" y="-1"/>
+						<Anchor point="BOTTOMRIGHT" x="-1" y="1"/>
+					</Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="HIGHLIGHT">
+                <Texture parentKey="background" atlas="communities-create-avatar-border-selected">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="0" y="0"/>
+						<Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+					</Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="ARTWORK">
+                <Texture parentKey="icon">
+                    <TexCoords left="0.0" right="0.68" top="0.0" bottom="1" />
+					<Anchors>
+						<Anchor point="TOPLEFT" x="0" y="0"/>
+						<Anchor point="BOTTOMRIGHT" x="0" y="10"/>
+					</Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="OVERLAY">
+				<FontString parentKey="text" inherits="GameFontNormal">
+                    <Size y="44"/>
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" x="0" y="0"/>
+						<Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnLoad method="OnLoad"/>
+        </Scripts>
+    </Frame>
+
+
+    <Frame name="AdventureGuideBossListviewItemTemplate" mixin="AdventureGuideBasicListviewMixin" virtual="true">
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture atlas="GarrLanding-Mission-InProgress" setAllPoints="true">
+                
+                </Texture>
+            </Layer>
+            <Layer level="ARTWORK">
+                <Texture parentKey="icon">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="0" y="0"/>
+						<Anchor point="BOTTOMLEFT" x="0" y="0"/>
+					</Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="OVERLAY">
+				<FontString parentKey="label" inherits="GameFontNormal">
+					<Anchors>
+						<Anchor point="LEFT" relativeKey="$parent.icon" relativePoint="RIGHT" x="0" y="0"/>
+						<Anchor point="TOPRIGHT" x="0" y="0"/>
+						<Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnLoad method="OnLoad"/>
+        </Scripts>
+    </Frame>
+
+
+    <Frame name="AdventureGuideLootListviewItemTemplate" mixin="AdventureGuideLootListviewMixin" virtual="true">
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture parentKey="backgroundTop" atlas="loottab-set-background" alpha="0.85">
+                    <Size y="22"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" x="44" y="0"/>
+						<Anchor point="TOPRIGHT" x="44" y="0"/>
+					</Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="ARTWORK" textureSubLevel="-1">
+                <Texture parentKey="icon">
+                    <Size x="38" y="38"/>
+					<Anchors>
+						<Anchor point="LEFT" x="3" y="0"/>
+					</Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="ARTWORK" textureSubLevel="1">
+                <Texture parentKey="iconBorder">
+                    <Size x="44" y="44"/>
+					<Anchors>
+						<Anchor point="LEFT" x="0" y="0"/>
+					</Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="OVERLAY">
+				<FontString parentKey="label" inherits="GameFontNormal" justifyH="LEFT">
+                    <Size y="22"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" x="50" y="0"/>
+						<Anchor point="TOPRIGHT" x="0" y="0"/>
+					</Anchors>
+					<Color r="1" g="1" b="1"/>
+				</FontString>
+				<FontString parentKey="class" inherits="GameFontNormal_NoShadow">
+                    <Size y="22"/>
+					<Anchors>
+						<Anchor point="BOTTOMLEFT" x="50" y="0"/>
+					</Anchors>
+					<Color r="0.1" g="0.1" b="0.1"/>
+				</FontString>
+				<FontString parentKey="subClass" inherits="GameFontNormal_NoShadow">
+                    <Size y="22"/>
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+					</Anchors>
+					<Color r="0.1" g="0.1" b="0.1"/>
+				</FontString>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnLoad method="OnLoad"/>
+        </Scripts>
+    </Frame>
+</Ui>

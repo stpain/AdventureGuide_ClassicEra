@@ -1,0 +1,26 @@
+{
+    "Lua.diagnostics.globals": [
+        "CreateDataProvider",
+        "CreateFramePool",
+        "ScrollUtil",
+        "CreateScrollBoxListLinearView",
+        "GenerateClosure",
+        "CreateAnchor",
+        "DUNGEON_FLOOR_RAGEFIRE1",
+        "DUNGEON_FLOOR_THEDEADMINES1",
+        "DUNGEON_FLOOR_WAILINGCAVERNS1",
+        "DUNGEON_FLOOR_THESTOCKADE1",
+        "WorldMapFrame",
+        "FramePool_HideAndClearAnchors",
+        "MapCanvasDataProviderMixin",
+        "MapCanvasPinMixin",
+        "GetCursorPosition",
+        "DEFAULT_CHAT_FRAME",
+        "MouseIsOver",
+        "InterfaceOptionsFrame_OpenToCategory",
+        "ToggleFriendsFrame",
+        "FriendsFrame",
+        "GameTooltip_SetDefaultAnchor",
+        "class"
+    ]
+}
