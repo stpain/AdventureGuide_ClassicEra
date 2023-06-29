@@ -1,6 +1,6 @@
 ## Interface: 11403
 ## Author: TheBoringDad
-## Version: 1.12
+## Version: 0.1
 ## Title: AdventureGuide_ClassicEra
 ## Notes: An addon for adventures
 ## SavedVariables: ADVENTURE_GUIDE_GLOBAL
@@ -33,6 +33,7 @@ Widgets\Slider.xml
 Widgets\Helptips.lua
 Widgets\Helptips.xml
 
+Locales.lua
 InstanceData.lua
 
 Callbacks.lua
@@ -41,7 +42,12 @@ Database.lua
 Templates.lua
 Templates.xml
 
+Api.lua
+
 AdventureGuide.lua
 AdventureGuide.xml
+
+Views\Instance\Instance.lua
+Views\Instance\Instance.xml
 
 Events.lua

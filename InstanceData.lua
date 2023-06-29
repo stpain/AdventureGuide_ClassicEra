@@ -1,5 +1,7 @@
 local name, addon = ...;
 
+local L = addon.locales;
+
 addon.dungeons = {
     {
         name = DUNGEON_FLOOR_RAGEFIRE1,
@@ -11,12 +13,27 @@ addon.dungeons = {
             minLevel = 13,
             maxLevel = 18,
         },
+        notes = {},
         maps = {
             "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Ragefire",
+        },
+        quests = {
+            5728,
+            5761,
+            5722,
+            5723,
+            5725,
         },
         bosses = {
             {
                 name = "Taragaman the Hungerer",
+                npcID = 11520,
+                info = "Taragaman the Hungerer is a level 16 elite demon located at the center of the 'X' in the dungeon's second to last room.",
+                strategy = "Taragaman is stationed in the middle of a platform surrounded by lava. Have your tank pull him away from the edges of the platform so that  Uppercut does not knock him off the platform. Make sure your range is at max range so  Fire Nova inflicts minimal damage. The rest of the fight is a basic tank-and-spank.",
+                abilities = {
+                    11970,
+                    18072,
+                },
                 loot = {
                     14145,
                     14148,
@@ -26,19 +43,53 @@ addon.dungeons = {
             },
             {
                 name = "Oggleflint",
-                loot = {},
+                npcID = 11517,
+                info = "Oggleflint is a level 16 elite trogg located in the small cave to the right of the large trogg room.",
+                strategy = "Oggleflint is flanked by 2 troggs in his room. Make sure to CC at least one trogg before engaging him. Allow your tank to pick up the remaining add and face Oggleflint away from the group (cleave). All dps should work to nuke down the add first as before switching to Oggleflint. Make sure to kill the CC'ed add once the boss and the first add are dead.",
+                abilities = {
+                    15496,
+                },
+                loot = {
+
+                },
             },
             {
                 name = "Bazzalan",
-                loot = {},
+                npcID = 11519,
+                info = "Bazzalan is a level 16 elite Satyr located on the upper-ramp towards the end of RFC.",
+                strategy = "Like previous bosses in the dungeon, Bazzalan is flanked by 2 mobs. However, the mob on HIS left can be pulled without engaging the boss, greatly reducing the difficulty of the fight. The other mob should be CC'ed while the group focuses on the boss as he deals significant single-target damage and should be killed ASAP. Other than that, another tank-and-spank.",
+                abilities = {
+                    14873,
+                    2818,
+                },
+                loot = {
+
+                },
             },
             {
                 name = "Jergosh the Invoker",
+                npcID = 11518,
+                info = "Jergosh the Invoker is a level 16 Orc Warlock located in the final room of RFC.",
+                strategy = "Like Oggleflint, Jergosh is flanked by two mobs. One of the mobs should be CC'ed while the other is focused down before transitioning to Jergosh. He casts  Immolate and  Curse of Weakness which can be a problem for tanks trying to gain threat and intense on healers, but overall this is a simple and straightforward fight.",
+                abilities = {
+                    18267,
+                    20800,
+                },
                 loot = {
                     14151,
                     14147,
                     14150,
                 },
+            },
+            {
+                name = "Trash",
+                npcID = false,
+                info = "",
+                strategy = "",
+                abilities = {
+
+                },
+                loot = {},
             },
         },
         history = "Ragefire Chasm consists of a network of volcanic caverns that lie below the orcs' new capital city of Orgrimmar. Recently, rumors have spread that a cult loyal to the demonic Shadow Council has taken up residence within the Chasm's fiery depths. This cult, known as the Burning Blade, threatens the very sovereignty of Durotar. Many believe that the orc Warchief, Thrall, is aware of the Blade's existence and has chosen not to destroy it in the hopes that its members might lead him straight to the Shadow Council. Either way, the dark powers emanating from Ragefire Chasm could undo all that the orcs have fought to attain.",
@@ -53,13 +104,29 @@ addon.dungeons = {
             minLevel = 15,
             maxLevel = 25,
         },
+        notes = {
+
+        },
         maps = {
             "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/TheDeadmines1",
             "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/TheDeadmines2",
         },
+        quests = {
+            2040,
+            166,
+            214,
+            167,
+            168,
+            373,
+        },
         bosses = {
             {
                 name = "Rhahk'Zor",
+                info = "Rhahk'Zor is a level 19 elite Ogre located in the Ironclad Cove of the Deadmines. He is the first boss of the dungeon.",
+                strategy = "Rhahk'Zor is flanked by 2 Defias Watchman in his room. Both of them can be pulled without pulling Rhahk'Zor himself. If you are unable to pull them cleanly, make sure to CC at least one archer once to limit the incoming damage your group will be taking. Also, beware of any patrolling elites that might aggro after the pull. Aside from that, this fight is a simple tank-and-spank as Rhahk'Zor is little more than a pseudo-boss and warmup for the dungeon.",
+                abilities = {
+                    6304,
+                },
                 loot = {
                     5187,
                     872,
@@ -67,6 +134,11 @@ addon.dungeons = {
             },
             {
                 name = "Miner Johnson (Rare)",
+                info = "Miner Johnson is a level 19 rare-elite miner located in the left corridor following Rhahk'Zor's room. He shares the model of all of the other miners around him.",
+                strategy = "Johnson is the epitome of a tank-and-spank. He has one single target ability that reduces the tanks armor, so aside from the fight requiring intensive tank healing, it is a straightforward encounter. The only problem is that he is surrounded by numerous Defias Miner. However, they are non-elites with small health pools. Try to pick as many of them off as possible before pulling Johnson. I recommend that if you happen to have a hybrid DPS class in your group, have the hybrid also heal the tank when the  Pierce Armor debuff is up to guarantee the kill.",
+                abilities = {
+                    12097,
+                },
                 loot = {
                     5444,
                     5443,
@@ -74,6 +146,13 @@ addon.dungeons = {
             },
             {
                 name = "Sneed's Shredder",
+                info = "Sneed's Shredder is a level 20 mechanical shredder located in the Mast Room of The Deadmines. The shredder is occupied by its operator, Sneed.",
+                strategy = "This fight begins before pulling the boss. Due to the Shredder's  Terrify ability, the entire room must be cleared of all Goblin Woodcarver. Otherwise, players might be feared into them and cause a wipe. Aside from clearing the room, the boss is a very straightforward tank-and-spank. Once the Shredder has been defeated, Sneed will hop out of the machine and continue the fight himself. He has a disarm ability that can be annoying for tanks trying to pick up aggro, so give the tank ample time to acquire threat before going ham on the boss. Overall, this is a simple boss encounter.",
+                abilities = {
+                    3603,
+                    7399,
+                    6713,
+                },
                 loot = {
                     2169,
                     7365,
@@ -82,6 +161,11 @@ addon.dungeons = {
             },
             {
                 name = "Gilnid",
+                info = "Gilnid is a level 20 elite Goblin located in the Goblin Foundry of The Deadmines.",
+                strategy = "Gilnid, like many of the bosses in this dungeon, is mostly a simple tank-and-spank. He is flanked by a Goblin Engineer that will pull once Gilnid has been engaged. Make sure to CC the engineer as he may cast  Summon Remote-Controlled Golem, which summons a mechanical robot that is immune to most abilities. If the robot does get summoned, focus the engineer that summoned it as the robot will despawn once its summoner is dead. You can avoid this headache by simply CCing the add before the pull.",
+                abilities = {
+                    5213,
+                },
                 loot = {
                     5199,
                     1156,
@@ -89,6 +173,15 @@ addon.dungeons = {
             },
             {
                 name = "Mr. Smite",
+                info = "Mr. Smite is a level 20 elite Tauren located on the Dreadnaught in The Deadmines. He is one of the more difficult bosses in the dungeon.",
+                strategy = "Mr. Smite will engage automatically as you approach the plank leading up to him. Pulling with him will be 2 Defias Blackguard, who are invisible before the pull. These MUST be prioritized and dealt with before Smite, as when he reaches 66% and 33% hp respectively, he will cast  Smite Stomp which will stun everyone in part for nearly 10 seconds. If the Blackguards aren't killed or CC'ed effectively by this time, they will continue attacking your tank during the stun and wipe the group. The best way to deal with these guards is to mark one with a 'skull' and kill it, while a mage polymorphs the second. If you are the mage in the group, make sure to reapply the polymorph shortly before Smite hit's the 66% hp mark.\nOnce at 66% hp, Smite will stun the group and run towards his chest located at the base of the plank. From the chest, he will pull out a second weapon, activating his  Dual Wield ability. Not much will change during this phase aside from higher DPS coming out from Smite, so healers should be aware of that. You can cheese the encounter a bit by pulling Smite as far away from the chest as possible so that by the time he reaches the chest and returns to you; the stun duration will have already subsided.\nAt 33%, Smite will stun the group once again and run towards the chest. This time, he will pull out his famous 2-handed mace, granting him the  Smite Slam. If your tank gets stunned in the mace phase, make sure to throw extra heals on him and have DPS kite if they pull aggro. The most important part of this fight is dealing with the adds before the first stomp transition; the rest is a simple tank-and-spank. Like previous bosses in the dungeon, Mr. Smite is flanked by two mobs. However, the mob on HIS left can be pulled without engaging the boss, significantly reducing the difficulty of the fight. The other mob should be CC\'ed while the group focuses on the boss as he deals significant single-target damage and should be killed ASAP. Other than that, another tank-and-spank.",
+                abilities = {
+                    674,
+                    6264,
+                    6435,
+                    6432,
+                    3391,
+                },
                 loot = {
                     5192,
                     5196,
@@ -97,6 +190,12 @@ addon.dungeons = {
             },
             {
                 name = "Captain Greenskin",
+                info = "Captain Greenskin is a level 19-20 Goblin elite located on the Dreadnaught in The Deadmines. He patrols the deck of the ship alongside a Defias Squallshaper, a Defias Pirate, and a Defias Companion.",
+                strategy = "Like all add-based bosses, make sure to CC one of the adds next to Greenskin before the pull. I recommend that you CC the Defias Squallshaper as their frost nova ability can be quite annoying. Once you've engaged the boss, begin by killing the Defias Companion first as it is non-elite and will die quickly. After that, kill the remaining Defias Pirate and then swap to Greenskin while keeping your CC on the Squallshaper. Make sure to face Greenskin away from the group as his cleave can be quite nasty. When he dies, finish off the Squallshaper and loot his corpse.",
+                abilities = {
+                    15496,
+                    5208,
+                },
                 loot = {
                     5201,
                     5200,
@@ -105,6 +204,12 @@ addon.dungeons = {
             },
             {
                 name = "Edwin VanCleef",
+                info = "Edwin VanCleef is the level 21 Defias Leader and final main boss of The Deadmines. He is flanked by 2 stealthed Defias Blackguard.",
+                strategy = "When you engage Van Cleef, two Defias Blackguard will break stealth and attack you as well. Like Mr. Smite, make sure to deal with these mobs first. CC one and 'skull' mark the other and burn it down quickly, as Van Cleef does a tremendous amount of single-target damage and can shred your tank. Once both of the adds are dealt with, focus back on VC. Once he hits 50% health, he will summon 2 more adds for you to deal with. It remains quite heal-intensive so the healers and hybrids in your group should be on their toes and provide spot-healing as it is needed.",
+                abilities = {
+                    674,
+                    3391,
+                },
                 loot = {
                     2874,
                     3637,
@@ -116,6 +221,12 @@ addon.dungeons = {
             },
             {
                 name = "Cookie (Bonus)",
+                info = "Cookie is a level 20 elite Murloc located on the Dreadnaught in The Deadmines. He is accessible by jumping off the opposite side of the ship after defeating Van Cleef.",
+                strategy = "The most challenging part about Cookie is the leap off the ship to engage him. The bottom deck of the ship is packed with elites that can easily aggro if a jump is not timed correctly. Assuming you've timed the jump correctly, pull Cookie off the ship towards the exit of the dungeon. The fight is a simple tank-and-spank. Make sure to interrupt the Cookie's Cooking spell as it heals Cookie for a fair chunk. The rest is easy.",
+                abilities = {
+                    6306,
+                    5174,
+                },
                 loot = {
                     5197,
                     5198,
@@ -124,8 +235,16 @@ addon.dungeons = {
             },
             {
                 name = "Trash",
+                info = "",
+                strategy = "",
+                abilities = {
+
+                },
                 loot = {
                     8492,
+                    10400,
+                    10401,
+                    10402,
                 }
             }
         },
@@ -147,6 +266,11 @@ addon.dungeons = {
         bosses = {
             {
                 name = "Kresh",
+                info = L.DUNGEON_BOSS_KRESH_INFO,
+                strategy = L.DUNGEON_BOSS_KRESH_STRATEGY,
+                abilities = {
+
+                },
                 loot = {
                     13245,
                     6447,
@@ -154,6 +278,14 @@ addon.dungeons = {
             },
             {
                 name = "Lady Anacondra",
+                info = "Lady Anacondra is a level 20 elite Druid of the Fang located on the cliff overlooking the Screaming Gully. She can spawn in several different locations around the cliff.",
+                strategy = "Anacondra is likely to be the first of the Druid bosses you will encounter in the Wailing Caverns. Like all of the druids, she has four abilities, 2 of which are shared by her contemporaries ( Lightning Bolt and  Sleep). Her most threatening ability is 'Sleep,' which can be applied to anyone in your party, including the Tank or Healer. To deal with this ability, make sure to interrupt it immediately. If you happen to pull another Druid of the Fang during the encounter, make sure to CC it right away as one 'Sleep' can be dealt with, but 2 or more will result in a wipe. If your interrupts are on point and you've pulled carefully, this fight should be easy.",
+                abilities = {
+                    5187,
+                    9532,
+                    700,
+                    8148,
+                },
                 loot = {
                     10412,
                     5404,
@@ -162,6 +294,14 @@ addon.dungeons = {
             },
             {
                 name = "Lord Cobrahn",
+                info = "Lord Cobrahn is a level 20 elite Druid of the Fang located at the end of the Pit of Fangs in the Wailing Caverns.",
+                strategy = "Before the pull, Cobrahn will be surrounded by 3 Deviate Python. They are between levels 18 and 19, and are non-elites, making them easy to AOE down. Prioritize these pythons before switching to Cobrahn. Like all of the Druids in the Wailing Caverns, Cobrahn may cast the dangerous 'Sleep' ability, which should be interrupted immediately. At some point during the encounter, Cobrahn will transform into a serpent, increasing his damage by 50 and attack speed by 43%. It's important that a 'Sleep' has not gone off on the healer during this phase. Otherwise, the tank will probably die. If the healer is not CC'ed during this phase, it's a guaranteed kill.",
+                abilities = {
+                    5187,
+                    9532,
+                    8040,
+                    7965,
+                },
                 loot = {
                     6460,
                     10410,
@@ -170,6 +310,11 @@ addon.dungeons = {
             },
             {
                 name = "Deviate Faerie Dragon (Rare)",
+                info = "Deviate Faerie Dragon is a level 20 rare-elite Faerie Dragon located in the Winding Chasm.",
+                strategy = "The Deviate Faerie Dragon is a low armor, high damage mob that possesses no significant abilities. The challenge in this encounter comes from the fact that this is a 4-mob pull, all of which are elites. Two Druids of the Fang are also included in this pull, meaning that  Druid's Slumber is likely to go off in this fight. Your strategy should be to CC one of the Druids while burning the other one down and interrupting its 'Sleep' whenever possible. Your tank will be taking damage from 3 different elites here, so if you have any hybrid classes in your group aside from the healer, make sure that they weave in some support heals during their rotation. This fight will test your group's ability to focus down a single target, so if you're coordinated and all on the same page, it should be a breeze.",
+                abilities = {
+
+                },
                 loot = {
                     5243,
                     6632,
@@ -177,6 +322,14 @@ addon.dungeons = {
             },
             {
                 name = "Lord Pythas",
+                info = "Lord Pythas is a level 21 elite Druid of the Fang located in the Winding Chasm.",
+                strategy = "Lord Pythas, like his fellow Druid counterparts, is most dangerous due to his 'Sleep' ability. Additionally, he is flanked by one additional Druid of the Fang and a Deviate Shambler. Make sure to CC the Druid and interrupt Pythas whenever he casts 'Sleep.' Prioritize the Shambler and burn it down before switching to Pythas, but make sure either your tank or one melee DPS stays focused on Pythas, so the 'Sleep' is interrupted.",
+                abilities = {
+                    5187,
+                    9532,
+                    700,
+                    8147,
+                },
                 loot = {
                     6472,
                     6473,
@@ -184,6 +337,11 @@ addon.dungeons = {
             },
             {
                 name = "Skum",
+                info = "Skum is a level 21elite Thunder Lizard located in the Winding Chasm.",
+                strategy = "Skum is a simple tank-and-spank boss with only one significant ability; Chained Bolt. This is a chain lightning-style spell that will strike three melee units if they are close together. Make sure your melee spread out around the boss to avoid the damage. Spreading out is not a hard requirement, as the ability itself deals minimal damage. Skum is entirely optional, but his loot makes him worthwhile.",
+                abilities = {
+                    6254,
+                },
                 loot = {
                     6449,
                     6448,
@@ -191,6 +349,13 @@ addon.dungeons = {
             },
             {
                 name = "Lord Serpentis",
+                info = "Lord Serpentis is the level 21 Druid of the Fang located at the end of the Winding Chasm.",
+                strategy = "",
+                abilities = {
+                    6778,
+                    9532,
+                    700,
+                },
                 loot = {
                     6469,
                     5970,
@@ -200,6 +365,11 @@ addon.dungeons = {
             },
             {
                 name = "Verdan the Everliving",
+                info = "",
+                strategy = "",
+                abilities = {
+
+                },
                 loot = {
                     6630,
                     6631,
@@ -208,6 +378,11 @@ addon.dungeons = {
             },
             {
                 name = "Mutanus the Devourer",
+                info = "",
+                strategy = "",
+                abilities = {
+
+                },
                 loot = {
                     6461,
                     6627,
@@ -217,6 +392,11 @@ addon.dungeons = {
             },
             {
                 name = "Trash",
+                info = "",
+                strategy = "",
+                abilities = {
+
+                },
                 loot = {
                     10412,
                 }
@@ -508,7 +688,11 @@ addon.dungeons = {
             maxLevel = 38,
         },
         maps = {
-
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Gnomeregan1",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Gnomeregan2",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Gnomeregan3",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Gnomeregan4",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Gnomeregan5",
         },
         bosses = {
             {
@@ -677,7 +861,10 @@ addon.dungeons = {
             maxLevel = 45,
         },
         maps = {
-
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ScarletMonasteryGraveyard",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ScarletMonasteryLib",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ScarletMonasteryArmory",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ScarletMonasteryCath",
         },
         bosses = {
             {
@@ -904,10 +1091,8 @@ addon.dungeons = {
             maxLevel = 52,
         },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonOrange",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonPurple",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon1",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon2",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Uldaman1",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Uldaman2",
         },
         bosses = {
             {
@@ -1155,19 +1340,16 @@ addon.dungeons = {
     },
     {
         name = "Zul'Farrak",
-        loreFileID = 608256,
-        buttonFileID = 608217,
-        background = 608178,
+        loreFileID = 608267,
+        buttonFileID = 608230,
+        background = 608191,
         meta = {
             zone = "Tanaris",
-            minLevel = 50,
-            maxLevel = 60,
+            minLevel = 44,
+            maxLevel = 54,
         },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonOrange",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonPurple",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon1",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon2",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ZulFarrak",
         },
         bosses = {
             {
@@ -1292,10 +1474,7 @@ addon.dungeons = {
             maxLevel = 60,
         },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonOrange",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonPurple",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon1",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon2",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/TheTempleOfAtalHakkar",
         },
         --[[
             Shade of Eranikus
@@ -1441,7 +1620,6 @@ addon.dungeons = {
         },
         history = "Over a thousand years ago, the powerful Gurubashi Empire was torn apart by a massive civil war. An influential group of troll priests, known as the Atal'ai, attempted to bring back an ancient blood god named Hakkar the Soulflayer. Though the priests were defeated and ultimately exiled, the great troll empire buckled in upon itself. The exiled priests fled far to the north, into the Swamp of Sorrows. There they erected a great temple to Hakkar - where they could prepare for his arrival into the physical world. The great dragon Aspect, Ysera, learned of the Atal'ai's plans and smashed the temple beneath the marshes. To this day, the temple's drowned ruins are guarded by the green dragons who prevent anyone from getting in or out. However, it is believed that some of the fanatical Atal'ai may have survived Ysera's wrath - and recommitted themselves to the dark service of Hakkar.",
     },
-    
     {
         name = "Blackrock Depths",
         loreFileID = 608235,
@@ -1453,15 +1631,138 @@ addon.dungeons = {
             maxLevel = 60,
         },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonOrange",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonPurple",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon1",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon2",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/BlackrockDepths1",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/BlackrockDepths2",
         },
         bosses = {
+            {
+                name = "Lord Roccor",
+                loot = {
 
+                },
+            },
+            {
+                name = "Bael'Gar",
+                loot = {
+
+                },
+            },
+            {
+                name = "Houndmaster Grebmar",
+                loot = {
+
+                },
+            },
+            {
+                name = "High Interrogator Gerstahn",
+                loot = {
+
+                },
+            },
+            {
+                name = "High Justice Grimstone",
+                loot = {
+
+                },
+            },
+            {
+                name = "Pyromancer Loregrain",
+                loot = {
+
+                },
+            },
+            {
+                name = "General Angerforge",
+                loot = {
+
+                },
+            },
+            {
+                name = "Golem Lord Argelmach",
+                loot = {
+
+                },
+            },
+            {
+                name = "Ribbly Screwspigot",
+                loot = {
+
+                },
+            },
+            {
+                name = "Hurley Blackbreath",
+                loot = {
+
+                },
+            },
+            {
+                name = "Plugger Spazzring",
+                loot = {
+
+                },
+            },
+            {
+                name = "Phalanx",
+                loot = {
+
+                },
+            },
+            {
+                name = "Lord Incendius",
+                loot = {
+
+                },
+            },
+            {
+                name = "Fineous Darkvire",
+                loot = {
+
+                },
+            },
+            {
+                name = "Warder Stilgiss & Verek",
+                loot = {
+
+                },
+            },
+            {
+                name = "Dark Coffer",
+                loot = {
+
+                },
+            },
+            {
+                name = "Ambassador Flamelash",
+                loot = {
+
+                },
+            },
+            {
+                name = "Chest of The Seven",
+                loot = {
+
+                },
+            },
+            {
+                name = "Magmus",
+                loot = {
+
+                },
+            },
+            {
+                name = "Princess Moira Bronzebeard",
+                loot = {
+
+                },
+            },
+            {
+                name = "Emperor Dagran Thaurissan",
+                loot = {
+
+                },
+            },
         },
-        history = "Protected by the fierce Maraudine centaur, Maraudon is one of the most sacred sites within Desolace. The great temple/cavern is the burial place of Zaetar, one of two immortal sons born to the demigod, Cenarius. Legend holds that Zaetar and the earth elemental princess, Theradras, sired the misbegotten centaur race. It is said that upon their emergence, the barbaric centaur turned on their father and killed him. Some believe that Theradras, in her grief, trapped Zaetar's spirit within the winding cavern - used its energies for some malign purpose. The subterranean tunnels are populated by the vicious, long-dead ghosts of the Centaur Khans, as well as Theradras' own raging, elemental minions.",
+        history = "Once the capital city of the Dark Iron dwarves, this volcanic labyrinth now serves as the seat of power for Ragnaros the Firelord. Ragnaros has uncovered the secret to creating life from stone and plans to build an army of unstoppable golems to aid him in conquering the whole of Blackrock Mountain. Obsessed with defeating Nefarian and his draconic minions, Ragnaros will go to any extreme to achieve final victory.",
     },
     {
         name = "Lower Blackrock Spire",
@@ -1474,15 +1775,70 @@ addon.dungeons = {
             maxLevel = 60,
         },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonOrange",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonPurple",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon1",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon2",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/BlackrockSpire",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/BlackrockSpire2",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/BlackrockSpire3",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/BlackrockSpire4",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/BlackrockSpire5",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/BlackrockSpire7",
         },
         bosses = {
+            {
+                name = "Highlord Omokk",
+                loot = {
 
+                },
+            },
+            {
+                name = "Shadow Hunter Vosh'gajin",
+                loot = {
+
+                },
+            },
+            {
+                name = "War Master Voone",
+                loot = {
+
+                },
+            },
+            {
+                name = "Mother Smolderweb",
+                loot = {
+
+                },
+            },
+            {
+                name = "Urok Doomhowl",
+                loot = {
+
+                },
+            },
+            {
+                name = "Quartermaster Zigris",
+                loot = {
+
+                },
+            },
+            {
+                name = "Gizrul the Slavener",
+                loot = {
+
+                },
+            },
+            {
+                name = "Halycon",
+                loot = {
+
+                },
+            },
+            {
+                name = "Overlord Wyrmthalak",
+                loot = {
+
+                },
+            },
         },
-        history = "Protected by the fierce Maraudine centaur, Maraudon is one of the most sacred sites within Desolace. The great temple/cavern is the burial place of Zaetar, one of two immortal sons born to the demigod, Cenarius. Legend holds that Zaetar and the earth elemental princess, Theradras, sired the misbegotten centaur race. It is said that upon their emergence, the barbaric centaur turned on their father and killed him. Some believe that Theradras, in her grief, trapped Zaetar's spirit within the winding cavern - used its energies for some malign purpose. The subterranean tunnels are populated by the vicious, long-dead ghosts of the Centaur Khans, as well as Theradras' own raging, elemental minions.",
+        history = "The mighty fortress carved within the fiery bowels of Blackrock Mountain was designed by the master dwarf-mason, Franclorn Forgewright. Intended to be the symbol of Dark Iron power, the fortress was held by the sinister dwarves for centuries. However, Nefarian - the cunning son of the dragon, Deathwing - had other plans for the great keep. He and his draconic minions took control of the upper Spire and made war on the dwarves' holdings in the mountain's volcanic depths. Realizing that the dwarves were led by the mighty fire elemental, Ragnaros - Nefarian vowed to crush his enemies and claim the whole of Blackrock mountain for himself.\n\nThe first part of the instance is referred to as the 'lower spire', or LBRS, and is the main chunk of the instance, intended for a single group of players. It can be accessed without a key by entering the Blackrock Spire and moving to the right. The lower spire is home to many different factions, such as the Bloodaxe Orc Clan, the trolls of Smolderthorn and the Spirestone ogres. Similarly, there is a wide variety of bosses. Overlord Wyrmthalak is the final boss of the Lower Blackrock Spire.",
     },
     {
         name = "Upper Blackrock Spire",
@@ -1495,15 +1851,41 @@ addon.dungeons = {
             maxLevel = 60,
         },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonOrange",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonPurple",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon1",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon2",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/UpperBlackrockSpire",
         },
         bosses = {
+            {
+                name = "Pyroguard Emberseer",
+                loot = {
 
+                },
+            },
+            {
+                name = "Warchief Rend Blackhand",
+                loot = {
+
+                },
+            },
+            {
+                name = "Gyth",
+                loot = {
+
+                },
+            },
+            {
+                name = "The Beast",
+                loot = {
+
+                },
+            },
+            {
+                name = "General Drakkisath",
+                loot = {
+
+                },
+            },
         },
-        history = "Protected by the fierce Maraudine centaur, Maraudon is one of the most sacred sites within Desolace. The great temple/cavern is the burial place of Zaetar, one of two immortal sons born to the demigod, Cenarius. Legend holds that Zaetar and the earth elemental princess, Theradras, sired the misbegotten centaur race. It is said that upon their emergence, the barbaric centaur turned on their father and killed him. Some believe that Theradras, in her grief, trapped Zaetar's spirit within the winding cavern - used its energies for some malign purpose. The subterranean tunnels are populated by the vicious, long-dead ghosts of the Centaur Khans, as well as Theradras' own raging, elemental minions.",
+        history = "The mighty fortress carved within the fiery bowels of Blackrock Mountain was designed by the master dwarf-mason, Franclorn Forgewright. Intended to be the symbol of Dark Iron power, the fortress was held by the sinister dwarves for centuries. However, Nefarian - the cunning son of the dragon, Deathwing - had other plans for the great keep. He and his draconic minions took control of the upper Spire and made war on the dwarves' holdings in the mountain's volcanic depths. Realizing that the dwarves were led by the mighty fire elemental, Ragnaros - Nefarian vowed to crush his enemies and claim the whole of Blackrock mountain for himself.\n\nThe second part is the 'upper spire', or UBRS, which is a much smaller area but intended for a 10-player raid group. The player cap was 15 prior to patch 1.10, when it was lowered to 10 to adjust the dungeon's difficulty.  Seal of Ascension, which can be obtained through a long series of quests following  Seal of Ascension, is required as a key to access the upper area by the left entrance. It allows the raid group to fight their way to the final boss, General Drakkisath, and to the final boss for the Dungeon Set 2 quest series, Lord Valthalak. It also grants the wielder protection against the chromatic attacks from Warchief Rend Blackhand's mount, Gyth.",
     },
     {
         name = "Scholomance",
@@ -1516,15 +1898,98 @@ addon.dungeons = {
             maxLevel = 60,
         },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonOrange",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonPurple",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon1",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon2",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Scholomance1",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Scholomance2",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Scholomance3",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Scholomance4",
         },
         bosses = {
+            {
+                name = "Kirtonos the Herald",
+                loot = {
 
+                },
+            },
+            {
+                name = "Kirtonos the Herald",
+                loot = {
+
+                },
+            },
+            {
+                name = "Jandice Barov",
+                loot = {
+
+                },
+            },
+            {
+                name = "Rattlegore",
+                loot = {
+
+                },
+            },
+            {
+                name = " Marduk Blackpool",
+                loot = {
+
+                },
+            },
+            {
+                name = "Vectus",
+                loot = {
+
+                },
+            },
+            {
+                name = "Ras Frostwhisper",
+                loot = {
+
+                },
+            },
+            {
+                name = "Instructor Malicia",
+                loot = {
+
+                },
+            },
+            {
+                name = "Doctor Theolen Krastinov",
+                loot = {
+
+                },
+            },
+            {
+                name = "Lorekeeper Polkelt",
+                loot = {
+
+                },
+            },
+            {
+                name = "The Ravenian",
+                loot = {
+
+                },
+            },
+            {
+                name = "Lord Alexei Barov",
+                loot = {
+
+                },
+            },
+            {
+                name = "Lady Illucia Barov",
+                loot = {
+
+                },
+            },
+            {
+                name = "Darkmaster Gandling",
+                loot = {
+
+                },
+            },
         },
-        history = "Protected by the fierce Maraudine centaur, Maraudon is one of the most sacred sites within Desolace. The great temple/cavern is the burial place of Zaetar, one of two immortal sons born to the demigod, Cenarius. Legend holds that Zaetar and the earth elemental princess, Theradras, sired the misbegotten centaur race. It is said that upon their emergence, the barbaric centaur turned on their father and killed him. Some believe that Theradras, in her grief, trapped Zaetar's spirit within the winding cavern - used its energies for some malign purpose. The subterranean tunnels are populated by the vicious, long-dead ghosts of the Centaur Khans, as well as Theradras' own raging, elemental minions.",
+        history = "The Scholomance is housed within a series of crypts that lie beneath the ruined keep of Caer Darrow. Once owned by the noble Barov family, Caer Darrow fell to ruin following the Second War. As the wizard Kel'thuzad enlisted followers for his Cult of the Damned he would often promise immortality in exchange for serving his Lich King. The Barov family fell to Kel'thuzad's charismatic influence and donated the keep and its crypts to the Scourge. The cultists then killed the Barovs and turned the ancient crypts into a school for necromancy known as the Scholomance. Though Kel'thuzad no longer resides in the crypts, devoted cultists and instructors still remain. The powerful lich, Ras Frostwhisper, rules over the site and guards it in the Scourge's name - while the mortal necromancer, Darkmaster Gandling, serves as the school's insidious headmaster.",
     },
     {
         name = "Stratholme",
@@ -1537,15 +2002,128 @@ addon.dungeons = {
             maxLevel = 60,
         },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonOrange",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonPurple",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon1",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon2",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Stratholme1",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Stratholme2",
         },
         bosses = {
+            {
+                name = "Fras Siabi",
+                loot = {
 
+                },
+            },
+            {
+                name = "Skul",
+                loot = {
+
+                },
+            },
+            {
+                name = "Hearthsinger Forresten",
+                loot = {
+
+                },
+            },
+            {
+                name = "The Unforgiven",
+                loot = {
+
+                },
+            },
+            {
+                name = "Postmaster Malown",
+                loot = {
+
+                },
+            },
+            {
+                name = "Timmy the Cruel",
+                loot = {
+
+                },
+            },
+            {
+                name = "Malor the Zealous",
+                loot = {
+
+                },
+            },
+            {
+                name = "Cannon Master Willey",
+                loot = {
+
+                },
+            },
+            {
+                name = "Crimson Hammersmith",
+                loot = {
+
+                },
+            },
+            {
+                name = "Archivist Galford",
+                loot = {
+
+                },
+            },
+            {
+                name = "Balnazzar",
+                loot = {
+
+                },
+            },
+            --service gate
+
+            {
+                name = "Magistrate Barthilas",
+                loot = {
+
+                },
+            },
+            {
+                name = "Stonespine",
+                loot = {
+
+                },
+            },
+            {
+                name = "Nerub'enkan",
+                loot = {
+
+                },
+            },
+            {
+                name = "Black Guard Swordsmith",
+                loot = {
+
+                },
+            },
+            {
+                name = "Maleki the Pallid",
+                loot = {
+
+                },
+            },
+            {
+                name = "Baroness Anastari",
+                loot = {
+
+                },
+            },
+            {
+                name = "Ramstein the Gorger",
+                loot = {
+
+                },
+            },
+            {
+                name = "Baron Rivendare",
+                loot = {
+
+                },
+            },
         },
-        history = "Protected by the fierce Maraudine centaur, Maraudon is one of the most sacred sites within Desolace. The great temple/cavern is the burial place of Zaetar, one of two immortal sons born to the demigod, Cenarius. Legend holds that Zaetar and the earth elemental princess, Theradras, sired the misbegotten centaur race. It is said that upon their emergence, the barbaric centaur turned on their father and killed him. Some believe that Theradras, in her grief, trapped Zaetar's spirit within the winding cavern - used its energies for some malign purpose. The subterranean tunnels are populated by the vicious, long-dead ghosts of the Centaur Khans, as well as Theradras' own raging, elemental minions.",
+        history = "Once the jewel of northern Lordaeron, the city of Stratholme is where Prince Arthas turned against his mentor, Uther Lightbringer, and slaughtered hundreds of his own subjects who were believed to have contracted the dreaded plague of undeath. Arthas' downward spiral and ultimate surrender to the Lich King soon followed. The broken city is now inhabited by the undead Scourge -- led by the powerful lich, Kel'Thuzad. A contingent of Scarlet Crusaders, led by Grand Crusader Dathrohan, also holds a portion of the ravaged city. The two sides are locked in constant, violent combat. Those adventurers brave (or foolish) enough to enter Stratholme will be forced to contend with both factions before long. It is said that the city is guarded by three massive watchtowers, as well as powerful necromancers, banshees and abominations. There have also been reports of a malefic Death Knight riding atop an unholy steed, dispensing indiscriminate wrath on all those who venture within the realm of the Scourge.",
     },
     {
         name = "Dire Maul",
@@ -1553,19 +2131,139 @@ addon.dungeons = {
         buttonFileID = 608200,
         background = 608161,
         meta = {
-            zone = "Blackrock mountain",
+            zone = "Feralas",
             minLevel = 58,
             maxLevel = 60,
         },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonOrange",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonPurple",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon1",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon2",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/DireMaulEast1",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/DireMaulEast2",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/DireMaulNorth1",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/DireMaulWest1",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/DireMaulWest2",
+            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/DireMaulWest3",
         },
         bosses = {
+            --east
+            {
+                name = "Pusillin",
+                loot = {
 
+                },
+            },
+            {
+                name = "Lethtendris",
+                loot = {
+
+                },
+            },
+            {
+                name = "Hydrospawn",
+                loot = {
+
+                },
+            },
+            {
+                name = "Zevrim Thornhoof",
+                loot = {
+
+                },
+            },
+            {
+                name = "Alzzin the Wildshaper",
+                loot = {
+
+                },
+            },
+
+            --north
+            {
+                name = "Guard Mol'dar",
+                loot = {
+
+                },
+            },
+            {
+                name = "Stomper Kreeg",
+                loot = {
+
+                },
+            },
+            {
+                name = "Guard Fengus",
+                loot = {
+
+                },
+            },
+            {
+                name = "Guard Slip'kik",
+                loot = {
+
+                },
+            },
+            {
+                name = "Captain Kromcrush",
+                loot = {
+
+                },
+            },
+            {
+                name = "Cho'Rush the Observer",
+                loot = {
+
+                },
+            },
+            {
+                name = "King Gordok",
+                loot = {
+
+                },
+            },
+
+            --west
+            {
+                name = "Tendris Warpwood",
+                loot = {
+
+                },
+            },
+            {
+                name = "Magister Kalendris",
+                loot = {
+
+                },
+            },
+            {
+                name = "Tsu'zee",
+                loot = {
+
+                },
+            },
+            {
+                name = "Illyanna Ravenoak",
+                loot = {
+
+                },
+            },
+            {
+                name = "Immol'thar",
+                loot = {
+
+                },
+            },
+            {
+                name = "Prince Tortheldrin",
+                loot = {
+
+                },
+            },
+            {
+                name = "Lord Hel'nurath (Summoned)",
+                loot = {
+
+                },
+            },
         },
-        history = "Protected by the fierce Maraudine centaur, Maraudon is one of the most sacred sites within Desolace. The great temple/cavern is the burial place of Zaetar, one of two immortal sons born to the demigod, Cenarius. Legend holds that Zaetar and the earth elemental princess, Theradras, sired the misbegotten centaur race. It is said that upon their emergence, the barbaric centaur turned on their father and killed him. Some believe that Theradras, in her grief, trapped Zaetar's spirit within the winding cavern - used its energies for some malign purpose. The subterranean tunnels are populated by the vicious, long-dead ghosts of the Centaur Khans, as well as Theradras' own raging, elemental minions.",
+        history = "Built thousands of years ago to house the kaldorei's arcane secrets, the formerly great city of Eldre'Thalas now lies in ruin, writhing with warped, twisted forces. Competing covens once fought for control of Dire Maul's corrupted energy, but they have since settled into uneasy truces, choosing to exploit the power within their own territories rather than continue to battle over the entire complex.",
     },
 }

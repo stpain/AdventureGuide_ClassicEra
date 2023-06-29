@@ -19,8 +19,6 @@ function AdventureGuideBasicListviewMixin:SetDataBinding(binding, height)
 
     self:SetHeight(height)
 
-    --self.backgroundTop:SetHeight(height / 2)
-
     self.icon:SetSize(1,1)
     self.icon:SetTexture(nil)
 
@@ -45,6 +43,9 @@ function AdventureGuideBasicListviewMixin:SetDataBinding(binding, height)
 end
 function AdventureGuideBasicListviewMixin:ResetDataBinding()
 
+end
+function AdventureGuideBasicListviewMixin:OnLeave()
+    GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
 end
 
 
@@ -95,6 +96,9 @@ end
 function AdventureGuideLootListviewMixin:ResetDataBinding()
 
 end
+function AdventureGuideLootListviewMixin:OnLeave()
+    GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
+end
 
 
 AdventureGuideHomeGridviewItemMixin = {}
@@ -109,4 +113,40 @@ function AdventureGuideHomeGridviewItemMixin:SetDataBinding(binding)
     self.instance = binding;
     self.icon:SetTexture(binding.buttonFileID)
     self.text:SetText(binding.name)
+end
+
+
+
+
+AdventureGuideInstanceQuestListviewMixin = {}
+function AdventureGuideInstanceQuestListviewMixin:OnLoad()
+
+end
+function AdventureGuideInstanceQuestListviewMixin:SetDataBinding(binding, height)
+
+    self:SetHeight(height)
+
+    self.icon:SetSize(height, height * 0.9)
+    self.icon:SetTexture(nil)
+
+    if binding.label then
+        self.label:SetText(binding.label)
+    end
+
+    if binding.isCompleted then
+        self.icon:SetAtlas("worldquest-tracker-checkmark")
+    end
+
+    if binding.onEnter then
+        self:SetScript("OnEnter", binding.onEnter)
+    end
+    if binding.onMouseDown then
+        self:SetScript("OnMouseDown", binding.onMouseDown)
+    end
+end
+function AdventureGuideInstanceQuestListviewMixin:ResetDataBinding()
+
+end
+function AdventureGuideInstanceQuestListviewMixin:OnLeave()
+    GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
 end
