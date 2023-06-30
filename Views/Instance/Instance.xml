@@ -128,7 +128,7 @@
                     <Frame parentKey="abilitiesListview" inherits="AdventureWidgetsListviewTemplate" hidden="true">
                         <Size y="100"/>
                         <Anchors>
-                            <Anchor point="TOPRIGHT" x="-30" y="-65"/>
+                            <Anchor point="TOPRIGHT" x="-30" y="-80"/>
                         </Anchors>
                         <KeyValues>
                             <KeyValue key="frameType" value="FRAME" type="string"/>
@@ -139,7 +139,7 @@
                             <Layer level="OVERLAY">
                                 <FontString parentKey="label" inherits="GameFontNormal_NoShadow" text="Abilities">
                                     <Anchors>
-                                        <Anchor point="TOPLEFT" x="2" y="12"/>
+                                        <Anchor point="TOPLEFT" x="2" y="18"/>
                                     </Anchors>
                                     <Color r="0" g="0" b="0"/>
                                 </FontString>
@@ -148,7 +148,7 @@
                     </Frame>
                     <Frame parentKey="guidePanel" inherits="ScrollingFontTemplate" hidden="true">
                         <Anchors>
-                            <Anchor point="TOP" relativeKey="$parent.abilitiesListview" relativePoint="BOTTOM" x="0" y="-20"/>
+                            <Anchor point="TOPLEFT" relativeKey="$parent.abilitiesListview" relativePoint="BOTTOMLEFT" x="0" y="-20"/>
                             <Anchor point="BOTTOMRIGHT" x="-30" y="30"/>
                         </Anchors>
                         <KeyValues>

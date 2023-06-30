@@ -21,6 +21,10 @@
         "ToggleFriendsFrame",
         "FriendsFrame",
         "GameTooltip_SetDefaultAnchor",
-        "class"
+        "class",
+        "MASTER",
+        "StaticPopupDialogs",
+        "ReloadUI",
+        "StaticPopup_Show"
     ]
 }

@@ -49,7 +49,7 @@ function AdventureGuideInstanceViewMixin:OnLoad()
             if self.selectedInstanceMapID < 1 then
                 self.selectedInstanceMapID = 1;
             end
-            self.maps.background:SetTexture(self.selectedInstance.maps[self.selectedInstanceMapID])
+            self.maps.background:SetTexture(self.selectedInstance.maps[self.selectedInstanceMapID].mapFile)
         end
     end)
     self.maps.next:SetNormalTexture(130866)
@@ -60,7 +60,7 @@ function AdventureGuideInstanceViewMixin:OnLoad()
             if self.selectedInstanceMapID > #self.selectedInstance.maps then
                 self.selectedInstanceMapID = #self.selectedInstance.maps;
             end
-            self.maps.background:SetTexture(self.selectedInstance.maps[self.selectedInstanceMapID])
+            self.maps.background:SetTexture(self.selectedInstance.maps[self.selectedInstanceMapID].mapFile)
         end
     end)
 
@@ -182,14 +182,13 @@ function AdventureGuideInstanceViewMixin:Guide_OnInstanceSelected(instance)
                         end
                     end
 
-                    if (#boss.abilities == 1) then
+                    if (#boss.abilities < 2) then
                         self.encounters.abilitiesListview:SetHeight(30)
                     else
                         self.encounters.abilitiesListview:SetHeight(#boss.abilities * 27)
                     end
-                else
-                    self.encounters.abilitiesListview:SetHeight(1)
                 end
+
 
                 self.encounters.guidePanel:SetText(string.format("%s\n\n%s", boss.info, boss.strategy))
             end,
@@ -216,7 +215,7 @@ function AdventureGuideInstanceViewMixin:Guide_OnInstanceSelected(instance)
         end
     end
 
-    self.maps.background:SetTexture(instance.maps[self.selectedInstanceMapID])
+    self.maps.background:SetTexture(instance.maps[self.selectedInstanceMapID].mapFile)
     
     self:UpdateLayout()
 end

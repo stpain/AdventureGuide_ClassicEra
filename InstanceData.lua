@@ -15,7 +15,12 @@ addon.dungeons = {
         },
         notes = {},
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Ragefire",
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Ragefire",
+                poi = {
+
+                },
+            }
         },
         quests = {
             5728,
@@ -26,10 +31,10 @@ addon.dungeons = {
         },
         bosses = {
             {
-                name = "Taragaman the Hungerer",
+                name = L.DUNGEON_BOSS_TARAGAMAN,
                 npcID = 11520,
-                info = "Taragaman the Hungerer is a level 16 elite demon located at the center of the 'X' in the dungeon's second to last room.",
-                strategy = "Taragaman is stationed in the middle of a platform surrounded by lava. Have your tank pull him away from the edges of the platform so that  Uppercut does not knock him off the platform. Make sure your range is at max range so  Fire Nova inflicts minimal damage. The rest of the fight is a basic tank-and-spank.",
+                info = L.DUNGEON_BOSS_TARAGAMAN_INFO,
+                strategy = L.DUNGEON_BOSS_TARAGAMAN_STRATEGY,
                 abilities = {
                     11970,
                     18072,
@@ -42,10 +47,10 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Oggleflint",
+                name = L.DUNGEON_BOSS_OGGLEFLINT,
                 npcID = 11517,
-                info = "Oggleflint is a level 16 elite trogg located in the small cave to the right of the large trogg room.",
-                strategy = "Oggleflint is flanked by 2 troggs in his room. Make sure to CC at least one trogg before engaging him. Allow your tank to pick up the remaining add and face Oggleflint away from the group (cleave). All dps should work to nuke down the add first as before switching to Oggleflint. Make sure to kill the CC'ed add once the boss and the first add are dead.",
+                info = L.DUNGEON_BOSS_OGGLEFLINT_INFO,
+                strategy = L.DUNGEON_BOSS_OGGLEFLINT_STRATEGY,
                 abilities = {
                     15496,
                 },
@@ -54,10 +59,10 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Bazzalan",
+                name = L.DUNGEON_BOSS_BAZZALAN,
                 npcID = 11519,
-                info = "Bazzalan is a level 16 elite Satyr located on the upper-ramp towards the end of RFC.",
-                strategy = "Like previous bosses in the dungeon, Bazzalan is flanked by 2 mobs. However, the mob on HIS left can be pulled without engaging the boss, greatly reducing the difficulty of the fight. The other mob should be CC'ed while the group focuses on the boss as he deals significant single-target damage and should be killed ASAP. Other than that, another tank-and-spank.",
+                info = L.DUNGEON_BOSS_BAZZALAN_INFO,
+                strategy = L.DUNGEON_BOSS_BAZZALAN_STRATEGY,
                 abilities = {
                     14873,
                     2818,
@@ -67,10 +72,10 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Jergosh the Invoker",
+                name = L.DUNGEON_BOSS_JERGOSH,
                 npcID = 11518,
-                info = "Jergosh the Invoker is a level 16 Orc Warlock located in the final room of RFC.",
-                strategy = "Like Oggleflint, Jergosh is flanked by two mobs. One of the mobs should be CC'ed while the other is focused down before transitioning to Jergosh. He casts  Immolate and  Curse of Weakness which can be a problem for tanks trying to gain threat and intense on healers, but overall this is a simple and straightforward fight.",
+                info = L.DUNGEON_BOSS_JERGOSH_INFO,
+                strategy = L.DUNGEON_BOSS_JERGOSH_STARTEGY,
                 abilities = {
                     18267,
                     20800,
@@ -82,7 +87,7 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Trash",
+                name = L.DUNGEON_TRASH,
                 npcID = false,
                 info = "",
                 strategy = "",
@@ -92,7 +97,7 @@ addon.dungeons = {
                 loot = {},
             },
         },
-        history = "Ragefire Chasm consists of a network of volcanic caverns that lie below the orcs' new capital city of Orgrimmar. Recently, rumors have spread that a cult loyal to the demonic Shadow Council has taken up residence within the Chasm's fiery depths. This cult, known as the Burning Blade, threatens the very sovereignty of Durotar. Many believe that the orc Warchief, Thrall, is aware of the Blade's existence and has chosen not to destroy it in the hopes that its members might lead him straight to the Shadow Council. Either way, the dark powers emanating from Ragefire Chasm could undo all that the orcs have fought to attain.",
+        history = L.DUNGEON_HISTORY_RAGEFIRE_CHASM,
     },
     {
         name = DUNGEON_FLOOR_THEDEADMINES1,
@@ -108,8 +113,18 @@ addon.dungeons = {
 
         },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/TheDeadmines1",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/TheDeadmines2",
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/TheDeadmines1",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/TheDeadmines2",
+                poi = {
+
+                },
+            },
         },
         quests = {
             2040,
@@ -121,9 +136,9 @@ addon.dungeons = {
         },
         bosses = {
             {
-                name = "Rhahk'Zor",
-                info = "Rhahk'Zor is a level 19 elite Ogre located in the Ironclad Cove of the Deadmines. He is the first boss of the dungeon.",
-                strategy = "Rhahk'Zor is flanked by 2 Defias Watchman in his room. Both of them can be pulled without pulling Rhahk'Zor himself. If you are unable to pull them cleanly, make sure to CC at least one archer once to limit the incoming damage your group will be taking. Also, beware of any patrolling elites that might aggro after the pull. Aside from that, this fight is a simple tank-and-spank as Rhahk'Zor is little more than a pseudo-boss and warmup for the dungeon.",
+                name = L.DUNGEON_BOSS_RHAHKZOR,
+                info = L.DUNGEON_BOSS_RHAHKZOR_INFO,
+                strategy = L.DUNGEON_BOSS_RHAHKZOR_STRATEGY,
                 abilities = {
                     6304,
                 },
@@ -133,9 +148,9 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Miner Johnson (Rare)",
-                info = "Miner Johnson is a level 19 rare-elite miner located in the left corridor following Rhahk'Zor's room. He shares the model of all of the other miners around him.",
-                strategy = "Johnson is the epitome of a tank-and-spank. He has one single target ability that reduces the tanks armor, so aside from the fight requiring intensive tank healing, it is a straightforward encounter. The only problem is that he is surrounded by numerous Defias Miner. However, they are non-elites with small health pools. Try to pick as many of them off as possible before pulling Johnson. I recommend that if you happen to have a hybrid DPS class in your group, have the hybrid also heal the tank when the  Pierce Armor debuff is up to guarantee the kill.",
+                name = L.DUNGEON_BOSS_MINER_JOHNSON,
+                info = L.DUNGEON_BOSS_MINER_JOHNSON_INFO,
+                strategy = L.DUNGEON_BOSS_MINER_JOHNSON_STRATEGY,
                 abilities = {
                     12097,
                 },
@@ -145,9 +160,9 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Sneed's Shredder",
-                info = "Sneed's Shredder is a level 20 mechanical shredder located in the Mast Room of The Deadmines. The shredder is occupied by its operator, Sneed.",
-                strategy = "This fight begins before pulling the boss. Due to the Shredder's  Terrify ability, the entire room must be cleared of all Goblin Woodcarver. Otherwise, players might be feared into them and cause a wipe. Aside from clearing the room, the boss is a very straightforward tank-and-spank. Once the Shredder has been defeated, Sneed will hop out of the machine and continue the fight himself. He has a disarm ability that can be annoying for tanks trying to pick up aggro, so give the tank ample time to acquire threat before going ham on the boss. Overall, this is a simple boss encounter.",
+                name = L.DUNGEON_BOSS_SNEEDS_SHREDDER,
+                info = L.DUNGEON_BOSS_SNEEDS_SHREDDER_INFO,
+                strategy = L.DUNGEON_BOSS_SNEEDS_SHREDDER_STRATEGY,
                 abilities = {
                     3603,
                     7399,
@@ -160,9 +175,9 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Gilnid",
-                info = "Gilnid is a level 20 elite Goblin located in the Goblin Foundry of The Deadmines.",
-                strategy = "Gilnid, like many of the bosses in this dungeon, is mostly a simple tank-and-spank. He is flanked by a Goblin Engineer that will pull once Gilnid has been engaged. Make sure to CC the engineer as he may cast  Summon Remote-Controlled Golem, which summons a mechanical robot that is immune to most abilities. If the robot does get summoned, focus the engineer that summoned it as the robot will despawn once its summoner is dead. You can avoid this headache by simply CCing the add before the pull.",
+                name = L.DUNGEON_BOSS_GILNID,
+                info = L.DUNGEON_BOSS_GILNID_INFO,
+                strategy = L.DUNGEON_BOSS_GILNID_STRATEGY,
                 abilities = {
                     5213,
                 },
@@ -172,9 +187,9 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Mr. Smite",
-                info = "Mr. Smite is a level 20 elite Tauren located on the Dreadnaught in The Deadmines. He is one of the more difficult bosses in the dungeon.",
-                strategy = "Mr. Smite will engage automatically as you approach the plank leading up to him. Pulling with him will be 2 Defias Blackguard, who are invisible before the pull. These MUST be prioritized and dealt with before Smite, as when he reaches 66% and 33% hp respectively, he will cast  Smite Stomp which will stun everyone in part for nearly 10 seconds. If the Blackguards aren't killed or CC'ed effectively by this time, they will continue attacking your tank during the stun and wipe the group. The best way to deal with these guards is to mark one with a 'skull' and kill it, while a mage polymorphs the second. If you are the mage in the group, make sure to reapply the polymorph shortly before Smite hit's the 66% hp mark.\nOnce at 66% hp, Smite will stun the group and run towards his chest located at the base of the plank. From the chest, he will pull out a second weapon, activating his  Dual Wield ability. Not much will change during this phase aside from higher DPS coming out from Smite, so healers should be aware of that. You can cheese the encounter a bit by pulling Smite as far away from the chest as possible so that by the time he reaches the chest and returns to you; the stun duration will have already subsided.\nAt 33%, Smite will stun the group once again and run towards the chest. This time, he will pull out his famous 2-handed mace, granting him the  Smite Slam. If your tank gets stunned in the mace phase, make sure to throw extra heals on him and have DPS kite if they pull aggro. The most important part of this fight is dealing with the adds before the first stomp transition; the rest is a simple tank-and-spank. Like previous bosses in the dungeon, Mr. Smite is flanked by two mobs. However, the mob on HIS left can be pulled without engaging the boss, significantly reducing the difficulty of the fight. The other mob should be CC\'ed while the group focuses on the boss as he deals significant single-target damage and should be killed ASAP. Other than that, another tank-and-spank.",
+                name = L.DUNGEON_BOSS_MR_SMITE,
+                info = L.DUNGEON_BOSS_MR_SMITE_INFO,
+                strategy = L.DUNGEON_BOSS_MR_SMITE_STRATEGY,
                 abilities = {
                     674,
                     6264,
@@ -189,9 +204,9 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Captain Greenskin",
-                info = "Captain Greenskin is a level 19-20 Goblin elite located on the Dreadnaught in The Deadmines. He patrols the deck of the ship alongside a Defias Squallshaper, a Defias Pirate, and a Defias Companion.",
-                strategy = "Like all add-based bosses, make sure to CC one of the adds next to Greenskin before the pull. I recommend that you CC the Defias Squallshaper as their frost nova ability can be quite annoying. Once you've engaged the boss, begin by killing the Defias Companion first as it is non-elite and will die quickly. After that, kill the remaining Defias Pirate and then swap to Greenskin while keeping your CC on the Squallshaper. Make sure to face Greenskin away from the group as his cleave can be quite nasty. When he dies, finish off the Squallshaper and loot his corpse.",
+                name = L.DUNGEON_BOSS_CAPTAIN_GREENSKIN,
+                info = L.DUNGEON_BOSS_CAPTAIN_GREENSKIN_INFO,
+                strategy = L.DUNGEON_BOSS_CAPTAIN_GREENSKIN_STRATEGY,
                 abilities = {
                     15496,
                     5208,
@@ -203,9 +218,9 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Edwin VanCleef",
-                info = "Edwin VanCleef is the level 21 Defias Leader and final main boss of The Deadmines. He is flanked by 2 stealthed Defias Blackguard.",
-                strategy = "When you engage Van Cleef, two Defias Blackguard will break stealth and attack you as well. Like Mr. Smite, make sure to deal with these mobs first. CC one and 'skull' mark the other and burn it down quickly, as Van Cleef does a tremendous amount of single-target damage and can shred your tank. Once both of the adds are dealt with, focus back on VC. Once he hits 50% health, he will summon 2 more adds for you to deal with. It remains quite heal-intensive so the healers and hybrids in your group should be on their toes and provide spot-healing as it is needed.",
+                name = L.DUNGEON_BOSS_EDWIN_VANCLEEF,
+                info = L.DUNGEON_BOSS_EDWIN_VANCLEEF_INFO,
+                strategy = L.DUNGEON_BOSS_EDWIN_VANCLEEF_STRATEGY,
                 abilities = {
                     674,
                     3391,
@@ -220,9 +235,9 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Cookie (Bonus)",
-                info = "Cookie is a level 20 elite Murloc located on the Dreadnaught in The Deadmines. He is accessible by jumping off the opposite side of the ship after defeating Van Cleef.",
-                strategy = "The most challenging part about Cookie is the leap off the ship to engage him. The bottom deck of the ship is packed with elites that can easily aggro if a jump is not timed correctly. Assuming you've timed the jump correctly, pull Cookie off the ship towards the exit of the dungeon. The fight is a simple tank-and-spank. Make sure to interrupt the Cookie's Cooking spell as it heals Cookie for a fair chunk. The rest is easy.",
+                name = L.DUNGEON_BOSS_COOKIE,
+                info = L.DUNGEON_BOSS_COOKIE_INFO,
+                strategy = L.DUNGEON_BOSS_COOKIE_STRATEGY,
                 abilities = {
                     6306,
                     5174,
@@ -234,7 +249,7 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Trash",
+                name = L.DUNGEON_TRASH,
                 info = "",
                 strategy = "",
                 abilities = {
@@ -248,7 +263,7 @@ addon.dungeons = {
                 }
             }
         },
-        history = "Once the greatest gold production center in the human lands, the Deadmines were abandoned when the Horde razed Stormwind city during the First War. Now the Defias Brotherhood has taken up residence and turned the dark tunnels into their private sanctum. It is rumored that the thieves have conscripted the clever goblins to help them build something terrible at the bottom of the mines - but what that may be is still uncertain. Rumor has it that the way into the Deadmines lies through the quiet, unassuming village of Moonbrook.",
+        history = L.DUNGEON_HISTORY_DEADMINES,
     },
     {
         name = DUNGEON_FLOOR_WAILINGCAVERNS1,
@@ -260,12 +275,29 @@ addon.dungeons = {
             minLevel = 17,
             maxLevel = 27,
         },
+        notes = {
+
+        },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/WailingCaverns",
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/WailingCaverns",
+                poi = {
+
+                },
+            },
+        },
+        quests = {
+            914,
+            962,
+            1487,
+            1486,
+            1491,
+            959,
+            3366,
         },
         bosses = {
             {
-                name = "Kresh",
+                name = L.DUNGEON_BOSS_KRESH,
                 info = L.DUNGEON_BOSS_KRESH_INFO,
                 strategy = L.DUNGEON_BOSS_KRESH_STRATEGY,
                 abilities = {
@@ -277,9 +309,9 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Lady Anacondra",
-                info = "Lady Anacondra is a level 20 elite Druid of the Fang located on the cliff overlooking the Screaming Gully. She can spawn in several different locations around the cliff.",
-                strategy = "Anacondra is likely to be the first of the Druid bosses you will encounter in the Wailing Caverns. Like all of the druids, she has four abilities, 2 of which are shared by her contemporaries ( Lightning Bolt and  Sleep). Her most threatening ability is 'Sleep,' which can be applied to anyone in your party, including the Tank or Healer. To deal with this ability, make sure to interrupt it immediately. If you happen to pull another Druid of the Fang during the encounter, make sure to CC it right away as one 'Sleep' can be dealt with, but 2 or more will result in a wipe. If your interrupts are on point and you've pulled carefully, this fight should be easy.",
+                name = L.DUNGEON_BOSS_LADY_ANACONDRA,
+                info = L.DUNGEON_BOSS_LADY_ANACONDRA_INFO,
+                strategy = L.DUNGEON_BOSS_LADY_ANACONDRA_STRATEGY,
                 abilities = {
                     5187,
                     9532,
@@ -293,9 +325,9 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Lord Cobrahn",
-                info = "Lord Cobrahn is a level 20 elite Druid of the Fang located at the end of the Pit of Fangs in the Wailing Caverns.",
-                strategy = "Before the pull, Cobrahn will be surrounded by 3 Deviate Python. They are between levels 18 and 19, and are non-elites, making them easy to AOE down. Prioritize these pythons before switching to Cobrahn. Like all of the Druids in the Wailing Caverns, Cobrahn may cast the dangerous 'Sleep' ability, which should be interrupted immediately. At some point during the encounter, Cobrahn will transform into a serpent, increasing his damage by 50 and attack speed by 43%. It's important that a 'Sleep' has not gone off on the healer during this phase. Otherwise, the tank will probably die. If the healer is not CC'ed during this phase, it's a guaranteed kill.",
+                name = L.DUNGEON_BOSS_LORD_COBRAHN,
+                info = L.DUNGEON_BOSS_LORD_COBRAHN_INFO,
+                strategy = L.DUNGEON_BOSS_LORD_COBRAHN_STRATEGY,
                 abilities = {
                     5187,
                     9532,
@@ -309,9 +341,9 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Deviate Faerie Dragon (Rare)",
-                info = "Deviate Faerie Dragon is a level 20 rare-elite Faerie Dragon located in the Winding Chasm.",
-                strategy = "The Deviate Faerie Dragon is a low armor, high damage mob that possesses no significant abilities. The challenge in this encounter comes from the fact that this is a 4-mob pull, all of which are elites. Two Druids of the Fang are also included in this pull, meaning that  Druid's Slumber is likely to go off in this fight. Your strategy should be to CC one of the Druids while burning the other one down and interrupting its 'Sleep' whenever possible. Your tank will be taking damage from 3 different elites here, so if you have any hybrid classes in your group aside from the healer, make sure that they weave in some support heals during their rotation. This fight will test your group's ability to focus down a single target, so if you're coordinated and all on the same page, it should be a breeze.",
+                name = L.DUNGEON_BOSS_DEVIATE_FAERIE_DRAGON,
+                info = L.DUNGEON_BOSS_DEVIATE_FAERIE_DRAGON_INFO,
+                strategy = L.DUNGEON_BOSS_DEVIATE_FAERIE_DRAGON_STRATEGY,
                 abilities = {
 
                 },
@@ -321,9 +353,9 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Lord Pythas",
-                info = "Lord Pythas is a level 21 elite Druid of the Fang located in the Winding Chasm.",
-                strategy = "Lord Pythas, like his fellow Druid counterparts, is most dangerous due to his 'Sleep' ability. Additionally, he is flanked by one additional Druid of the Fang and a Deviate Shambler. Make sure to CC the Druid and interrupt Pythas whenever he casts 'Sleep.' Prioritize the Shambler and burn it down before switching to Pythas, but make sure either your tank or one melee DPS stays focused on Pythas, so the 'Sleep' is interrupted.",
+                name = L.DUNGEON_BOSS_LORD_PYTHAS,
+                info = L.DUNGEON_BOSS_LORD_PYTHAS_INFO,
+                strategy = L.DUNGEON_BOSS_LORD_PYTHAS_STRATEGY,
                 abilities = {
                     5187,
                     9532,
@@ -336,9 +368,9 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Skum",
-                info = "Skum is a level 21elite Thunder Lizard located in the Winding Chasm.",
-                strategy = "Skum is a simple tank-and-spank boss with only one significant ability; Chained Bolt. This is a chain lightning-style spell that will strike three melee units if they are close together. Make sure your melee spread out around the boss to avoid the damage. Spreading out is not a hard requirement, as the ability itself deals minimal damage. Skum is entirely optional, but his loot makes him worthwhile.",
+                name = L.DUNGEON_BOSS_SKUM,
+                info = L.DUNGEON_BOSS_SKUM_INFO,
+                strategy = L.DUNGEON_BOSS_SKUM_STRATEGY,
                 abilities = {
                     6254,
                 },
@@ -348,9 +380,9 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Lord Serpentis",
-                info = "Lord Serpentis is the level 21 Druid of the Fang located at the end of the Winding Chasm.",
-                strategy = "",
+                name = L.DUNGEON_BOSS_LORD_SERPENTIS,
+                info = L.DUNGEON_BOSS_LORD_SERPENTIS_INFO,
+                strategy = L.DUNGEON_BOSS_LORD_SERPENTIS_STRATEGY,
                 abilities = {
                     6778,
                     9532,
@@ -364,11 +396,11 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Verdan the Everliving",
-                info = "",
-                strategy = "",
+                name = L.DUNGEON_BOSS_VERDAN_THE_EVERLIVING,
+                info = L.DUNGEON_BOSS_VERDAN_THE_EVERLIVING_INFO,
+                strategy = L.DUNGEON_BOSS_VERDAN_THE_EVERLIVING_STRATEGY,
                 abilities = {
-
+                    8142,
                 },
                 loot = {
                     6630,
@@ -377,11 +409,13 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Mutanus the Devourer",
-                info = "",
-                strategy = "",
+                name = L.DUNGEON_BOSS_MUTANUS_THE_DEVOURER,
+                info = L.DUNGEON_BOSS_MUTANUS_THE_DEVOURER_INFO,
+                strategy = L.DUNGEON_BOSS_MUTANUS_THE_DEVOURER_STRATEGY,
                 abilities = {
-
+                    8150,
+                    7399,
+                    7967,
                 },
                 loot = {
                     6461,
@@ -391,7 +425,7 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Trash",
+                name = L.DUNGEON_TRASH,
                 info = "",
                 strategy = "",
                 abilities = {
@@ -402,7 +436,7 @@ addon.dungeons = {
                 }
             }
         },
-        history = "Recently, a night elf druid named Naralex discovered a network of underground caverns within the heart of the Barrens. Dubbed the 'Wailing Caverns', these natural caves were filled with steam fissures which produced long, mournful wails as they vented. Naralex believed he could use the caverns' underground springs to restore lushness and fertility to the Barrens - but to do so would require siphoning the energies of the fabled Emerald Dream. Once connected to the Dream, however, the druid's vision somehow became a nightmare. Soon the Wailing Caverns began to change - the waters turned foul and the once-docile creatures inside metamorphosed into vicious, deadly predators. It is said that Naralex himself still resides somewhere inside the heart of the labyrinth, trapped beyond the edges of the Emerald Dream. Even his former acolytes have been corrupted by their master's waking nightmare - transformed into the wicked Druids of the Fang.",
+        history = L.DUNGEON_HISTORY_WAILING_CAVERNS,
     },
     {
         name = "Shadowfang Keep",
@@ -414,31 +448,92 @@ addon.dungeons = {
             minLevel = 18,
             maxLevel = 24,
         },
+        notes = {
+
+        },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ShadowfangKeep1",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ShadowfangKeep2",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ShadowfangKeep3",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ShadowfangKeep4",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ShadowfangKeep5",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ShadowfangKeep6",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ShadowfangKeep7",
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ShadowfangKeep1",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ShadowfangKeep2",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ShadowfangKeep3",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ShadowfangKeep4",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ShadowfangKeep5",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ShadowfangKeep6",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ShadowfangKeep7",
+                poi = {
+
+                },
+            },
+        },
+        quests = {
+            1014,
+            1098,
+            1013,
         },
         bosses = {
             {
-                name = "Rethilgore",
+                name = L.DUNGEON_BOSS_RETHILGORE,
+                npcID = 3914,
+                info = L.DUNGEON_BOSS_RETHILGORE_INFO,
+                strategy = L.DUNGEON_BOSS_RETHILGORE_STRATEGY,
+                abilities = {
+                    7295,
+                },
                 loot = {
                     5254,
                 },
             },
             {
-                name = "Fel Steed/Shadow Charger",
+                name = L.DUNGEON_BOSS_FEL_STEED_SHADOW_CHARGER,
+                npcID = 3864,
+                info = L.DUNGEON_BOSS_FEL_STEED_SHADOW_CHARGER_INFO,
+                strategy = L.DUNGEON_BOSS_FEL_STEED_SHADOW_CHARGER_STRATEGY,
+                abilities = {
+                    7139,
+                },
                 loot = {
                     6341,
                     932,
                 },
             },
             {
-                name = "Razorclaw the Butcher",
+                name = L.DUNGEON_BOSS_RAZORCLAW_THE_BUTCHER,
+                npcID = 3886,
+                info = L.DUNGEON_BOSS_RAZORCLAW_THE_BUTCHER_INFO,
+                strategy = L.DUNGEON_BOSS_RAZORCLAW_THE_BUTCHER_STRATEGY,
+                abilities = {
+                    7485,
+                },
                 loot = {
                     1292,
                     6226,
@@ -446,55 +541,109 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Baron Silverlaine",
+                name = L.DUNGEON_BOSS_BARON_SILVERLAINE,
+                npcID = 3887,
+                info = L.DUNGEON_BOSS_BARON_SILVERLAINE_INFO,
+                strategy = L.DUNGEON_BOSS_BARON_SILVERLAINE_STRATEGY,
+                abilities = {
+                    7068,
+                },
                 loot = {
                     6321,
                     6323,
                 },
             },
             {
-                name = "Commander Springvale",
+                name = L.DUNGEON_BOSS_COMMANDER_SPRINGVALE,
+                npcID = 4278,
+                info = L.DUNGEON_BOSS_COMMANDER_SPRINGVALE_INFO,
+                strategy = L.DUNGEON_BOSS_COMMANDER_SPRINGVALE_STRATEGY,
+                abilities = {
+                    5588,
+                    1026,
+                },
                 loot = {
                     6320,
                     3191,
                 },
             },
             {
-                name = "Odo the Blindwatcher",
+                name = L.DUNGEON_BOSS_ODO_THE_BLINDWATCHER,
+                npcID = 4279,
+                info = L.DUNGEON_BOSS_ODO_THE_BLINDWATCHER_INFO,
+                strategy = L.DUNGEON_BOSS_ODO_THE_BLINDWATCHER_STRATEGY,
+                abilities = {
+                    7481,
+                },
                 loot = {
                     6318,
                     9319,
                 },
             },
             {
-                name = "Deathsworn Captain",
+                name = L.DUNGEON_BOSS_DEATHSWORN_CAPTAIN,
+                npcID = 3872,
+                info = L.DUNGEON_BOSS_DEATHSWORN_CAPTAIN_INFO,
+                strategy = L.DUNGEON_BOSS_DEATHSWORN_CAPTAIN_STRATEGY,
+                abilities = {
+                    15496,
+                    9080,
+                },
                 loot = {
                     6642,
                     6641,
                 },
             },
+            -- {
+            --     name = "Arugal's Voidwalker",
+            --     info = L.DUNGEON_BOSS_KRESH_INFO,
+            --     strategy = L.DUNGEON_BOSS_KRESH_STRATEGY,
+            --     abilities = {
+
+            --     },
+            --     loot = {
+            --         5943,
+            --     },
+            -- },
             {
-                name = "Arugal's Voidwalker",
-                loot = {
-                    5943,
+                name = L.DUNGEON_BOSS_FENRUS_THE_DEVOURER,
+                npcID = 4274,
+                info = L.DUNGEON_BOSS_FENRUS_THE_DEVOURER_INFO,
+                strategy = L.DUNGEON_BOSS_FENRUS_THE_DEVOURER_STRATEGY,
+                abilities = {
+                    7125
                 },
-            },
-            {
-                name = "Fenrus the Devourer",
                 loot = {
                     6340,
                     3230,
                 },
             },
             {
-                name = "Wolf Master Nandos",
+                name = L.DUNGEON_BOSS_WOLF_MASTER_NANDOS,
+                npcID = 3927,
+                info = L.DUNGEON_BOSS_WOLF_MASTER_NANDOS_INFO,
+                strategy = L.DUNGEON_BOSS_WOLF_MASTER_NANDOS_STRATEGY,
+                abilities = {
+                    7487,
+                    7489,
+                    7488,
+                },
                 loot = {
                     3748,
                     6314,
                 },
             },
             {
-                name = "Archmage Arugal",
+                name = L.DUNGEON_BOSS_ARCHMAGE_ARUGAL,
+                npcID = 4275,
+                info = L.DUNGEON_BOSS_ARCHMAGE_ARUGAL_INFO,
+                strategy = L.DUNGEON_BOSS_ARCHMAGE_ARUGAL_STRATEGY,
+                abilities = {
+                    7621,
+                    7587,
+                    7803,
+                    22709,
+                },
                 loot = {
                     6324,
                     6392,
@@ -502,7 +651,12 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Trash",
+                name = L.DUNGEON_TRASH,
+                info = "",
+                strategy = "",
+                abilities = {
+
+                },
                 loot = {
                     2292,
                     1489,
@@ -521,7 +675,7 @@ addon.dungeons = {
                 }
             }
         },
-        history = "During the Third War, the wizards of the Kirin Tor battled against the undead armies of the Scourge. When the wizards of Dalaran died in battle, they would rise soon after - adding their former might to the growing Scourge. Frustrated by their lack of progress (and against the advice of his peers) the Archmage, Arugal elected to summon extra-dimensional entities to bolster Dalaran's diminishing ranks. Arugal's summoning brought the ravenous worgen into the world of Azeroth. The feral wolf-men slaughtered not only the Scourge, but quickly turned on the wizards themselves. The worgen sieged the keep of the noble, Baron Silverlaine. Situated above the tiny hamlet of Pyrewood, the keep quickly fell into shadow and ruin. Driven mad with guilt, Arugal adopted the worgen as his children and retreated to the newly dubbed 'Shadowfang Keep'. It's said he still resides there, protected by his massive pet, Fenrus - and haunted by the vengeful ghost of Baron Silverlaine.",
+        history = L.DUNGEON_HISTORY_SHADOWFANG_KEEP,
     },
     {
         name = DUNGEON_FLOOR_THESTOCKADE1,
@@ -533,42 +687,103 @@ addon.dungeons = {
             minLevel = 22,
             maxLevel = 32,
         },
+        notes = {
+
+        },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/TheStockade",
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/TheStockade",
+                poi = {
+
+                },
+            },
+        },
+        quests = {
+            391,
+            387,
+            386,
+            378,
+            388,
+            377,
         },
         bosses = {
             {
-                name = "Targorr the Dread",
+                name = L.DUNGEON_BOSS_TARGORR_THE_DREAD,
+                npcID = 1696,
+                info = L.DUNGEON_BOSS_TARGORR_THE_DREAD_INFO,
+                strategy = L.DUNGEON_BOSS_TARGORR_THE_DREAD_STRATEGY,
+                abilities = {
+                    674,
+                    8599,
+                    3391,
+                },
                 loot = {
 
                 },
             },
             {
-                name = "Kam Deepfury",
+                name = L.DUNGEON_BOSS_KAM_DEEPFURY,
+                npcID = 1666,
+                info = L.DUNGEON_BOSS_KAM_DEEPFURY_INFO,
+                strategy = L.DUNGEON_BOSS_KAM_DEEPFURY_STRATEGY,
+                abilities = {
+                    7164,
+                    3419,
+                    8242,
+                },
                 loot = {
                     2280,
                 },
             },
             {
-                name = "Hamhock",
+                name = L.DUNGEON_BOSS_HAMHOCK,
+                npcID = 1663,
+                info = L.DUNGEON_BOSS_HAMHOCK_INFO,
+                strategy = L.DUNGEON_BOSS_HAMHOCK_STRATEGY,
+                abilities = {
+                    6742,
+                    421,
+                },
                 loot = {
 
                 },
             },
             {
-                name = "Dextren Ward",
+                name = L.DUNGEON_BOSS_DEXTREN_WARD,
+                npcID = 1663,
+                info = L.DUNGEON_BOSS_DEXTREN_WARD_INFO,
+                strategy = L.DUNGEON_BOSS_DEXTREN_WARD_STRATEGY,
+                abilities = {
+                    7165,
+                    5246,
+                    11976,
+                },
                 loot = {
 
                 },
             },
             {
-                name = "Bazil Thredd",
+                name = L.DUNGEON_BOSS_BAZIL_THREDD,
+                npcID = 1716,
+                info = L.DUNGEON_BOSS_BAZIL_THREDD_INFO,
+                strategy = L.DUNGEON_BOSS_BAZIL_THREDD_STRATEGY,
+                abilities = {
+                    9128,
+                    674,
+                    7964,
+                },
                 loot = {
 
                 },
             },
             {
-                name = "Bruegal Ironknuckle (Rare)",
+                name = L.DUNGEON_BOSS_BRUEGAL_IRONKNUCKLE,
+                npcID = 1720,
+                info = L.DUNGEON_BOSS_BRUEGAL_IRONKNUCKLE_INFO,
+                strategy = L.DUNGEON_BOSS_BRUEGAL_IRONKNUCKLE_STRATEGY,
+                abilities = {
+                    
+                },
                 loot = {
                     3228,
                     2941,
@@ -577,12 +792,18 @@ addon.dungeons = {
             },
             {
                 name = "Trash",
+                npcID = false,
+                info = "",
+                strategy = "",
+                abilities = {
+
+                },
                 loot = {
                     1076,
                 },
             }
         },
-        history = "The Stockades are a high-security prison complex, hidden beneath the canal district of Stormwind city. Presided over by Warden Thelwater, the Stockades are home to petty crooks, political insurgents, murderers and a score of the most dangerous criminals in the land. Recently, a prisoner-led revolt has resulted in a state of pandemonium within the Stockades - where the guards have been driven out and the convicts roam free. Warden Thelwater has managed to escape the holding area and is currently enlisting brave thrill-seekers to venture into the prison and kill the uprising's mastermind - the cunning felon, Bazil Thredd.",
+        history = L.DUNGEON_HISTORY_STOCKADES,
     },
     {
         name = "Blackfathom Deeps",
@@ -594,21 +815,66 @@ addon.dungeons = {
             minLevel = 1,
             maxLevel = 2,
         },
+        notes = {
+
+        },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/BlackfathomDeeps1",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/BlackfathomDeeps2",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/BlackfathomDeeps3",
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/BlackfathomDeeps1",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/BlackfathomDeeps2",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/BlackfathomDeeps3",
+                poi = {
+
+                },
+            },
+        },
+        quests = {
+            971,
+            1275,
+            1199,
+            1198,
+            1200,
+            6565,
+            6921,
+            6563,
+            6922,
+            6561,
         },
         bosses = {
             {
-                name = "Ghamoo-ra",
+                name = L.DUNGEON_BOSS_GHAMOO_RA,
+                npcID = 4887,
+                info = L.DUNGEON_BOSS_GHAMOO_RA_INFO,
+                strategy = L.DUNGEON_BOSS_GHAMOO_RA_STRATEGY,
+                abilities = {
+                    5568,
+                },
                 loot = {
                     6907,
                     6908,
                 },
             },
             {
-                name = "Lady Sarevess",
+                name = L.DUNGEON_BOSS_LADY_SAREVESS,
+                npcID = 4831,
+                info = L.DUNGEON_BOSS_LADY_SAREVESS_INFO,
+                strategy = L.DUNGEON_BOSS_LADY_SAREVESS_STRATEGY,
+                abilities = {
+                    8435,
+                    865,
+                    6660,
+                    246,
+                },
                 loot = {
                     888,
                     3078,
@@ -616,7 +882,13 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Gelihast",
+                name = L.DUNGEON_BOSS_GELIHAST,
+                npcID = 6243,
+                info = L.DUNGEON_BOSS_GELIHAST_INFO,
+                strategy = L.DUNGEON_BOSS_GELIHAST_STRATEGY,
+                abilities = {
+                    6533,
+                },
                 loot = {
                     6906,
                     6905,
@@ -624,26 +896,51 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Lorgus Jett",
+                name = L.DUNGEON_BOSS_LORGUS_JETT,
+                npcID = 12902,
+                info = L.DUNGEON_BOSS_LORGUS_JETT_INFO,
+                strategy = L.DUNGEON_BOSS_LORGUS_JETT_STRATEGY,
+                abilities = {
+
+                },
                 loot = {
 
                 },
             },
             {
-                name = "Baron Aquanis",
+                name = L.DUNGEON_BOSS_BARON_AQUANIS,
+                npcID = 12876,
+                info = L.DUNGEON_BOSS_BARON_AQUANIS_INFO,
+                strategy = L.DUNGEON_BOSS_BARON_AQUANIS_STRATEGY,
+                abilities = {
+
+                },
                 loot = {
                     16782,
                 },
             },
             {
-                name = "Twilight Lord Kelris",
+                name = L.DUNGEON_BOSS_TWILIGHT_LORD_KELRIS,
+                npcID = 4832,
+                info = L.DUNGEON_BOSS_TWILIGHT_LORD_KELRIS_INFO,
+                strategy = L.DUNGEON_BOSS_TWILIGHT_LORD_KELRIS_STRATEGY,
+                abilities = {
+                    15587,
+                    8399,
+                },
                 loot = {
                     1155,
                     6903,
                 },
             },
             {
-                name = "Old Serra'kis",
+                name = L.DUNGEON_BOSS_OLD_SERRAKIS,
+                npcID = 4830,
+                info = L.DUNGEON_BOSS_OLD_SERRAKIS_INFO,
+                strategy = L.DUNGEON_BOSS_OLD_SERRAKIS_STRATEGY,
+                abilities = {
+
+                },
                 loot = {
                     6901,
                     6904,
@@ -651,7 +948,14 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Aku'mai",
+                name = L.DUNGEON_BOSS_AKUMAI,
+                npcID = 4829,
+                info = L.DUNGEON_BOSS_AKUMAI_INFO,
+                strategy = L.DUNGEON_BOSS_AKUMAI_STRATEGY,
+                abilities = {
+                    3815,
+                    3490,
+                },
                 loot = {
                     6911,
                     6910,
@@ -659,7 +963,13 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Trash",
+                name = L.DUNGEON_TRASH,
+                npcID = false,
+                info = "",
+                strategy = "",
+                abilities = {
+
+                },
                 loot = {
                     1486,
                     3416,
@@ -675,7 +985,7 @@ addon.dungeons = {
                 },
             }
         },
-        history = "Situated along the Zoram Strand of Ashenvale, Blackfathom Deeps was once a glorious temple dedicated to the night elves' moon-goddess, Elune. However, the great Sundering shattered the temple - sinking it beneath the waves of the Veiled Sea. There it remained untouched - until, drawn by its ancient power - the naga and satyr emerged to plumb its secrets. Legends hold that the ancient beast, Aku'mai, has taken up residence within the temple's ruins. Aku'mai, a favored pet of the primordial Old Gods, has preyed upon the area ever since. Drawn to Aku'mai's presence, the cult known as the Twilight's Hammer has also come to bask in the Old Gods' evil presence.",
+        history = L.DUNGEON_HISTORY_WAILING_CAVERNS,
     },
     {
         name = "Gnomeregan",
@@ -687,22 +997,82 @@ addon.dungeons = {
             minLevel = 29,
             maxLevel = 38,
         },
+        notes = {
+
+        },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Gnomeregan1",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Gnomeregan2",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Gnomeregan3",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Gnomeregan4",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Gnomeregan5",
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Gnomeregan1",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Gnomeregan2",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Gnomeregan3",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Gnomeregan4",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Gnomeregan5",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/GnomereganOld",
+                poi = {
+
+                },
+            },
+        },
+        quests = {
+            2904,
+            2951,
+            2945,
+            2841,
+            2842,
+            2922,
+            2926,
+            2962,
+            2928,
+            2924,
+            2930,
+            2929,
         },
         bosses = {
             {
-                name = "Grubbis",
+                name = L.DUNGEON_BOSS_GRUBBIS,
+                npcID = 7361,
+                info = L.DUNGEON_BOSS_GRUBBIS_INFO,
+                strategy = L.DUNGEON_BOSS_GRUBBIS_STRATEGY,
+                abilities = {
+
+                },
                 loot = {
                     9445,
                 },
             },
             {
-                name = "Viscous Fallout",
+                name = L.DUNGEON_BOSS_VISCOUS_FALLOUT,
+                npcID = 7079,
+                info = L.DUNGEON_BOSS_VISCOUS_FALLOUT_INFO,
+                strategy = L.DUNGEON_BOSS_VISCOUS_FALLOUT_STRATEGY,
+                abilities = {
+
+                },
                 loot = {
                     9454,
                     9453,
@@ -710,7 +1080,15 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Electrocutioner 6000",
+                name = L.DUNGEON_BOSS_ELECTROCUTIONER_6000,
+                npcID = 6235,
+                info = L.DUNGEON_BOSS_ELECTROCUTIONER_6000_INFO,
+                strategy = L.DUNGEON_BOSS_ELECTROCUTIONER_6000_STRATEGY,
+                abilities = {
+                    11085,
+                    11082,
+                    11084,
+                },
                 loot = {
                     9447,
                     9446,
@@ -719,14 +1097,30 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Crowd Pummeler 9-60",
+                name = L.DUNGEON_BOSS_CROWD_PUMMELER_9_60,
+                npcID = 6229,
+                info = L.DUNGEON_BOSS_CROWD_PUMMELER_9_60_INFO,
+                strategy = L.DUNGEON_BOSS_CROWD_PUMMELER_9_60_STRATEGY,
+                abilities = {
+                    8374,
+                    10887,
+                    5568,
+                },
                 loot = {
                     9449,
                     9450,
                 },
             },
             {
-                name = "Dark Iron Ambassador",
+                name = L.DUNGEON_BOSS_DARK_IRON_AMBASSADOR,
+                npcID = 6228,
+                info = L.DUNGEON_BOSS_DARK_IRON_AMBASSADOR_INFO,
+                strategy = L.DUNGEON_BOSS_DARK_IRON_AMBASSADOR_STRATEGY,
+                abilities = {
+                    184 ,
+                    9053    ,
+                    10870,
+                },
                 loot = {
                     9455,
                     9456,
@@ -734,7 +1128,13 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Mekgineer Thermaplugg",
+                name = L.DUNGEON_BOSS_MEKGINEER_THERMAPLUGG,
+                npcID = 7800,
+                info = L.DUNGEON_BOSS_MEKGINEER_THERMAPLUGG_INFO,
+                strategy = L.DUNGEON_BOSS_MEKGINEER_THERMAPLUGG_STRATEGY,
+                abilities = {
+                    11130,
+                },
                 loot = {
                     9492,
                     9461,
@@ -748,7 +1148,13 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Trash",
+                name = L.DUNGEON_TRASH,
+                npcID = false,
+                info = "",
+                strategy = "",
+                abilities = {
+
+                },
                 loot = {
                     9508,
                     9491,
@@ -773,7 +1179,7 @@ addon.dungeons = {
                 },
             },
         },
-        history = "Located in Dun Morogh, the technological wonder known as Gnomeregan has been the gnomes' capital city for generations. Recently, a hostile race of mutant troggs infested several regions of Dun Morogh - including the great gnome city. In a desperate attempt to destroy the invading troggs, High Tinker Mekkatorque ordered the emergency venting of the city's radioactive waste tanks. Several gnomes sought shelter from the airborne pollutants as they waited for the troggs to die or flee. Unfortunately, though the troggs became irradiated from the toxic assault - their siege continued, unabated. Those gnomes who were not killed by noxious seepage were forced to flee, seeking refuge in the nearby dwarven city of Ironforge. There, High Tinker Mekkatorque set out to enlist brave souls to help his people reclaim their beloved city. It is rumored that Mekkatorque's once-trusted advisor, Mekgineer Thermaplugg, betrayed his people by allowing the invasion to happen. Now, his sanity shattered, Thermaplugg remains in Gnomeregan - furthering his dark schemes and acting as the city's new techno-overlord.",
+        history = L.DUNGEON_HISTORY_GNOMEREGAN,
     },
     {
         name = "Razorfen Kraul",
@@ -785,24 +1191,61 @@ addon.dungeons = {
             minLevel = 32,
             maxLevel = 42,
         },
+        notes = {
+
+        },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/RazorfenKraul",
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/RazorfenKraul",
+                poi = {
+
+                },
+            },
+        },
+        quests = {
+            1221,
+            1144,
+            1102,
+            1109,
+            1142,
+            1101,
+            6522,
         },
         bosses = {
             {
-                name = "Roogug",
+                name = L.DUNGEON_BOSS_ROOGUG,
+                npcID = 6168,
+                info = L.DUNGEON_BOSS_ROOGUG_INFO,
+                strategy = L.DUNGEON_BOSS_ROOGUG_STRATEGY,
+                abilities = {
+                    9532,
+                    8270,
+                },
                 loot = {
 
                 },
             },
             {
-                name = "Aggem Thorncurse",
+                name = L.DUNGEON_BOSS_AGGEM_THORNCURSE,
+                npcID = 4424,
+                info = L.DUNGEON_BOSS_AGGEM_THORNCURSE_INFO,
+                strategy = L.DUNGEON_BOSS_AGGEM_THORNCURSE_STRATEGY,
+                abilities = {
+
+                },
                 loot = {
                     6681,
                 },
             },
             {
-                name = "Death Speaker Jargba",
+                name = L.DUNGEON_BOSS_DEATH_SPEAKER_JARGBA,
+                npcID = 4428,
+                info = L.DUNGEON_BOSS_DEATH_SPEAKER_JARGBA_INFO,
+                strategy = L.DUNGEON_BOSS_DEATH_SPEAKER_JARGBA_STRATEGY,
+                abilities = {
+                    14515,
+                    9613,
+                },
                 loot = {
                     2816,
                     6685,
@@ -810,21 +1253,71 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Overlord Ramtusk",
+                name = L.DUNGEON_BOSS_OVERLORD_RAMTUSK,
+                npcID = 4420,
+                info = L.DUNGEON_BOSS_OVERLORD_RAMTUSK_INFO,
+                strategy = L.DUNGEON_BOSS_OVERLORD_RAMTUSK_STRATEGY,
+                abilities = {
+                    
+                },
                 loot = {
                     6687,
                     6686,
                 },
             },
             {
-                name = "Agathelos the Raging",
+                name = L.DUNGEON_BOSS_AGATHELOS_THE_RAGING,
+                npcID = 4422,
+                info = L.DUNGEON_BOSS_AGATHELOS_THE_RAGING_INFO,
+                strategy = L.DUNGEON_BOSS_AGATHELOS_THE_RAGING_STRATEGY,
+                abilities = {
+                    
+                },
                 loot = {
                     6691,
                     6690,
                 },
             },
             {
-                name = "Charlga Razorflank",
+                name = L.DUNGEON_BOSS_BLIND_HUNTER,
+                npcID = 4425,
+                info = L.DUNGEON_BOSS_BLIND_HUNTER_INFO,
+                strategy = L.DUNGEON_BOSS_BLIND_HUNTER_STRATEGY,
+                abilities = {
+                    8281,
+                    3242
+                },
+                loot = {
+                    6695,
+                    6696,
+                    6697,
+                },
+            },
+            {
+                name = L.DUNGEON_BOSS_EARTHCALLER_HALMGAR,
+                npcID = 4842,
+                info = L.DUNGEON_BOSS_EARTHCALLER_HALMGAR_INFO,
+                strategy = L.DUNGEON_BOSS_EARTHCALLER_HALMGAR_STRATEGY,
+                abilities = {
+                    2484,
+                    9532,
+                    8270,
+                },
+                loot = {
+                    6688,
+                    6689,
+                },
+            },
+            {
+                name = L.DUNGEON_BOSS_CHARLGA_RAZORFLANK,
+                npcID = 4421,
+                info = L.DUNGEON_BOSS_CHARLGA_RAZORFLANK_INFO,
+                strategy = L.DUNGEON_BOSS_CHARLGA_RAZORFLANK_STRATEGY,
+                abilities = {
+                    8292,
+                    8361,
+                    6077,
+                },
                 loot = {
                     6693,
                     6694,
@@ -833,7 +1326,13 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Trash",
+                name = L.DUNGEON_TRASH,
+                npcID = false,
+                info = "",
+                strategy = "",
+                abilities = {
+                    11130,
+                },
                 loot = {
                     2264,
                     1488,
@@ -848,7 +1347,7 @@ addon.dungeons = {
                 },
             },
         },
-        history = "Ten thousand years ago - during the War of the Ancients, the mighty demigod, Agamaggan, came forth to battle the Burning Legion. Though the colossal boar fell in combat, his actions helped save Azeroth from ruin. Yet over time, in the areas where his blood fell, massive thorn-ridden vines sprouted from the earth. The quillboar - believed to be the mortal offspring of the mighty god, came to occupy these regions and hold them sacred. The heart of these thorn-colonies was known as the Razorfen. The great mass of Razorfen Kraul was conquered by the old crone, Charlga Razorflank. Under her rule, the shamanistic quillboar stage attacks on rival tribes as well as Horde villages. Some speculate that Charlga has even been negotiating with agents of the Scourge - aligning her unsuspecting tribe with the ranks of the Undead for some insidious purpose.",
+        history = L.DUNGEON_HISTORY_RAZORFEN_KRAUL,
     },
     {
         name = "Scarlet Monastery",
@@ -860,29 +1359,84 @@ addon.dungeons = {
             minLevel = 26,
             maxLevel = 45,
         },
+        notes = {
+
+        },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ScarletMonasteryGraveyard",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ScarletMonasteryLib",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ScarletMonasteryArmory",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ScarletMonasteryCath",
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ScarletMonasteryGraveyard",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ScarletMonasteryLib",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ScarletMonasteryArmory",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ScarletMonasteryCath",
+                poi = {
+
+                },
+            },
+        },
+        quests = {
+            1053,
+            1050,
+            1048,
+            1051,
+            1049,
+            1160,
+            1113,
+            1951,
         },
         bosses = {
             {
-                name = "Interrogator Vishas",
+                name = L.DUNGEON_BOSS_INTERROGATOR_VISHAS,
+                npcID = 3983,
+                info = L.DUNGEON_BOSS_INTERROGATOR_VISHAS_INFO,
+                strategy = L.DUNGEON_BOSS_INTERROGATOR_VISHAS_STRATEGY,
+                abilities = {
+                    9034,
+                },
                 loot = {
                     7682,
                     7683,
                 },
             },
             {
-                name = "Bloodmage Thalnos",
+                name = L.DUNGEON_BOSS_BLOODMAGE_THALNOS,
+                npcID = 4543,
+                info = L.DUNGEON_BOSS_BLOODMAGE_THALNOS_INFO,
+                strategy = L.DUNGEON_BOSS_BLOODMAGE_THALNOS_STRATEGY,
+                abilities = {
+                    9613,
+                    8814,
+                    12470,
+                },
                 loot = {
                     7685,
                     7684,
                 },
             },
             {
-                name = "Azshir the Sleepless (Rare)",
+                name = L.DUNGEON_BOSS_AZSHIR_THE_SLEEPLESS,
+                npcID = 6490,
+                info = L.DUNGEON_BOSS_AZSHIR_THE_SLEEPLESS_INFO,
+                strategy = L.DUNGEON_BOSS_AZSHIR_THE_SLEEPLESS_STRATEGY,
+                abilities = {
+                    5137,
+                    9373,
+                    7399,
+                },
                 loot = {
                     7709,
                     7708,
@@ -890,7 +1444,14 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Fallen Champion (Rare)",
+                name = L.DUNGEON_BOSS_FALLEN_CHAMPION,
+                npcID = 6488,
+                info = L.DUNGEON_BOSS_FALLEN_CHAMPION_INFO,
+                strategy = L.DUNGEON_BOSS_FALLEN_CHAMPION_STRATEGY,
+                abilities = {
+                    7366,
+                    15496,
+                },
                 loot = {
                     7691,
                     7690,
@@ -898,7 +1459,14 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Ironspine (Rare)",
+                name = L.DUNGEON_BOSS_IRONSPINE,
+                npcID = 6489,
+                info = L.DUNGEON_BOSS_IRONSPINE_INFO,
+                strategy = L.DUNGEON_BOSS_IRONSPINE_STRATEGY,
+                abilities = {
+                    21007,
+                    3815,
+                },
                 loot = {
                     7688,
                     7687,
@@ -906,7 +1474,14 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Houndmaster Loksey",
+                name = L.DUNGEON_BOSS_HOUNDMASTER_LOKSEY,
+                npcID = 3974,
+                info = L.DUNGEON_BOSS_HOUNDMASTER_LOKSEY_INFO,
+                strategy = L.DUNGEON_BOSS_HOUNDMASTER_LOKSEY_STRATEGY,
+                abilities = {
+                    11549,
+                    6742,
+                },
                 loot = {
                     7710,
                     7756,
@@ -914,7 +1489,17 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Arcanist Doan",
+                name = L.DUNGEON_BOSS_ARCANIST_DOAN,
+                npcID = 6487,
+                info = L.DUNGEON_BOSS_ARCANIST_DOAN_INFO,
+                strategy = L.DUNGEON_BOSS_ARCANIST_DOAN_STRATEGY,
+                abilities = {
+                    9438,
+                    9433,
+                    9435,
+                    13323,
+                    8988,
+                },
                 loot = {
                     7714,
                     7713,
@@ -923,7 +1508,16 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Herod",
+                name = L.DUNGEON_BOSS_HEROD,
+                npcID = 3975,
+                info = L.DUNGEON_BOSS_HEROD_INFO,
+                strategy = L.DUNGEON_BOSS_HEROD_STRATEGY,
+                abilities = {
+                    22540,
+                    8269,
+                    8260,
+                    8989,
+                },
                 loot = {
                     7719,
                     7718,
@@ -932,7 +1526,17 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Scarlet Commander Mograine",
+                name = L.DUNGEON_BOSS_SCARLET_COMMANDER_MOGRAINE,
+                npcID = 3976,
+                info = L.DUNGEON_BOSS_SCARLET_COMMANDER_MOGRAINE_INFO,
+                strategy = L.DUNGEON_BOSS_SCARLET_COMMANDER_MOGRAINE_STRATEGY,
+                abilities = {
+                    14518,
+                    9257,
+                    8990,
+                    853,
+                    642,
+                },
                 loot = {
                     7724,
                     10330,
@@ -941,7 +1545,17 @@ addon.dungeons = {
                 },
             },
             {
-                name = "High Inquisitor Whitemane",
+                name = L.DUNGEON_BOSS_HIGH_INQUISITOR_WHITEMANE,
+                npcID = 3977,
+                info = L.DUNGEON_BOSS_HIGH_INQUISITOR_WHITEMANE_INFO,
+                strategy = L.DUNGEON_BOSS_HIGH_INQUISITOR_WHITEMANE_STRATEGY,
+                abilities = {
+                    9256,
+                    12039,
+                    9481,
+                    22187,
+                    9232,
+                },
                 loot = {
                     7720,
                     7722,
@@ -949,7 +1563,14 @@ addon.dungeons = {
                 },
             },
             {
-                name = "High Inquisitor Fairbanks",
+                name = L.DUNGEON_BOSS_HIGH_INQUISITOR_FAIRBANKS,
+                npcID = 4542,
+                info = L.DUNGEON_BOSS_HIGH_INQUISITOR_FAIRBANKS_INFO,
+                strategy = L.DUNGEON_BOSS_HIGH_INQUISITOR_FAIRBANKS_STRATEGY,
+                abilities = {
+                    9532,
+                    8270,
+                },
                 loot = {
                     19507,
                     19508,
@@ -957,7 +1578,14 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Trash",
+                name = L.DUNGEON_TRASH,
+                npcID = 6168,
+                info = L.DUNGEON_BOSS_ROOGUG_INFO,
+                strategy = L.DUNGEON_BOSS_ROOGUG_STRATEGY,
+                abilities = {
+                    9532,
+                    8270,
+                },
                 loot = {
                     2262 ,
                     7787,
@@ -992,12 +1620,18 @@ addon.dungeons = {
             },
             {
                 name = "Keys",
+                npcID = false,
+                info = "",
+                strategy = "",
+                abilities = {
+
+                },
                 loot = {
                     7146,
                 }
             }
         },
-        history = "",
+        history = L.DUNGEON_HISTORY_SCARLET_MONASTERY,
     },
     {
         name = "Razorfen Downs",
@@ -1009,12 +1643,35 @@ addon.dungeons = {
             minLevel = 42,
             maxLevel = 45,
         },
+        notes = {
+
+        },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/RazorfenDowns",
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/RazorfenDowns",
+                poi = {
+
+                },
+            },
+        },
+        quests = {
+            3636,
+            3341,
+            6522,
+            3525,
+            6626,
         },
         bosses = {
             {
-                name = "Tuten'kash",
+                name = L.DUNGEON_BOSS_TUTENKASH,
+                npcID = 7355,
+                info = L.DUNGEON_BOSS_TUTENKASH_INFO,
+                strategy = L.DUNGEON_BOSS_TUTENKASH_STRATEGY,
+                abilities = {
+                    12255,
+                    12254,
+                    12252,
+                },
                 loot = {
                     10776,
                     10775,
@@ -1022,14 +1679,28 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Plaguemaw the Rotting",
+                name = L.DUNGEON_BOSS_PLAGUEMAW_THE_ROTTING,
+                npcID = 7356,
+                info = L.DUNGEON_BOSS_PLAGUEMAW_THE_ROTTING_INFO,
+                strategy = L.DUNGEON_BOSS_PLAGUEMAW_THE_ROTTING_STRATEGY,
+                abilities = {
+                    12946,
+                    12947
+                },
                 loot = {
                     10766,
                     10760,
                 },
             },
             {
-                name = "Mordresh Fire Eye",
+                name = L.DUNGEON_BOSS_MORDRESH_FIRE_EYE,
+                npcID = 7357,
+                info = L.DUNGEON_BOSS_MORDRESH_FIRE_EYE_INFO,
+                strategy = L.DUNGEON_BOSS_MORDRESH_FIRE_EYE_STRATEGY,
+                abilities = {
+                    12470,
+                    12466,
+                },
                 loot = {
                     10769,
                     10771,
@@ -1037,7 +1708,16 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Ragglesnout",
+                name = L.DUNGEON_BOSS_RAGGLESNOUT,
+                npcID = 7354,
+                info = L.DUNGEON_BOSS_RAGGLESNOUT_INFO,
+                strategy = L.DUNGEON_BOSS_RAGGLESNOUT_STRATEGY,
+                abilities = {
+                    10892,
+                    11659,
+                    12039,
+                    7645,
+                },
                 loot = {
                     10768,
                     10767,
@@ -1045,14 +1725,30 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Glutton",
+                name = L.DUNGEON_BOSS_GLUTTON,
+                npcID = 8567,
+                info = L.DUNGEON_BOSS_GLUTTON_INFO,
+                strategy = L.DUNGEON_BOSS_GLUTTON_STRATEGY,
+                abilities = {
+                    12627,
+                    12795,
+                },
                 loot = {
                     10774,
                     10772,
                 },
             },
             {
-                name = "Amnennar the Coldbringer",
+                name = L.DUNGEON_BOSS_AMNENNAR_THE_COLDBRINGER,
+                npcID = 7358,
+                info = L.DUNGEON_BOSS_AMNENNAR_THE_COLDBRINGER_INFO,
+                strategy = L.DUNGEON_BOSS_AMNENNAR_THE_COLDBRINGER_STRATEGY,
+                abilities = {
+                    13009,
+                    15531,
+                    15530,
+                    12642,
+                },
                 loot = {
                     10763,
                     10762,
@@ -1062,7 +1758,13 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Trash",
+                name = L.DUNGEON_TRASH,
+                npcID = false,
+                info = "",
+                strategy = "",
+                abilities = {
+
+                },
                 loot = {
                     10574,
                     10581,
@@ -1078,7 +1780,7 @@ addon.dungeons = {
                 },
             },
         },
-        history = "Crafted from the same mighty vines as Razorfen Kraul, Razorfen Downs is the traditional capital city of the quillboar race. The sprawling, thorn-ridden labyrinth houses a veritable army of loyal quillboar as well as their high priests - the Death's Head tribe. Recently, however, a looming shadow has fallen over the crude den. Agents of the undead Scourge - led by the lich, Amnennar the Coldbringer - have taken control over the quillboar race and turned the maze of thorns into a bastion of undead might. Now the quillboar fight a desperate battle to reclaim their beloved city before Amnennar spreads his control across the Barrens.",
+        history = L.DUNGEON_HISTORY_RAZORFEN_DOWNS,
     },
     {
         name = "Uldaman",
@@ -1090,29 +1792,69 @@ addon.dungeons = {
             minLevel = 42,
             maxLevel = 52,
         },
+        notes = {
+
+        },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Uldaman1",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Uldaman2",
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Uldaman1",
+                poi ={
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Uldaman2",
+                poi ={
+
+                },
+            },
+        },
+        quests = {
+            1360,
+            722,
+            2240,
+            17,
+            704,
+            1139,
+            2204,
+            2342,
+            2202,
+            2341,
+            709,
+            2278,
+            2418,
+            1956,
         },
         bosses = {
             {
-                name = "Baelog",
+                name = L.DUNGEON_BOSS_THE_LOST_DWARVES,
+                npcID = {6906,6907,6908}, --THE_LOST_DWARVES, eric, olaf
+                info = L.DUNGEON_BOSS_THE_LOST_DWARVES_INFO,
+                strategy = L.DUNGEON_BOSS_THE_LOST_DWARVES_STRATEGY,
+                abilities = {
+                    20252,
+                    8242,
+                },
                 loot = {
                     9401,
                     9399,
                     9400,
-                },
-            },
-            {
-                name = "Olaf",
-                loot = {
+                    9394,
+                    9398,
                     9404,
                     9403,
-                    1177,
+                    7740,
                 },
             },
             {
-                name = "Revelosh",
+                name = L.DUNGEON_BOSS_REVELOSH,
+                npcID = 6910,
+                info = L.DUNGEON_BOSS_REVELOSH_INFO,
+                strategy = L.DUNGEON_BOSS_REVELOSH_STRATEGY,
+                abilities = {
+                    16033,
+                    9532,
+                },
                 loot = {
                     9389,
                     9388,
@@ -1122,7 +1864,15 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Ironaya",
+                name = L.DUNGEON_BOSS_IRONAYA,
+                npcID = 7228,
+                info = L.DUNGEON_BOSS_IRONAYA_INFO,
+                strategy = L.DUNGEON_BOSS_IRONAYA_STRATEGY,
+                abilities = {
+                    8374,
+                    45,
+                    18670,
+                },
                 loot = {
                     9409,
                     9407,
@@ -1130,20 +1880,42 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Obsidian Sentinel",
+                name = L.DUNGEON_BOSS_OBSIDIAN_SENTINEL,
+                npcID = 7023,
+                info = L.DUNGEON_BOSS_OBSIDIAN_SENTINEL_INFO,
+                strategy = L.DUNGEON_BOSS_OBSIDIAN_SENTINEL_STRATEGY,
+                abilities = {
+                    10072,
+                    10061,
+                },
                 loot = {
                     8053,
                 },
             },
             {
-                name = "Ancient Stone Keeper",
+                name = L.DUNGEON_BOSS_ANCIENT_STONE_KEEPER,
+                npcID = 7206,
+                info = L.DUNGEON_BOSS_ANCIENT_STONE_KEEPER_INFO,
+                strategy = L.DUNGEON_BOSS_ANCIENT_STONE_KEEPER_STRATEGY,
+                abilities = {
+                    10094,
+                },
                 loot = {
                     9410,
                     9411,
                 },
             },
             {
-                name = "Galgann Firehammer",
+                name = L.DUNGEON_BOSS_GALGANN_FIREHAMMER,
+                npcID = 7291,
+                info = L.DUNGEON_BOSS_GALGANN_FIREHAMMER_INFO,
+                strategy = L.DUNGEON_BOSS_GALGANN_FIREHAMMER_STRATEGY,
+                abilities = {
+                    15039,
+                    9482,
+                    3356,
+                    11970,
+                },
                 loot = {
                     11310,
                     9412,
@@ -1152,7 +1924,16 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Grimlok",
+                name = L.DUNGEON_BOSS_GRIMLOK,
+                npcID = 4854,
+                info = L.DUNGEON_BOSS_GRIMLOK_INFO,
+                strategy = L.DUNGEON_BOSS_GRIMLOK_STRATEGY,
+                abilities = {
+                    7289,
+                    9532,
+                    8292,
+                    6742
+                },
                 loot = {
                     9415,
                     9416,
@@ -1161,7 +1942,14 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Archaedas",
+                name = L.DUNGEON_BOSS_ARCHAEDAS,
+                npcID = 2748,
+                info = L.DUNGEON_BOSS_ARCHAEDAS_INFO,
+                strategy = L.DUNGEON_BOSS_ARCHAEDAS_STRATEGY,
+                abilities = {
+                    6524,10252,
+                    10258,
+                },
                 loot = {
                     11118,
                     9413,
@@ -1169,7 +1957,13 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Trash",
+                name = L.DUNGEON_TRASH,
+                npcID = false,
+                info = "",
+                strategy = "",
+                abilities = {
+
+                },
                 loot = {
                     9431,
                     9429,
@@ -1202,7 +1996,7 @@ addon.dungeons = {
                 },
             },
         },
-        history = "Uldaman is an ancient Titan vault that has laid buried deep within the earth since the world's creation. Dwarven excavations have recently penetrated this forgotten city, releasing the Titans' first failed creations: the Troggs. Legends say that the Titans created troggs from stone. When they deemed the experiment a failure, the Titans locked the troggs away and tried again - resulting in the creation of the dwarven race. The secrets of the dwarves' creation are recorded on the fabled Discs of Norgannon - massive Titan artifacts that lie at the very bottom of the ancient city. Recently, the Dark Iron dwarves have launched a series of incursions into Uldaman, hoping to claim the discs for their fiery master, Ragnaros. However, protecting the buried city are several guardians - giant constructs of living stone that crush any hapless intruders they find. The Discs themselves are guarded by a massive, sapient Stonekeeper called Archaedas. Some rumors even suggest that the dwarves' stone-skinned ancestors, the earthen, still dwell deep within the city's hidden recesses.",
+        history = L.DUNGEON_HISTORY_ULDAMAN,
     },
     {
         name = "Maraudon",
@@ -1214,16 +2008,59 @@ addon.dungeons = {
             minLevel = 42,
             maxLevel = 52,
         },
+        notes = {
+
+        },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonOrange",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonPurple",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon1",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon2",
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonOrange",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/MaraudonPurple",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon1",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Maraudon2",
+                poi = {
+
+                },
+            },
+        },
+        quests = {
+            7070,
+            7041,
+            7065,
+            7068,
+            7029,
+            7064,
+            7066,
+            7028,
+            7067,
+            7044,
+            7046,
         },
         bosses = {
             --Orange
             {
-                name = "Noxxion",
+                name = L.DUNGEON_BOSS_NOXXION,
+                npcID = 13282,
+                info = L.DUNGEON_BOSS_NOXXION_INFO,
+                strategy = L.DUNGEON_BOSS_NOXXION_STRATEGY,
+                abilities = {
+                    21687,
+                    18072,
+                },
                 loot = {
                     17746,
                     17744,
@@ -1231,7 +2068,14 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Razorlash",
+                name = L.DUNGEON_BOSS_RAZORLASH,
+                npcID = 12258,
+                info = L.DUNGEON_BOSS_RAZORLASH_INFO,
+                strategy = L.DUNGEON_BOSS_RAZORLASH_STRATEGY,
+                abilities = {
+                    15284,
+                    15976,
+                },
                 loot = {
                     17749,
                     17748,
@@ -1242,7 +2086,15 @@ addon.dungeons = {
 
             --Purple
             {
-                name = "Lord Vyletongue",
+                name = L.DUNGEON_BOSS_LORD_VYLETONGUE,
+                npcID = 12236,
+                info = L.DUNGEON_BOSS_LORD_VYLETONGUE_INFO,
+                strategy = L.DUNGEON_BOSS_LORD_VYLETONGUE_STRATEGY,
+                abilities = {
+                    14443,
+                    7964,
+                    1953,
+                },
                 loot = {
                     17755,
                     17754,
@@ -1252,7 +2104,32 @@ addon.dungeons = {
 
             --Poison Falls
             {
-                name = "Celebras the Cursed",
+                name = L.DUNGEON_BOSS_MESHLOK_THE_HARVESTER,
+                npcID = 12225,
+                info = L.DUNGEON_BOSS_MESHLOK_THE_HARVESTER_INFO,
+                strategy = L.DUNGEON_BOSS_MESHLOK_THE_HARVESTER_STRATEGY,
+                abilities = {
+                    11876,
+                    15501,
+                    13446,
+                },
+                loot = {
+                    17740,
+                    17739,
+                    17738,
+                },
+            },
+            {
+                name = L.DUNGEON_BOSS_CELEBRAS_THE_CURSED,
+                npcID = 12225,
+                info = L.DUNGEON_BOSS_CELEBRAS_THE_CURSED_INFO,
+                strategy = L.DUNGEON_BOSS_CELEBRAS_THE_CURSED_STRATEGY,
+                abilities = {
+                    9739,
+                    6913,
+                    12747,
+                    21793,
+                },
                 loot = {
                     17740,
                     17739,
@@ -1262,7 +2139,14 @@ addon.dungeons = {
 
             --Inner
             {
-                name = "Landslide",
+                name = L.DUNGEON_BOSS_LANDSLIDE,
+                npcID = 12203,
+                info = L.DUNGEON_BOSS_LANDSLIDE_INFO,
+                strategy = L.DUNGEON_BOSS_LANDSLIDE_STRATEGY,
+                abilities = {
+                    5568,
+                    10101,
+                },
                 loot = {
                     17734,
                     17736,
@@ -1271,7 +2155,15 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Tinkerer Gizlock",
+                name = L.DUNGEON_BOSS_TINKERER_GIZLOCK,
+                npcID = 13601,
+                info = L.DUNGEON_BOSS_TINKERER_GIZLOCK_INFO,
+                strategy = L.DUNGEON_BOSS_TINKERER_GIZLOCK_STRATEGY,
+                abilities = {
+                    13183,
+                    6660,
+                    8858,
+                },
                 loot = {
                     17718,
                     17718,
@@ -1279,7 +2171,14 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Rotgrip",
+                name = L.DUNGEON_BOSS_ROTGRIP,
+                npcID = 13596,
+                info = L.DUNGEON_BOSS_ROTGRIP_INFO,
+                strategy = L.DUNGEON_BOSS_ROTGRIP_STRATEGY,
+                abilities = {
+                    15976,
+                    16495,
+                },
                 loot = {
                     17732,
                     17728,
@@ -1287,7 +2186,15 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Princess Theradras",
+                name = L.DUNGEON_BOSS_PRINCESS_THERADRAS,
+                npcID = 12201,
+                info = L.DUNGEON_BOSS_PRINCESS_THERADRAS_INFO,
+                strategy = L.DUNGEON_BOSS_PRINCESS_THERADRAS_STRATEGY,
+                abilities = {
+                    21868,
+                    21869,
+                    9483,
+                },
                 loot = {
                     17780,
                     17715,
@@ -1299,44 +2206,76 @@ addon.dungeons = {
                     17766,
                 },
             },
+            --[[ this quest info will get moved to the quest section
             {
                 name = "Veng",
+                info = L.DUNGEON_BOSS_NOXXION_INFO,
+                strategy = L.DUNGEON_BOSS_NOXXION_STRATEGY,
+                abilities = {
+
+                },
                 loot = {
                     17765,
                 },
             },
             {
                 name = "Maraudos",
+                info = L.DUNGEON_BOSS_NOXXION_INFO,
+                strategy = L.DUNGEON_BOSS_NOXXION_STRATEGY,
+                abilities = {
+
+                },
                 loot = {
                     17764,
                 },
             },
             {
                 name = "Kolk",
+                info = L.DUNGEON_BOSS_NOXXION_INFO,
+                strategy = L.DUNGEON_BOSS_NOXXION_STRATEGY,
+                abilities = {
+
+                },
                 loot = {
                     17761,
                 },
             },
             {
                 name = "Gelk",
+                info = L.DUNGEON_BOSS_NOXXION_INFO,
+                strategy = L.DUNGEON_BOSS_NOXXION_STRATEGY,
+                abilities = {
+
+                },
                 loot = {
                     17762,
                 },
             },
             {
                 name = "Magra",
+                info = L.DUNGEON_BOSS_NOXXION_INFO,
+                strategy = L.DUNGEON_BOSS_NOXXION_STRATEGY,
+                abilities = {
+
+                },
                 loot = {
                     17763,
                 },
             },
             {
                 name = "The Nameless Prophet",
+                info = L.DUNGEON_BOSS_NOXXION_INFO,
+                strategy = L.DUNGEON_BOSS_NOXXION_STRATEGY,
+                abilities = {
+
+                },
                 loot = {
                     17757,
                 },
             },
+            ]]
         },
-        history = "Protected by the fierce Maraudine centaur, Maraudon is one of the most sacred sites within Desolace. The great temple/cavern is the burial place of Zaetar, one of two immortal sons born to the demigod, Cenarius. Legend holds that Zaetar and the earth elemental princess, Theradras, sired the misbegotten centaur race. It is said that upon their emergence, the barbaric centaur turned on their father and killed him. Some believe that Theradras, in her grief, trapped Zaetar's spirit within the winding cavern - used its energies for some malign purpose. The subterranean tunnels are populated by the vicious, long-dead ghosts of the Centaur Khans, as well as Theradras' own raging, elemental minions.",
+        history = L.DUNGEON_HISTORY_MARAUDON,
     },
     {
         name = "Zul'Farrak",
@@ -1348,12 +2287,39 @@ addon.dungeons = {
             minLevel = 44,
             maxLevel = 54,
         },
+        notes = {
+
+        },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ZulFarrak",
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/ZulFarrak",
+                poi = {
+
+                },
+            },
+        },
+        quests = {
+            2991,
+            2936,
+            3042,
+            2865,
+            2846,
+            3527,
+            2768,
+            2770,
         },
         bosses = {
             {
-                name = "Antu'sul",
+                name = L.DUNGEON_BOSS_ANTUSUL,
+                npcID = 8127,
+                info = L.DUNGEON_BOSS_ANTUSUL_INFO,
+                strategy = L.DUNGEON_BOSS_ANTUSUL_STRATEGY,
+                abilities = {
+                    8376,
+                    11899,
+                    11894,
+                    11895,
+                },
                 loot = {
                     9640,
                     9641,
@@ -1362,33 +2328,60 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Theka the Martyr",
+                name = L.DUNGEON_BOSS_THEKA_THE_MARTYR,
+                npcID = 7272,
+                info = L.DUNGEON_BOSS_THEKA_THE_MARTYR_INFO,
+                strategy = L.DUNGEON_BOSS_THEKA_THE_MARTYR_STRATEGY,
+                abilities = {
+                    8600,
+                    11089,
+
+                },
                 loot = {
                     10660,
                 },
             },
             {
-                name = "Sandarr Dunereaver",
+                name = L.DUNGEON_BOSS_SANDARR_DUNEREAVER,
+                npcID = 10080,
+                info = L.DUNGEON_BOSS_SANDARR_DUNEREAVER_INFO,
+                strategy = L.DUNGEON_BOSS_SANDARR_DUNEREAVER_STRATEGY,
+                abilities = {
+
+                },
                 loot = {
                     9523,
                 },
             },
             {
-                name = "Witch Doctor Zum'rah",
+                name = L.DUNGEON_BOSS_WITCH_DOCTOR_ZUMRAH,
+                npcID = 7271,
+                info = L.DUNGEON_BOSS_WITCH_DOCTOR_ZUMRAH_INFO,
+                strategy = L.DUNGEON_BOSS_WITCH_DOCTOR_ZUMRAH_STRATEGY,
+                abilities = {
+                    12491,
+                    12739,
+                    15245,
+                    11086,
+                },
                 loot = {
                     18083,
                     18082,
                 },
             },
             {
-                name = "Nekrum Gutchewer",
+                name = L.DUNGEON_BOSS_ZF_STAIRS_EVENT,
+                npcID = {7796, 7275,},
+                info = L.DUNGEON_BOSS_ZF_STAIRS_EVENT_INFO,
+                strategy = L.DUNGEON_BOSS_ZF_STAIRS_EVENT_STRATEGY,
+                abilities = {
+                    12039,
+                    13704,
+                    8362,
+                    15537,
+                },
                 loot = {
                     9471,
-                },
-            },
-            {
-                name = "Shadowpriest Sezz'ziz",
-                loot = {
                     9470,
                     9473,
                     9474,
@@ -1396,39 +2389,71 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Dustwraith",
+                name = L.DUNGEON_BOSS_DUSTWRAITH,
+                npcID = 10081,
+                info = L.DUNGEON_BOSS_DUSTWRAITH_INFO,
+                strategy = L.DUNGEON_BOSS_DUSTWRAITH_STRATEGY,
+                abilities = {
+
+                },
                 loot = {
                     12471,
                 },
             },
             {
-                name = "Sandfury Executioner",
-                loot = {
-                    8444,
+                name = L.DUNGEON_BOSS_SERGEANT_BLY,
+                npcID = 7604,
+                info = L.DUNGEON_BOSS_SERGEANT_BLY_INFO,
+                strategy = L.DUNGEON_BOSS_SERGEANT_BLY_STRATEGY,
+                abilities = {
+                    12170,
+                    11972,
                 },
-            },
-            {
-                name = "Sergeant Bly",
                 loot = {
                     8548,
                 },
             },
             {
-                name = "Hydromancer Velratha",
+                name = L.DUNGEON_BOSS_HYDROMANCER_VELRATHA,
+                npcID = 7795,
+                info = L.DUNGEON_BOSS_HYDROMANCER_VELRATHA_INFO,
+                strategy = L.DUNGEON_BOSS_HYDROMANCER_VELRATHA_STRATEGY,
+                abilities = {
+                    12491,
+                    12739,
+                    15245,
+                    11086,
+                },
                 loot = {
                     9234,
                     10661,
                 },
             },
             {
-                name = "Gahz'rilla",
+                name = L.DUNGEON_BOSS_GAHZRILLA,
+                npcID = 7273,
+                info = L.DUNGEON_BOSS_GAHZRILLA_INFO,
+                strategy = L.DUNGEON_BOSS_GAHZRILLA_STRATEGY,
+                abilities = {
+                    11836,
+                    11902,
+                    11131,
+                },
                 loot = {
                     9469,
                     9467,
                 },
             },
             {
-                name = "Chief Ukorz Sandscalp",
+                name = L.DUNGEON_BOSS_CHIEF_UKORZ_SANDSCALP,
+                npcID = 7267,
+                info = L.DUNGEON_BOSS_CHIEF_UKORZ_SANDSCALP_INFO,
+                strategy = L.DUNGEON_BOSS_CHIEF_UKORZ_SANDSCALP_STRATEGY,
+                abilities = {
+                    11837,
+                    15496,
+                    7366,
+                },
                 loot = {
                     9479,
                     9476,
@@ -1438,13 +2463,27 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Zerillis",
+                name = L.DUNGEON_BOSS_ZERILLIS,
+                npcID = 10082,
+                info = L.DUNGEON_BOSS_ZERILLIS_INFO,
+                strategy = L.DUNGEON_BOSS_ZERILLIS_STRATEGY,
+                abilities = {
+                    12551,
+                    6533,
+                    15547,
+                },
                 loot = {
                     12470,
                 },
             },
             {
-                name = "Trash",
+                name = L.DUNGEON_TRASH,
+                npcID = false,
+                info = "",
+                strategy = "",
+                abilities = {
+
+                },
                 loot = {
                     9512,
                     9484,
@@ -1461,7 +2500,7 @@ addon.dungeons = {
                 },
             },
         },
-        history = "",
+        history = L.DUNGEON_HISTORY_ZULFARRACK,
     },
     {
         name = "Sunken Temple",
@@ -1473,15 +2512,49 @@ addon.dungeons = {
             minLevel = 50,
             maxLevel = 60,
         },
+        notes = {
+
+        },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/TheTempleOfAtalHakkar",
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/TheTempleOfAtalHakkar",
+                poi = {
+
+                },
+            },
+        },
+        quests = {
+            1475,
+            4143,
+            3380,
+            1445,
+            4146,
+            3446,
+            3447,
+            1446,
+            3373,
+            3528,
         },
         --[[
             Shade of Eranikus
         ]]
         bosses = {
             {
-                name = "Atal'ai Defenders", --balcony bosses
+                name = L.DUNGEON_BOSS_ATALAI_DEFENDERS, --balcony bosses
+                npcID = {8127},
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    12782,
+                    118,
+                    8179,
+                    2860,
+                    12530,
+                    11660,
+                    697,
+                    688,
+                    712,
+                },
                 loot = {
                     10783,
                     10784,
@@ -1495,7 +2568,13 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Atal'alarion",
+                name = L.DUNGEON_BOSS_ATALALARION,
+                npcID = 8580,
+                info = L.DUNGEON_BOSS_ATALALARION_INFO,
+                strategy = L.DUNGEON_BOSS_ATALALARION_STRATEGY,
+                abilities = {
+                    12887,
+                },
                 loot = {
                     10800,
                     10798,
@@ -1503,7 +2582,14 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Dreamscythe",
+                name = L.DUNGEON_BOSS_DREAMSCYTHE,
+                npcID = 5721,
+                info = L.DUNGEON_BOSS_DREAMSCYTHE_INFO,
+                strategy = L.DUNGEON_BOSS_DREAMSCYTHE_STRATEGY,
+                abilities = {
+                    12533,
+                    12882,
+                },
                 loot = {
                     12465,
                     12466,
@@ -1516,7 +2602,14 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Weaver",
+                name = L.DUNGEON_BOSS_WEAVER,
+                npcID = 5720,
+                info = L.DUNGEON_BOSS_WEAVER_INFO,
+                strategy = L.DUNGEON_BOSS_WEAVER_STRATEGY,
+                abilities = {
+                    12533,
+                    12882,
+                },
                 loot = {
                     12465,
                     12466,
@@ -1529,7 +2622,15 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Jammal'an the Prophet",
+                name = L.DUNGEON_BOSS_JAMMALAN_THE_PROPHET,
+                npcID = 5710,
+                info = L.DUNGEON_BOSS_JAMMALAN_THE_PROPHET_INFO,
+                strategy = L.DUNGEON_BOSS_JAMMALAN_THE_PROPHET_STRATEGY,
+                abilities = {
+                    8505,
+                    10395,
+                    20296,
+                },
                 loot = {
                     10806,
                     10807,
@@ -1537,7 +2638,15 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Ogom the Wretched",
+                name = L.DUNGEON_BOSS_OGOM_THE_WRETCHED,
+                npcID = 5711,
+                info = L.DUNGEON_BOSS_OGOM_THE_WRETCHED_INFO,
+                strategy = L.DUNGEON_BOSS_OGOM_THE_WRETCHED_STRATEGY,
+                abilities = {
+                    11660,
+                    13952,
+                    11708,
+                },
                 loot = {
                     10805,
                     10803,
@@ -1545,7 +2654,14 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Morphaz",
+                name = L.DUNGEON_BOSS_MORPHAZ,
+                npcID = 5719,
+                info = L.DUNGEON_BOSS_MORPHAZ_INFO,
+                strategy = L.DUNGEON_BOSS_MORPHAZ_STRATEGY,
+                abilities = {
+                    12533,
+                    12882,
+                },
                 loot = {
                     12465,
                     12466,
@@ -1558,7 +2674,14 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Hazzas",
+                name = L.DUNGEON_BOSS_HAZZAS,
+                npcID = 5722,
+                info = L.DUNGEON_BOSS_HAZZAS_INFO,
+                strategy = L.DUNGEON_BOSS_HAZZAS_STRATEGY,
+                abilities = {
+                    12533,
+                    12882,
+                },
                 loot = {
                     12465,
                     12466,
@@ -1571,7 +2694,16 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Avatar of Hakkar",
+                name = L.DUNGEON_BOSS_AVATAR_OF_HAKKAR,
+                npcID = 8443,
+                info = L.DUNGEON_BOSS_AVATAR_OF_HAKKAR_INFO,
+                strategy = L.DUNGEON_BOSS_AVATAR_OF_HAKKAR_STRATEGY,
+                abilities = {
+                    12888,
+                    12889,
+                    25852,
+                    10896,
+                },
                 loot = {
                     12462,
                     10843,
@@ -1583,7 +2715,16 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Shade of Eranikus",
+                name = L.DUNGEON_BOSS_SHADE_OF_ERANIKUS,
+                npcID = 5709,
+                info = L.DUNGEON_BOSS_SHADE_OF_ERANIKUS_INFO,
+                strategy = L.DUNGEON_BOSS_SHADE_OF_ERANIKUS_STRATEGY,
+                abilities = {
+                    16740,
+                    12890,
+                    3391,
+                    12533,
+                },
                 loot = {
                     10847,
                     10833,
@@ -1596,7 +2737,13 @@ addon.dungeons = {
                 },
             },
             {
-                name = "Trash",
+                name = L.DUNGEON_TRASH,
+                npcID = false,
+                info = "",
+                strategy = "",
+                abilities = {
+
+                },
                 loot = {
                     10630,
                     10632,
@@ -1618,7 +2765,7 @@ addon.dungeons = {
                 },
             },
         },
-        history = "Over a thousand years ago, the powerful Gurubashi Empire was torn apart by a massive civil war. An influential group of troll priests, known as the Atal'ai, attempted to bring back an ancient blood god named Hakkar the Soulflayer. Though the priests were defeated and ultimately exiled, the great troll empire buckled in upon itself. The exiled priests fled far to the north, into the Swamp of Sorrows. There they erected a great temple to Hakkar - where they could prepare for his arrival into the physical world. The great dragon Aspect, Ysera, learned of the Atal'ai's plans and smashed the temple beneath the marshes. To this day, the temple's drowned ruins are guarded by the green dragons who prevent anyone from getting in or out. However, it is believed that some of the fanatical Atal'ai may have survived Ysera's wrath - and recommitted themselves to the dark service of Hakkar.",
+        history = L.DUNGEON_HISTORY_SUNKEN_TEMPLE,
     },
     {
         name = "Blackrock Depths",
@@ -1630,139 +2777,563 @@ addon.dungeons = {
             minLevel = 52,
             maxLevel = 60,
         },
+        notes = {
+
+        },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/BlackrockDepths1",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/BlackrockDepths2",
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/BlackrockDepths1",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/BlackrockDepths2",
+                poi = {
+
+                },
+            },
+        },
+        quests = {
+            4081,
+            4082,
+            3907,
+            7201,
+            3981,
+            4263,
+            4286,
+            4341,
+            4024,
+            4123,
+            3801,
+
+            --ony attune
+            4242,
+            4282,
+            4322,
         },
         bosses = {
             {
                 name = "Lord Roccor",
+                npcID = 9025,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    13728,
+                    13729,
+                },
                 loot = {
-
+                    22397,
+                    22234,
+                    11631,
+                    11632,
+                    11630,
+                    11813,
                 },
             },
             {
                 name = "Bael'Gar",
+                npcID = 9016,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    13895,
+                    13880,
+                },
                 loot = {
-
+                    11802,
+                    11803,
+                    11805,
+                    11807,
                 },
             },
             {
                 name = "Houndmaster Grebmar",
+                npcID = 9319,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    21049,
+                    13730,
+                    15615,
+                },
                 loot = {
-
+                    11623,
+                    11629,
+                    11628,
+                    11627,
                 },
             },
             {
                 name = "High Interrogator Gerstahn",
+                npcID = 9018,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    14032,
+                    14033,
+                    13704,
+                    12040,
+                },
                 loot = {
+                    22240,
+                    11626,
+                    11625,
+                    11624,
+                },
+            },
 
+
+            --[[
+                ring of law event
+            ]]
+            {
+                name = "gorosh",
+                npcID = 9027,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    15589,
+                    15708,
+                    21049,
+                },
+                loot = {
+                    11726,
+                    22271,
+                    22266,
+                    22257,
                 },
             },
             {
+                name = "grizzle",
+                npcID = 9028,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    6524,
+                    8269,
+                },
+                loot = {
+                    22270,
+                    11722,
+                    11703,
+                    11702,
+                    11610,
+                },
+            },
+            {
+                name = "evis",
+                npcID = 9029,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    7121,
+                    28599,
+                    16095,
+                },
+                loot = {
+                    11730,
+                    11679,
+                    11685,
+                    11686,
+                },
+            },
+            {
+                name = "okthor",
+                npcID = 9030,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    14621,
+                    26192,
+                    25055,
+                    13747,
+                },
+                loot = {
+                    11728,
+                    11662,
+                    11665,
+                    11824,
+                },
+            },
+            {
+                name = "anub",
+                npcID = 9031,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    15472,
+                    15470,
+                    12493,
+                    13787,
+                    15471,
+                },
+                loot = {
+                    11731,
+                    11675,
+                    11677,
+                    11678,
+                },
+            },
+            {
+                name = "hedrum",
+                npcID = 9032,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    15475,
+                    3609,
+                    15474,
+                },
+                loot = {
+                    11729,
+                    11633,
+                    11634,
+                    11635,
+                },
+            },
+            {
+                name = "theldran",
+                npcID = 16059,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+
+                },
+                loot = {
+                    22305,
+                    22317,
+                    22318,
+                    22330,
+                },
+            },
+
+
+
+
+            {
                 name = "High Justice Grimstone",
+                npcID = 10096,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+
+                },
                 loot = {
 
                 },
             },
             {
                 name = "Pyromancer Loregrain",
+                npcID = 9024,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    15038,
+                    15095,
+                    15616,
+                    15041,
+                },
                 loot = {
-
+                    11750,
+                    11749,
+                    11748,
+                    11747,
+                    11207,
                 },
             },
             {
                 name = "General Angerforge",
+                npcID = 9033,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    15572,
+                },
                 loot = {
-
+                    11816,
+                    11817,
+                    11820,
+                    11821,
+                    11810,
                 },
             },
             {
                 name = "Golem Lord Argelmach",
+                npcID = 8983,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    15305,
+                    15507,
+                    15605,
+                },
                 loot = {
-
+                    11669,
+                    11819,
+                    11822,
+                    11823,
                 },
             },
             {
                 name = "Ribbly Screwspigot",
-                loot = {
+                npcID = 9543,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
 
+                },
+                loot = {
+                    11612,
+                    11742,
+                    2663,
+                    2662,
                 },
             },
             {
                 name = "Hurley Blackbreath",
-                loot = {
+                npcID = 9537,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
 
+                },
+                loot = {
+                    22275,
+                    18044,
+                    18043,
                 },
             },
             {
                 name = "Plugger Spazzring",
-                loot = {
+                npcID = 9499,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
 
+                },
+                loot = {
+                    18653,
+                    12791,
+                    12793,
                 },
             },
             {
                 name = "Phalanx",
+                npcID = 9502,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    15588,
+                    14099,
+                    15285,
+                },
                 loot = {
-
+                    22212,
+                    11744,
+                    11745,
+                    11743,
                 },
             },
             {
                 name = "Lord Incendius",
+                npcID = 9017,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    26977,
+                    13900,
+                    13899,
+                    14099,
+                },
                 loot = {
-
+                    11764,
+                    11765,
+                    11766,
+                    11767,
                 },
             },
             {
                 name = "Fineous Darkvire",
+                npcID = 9056,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    8258,
+                    15493,
+                    13953,
+                    11978,
+                    15346,
+                },
                 loot = {
-
+                    22223,
+                    11839,
+                    11841,
+                    11842,
+                    11840,
                 },
             },
             {
                 name = "Warder Stilgiss & Verek",
+                npcID = {9041,9042},
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    12675,
+                    15044,
+                    12674,
+                    12556
+                },
                 loot = {
-
+                    22241,
+                    11784,
+                    11783,
+                    11782,
+                    22242,
+                    11755,
+                    22242,
                 },
             },
             {
                 name = "Dark Coffer",
+                npcID = 160845, --object id not npc
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+
+                },
                 loot = {
 
                 },
             },
             {
                 name = "Ambassador Flamelash",
+                npcID = 9156,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    13489,
+                    14744,
+                },
                 loot = {
-
+                    11808,
+                    11809,
+                    11812,
+                    11814,
+                    11832,
+                },
+            },
+            {
+                name = "panzor",
+                npcID = 8923,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    9941,
+                },
+                loot = {
+                    22245,
+                    11785,
+                    11787,
+                    11786,
                 },
             },
             {
                 name = "Chest of The Seven",
-                loot = {
+                npcID = 169243, --object ID not npc
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
 
+                },
+                loot = {
+                    11920,
+                    11921,
+                    11922,
+                    11923,
+                    11925,
+                    11926,
+                    11927,
+                    11929,
                 },
             },
             {
                 name = "Magmus",
+                npcID = 9938,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    13900,
+                    24375,
+                },
                 loot = {
-
+                    11746,
+                    22400,
+                    22395,
+                    22208,
+                    11935,
                 },
             },
             {
                 name = "Princess Moira Bronzebeard",
+                npcID = 8929,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    15586,
+                    10929,
+                    10901,
+                    15587,
+                    15654,
+                    10934,
+                    15537,
+                    13912,
+                },
                 loot = {
-
+                    12553,
+                    12554,
+                    12556,
+                    12557,
                 },
             },
             {
                 name = "Emperor Dagran Thaurissan",
+                npcID = 9019,
+                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+                abilities = {
+                    17492,
+                    15636,
+                    15642,
+                },
+                loot = {
+                    22204,
+                    22207,
+                    11815,
+                    11684,
+                    11924,
+                    11928,
+                    11932,
+                    11934,
+                    11930,
+                    11933,
+                    11931,
+                },
+            },
+            {
+                name = L.DUNGEON_TRASH,
+                npcID = false,
+                info = "",
+                strategy = "",
+                abilities = {
+
+                },
                 loot = {
 
                 },
             },
         },
-        history = "Once the capital city of the Dark Iron dwarves, this volcanic labyrinth now serves as the seat of power for Ragnaros the Firelord. Ragnaros has uncovered the secret to creating life from stone and plans to build an army of unstoppable golems to aid him in conquering the whole of Blackrock Mountain. Obsessed with defeating Nefarian and his draconic minions, Ragnaros will go to any extreme to achieve final victory.",
+        history = L.DUNGEON_HISTORY_BLACKROCK_DEPTHS,
     },
     {
         name = "Lower Blackrock Spire",
