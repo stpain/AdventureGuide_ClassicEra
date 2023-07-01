@@ -4446,129 +4446,445 @@ addon.dungeons = {
             minLevel = 58,
             maxLevel = 60,
         },
+        notes = {
+
+        },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Stratholme1",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Stratholme2",
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Stratholme1",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/Stratholme2",
+                poi = {
+
+                },
+            },
+        },
+        quests = {
+            5848,
+            8945,
+            5122,
+            5213,
+            5263,
+            5463,
+            5125,
+            5262,
+            5251,
+            5214,
+            5282,
+            5212,
+            5243,
+            6163,
+            --6202,
+            8991,
+            8968,
+            --6201,
         },
         bosses = {
             {
-                name = "Fras Siabi",
+                name = L.DUNGEON_BOSS_FRAS_SIABI,
+                npcID = 11058,
+                info = L.DUNGEON_BOSS_FRAS_SIABI_INFO,
+                strategy = L.DUNGEON_BOSS_FRAS_SIABI_STRATEGY,
+                abilities = {
+                    17294,
+                    7964,
+                },
+                loot = {
+                    13172,
+                },
+            },
+            {
+                name = L.DUNGEON_BOSS_SKUL,
+                npcID = 10393,
+                info = L.DUNGEON_BOSS_SKUL_INFO,
+                strategy = L.DUNGEON_BOSS_SKUL_STRATEGY,
+                abilities = {
+                    15230,
+                    15499,
+                    16799,
+                },
                 loot = {
 
                 },
             },
             {
-                name = "Skul",
+                name = L.DUNGEON_BOSS_HEARTHSINGER_FORRESTEN,
+                npcID = 10558,
+                info = L.DUNGEON_BOSS_HEARTHSINGER_FORRESTEN_INFO,
+                strategy = L.DUNGEON_BOSS_HEARTHSINGER_FORRESTEN_STRATEGY,
+                abilities = {
+                    16798,
+                    14443,
+                },
                 loot = {
-
+                    16682,
+                    13384,
+                    13378,
+                    13383,
+                    13379,
+                    12843,
                 },
             },
             {
-                name = "Hearthsinger Forresten",
+                name = L.DUNGEON_BOSS_THE_UNFORGIVEN,
+                npcID = 10516,
+                info = L.DUNGEON_BOSS_THE_UNFORGIVEN_INFO,
+                strategy = L.DUNGEON_BOSS_THE_UNFORGIVEN_STRATEGY,
+                abilities = {
+                    
+                },
                 loot = {
-
+                    13404,
+                    13408,
+                    13409,
+                    13405,
+                    16717,
+                    12843,
                 },
             },
             {
-                name = "The Unforgiven",
+                name = L.DUNGEON_BOSS_POSTMASTER_MALOWN,
+                npcID = 11143,
+                info = L.DUNGEON_BOSS_POSTMASTER_MALOWN_INFO,
+                strategy = L.DUNGEON_BOSS_POSTMASTER_MALOWN_STRATEGY,
+                abilities = {
+                    6253,
+                    13338,
+                    12741,
+                    12542,
+                },
                 loot = {
-
+                    13393,
+                    13390,
+                    13392,
+                    13391,
+                    13389,
+                    13388,
+                    12843,
                 },
             },
             {
-                name = "Postmaster Malown",
+                name = L.DUNGEON_BOSS_TIMMY_THE_CRUEL,
+                npcID = 10808,
+                info = L.DUNGEON_BOSS_TIMMY_THE_CRUEL_INFO,
+                strategy = L.DUNGEON_BOSS_TIMMY_THE_CRUEL_STRATEGY,
+                abilities = {
+                    17470,
+                    8599,
+                },
                 loot = {
-
+                    13403,
+                    16724,
+                    13401,
+                    13402,
+                    13400,
+                    12843,
                 },
             },
             {
-                name = "Timmy the Cruel",
+                name = L.DUNGEON_BOSS_MALOR_THE_ZEALOUS,
+                npcID = 11032,
+                info = L.DUNGEON_BOSS_MALOR_THE_ZEALOUS_INFO,
+                strategy = L.DUNGEON_BOSS_MALOR_THE_ZEALOUS_STRATEGY,
+                abilities = {
+                    17233,
+                },
                 loot = {
-
+                    12845,
                 },
             },
             {
-                name = "Malor the Zealous",
+                name = L.DUNGEON_BOSS_CANNON_MASTER_WILLEY,
+                npcID = 10997,
+                info = L.DUNGEON_BOSS_CANNON_MASTER_WILLEY_INFO,
+                strategy = L.DUNGEON_BOSS_CANNON_MASTER_WILLEY_STRATEGY,
+                abilities = {
+                    
+                },
                 loot = {
-
+                    22405,
+                    22407,
+                    22403,
+                    22404,
+                    22406,
+                    18721,
+                    13382,
+                    13381,
+                    13377,
+                    12839,
+                    16708,
+                    13380,
                 },
             },
             {
-                name = "Cannon Master Willey",
+                name = L.DUNGEON_BOSS_CRIMSON_HAMMERSMITH,
+                npcID = 11120,
+                info = L.DUNGEON_BOSS_CRIMSON_HAMMERSMITH_INFO,
+                strategy = L.DUNGEON_BOSS_CRIMSON_HAMMERSMITH_STRATEGY,
+                abilities = {
+                    
+                },
                 loot = {
-
+                    18781,
+                    13351,
                 },
             },
             {
-                name = "Crimson Hammersmith",
+                name = L.DUNGEON_BOSS_ARCHIVIST_GALFORD,
+                npcID = 10811,
+                info = L.DUNGEON_BOSS_ARCHIVIST_GALFORD_INFO,
+                strategy = L.DUNGEON_BOSS_ARCHIVIST_GALFORD_STRATEGY,
+                abilities = {
+                    17293,
+                    17366,
+                },
                 loot = {
-
+                    13386,
+                    18716,
+                    16692,
+                    13385,
+                    13387,
+                    12811,
                 },
             },
             {
-                name = "Archivist Galford",
+                name = L.DUNGEON_BOSS_BALNAZZAR,
+                npcID = 10813,
+                info = L.DUNGEON_BOSS_BALNAZZAR_INFO,
+                strategy = L.DUNGEON_BOSS_BALNAZZAR_STRATEGY,
+                abilities = {
+                    17405,
+                    13704,
+                    15587,
+                    17399,
+                    15970,
+                },
                 loot = {
-
+                    22334,
+                    13348,
+                    13369,
+                    13359,
+                    13360,
+                    12103,
+                    13358,
+                    16725,
+                    18717,
+                    18718,
+                    18720,
+                    22334,
+                    13353,
+                    14512,
+                    13520,
                 },
             },
             {
-                name = "Balnazzar",
-                loot = {
+                name = L.DUNGEON_BOSS_JARIEN_SOTHOS,
+                npcID = {16101,16102},
+                info = L.DUNGEON_BOSS_JARIEN_SOTHOS_INFO,
+                strategy = L.DUNGEON_BOSS_JARIEN_SOTHOS_STRATEGY,
+                abilities = {
 
                 },
+                loot = {
+                    22327,
+                    22334,
+                    22301,
+                    22328,
+                    22329,
+                },
             },
+
             --service gate
-
             {
-                name = "Magistrate Barthilas",
+                name = L.DUNGEON_BOSS_MAGISTRATE_BARTHILAS,
+                npcID = 10435,
+                info = L.DUNGEON_BOSS_MAGISTRATE_BARTHILAS_INFO,
+                strategy = L.DUNGEON_BOSS_MAGISTRATE_BARTHILAS_STRATEGY,
+                abilities = {
+                    16793,
+                    10887,
+                    16791,
+                    14099,
+                },
                 loot = {
-
+                    23198,
+                    12843,
+                    18725,
+                    18726,
+                    18722,
+                    18727,
+                    13376,
+                    12382,
                 },
             },
             {
-                name = "Stonespine",
+                name = L.DUNGEON_BOSS_STONESPINE,
+                npcID = 10809,
+                info = L.DUNGEON_BOSS_STONESPINE_INFO,
+                strategy = L.DUNGEON_BOSS_STONESPINE_STRATEGY,
+                abilities = {
+                    14331,
+                },
                 loot = {
-
+                    12843,
+                    13954,
+                    13397,
+                    13399,
                 },
             },
             {
-                name = "Nerub'enkan",
+                name = L.DUNGEON_BOSS_NERUBENKAN,
+                npcID = 10437,
+                info = L.DUNGEON_BOSS_NERUBENKAN_INFO,
+                strategy = L.DUNGEON_BOSS_NERUBENKAN_STRATEGY,
+                abilities = {
+                    16418,
+                    4962,
+                    6016,
+                    17235,
+                },
                 loot = {
-
+                    12843,
+                    16675,
+                    18738,
+                    18739,
+                    13529,
+                    18740,
+                    13531,
+                    13530,
+                    13532,
+                    13533,
+                    13508,
                 },
             },
             {
-                name = "Black Guard Swordsmith",
+                name = L.DUNGEON_BOSS_BLACK_GUARD_SWORDSMITH,
+                npcID = 11121,
+                info = L.DUNGEON_BOSS_BLACK_GUARD_SWORDSMITH_INFO,
+                strategy = L.DUNGEON_BOSS_BLACK_GUARD_SWORDSMITH_STRATEGY,
+                abilities = {
+                    
+                },
                 loot = {
-
+                    18783,
                 },
             },
             {
-                name = "Maleki the Pallid",
+                name = L.DUNGEON_BOSS_MALEKI_THE_PALLID,
+                npcID = 10438,
+                info = L.DUNGEON_BOSS_MALEKI_THE_PALLID_INFO,
+                strategy = L.DUNGEON_BOSS_MALEKI_THE_PALLID_STRATEGY,
+                abilities = {
+                    17620,
+                    13322,
+                    16869,
+                },
                 loot = {
-
+                    12843,
+                    18737,
+                    16691,
+                    18735,
+                    18734,
+                    12833,
+                    13524,
+                    13509,
+                    13526,
+                    13525,
+                    13527,
+                    13528,
                 },
             },
             {
-                name = "Baroness Anastari",
+                name = L.DUNGEON_BOSS_BARONESS_ANASTARI,
+                npcID = 10436,
+                info = L.DUNGEON_BOSS_BARONESS_ANASTARI_INFO,
+                strategy = L.DUNGEON_BOSS_BARONESS_ANASTARI_STRATEGY,
+                abilities = {
+                    16867,
+                    16868,
+                    17244,
+                    18327,
+                },
                 loot = {
-
+                    12843,
+                    18728,
+                    13534,
+                    16704,
+                    18729,
+                    18730,
+                    13538,
+                    13539,
+                    13514,
+                    13537,
+                    13535,
                 },
             },
             {
-                name = "Ramstein the Gorger",
+                name = L.DUNGEON_BOSS_RAMSTEIN_THE_GORGER,
+                npcID = 10439,
+                info = L.DUNGEON_BOSS_RAMSTEIN_THE_GORGER_INFO,
+                strategy = L.DUNGEON_BOSS_RAMSTEIN_THE_GORGER_STRATEGY,
+                abilities = {
+                    17687,
+                    17307,
+                    5568,
+                },
                 loot = {
-
+                    12843,
+                    13373,
+                    12735,
+                    18723,
+                    13375,
+                    16737,
+                    13515,
+                    13372,
+                    13374,
                 },
             },
             {
-                name = "Baron Rivendare",
+                name = L.DUNGEON_BOSS_BARON_RIVENDARE,
+                npcID = 10440,
+                info = L.DUNGEON_BOSS_BARON_RIVENDARE_INFO,
+                strategy = L.DUNGEON_BOSS_BARON_RIVENDARE_STRATEGY,
+                abilities = {
+                    15496,
+                    16856,
+                    17393,
+                    17467,
+                },
                 loot = {
-
+                    22412,
+                    22409,
+                    22410,
+                    22411,
+                    22408,
+                    13335,
+                    13505,
+                    12843,
+                    13349,
+                    13344,
+                    13345,
+                    13340,
+                    13346,
+                    13361,
+                    13368,
+                    16719,
+                    16678,
+                    16687,
+                    16728,
+                    16694,
+                    16709,
+                    16668,
+                    16699,
+                    16732,
                 },
             },
         },
-        history = "Once the jewel of northern Lordaeron, the city of Stratholme is where Prince Arthas turned against his mentor, Uther Lightbringer, and slaughtered hundreds of his own subjects who were believed to have contracted the dreaded plague of undeath. Arthas' downward spiral and ultimate surrender to the Lich King soon followed. The broken city is now inhabited by the undead Scourge -- led by the powerful lich, Kel'Thuzad. A contingent of Scarlet Crusaders, led by Grand Crusader Dathrohan, also holds a portion of the ravaged city. The two sides are locked in constant, violent combat. Those adventurers brave (or foolish) enough to enter Stratholme will be forced to contend with both factions before long. It is said that the city is guarded by three massive watchtowers, as well as powerful necromancers, banshees and abominations. There have also been reports of a malefic Death Knight riding atop an unholy steed, dispensing indiscriminate wrath on all those who venture within the realm of the Scourge.",
+        history = L.DUNGEON_HISTORY_STRATHOLME,
     },
     {
         name = "Dire Maul",
@@ -4580,135 +4896,568 @@ addon.dungeons = {
             minLevel = 58,
             maxLevel = 60,
         },
+        notes = {
+
+        },
         maps = {
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/DireMaulEast1",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/DireMaulEast2",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/DireMaulNorth1",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/DireMaulWest1",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/DireMaulWest2",
-            "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/DireMaulWest3",
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/DireMaulEast1",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/DireMaulEast2",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/DireMaulNorth1",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/DireMaulWest1",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/DireMaulWest2",
+                poi = {
+
+                },
+            },
+            {
+                mapFile = "Interface/Addons/AdventureGuide_ClassicEra/Media/Maps/Dungeons/DireMaulWest3",
+                poi = {
+
+                },
+            },
+        },
+        quests = {
+            7488,
+            7489,
+            5518,
+            7441,
+            7461,
+            7462,
+            7703,
+            5526,
+            7463,
+            7482,
+            7481,
+            7484,
+            7485,
+            7483,
+            7506,
+            7503,
+            7500,
+            7501,
+            7504,
+            7498,
+            7505,
+            7502,
+            7499,
         },
         bosses = {
+            --arena
+            {
+                name = L.DUNGEON_BOSS_DIRE_MAUL_ARENA,
+                npcID = 11497,
+                info = "",
+                strategy = "",
+                abilities = {
+                    22937,
+                    20831,
+                },
+                loot = {
+                },
+            },
+            {
+                name = L.DUNGEON_BOSS_DIRE_MAUL_ARENA,
+                npcID = 11498,
+                info = "",
+                strategy = "",
+                abilities = {
+                    15708,
+                    15496,
+                },
+                loot = {
+
+                },
+            },
+            {
+                name = L.DUNGEON_BOSS_DIRE_MAUL_ARENA,
+                npcID = 11447,
+                info = "",
+                strategy = "",
+                abilities = {
+                    22948,
+                    21749,
+                },
+                loot = {
+                },
+            },
+
             --east
             {
-                name = "Pusillin",
+                name = L.DUNGEON_BOSS_PUSILLIN,
+                npcID = 14354,
+                info = L.DUNGEON_BOSS_PUSILLIN_INFO,
+                strategy = L.DUNGEON_BOSS_PUSILLIN_STRATEGY,
+                abilities = {
+                    17145,
+                    14145,
+                    15242,
+                    22735,
+                },
                 loot = {
-
+                    18267,
+                    18261,
+                    18249,
                 },
             },
             {
-                name = "Lethtendris",
+                name = L.DUNGEON_BOSS_LETHTENDRIS,
+                npcID = 14327,
+                info = L.DUNGEON_BOSS_LETHTENDRIS_INFO,
+                strategy = L.DUNGEON_BOSS_LETHTENDRIS_STRATEGY,
+                abilities = {
+                    22709,
+                    14887,
+                    20787,
+                    13338,
+                    16247,
+                    22710,
+                },
                 loot = {
-
+                    18325,
+                    18311,
+                    18302,
+                    18301,
+                    18426,
                 },
             },
             {
-                name = "Hydrospawn",
+                name = L.DUNGEON_BOSS_HYDROSPAWN,
+                npcID = 13280,
+                info = L.DUNGEON_BOSS_HYDROSPAWN_INFO,
+                strategy = L.DUNGEON_BOSS_HYDROSPAWN_STRATEGY,
+                abilities = {
+                    22419,
+                    22420,
+                    22421,
+                    22714,
+                    22715,
+                },
                 loot = {
-
+                    19268,
+                    18317,
+                    18322,
+                    18324,
+                    18305,
+                    7091,
+                    18307,
+                    18299,
                 },
             },
             {
-                name = "Zevrim Thornhoof",
+                name = L.DUNGEON_BOSS_ZEVRIM_THORNHOOF,
+                npcID = 11490,
+                info = L.DUNGEON_BOSS_ZEVRIM_THORNHOOF_INFO,
+                strategy = L.DUNGEON_BOSS_ZEVRIM_THORNHOOF_STRATEGY,
+                abilities = {
+                    22478,
+                    22651,
+                },
                 loot = {
-
+                    18319,
+                    18313,
+                    18323,
+                    18308,
+                    18306,
                 },
             },
             {
-                name = "Alzzin the Wildshaper",
+                name = L.DUNGEON_BOSS_ALZZIN_THE_WILDSHAPER,
+                npcID = 11492,
+                info = L.DUNGEON_BOSS_ALZZIN_THE_WILDSHAPER_INFO,
+                strategy = L.DUNGEON_BOSS_ALZZIN_THE_WILDSHAPER_STRATEGY,
+                abilities = {
+                    22661,
+                    22662,
+                    22128,
+                    22691,
+                    10101,
+                    7948,
+                    22660,
+                    22689,
+                    19319,
+                },
                 loot = {
+                    18321,
+                    18312,
+                    18310,
+                    18309,
+                    18318,
+                    18326,
+                    18314,
+                    18315,
+                    18328,
+                    18327
+                },
+            },
+            {
+                name = L.DUNGEON_BOSS_ISALIEN,
+                npcID = 16097,
+                info = L.DUNGEON_BOSS_ISALIEN_INFO,
+                strategy = L.DUNGEON_BOSS_ISALIEN_STRATEGY,
+                abilities = {
 
+                },
+                loot = {
+                    22472,
+                    22315,
+                    22314,
+                    22304,
+                    22401,
+                    22345,
                 },
             },
 
             --north
             {
-                name = "Guard Mol'dar",
+                name = L.DUNGEON_BOSS_GUARD_MOLDAR,
+                npcID = 14326,
+                info = L.DUNGEON_BOSS_GUARD_MOLDAR_INFO,
+                strategy = L.DUNGEON_BOSS_GUARD_MOLDAR_STRATEGY,
+                abilities = {
+                    8269,
+                    10101,
+                    11972,
+                    15749,
+                    15580,
+                },
                 loot = {
-
+                    18250,
+                    18451,
+                    18462,
+                    18458,
+                    18463,
+                    18450,
+                    18460,
+                    18498,
+                    18464,
+                    18459,
+                    18493,
+                    18494,
+                    18496,
+                    18497,
                 },
             },
             {
-                name = "Stomper Kreeg",
+                name = L.DUNGEON_BOSS_STOMPER_KREEG,
+                npcID = 11058,
+                info = L.DUNGEON_BOSS_STOMPER_KREEG_INFO,
+                strategy = L.DUNGEON_BOSS_STOMPER_KREEG_STRATEGY,
+                abilities = {
+                    22833,
+                    22835,
+                    8269,
+                    16740,
+                    15577,
+                },
                 loot = {
-
+                    18425,
+                    4595,
+                    18640,
                 },
             },
             {
-                name = "Guard Fengus",
+                name = L.DUNGEON_BOSS_GUARD_FENGUS,
+                npcID = 14321,
+                info = L.DUNGEON_BOSS_GUARD_FENGUS_INFO,
+                strategy = L.DUNGEON_BOSS_GUARD_FENGUS_STRATEGY,
+                abilities = {
+                    8269,
+                    10101,
+                    11972,
+                    15749,
+                    15580,
+                },
                 loot = {
-
+                    18451,
+                    18464,
+                    18250,
+                    18462,
+                    18463,
+                    18458,
+                    18459,
+                    18450,
                 },
             },
             {
-                name = "Guard Slip'kik",
+                name = L.DUNGEON_BOSS_GUARD_SLIPKIK,
+                npcID = 14323,
+                info = L.DUNGEON_BOSS_GUARD_SLIPKIK_INFO,
+                strategy = L.DUNGEON_BOSS_GUARD_SLIPKIK_STRATEGY,
+                abilities = {
+                    8269,
+                    10101,
+                    11972,
+                    15749,
+                    15580,
+                },
                 loot = {
-
+                    118493,
+                    18494,
+                    18498,
+                    18496,
+                    18497,
+                    18459,
+                    18250,
+                    18268,
                 },
             },
             {
-                name = "Captain Kromcrush",
+                name = L.DUNGEON_BOSS_CAPTAIN_KROMCRUSH,
+                npcID = 14325,
+                info = L.DUNGEON_BOSS_CAPTAIN_KROMCRUSH_INFO,
+                strategy = L.DUNGEON_BOSS_CAPTAIN_KROMCRUSH_STRATEGY,
+                abilities = {
+                    22860,
+                    8599,
+                    19134,
+                    22859,
+                    22857,
+                },
                 loot = {
-
+                    18502,
+                    18503,
+                    18505,
+                    18507,
                 },
             },
             {
-                name = "Cho'Rush the Observer",
+                name = L.DUNGEON_BOSS_CHORUSH_THE_OBSERVER,
+                npcID = 14324,
+                info = L.DUNGEON_BOSS_CHORUSH_THE_OBSERVER_INFO,
+                strategy = L.DUNGEON_BOSS_CHORUSH_THE_OBSERVER_STRATEGY,
+                abilities = {
+                    17194,
+                    22884,
+                    17139,
+                    11642,
+                },
                 loot = {
-
+                    18485,
+                    18484,
+                    18490,
+                    18483,
                 },
             },
             {
-                name = "King Gordok",
+                name = L.DUNGEON_BOSS_KING_GORDOK,
+                npcID = 11501,
+                info = L.DUNGEON_BOSS_KING_GORDOK_INFO,
+                strategy = L.DUNGEON_BOSS_KING_GORDOK_STRATEGY,
+                abilities = {
+                    22886,
+                    15708,
+                    15572,
+                    16727,
+                },
                 loot = {
+                    18523,
+                    18527,
+                    18524,
+                    18525,
+                    18526,
+                    18521,
+                    18520,
+                    18522,
+                    18780,
+                    19258,
+                },
+            },
+            {
+                name = L.DUNGEON_BOSS_TRIBUTE,
+                npcID = 179564, --object id
+                info = L.DUNGEON_BOSS_TRIBUTE_INFO,
+                strategy = L.DUNGEON_BOSS_TRIBUTE_STRATEGY,
+                abilities = {
 
+                },
+                loot = {
+                    18538,
+                    18499,
+                    18537,
+                    18528,
+                    18529,
+                    18533,
+                    18532,
+                    18530,
+                    18495,
+                    18534,
+                    18500,
+                    18531,
+                    18479,
+                    18478,
+                    18476,
+                    18475,
+                    18482,
+                    18480,
+                    18655,
+                    18477,
+                    18481,
                 },
             },
 
             --west
             {
-                name = "Tendris Warpwood",
+                name = L.DUNGEON_BOSS_TENDRIS_WARPWOOD,
+                npcID = 11489,
+                info = L.DUNGEON_BOSS_TENDRIS_WARPWOOD_INFO,
+                strategy = L.DUNGEON_BOSS_TENDRIS_WARPWOOD_STRATEGY,
+                abilities = {
+                    22994,
+                    22924,
+                    5568,
+                    22916,
+                },
                 loot = {
-
+                    18390,
+                    18393,
+                    18353,
+                    18352,
                 },
             },
             {
-                name = "Magister Kalendris",
+                name = L.DUNGEON_BOSS_MAGISTER_KALENDRIS,
+                npcID = 11487,
+                info = L.DUNGEON_BOSS_MAGISTER_KALENDRIS_INFO,
+                strategy = L.DUNGEON_BOSS_MAGISTER_KALENDRIS_STRATEGY,
+                abilities = {
+                    7645,
+                    15587,
+                    22919,
+                    15654,
+                    22917,
+                },
                 loot = {
-
+                    18374,
+                    18397,
+                    18371,
+                    18351,
+                    18350,
+                    22309,
                 },
             },
             {
-                name = "Tsu'zee",
+                name = L.DUNGEON_BOSS_TSUZEE,
+                npcID = 11467,
+                info = L.DUNGEON_BOSS_TSUZEE_INFO,
+                strategy = L.DUNGEON_BOSS_TSUZEE_STRATEGY,
+                abilities = {
+                    15657,
+                    21060,
+                    12540,
+                    15667,
+                },
                 loot = {
-
+                    18387,
+                    18346,
+                    18345,
                 },
             },
             {
-                name = "Illyanna Ravenoak",
+                name = L.DUNGEON_BOSS_ILLYANNA_RAVENOAK,
+                npcID = 11488,
+                info = L.DUNGEON_BOSS_ILLYANNA_RAVENOAK_INFO,
+                strategy = L.DUNGEON_BOSS_ILLYANNA_RAVENOAK_STRATEGY,
+                abilities = {
+                    20904,
+                    22914,
+                    22910,
+                    22908,
+                },
                 loot = {
-
+                    18383,
+                    18386,
+                    18349,
+                    18347,
                 },
             },
             {
-                name = "Immol'thar",
+                name = L.DUNGEON_BOSS_IMMOLTHAR,
+                npcID = 11496,
+                info = L.DUNGEON_BOSS_IMMOLTHAR_INFO,
+                strategy = L.DUNGEON_BOSS_IMMOLTHAR_STRATEGY,
+                abilities = {
+                    8269,
+                    22899,
+                    16128,
+                    22950,
+                    5568,
+                },
                 loot = {
-
+                    18370,
+                    18391,
+                    18379,
+                    18377,
+                    18381,
+                    18384,
+                    18389,
+                    18385,
+                    18372,
+                    18394,
+                    18360,
                 },
             },
             {
-                name = "Prince Tortheldrin",
+                name = L.DUNGEON_BOSS_PRINCE_TORTHELDRIN,
+                npcID = 11486,
+                info = L.DUNGEON_BOSS_PRINCE_TORTHELDRIN_INFO,
+                strategy = L.DUNGEON_BOSS_PRINCE_TORTHELDRIN_STRATEGY,
+                abilities = {
+                    22920,
+                    20537,
+                    22995,
+                    15589,
+                },
                 loot = {
-
+                    18382,
+                    18378,
+                    18375,
+                    18392,
+                    18380,
+                    18395,
+                    18396,
+                    18376,
+                    18388,
+                    18373,
                 },
             },
             {
-                name = "Lord Hel'nurath (Summoned)",
+                name = L.DUNGEON_BOSS_LORD_HELNURATH,
+                npcID = 14506,
+                info = L.DUNGEON_BOSS_LORD_HELNURATH_INFO,
+                strategy = L.DUNGEON_BOSS_LORD_HELNURATH_STRATEGY,
+                abilities = {
+                    20812,
+                    22665,
+                },
                 loot = {
-
+                    18757,
+                    18756,
+                    18755,
+                    18754,
                 },
             },
         },
-        history = "Built thousands of years ago to house the kaldorei's arcane secrets, the formerly great city of Eldre'Thalas now lies in ruin, writhing with warped, twisted forces. Competing covens once fought for control of Dire Maul's corrupted energy, but they have since settled into uneasy truces, choosing to exploit the power within their own territories rather than continue to battle over the entire complex.",
+        history = L.DUNGEON_HISTORY_DIRE_MAUL,
     },
 }

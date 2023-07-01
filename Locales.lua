@@ -832,6 +832,182 @@ locales["enUS"] = {
 	DUNGEON_BOSS_DARKMASTER_GANDLING_STRATEGY = "Many tanks will keep Darkmaster Gandling in the center where he spawns, while the ranged will stay atop the stairs to keep a distance. He'll periodically teleport a player to an adjacent room, where they will be locked in until they defeat the enemies inside. Be aware and make plans in the event your tank or healer get teleported. An interrupt order works nicely for when he casts  Arcane Missiles. Have a  Mage or  Druid dispel  Improved Shadow Bolt as quickly as possible. Other than that, he has a lot of HP so properly execute the mechanics, and you'll be greatly rewarded for his defeat!",
 
 
+	--stratholme
+	DUNGEON_HISTORY_STRATHOLME = "Once the jewel of northern Lordaeron, the city of Stratholme is where Prince Arthas turned against his mentor, Uther Lightbringer, and slaughtered hundreds of his own subjects who were believed to have contracted the dreaded plague of undeath. Arthas' downward spiral and ultimate surrender to the Lich King soon followed. The broken city is now inhabited by the undead Scourge -- led by the powerful lich, Kel'Thuzad. A contingent of Scarlet Crusaders, led by Grand Crusader Dathrohan, also holds a portion of the ravaged city. The two sides are locked in constant, violent combat. Those adventurers brave (or foolish) enough to enter Stratholme will be forced to contend with both factions before long. It is said that the city is guarded by three massive watchtowers, as well as powerful necromancers, banshees and abominations. There have also been reports of a malefic Death Knight riding atop an unholy steed, dispensing indiscriminate wrath on all those who venture within the realm of the Scourge.",
+
+	DUNGEON_BOSS_FRAS_SIABI = "Fras Siabi",
+	DUNGEON_BOSS_FRAS_SIABI_INFO = "He doesn't drop any unique loot apart from  Grimm's Premium Tobacco for the quest  The Great Ezra Grimm. He can also drop  Corruptor's Scourgestone.",
+	DUNGEON_BOSS_FRAS_SIABI_STRATEGY = "You must click on the wooden tobacco box in the area to summon him. He has an AoE fire attack and an AoE stun, so spreading out a little can help. He also spawns a bunch of adds with him and will also pull any extra mobs in the area, so make sure they're all dead, or the fight may be a little too hard. If you do happen to wipe, the mailbox will despawn, and you will not be able to summon him again until you reset the instance.",
+	
+	DUNGEON_BOSS_SKUL = "Skul (rare)",
+	DUNGEON_BOSS_SKUL_INFO = "Skul is a rare spawn that you may encounter just before Fras Siabi",
+	DUNGEON_BOSS_SKUL_STRATEGY = "",
+	
+	DUNGEON_BOSS_HEARTHSINGER_FORRESTEN = "Hearthsinger Forresten (rare)",
+	DUNGEON_BOSS_HEARTHSINGER_FORRESTEN_INFO = "Hearthsinger Forresten is another rare spawn which spawns north up the lane from where Fras Siabi is.",
+	DUNGEON_BOSS_HEARTHSINGER_FORRESTEN_STRATEGY = "He has a sleep which lasts for 8 seconds that he will cast on a random player. He also has a multi-shot ability which can be countered by spreading out a little.",
+	
+	DUNGEON_BOSS_THE_UNFORGIVEN = "The Unforgiven",
+	DUNGEON_BOSS_THE_UNFORGIVEN_INFO = "",
+	DUNGEON_BOSS_THE_UNFORGIVEN_STRATEGY = "",
+	
+	DUNGEON_BOSS_POSTMASTER_MALOWN = "Postmaster Malown",
+	DUNGEON_BOSS_POSTMASTER_MALOWN_INFO = "You will find Stratholme Courier throughout the instance that drop keys like  Market Row Postbox Key which can be used to open their associated mailbox.",
+	DUNGEON_BOSS_POSTMASTER_MALOWN_STRATEGY = "When the third mailbox is opened you will spawn Postmaster Malown at that location as well as 3 elite Undead Postman that use  Wailing Dead which stacks and can give your tank/healer a hard time. Either CC the adds or make sure you have a mage or your healer Dispel the Curse from the tank. Also make sure the area is clear when you go to engage as he has a fear and it could lead you to run into extra mobs.",
+
+	DUNGEON_BOSS_TIMMY_THE_CRUEL = "Timmy the Cruel",
+	DUNGEON_BOSS_TIMMY_THE_CRUEL_INFO = "Timmy the Cruel is the first boss you may encounter if you are just choosing to go straight to the Scarlet side.",
+	DUNGEON_BOSS_TIMMY_THE_CRUEL_STRATEGY = "",
+	
+	DUNGEON_BOSS_MALOR_THE_ZEALOUS = "Malor the Zealous",
+	DUNGEON_BOSS_MALOR_THE_ZEALOUS_INFO = "",
+	DUNGEON_BOSS_MALOR_THE_ZEALOUS_STRATEGY = "",
+	
+	DUNGEON_BOSS_CANNON_MASTER_WILLEY = "Cannon Master Willey",
+	DUNGEON_BOSS_CANNON_MASTER_WILLEY_INFO = "",
+	DUNGEON_BOSS_CANNON_MASTER_WILLEY_STRATEGY = "He will spawn several adds during the fight which are ranged so you will have to deal with them by switching to them or you can pick up a cannon ball near Cannon Master Willey and use it on one of the cannons and it will shoot out and kill them. He has an interrupt but apart from that it is a simple fight as long as the adds are dealt with.",
+	
+	DUNGEON_BOSS_CRIMSON_HAMMERSMITH = "Crimson Hammersmith",
+	DUNGEON_BOSS_CRIMSON_HAMMERSMITH_INFO = "Summoned by clicking on the blacksmithing plans located on the floor",
+	DUNGEON_BOSS_CRIMSON_HAMMERSMITH_STRATEGY = "",
+	
+	DUNGEON_BOSS_ARCHIVIST_GALFORD = "Archivist Galford",
+	DUNGEON_BOSS_ARCHIVIST_GALFORD_INFO = "",
+	DUNGEON_BOSS_ARCHIVIST_GALFORD_STRATEGY = "",
+	
+	DUNGEON_BOSS_BALNAZZAR = "Grand Crusader Dathrohan/Balnazzar",
+	DUNGEON_BOSS_BALNAZZAR_INFO = "Grand Crusader Dathrohan which turns into Balnazzar half way through the fight and is the final boss of the dungeon.",
+	DUNGEON_BOSS_BALNAZZAR_STRATEGY = "You should try to CC the player he mind controls. Stand max range to avoid the fear if you are a caster and dispel the sleep off your party members if you can. Apart from those abilities he will cast shadow spells and the fight isn't too hard.",
+	
+	DUNGEON_BOSS_JARIEN_SOTHOS = "Jarien and Sothos",
+	DUNGEON_BOSS_JARIEN_SOTHOS_INFO = "Jarien and Sothos can be summoned in Balnazzar's room of Live Stratholme with the  Brazier of Beckoning provided by one of the Tier 0.5 quests to kill them.",
+	DUNGEON_BOSS_JARIEN_SOTHOS_STRATEGY = "",
+	
+	DUNGEON_BOSS_MAGISTRATE_BARTHILAS = "Magistrate Barthilas",
+	DUNGEON_BOSS_MAGISTRATE_BARTHILAS_INFO = "",
+	DUNGEON_BOSS_MAGISTRATE_BARTHILAS_STRATEGY = "The main ability you need to be aware of, especially while tanking is  Mighty Blow as it will knock you back a few yards potentially into more mobs, making the fight harder for you and your group. To counter this simply face your back to a wall and you will be knocked straight upwards rather than backward.",
+	
+	DUNGEON_BOSS_STONESPINE = "Stonespine (Rare Spawn)",
+	DUNGEON_BOSS_STONESPINE_INFO = "Stonespine is a rare spawn",
+	DUNGEON_BOSS_STONESPINE_STRATEGY = "",
+	
+	DUNGEON_BOSS_NERUBENKAN = "Nerub'enkan",
+	DUNGEON_BOSS_NERUBENKAN_INFO = "",
+	DUNGEON_BOSS_NERUBENKAN_STRATEGY = "As a DPS cleave down the extra mobs he spawns, they wont do much damage and you will likely pull aggro due to the tank being snared or already under pressure. Healers/tanks should watch for  Pierce Armor and coordinate small defensive abilities and some more focused healing on the tank but apart from that it is a simple fight.",
+	
+	DUNGEON_BOSS_BLACK_GUARD_SWORDSMITH = "Black Guard Swordsmith",
+	DUNGEON_BOSS_BLACK_GUARD_SWORDSMITH_INFO = "Black Guard Swordsmith is a mini boss that can be summoned by clicking on the blacksmithing plans on the ground right of Baroness Anastari. He doesn't have any mechanics or drop any unique loot apart from  Bottom Half of Advanced Armorsmithing: Volume III for Blacksmiths.",
+	DUNGEON_BOSS_BLACK_GUARD_SWORDSMITH_STRATEGY = "",
+	
+	DUNGEON_BOSS_MALEKI_THE_PALLID = "Maleki the Pallid",
+	DUNGEON_BOSS_MALEKI_THE_PALLID_INFO = "Maleki the Pallid is down the path north of Baroness Anastari.",
+	DUNGEON_BOSS_MALEKI_THE_PALLID_STRATEGY = "He will entomb the tank in the  Ice Tomb which lasts for 6 seconds, during this time healers and DPS should be aware of pulling aggro and play. That is the only mechanic you need to worry about on this fight.",
+	
+	DUNGEON_BOSS_BARONESS_ANASTARI = "Baroness Anastari",
+	DUNGEON_BOSS_BARONESS_ANASTARI_INFO = "",
+	DUNGEON_BOSS_BARONESS_ANASTARI_STRATEGY = "She will cast  Possess on players throughout the fight which can be broken by getting the possessed player to 50% health. She will also silence casters and put a curse on players to reduce their hit chance.",
+	
+	DUNGEON_BOSS_RAMSTEIN_THE_GORGER = "Ramstein the Gorger",
+	DUNGEON_BOSS_RAMSTEIN_THE_GORGER_INFO = "Once you have cleared the room of all the patchwork mobs you will spawn Ramstein the Gorger. He is basically a tank and spank with aggro swap mechanics",
+	DUNGEON_BOSS_RAMSTEIN_THE_GORGER_STRATEGY = "He will cast  Knockout on the tank and swap aggro also using  Trample along the way. You should just be wary of this and have some heals ready for your DPS'ers as a healer.",
+	
+	DUNGEON_BOSS_BARON_RIVENDARE = "The final boss of Stratholme undead is Baron Rivendare.",
+	DUNGEON_BOSS_BARON_RIVENDARE_INFO = "",
+	DUNGEON_BOSS_BARON_RIVENDARE_STRATEGY = "Pull him to the right side of the room, the melee will follow suit and the ranged DPS and healer will go to the left side of the room and stand on the bone piles. This will allow all your ranged to avoid the  Unholy Aura, making the fight a lot easier on the healer. Melee should also be standing behind the boss to avoid his cleave. When the skeleton mobs spawn as a DPS, they are your primary focus; the tank shouldn't have to worry about picking all of these up as they die fairly quickly. Maintain the distance to avoid the aura as much as you can, and this fight is a lot easier.",
+
+
+
+	--dire maul
+	DUNGEON_HISTORY_DIRE_MAUL = "Built thousands of years ago to house the kaldorei's arcane secrets, the formerly great city of Eldre'Thalas now lies in ruin, writhing with warped, twisted forces. Competing covens once fought for control of Dire Maul's corrupted energy, but they have since settled into uneasy truces, choosing to exploit the power within their own territories rather than continue to battle over the entire complex.",
+
+	DUNGEON_BOSS_DIRE_MAUL_ARENA = "The Razza, Skarr the Unbreakable and Mushgog all randomly spawn in the Arena. The spawn timer is unknown, but when they do spawn, you'll see a /yell from a goblin spectator telling you which one spawned. You can hear this yell from either inside or outside an instance in Dire Maul.",
+
+	DUNGEON_BOSS_PUSILLIN = "Pusillin",
+	DUNGEON_BOSS_PUSILLIN_INFO = "Pusillin is a level 56-57 elite imp mini-boss located in Dire Maul East. He drops  Crescent Key.",
+	DUNGEON_BOSS_PUSILLIN_STRATEGY = "Once you engage Pusillin, he will summon four (4) Wildspawn Imp to his side. Once your tank grabs aggro on Pusillin, your group can AoE down the imps. Pusillin casts a variety of Fire spells -  Kick,  Counterspell and other interrupts can prevent his casts from going off. Casters: watch out for his  Spirit of Runn Tum, which is a self-buff increasing his size, melee haste by 20% and chance to reflect spells by 50%.",
+	
+	DUNGEON_BOSS_LETHTENDRIS = "Lethtendris",
+	DUNGEON_BOSS_LETHTENDRIS_INFO = "Lethtendris is a blood elf  Warlock, accompanied by her imp Pimgib, located in Dire Maul East.",
+	DUNGEON_BOSS_LETHTENDRIS_STRATEGY = "Lethtendris has a plethora of  Warlock-related spells. Her  Void Bolt is a 4-second cast and should be interrupted, as should most of the spells you see casting. She afflicts a couple of curses, so if you have a  Mage or  Druid, be sure to have them decurse the group. Her imp, Pimgib also casts a variety of fires pells. He has about 1/3 of her HP, so focus down the imp first then move on to Lethtendris.",
+	
+	DUNGEON_BOSS_HYDROSPAWN = "Hydrospawn",
+	DUNGEON_BOSS_HYDROSPAWN_INFO = "Hydrospawn is a water elemental boss located in Dire Maul East.",
+	DUNGEON_BOSS_HYDROSPAWN_STRATEGY = "Hydrospawn could be approached in 2 ways. Burn him down & ignore the Hydroling that he spawns, or AoE down the Hydroling then switch over to Hydrospawn. The Hydroling do tend to cause more damage than Hydrospawn himself, so if you choose to just burn him down quickly, keep an eye on your healers and interrupt spells when you can.",
+	
+	DUNGEON_BOSS_ZEVRIM_THORNHOOF = "Zevrim Thornhoof",
+	DUNGEON_BOSS_ZEVRIM_THORNHOOF_INFO = "Zevrim Thornhoof is a satyr boss located in Dire Maul East. He is required to kill in order to access The Lower Conservatory portion of the instance.",
+	DUNGEON_BOSS_ZEVRIM_THORNHOOF_STRATEGY = "Zevrim Thornhoof will periodically teleport a party member to his ritual alter and cast  Sacrifice. Healers: whoever is targeted by this will need BIG heals! His other spell,  Intense Pain is like an AoE  Shadow Word: Pain that can be dispelled. Ranged, stand max distance to avoid this. If you have a  Warlock in your group, one tactic is to enslave a Wildspawn Hellcaller or Wildspawn Shadowstalker and use them to attack Zevrim Thornhoof.",
+	
+	DUNGEON_BOSS_ALZZIN_THE_WILDSHAPER = "Alzzin the Wildshaper",
+	DUNGEON_BOSS_ALZZIN_THE_WILDSHAPER_INFO = "Alzzin the Wildshaper is a shape-shifting demon boss located in Dire Maul East.",
+	DUNGEON_BOSS_ALZZIN_THE_WILDSHAPER_STRATEGY = "Alzzin the Wildshaper will shape-shift into different forms. When he shape-shifts, make sure your tank reestablishes aggro before DPSing.\n\nIn his initial, Satyr Form, be sure to cleanse the poison  Enervate right away as it acts as a periodic mana drain. Be sure to cleanse the disease spell,  Wither, as well. Both can be interrupted, so watch out for his spell casting.\n\nWhen he shifts into treant form, his armor increases by a lot, so using like  Sunder Armor and  Expose Armor will help you get through this phase.\n\nHe can also shape-shift into a Dire Wolf, casting abilities similar to a feral  Druid in  Cat Form. At 35% health, the wall will crumble behind him and a group of non-elite adds will come running out. They're pretty easy to AoE down and finish burning down Alzzin the Wildshaper.",
+	
+	DUNGEON_BOSS_ISALIEN = "Isalien",
+	DUNGEON_BOSS_ISALIEN_INFO = "Isalien can be summoned at Alzzin the Wildshaper's room in Dire Maul East with the  Brazier of Beckoning provided by one of the quests to kill her from the TIer 0.5 questline.",
+	DUNGEON_BOSS_ISALIEN_STRATEGY = "",
+	
+	DUNGEON_BOSS_GUARD_MOLDAR = "Guard Mol'dar",
+	DUNGEON_BOSS_GUARD_MOLDAR_INFO = "TRIBUTE RUN: DO NOT kill Guard Mol'dar. Hug the northern wall and head west. Climb the northern ramp. Ensure someone in your group can unlock the inner door leading to Captain Kromcrush: Rogues can Pick Lock the door (300 Lockpicking required), Engineers can open the door with  Large Seaforium Charge, and Blacksmiths can open the door with  Truesilver Skeleton Key.\n\nNORMAL RUN: Kill Guard Mol'dar",
+	DUNGEON_BOSS_GUARD_MOLDAR_STRATEGY = "Guard Mol'dar has all melee-focused abilities and isn't too challenging of a fight as long as you make sure your tank has acquired aggro and the ranged stay back a bit to avoid  Knock Away and  Shield Charge.",
+	
+	DUNGEON_BOSS_STOMPER_KREEG = "Stomper Kreeg",
+	DUNGEON_BOSS_STOMPER_KREEG_INFO = "TRIBUTE RUN: DO NOT kill Stomper Kreeg. Wait for him to go to sleep and sneak past him.\n\nNORMAL RUN: Kill Stomper Kreeg",
+	DUNGEON_BOSS_STOMPER_KREEG_STRATEGY = "The biggest thing to look out for when fighting Stomper Kreeg is his  Booze Spit. It gets everyone drunk and reduces their chance to hit by 75%. Other than that, it's a pretty straightforward tank and spank melee fight.",
+	
+	DUNGEON_BOSS_GUARD_FENGUS = "Guard Fengus",
+	DUNGEON_BOSS_GUARD_FENGUS_INFO = "TRIBUTE RUN: DO NOT kill Guard Fengus. The idea is to sneak up and loot a chest near the middle area where he patrols. If you have a  Rogue or  Druid in your group, they can easily stealth up, wait for Guard Fengus to patrol away, loot the chest and grab the  Gordok Courtyard Key.\n\nIf you do not have a stealth class in your group, this can still be done. When Guard Fengus patrols away, have a class with a movement speed ability, such as a  Hunter with  Aspect of the Cheetah run and grab it.\n\nAfter doing so, be careful to not aggro Guard Fengus as you continue clearing Northwest to the next area.\n\nNORMAL RUN: Kill Guard Fengus. Loot chest in the middle of the courtyard after and grab  Gordok Courtyard Key.",
+	DUNGEON_BOSS_GUARD_FENGUS_STRATEGY = "Like Guard Mol'dar, Guard Fengus has all melee-focused abilities and isn't too challenging of a fight as long as you make sure your tank has acquired aggro and the ranged stay back a bit to avoid  Knock Away and  Shield Charge.",
+	
+	DUNGEON_BOSS_GUARD_SLIPKIK = "Guard Slip'kik",
+	DUNGEON_BOSS_GUARD_SLIPKIK_INFO = "TRIBUTE RUN: DO NOT kill Guard Slip'kik. Wait until he patrols away and use your  Thorium Widget and  Frost Oil on the broken trap on the ground. Wait for Guard Slip'kik to patrol back and get frozen inside the trap. Take note that Knot Thimblejack is there, but you do not need to speak with him yet.\n\nNORMAL RUN: Kill Guard Slip'kik",
+	DUNGEON_BOSS_GUARD_SLIPKIK_STRATEGY = "Like the other guards, Guard Slip'kik has all melee-focused abilities and isn't too challenging of a fight as long as you make sure your tank has acquired aggro and the ranged stay back a bit to avoid  Knock Away and  Shield Charge.",
+	
+	DUNGEON_BOSS_CAPTAIN_KROMCRUSH = "Captain Kromcrush",
+	DUNGEON_BOSS_CAPTAIN_KROMCRUSH_INFO = "TRIBUTE RUN: Look for Ogre Tannin Basket. Open it and loot  Ogre Tannin. Head back down the ramp and speak with Knot Thimblejack to receive  Gordok Ogre Suit. DO NOT equip it just yet. Continue forward into Captain Kromcrush's room. Now is time to equip  Gordok Ogre Suit. Speak with Captain Kromcrush with the  Gordok Ogre Suit on and he will eventually storm off, clearing the path for you to continue.\n\nNORMAL RUN: Kill Captain Kromcrush",
+	DUNGEON_BOSS_CAPTAIN_KROMCRUSH_STRATEGY = "Captain Kromcrush hits very hard, can fear your party members with  Intimidating Shout and at around 50% health, he will summon two (2) Gordok Reavers to his side. Be prepared to CC the adds when the come out and ensure your tank maintains aggro on Captain Kromcrush. As with the rest of the guards, casters try to stay back at max range.",
+	
+	DUNGEON_BOSS_CHORUSH_THE_OBSERVER = "Cho'Rush the Observer",
+	DUNGEON_BOSS_CHORUSH_THE_OBSERVER_INFO = "TRIBUTE RUN: DO NOT kill Cho'Rush the Observer. He must live to complete the Tribute Run. He is a caster type mob, so keep him occupied and interrupt his spellcasting while you focus down King Gordok.",
+	DUNGEON_BOSS_CHORUSH_THE_OBSERVER_STRATEGY = "When doing a non-tribute run, it's generally easier to burn down Cho'Rush the Observer first while your tank establishes aggro on King Gordok. King Gordok is a caster, so be sure to interupt his spells, especially his  Heal. Once Cho'Rush the Observer has fallen, focus all DPS on King Gordok.",
+	
+	DUNGEON_BOSS_KING_GORDOK = "King Gordok",
+	DUNGEON_BOSS_KING_GORDOK_INFO = "TRIBUTE RUN: Kill King Gordok but DO NOT kill Cho'Rush the Observer.",
+	DUNGEON_BOSS_KING_GORDOK_STRATEGY = "When doing a non-tribute run, it's generally easier to burn down Cho'Rush the Observer first while your tank establishes aggro on King Gordok. King Gordok is a caster, so be sure to interupt his spells, especially his  Heal. Once Cho'Rush the Observer has fallen, focus all DPS on King Gordok.",
+	
+	DUNGEON_BOSS_TRIBUTE = "Gordok Tribute",
+	DUNGEON_BOSS_TRIBUTE_INFO = "TRIBUTE RUN: Now that King Gordok is dead, you are the new king! Mizzle the Crafty will come running into the room. Interact with him - you'll need to have two different conversations - and he will spawn your reward: the Gordok Tribute Chest with rewards from each of the bosses you left alive. You'll also receive the buff King of the Gordok.\n\nAs long as you stay in the dungeon, you can wander freely and interact with any living Ogres. Retrace your steps to speak to all of the guards to receive buffs. You can also pick up or turn in the quest  Unfinished Gordok Business from Captain Kromcrush, and speak to Stomper Kreeg for some free booze.",
+	DUNGEON_BOSS_TRIBUTE_STRATEGY = "",
+	
+	DUNGEON_BOSS_TENDRIS_WARPWOOD = "Tendris Warpwood",
+	DUNGEON_BOSS_TENDRIS_WARPWOOD_INFO = "Tendris Warpwood is an ancient boss located in Dire Maul West.",
+	DUNGEON_BOSS_TENDRIS_WARPWOOD_STRATEGY = "Watch out for his AoE melee knockdown,  Trample. Ranged, be sure to stand back to avoid this.  Entangle is a root effect that can be dispelled. Wait for your tank to gain threat and DPS him down.",
+	
+	DUNGEON_BOSS_MAGISTER_KALENDRIS = "Magister Kalendris",
+	DUNGEON_BOSS_MAGISTER_KALENDRIS_INFO = "Magister Kalendris is a shadow priest-type boss located in Dire Maul West.",
+	DUNGEON_BOSS_MAGISTER_KALENDRIS_STRATEGY = "Pretend you're fighting a Shadow  Priest. Interupt his spells. Dispell any magic. Use any sort of Shadow Resist such as  Shadow Resistance Aura or  Prayer of Shadow Protection and burn him down.",
+	
+	DUNGEON_BOSS_TSUZEE = "Tzu'see",
+	DUNGEON_BOSS_TSUZEE_INFO = "Tsu'zee is a rogue-type silver elite found in the Court of the Highborne, near the ramps, in Dire Maul West.",
+	DUNGEON_BOSS_TSUZEE_STRATEGY = "Fighting Tsu'zee is like encountering a  Rogue, and she hits pretty hard. Make sure your tank gains aggro before attacking. Dispel  Blind from your party if able to, and burn her down.",
+	
+	DUNGEON_BOSS_ILLYANNA_RAVENOAK = "Illyanna Ravenoak",
+	DUNGEON_BOSS_ILLYANNA_RAVENOAK_INFO = "Illyanna Ravenoak is a Hunter-type boss located in Dire Maul West.",
+	DUNGEON_BOSS_ILLYANNA_RAVENOAK_STRATEGY = "Illyanna Ravenoak is just like fighting a  Hunter, accompanied with a pet bear, Ferra. All of her abilities, minus  Immolation Trap, can be negated simply by standing in melee range of her, similar to that of a  Hunter. Most groups tend to burn down Illyanna Ravenoak first, then kill Ferra after.",
+	
+	DUNGEON_BOSS_IMMOLTHAR = "Immol'thar",
+	DUNGEON_BOSS_IMMOLTHAR_INFO = "Immol'thar is a beast boss located in Dire Maul West.",
+	DUNGEON_BOSS_IMMOLTHAR_STRATEGY = "Immol'thar will summon eyes around the room. Designate someone, preferably a ranged attacker, to dispose of these. He will  Enrage at 50% health, so healers: get ready for big heals on the tank! He will also randomly teleport players to the middle of the room. If this happens to your tank, be wary and allow for the tank to return and reestablish aggro.",
+	
+	DUNGEON_BOSS_PRINCE_TORTHELDRIN = "Prince Tortheldrin",
+	DUNGEON_BOSS_PRINCE_TORTHELDRIN_INFO = "Immol'thar is the final boss of Dire Maul West.",
+	DUNGEON_BOSS_PRINCE_TORTHELDRIN_STRATEGY = "Prince Tortheldrin hits pretty hard and fast. Tank him in the corner to avoid his knockback,  Arcane Blast. Be aware that after he does cast  Arcane Blast his aggro resets. Cease DPS until your tank gets him back, then burn him down fast.",
+	
+	DUNGEON_BOSS_LORD_HELNURATH = "Special Boss: Lord Hel'nurath",
+	DUNGEON_BOSS_LORD_HELNURATH_INFO = "Lord Hel'nurath is a special boss Dire Maul West. This boss can only be summoned by Warlocks who possess the three summoning items obtained during their Epic Mount Questline:  J'eevee's Jar,  Black Lodestone and  Xorothian Glyphs.",
+	DUNGEON_BOSS_LORD_HELNURATH_STRATEGY = "The hardest part of the Lord Hel'nurath fight is the ritual leading to him. The ritual to summon Lord Hel'nurath happens at the altar where Immol'thar is originally located, after killing the boss. The group must survive through many waves of demons while ensuring the Warlock is able to maintain all three ritual items active, as they grant beneficial buffs and aid you with killing waves. The waves will mainly consist of Imps and an occasional Dread Guard, which Warlocks can either  Banish or  Enslave Demon. The event will last around 6 minutes, and once it ends, the remaining demons will despawn and Immol'thar's altar will glow with shadow power.\n\nTake this pause to heal and drink, and once the group is ready, use the  Xorothian Glyphs to invoke a Xorothian Dreadsteed. Once the Horse is at 50%, Lord Hel'nurath will appear: His abilities aren't too tough and he does not hit terribly hard, but it is still best to dispose of him before the Dreadsteed.",
+
+
+
 
 }
 
