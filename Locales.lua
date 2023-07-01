@@ -550,8 +550,289 @@ locales["enUS"] = {
 	--blackrok depths
 	DUNGEON_HISTORY_BLACKROCK_DEPTHS = "Once the capital city of the Dark Iron dwarves, this volcanic labyrinth now serves as the seat of power for Ragnaros the Firelord. Ragnaros has uncovered the secret to creating life from stone and plans to build an army of unstoppable golems to aid him in conquering the whole of Blackrock Mountain. Obsessed with defeating Nefarian and his draconic minions, Ragnaros will go to any extreme to achieve final victory.",
 
-
+	DUNGEON_BOSS_LORD_ROCCOR = "Lord Roccor",
+	DUNGEON_BOSS_LORD_ROCCOR_INFO = "Arguably, Lord Roccor is one of the easiest bosses in Blackrock Depths. Level 60 druids are able to solo this boss, which indicates just how easily he can be defeated.",
+	DUNGEON_BOSS_LORD_ROCCOR_STRATEGY = "Lord Roccor is incredibly easy. There is nothing really to look out for.  Earth Shock can interrupt casting, which is about the only real concern on this boss.",
 	
+	DUNGEON_BOSS_BAELGAR = "Bael'gar",
+	DUNGEON_BOSS_BAELGAR_INFO = "Bael'Gar is an optional boss that most groups skip because he is not important to the advancement of the dungeon.",
+	DUNGEON_BOSS_BAELGAR_STRATEGY = "Bael'Gar spawns adds, which needs to be kill. Also, tanks need to face Bael'Gar away from the group  Magma Splash is not a major concern if that is done. Outside of the tank taking a lot of damage, this fight is fairly easy.",
+	
+	DUNGEON_BOSS_HOUNDMASTER_GREBMAR = "Houndmaster Grebmar",
+	DUNGEON_BOSS_HOUNDMASTER_GREBMAR_INFO = "Houndmaster Grebmar is another fairly easy boss fight. He shouldn't cause issues as long as he is handled appropriate to his patrol path.",
+	DUNGEON_BOSS_HOUNDMASTER_GREBMAR_STRATEGY = "Houndmaster Grebmar pats around the room between two packs of hounds. Kill the pack of hounds opposite of his patrol path. Then, when he pats back, kill the other pack. Once both packs are dead.",
+	
+	DUNGEON_BOSS_HIGH_INTERROGATOR_GERSTAHN = "High Interrogator Gerstahn",
+	DUNGEON_BOSS_HIGH_INTERROGATOR_GERSTAHN_INFO = "High Interrogator Gerstahn is the first boss many will face their first time in Blackrock Depths! She is not exceedingly difficult overall, but can cause problems if you don't compensate for some of her mechanics. Killing her is necessary to obtain the  Prison Cell Key, which is used to complete quests in the Detention Block.",
+	DUNGEON_BOSS_HIGH_INTERROGATOR_GERSTAHN_STRATEGY = "Overall, the approach to beating her is fairly simple. Her use of  Psychic Scream is the most challenging part of the encounter as it can lead to other packs being pulled. For Horde Shamans, use tremor to deal with the fear. For Alliance Dwarf Priests, use fear ward.\n\nFurther, warrior tanks can attempt  Berserker Rage, but the inability to effectively time and predict the fear makes utilizing this more about luck than timing. As for other tank/healer combinations and for DPS, attempt to wedge yourself deeply in a corner to attempt to mitigate some of the fear effects.\n\nApart from the fear, dispel  Shadow Word: Pain and interrupt the  Mana Burn.",
+	
+	DUNGEON_BOSS_HIGH_JUSTICE_GRIMSTONE = "",
+	DUNGEON_BOSS_HIGH_JUSTICE_GRIMSTONE_INFO = "",
+	DUNGEON_BOSS_HIGH_JUSTICE_GRIMSTONE_STRATEGY = "",
+	
+	DUNGEON_BOSS_ROL_GOROSH = "Gorosh the Dervish",
+	DUNGEON_BOSS_ROL_GOROSH_INFO = "Gorosh the Dervish is like a warrior with  Whirlwind and  Mortal Strike. Maximize healing output outside of the  Mortal Strike debuff. It is an easy fight as long as healer can sustain through the use  Mortal Strike.",
+	DUNGEON_BOSS_ROL_GOROSH_STRATEGY = "",
+	
+	DUNGEON_BOSS_ROL_GRIZZLE = "Grizzle",
+	DUNGEON_BOSS_ROL_GRIZZLE_INFO = "Grizzle is incredibly easy. There is nothing really to look out for.  Earth Shock can interrupt casting, which is about the only real concern on this boss.",
+	DUNGEON_BOSS_ROL_GRIZZLE_STRATEGY = "",
+	
+	DUNGEON_BOSS_ROL_EVISCERATOR = "Eviscerator",
+	DUNGEON_BOSS_ROL_EVISCERATOR_INFO = "Eviscerator is more annoying than difficult.  Shadow Bolt Volley can be rather annoying, but it shouldn't kill the group. That said, priests can utilize  Shadow Protection to their advantage here. The additional shadow resistance makes the fight trivial.",
+	DUNGEON_BOSS_ROL_EVISCERATOR_STRATEGY = "",
+	
+	DUNGEON_BOSS_ROL_OKTHOR = "Ok'Thor the Breaker",
+	DUNGEON_BOSS_ROL_OKTHOR_INFO = "Ok'thor the Breaker is the most difficult boss within Ring of the Law because of the number of abilities. He plays like a mage, and bad  Polymorph luck could lead to a wipe. The key is to dispel the  Polymorph and have as many members stay at range as possible to minimize the effect of  Arcane Explosion",
+	DUNGEON_BOSS_ROL_OKTHOR_STRATEGY = "",
+	
+	DUNGEON_BOSS_ROL_ANUBSHIAH = "Anub'Shiah",
+	DUNGEON_BOSS_ROL_ANUBSHIAH_INFO = "Anub'shiah is almost as difficult as Ok'thor the Breaker.  Curse of Tongues and  Enveloping Web both need an immediate dispel. These are the difficult mechanics. The rest aren't too tricky. No real strategy needed other than the dispels.",
+	DUNGEON_BOSS_ROL_ANUBSHIAH_STRATEGY = "",
+	
+	DUNGEON_BOSS_ROL_HEDRUM = "Hedrum the Creeper",
+	DUNGEON_BOSS_ROL_HEDRUM_INFO = "Hedrum the Creeper is a fairly straightforward boss. No real strategy is present outside of cleansing the poisons and dispel the Immobilize.",
+	DUNGEON_BOSS_ROL_HEDRUM_STRATEGY = "",
+	
+	DUNGEON_BOSS_ROL_THELDREN = "Theldren",
+	DUNGEON_BOSS_ROL_THELDREN_INFO = "Theldren can be summoned at the Ring of Law in Blackrock Depths by using the  Banner of Provocation provided on the quest  The Challenge. This is part of the Tier 0.5 questline.\n\nAfter completing this quest, you will receive another Banner of Provocation, allowing you to summon Theldren at any time you visit the Ring of the Law. Loot from his fight is not directly dropped by Theldren, but contained inside the Arena Spoils cache he leaves behind:",
+	DUNGEON_BOSS_ROL_THELDREN_STRATEGY = "",
+	
+	DUNGEON_BOSS_PYROMANCER_LOREGRAIN = "Pyromancer Loregrain",
+	DUNGEON_BOSS_PYROMANCER_LOREGRAIN_INFO = "Pyromancer Loregrain is an optional boss that spawns near the Shrine. It is an incredibly easy fight.",
+	DUNGEON_BOSS_PYROMANCER_LOREGRAIN_STRATEGY = "Pyromancer Loregrain does not really warrant discussion of strategy outside of destroying to totem. Incredibly easy boss to kill.",
+	
+	DUNGEON_BOSS_GENERAL_ANGERFORGE = "General Angerforge",
+	DUNGEON_BOSS_GENERAL_ANGERFORGE_INFO = "General Angerforge is an optional boss, but a lot of players will want to farm it for  Hand of Justice and  Force of Will. Overall, the fight is fairly difficult because of the adds. If your group is lacking on AoE damage, the fight is harder than it would otherwise be.",
+	DUNGEON_BOSS_GENERAL_ANGERFORGE_STRATEGY = "General Angerforge is straightforward. He behaves like a warrior, and then calls adds during the encounter. Just burn him and AoE the adds when they come. They have fairly low health, so they die fairly easily.",
+	
+	DUNGEON_BOSS_GOLEM_LORD_ARGELMACH = "Golem Lord Argelmach",
+	DUNGEON_BOSS_GOLEM_LORD_ARGELMACH_INFO = "Golem Lord Argelmach is an another optional boss that most avoid after the first few runs. It is one of the more challenging fights in Blackrock Depths, which is one reason why many avoid the fight all together. The primary reason to enter this room is for the Schematic: Field Repair Bot 74A, which is near Golem Lord Argelmach.",
+	DUNGEON_BOSS_GOLEM_LORD_ARGELMACH_STRATEGY = "Golem Lord Argelmach is a difficult fight because of  Chain Lightning. It is an unrelenting amount of damage if you're group is stacked too close together. As such, the real key to this fight is remaining spread out so that  Chain Lightning doesn't freely bounce from target to target, which is the major killing mechanic on this fight.",
+	
+	DUNGEON_BOSS_RIBBLY_SCREWSPIGOT = "Ribbly Screwspigot",
+	DUNGEON_BOSS_RIBBLY_SCREWSPIGOT_INFO = "",
+	DUNGEON_BOSS_RIBBLY_SCREWSPIGOT_STRATEGY = "",
+	
+	DUNGEON_BOSS_HURLEY_BLACKBREATH = "Hurley Blackbreath",
+	DUNGEON_BOSS_HURLEY_BLACKBREATH_INFO = "To spawn Hurley, you must break the three kegs in the Grim Guzzler storage room. It is a much more difficult fight because of the adds accompanying Hurley Blackbreath. That said, this is a completely avoidable fight, so I am not including major details about it. However, some basic strategy would be to utilize CC on the adds and burn Hurley.",
+	DUNGEON_BOSS_HURLEY_BLACKBREATH_STRATEGY = "",
+	
+	DUNGEON_BOSS_PLUGGER_SPAZZRING = "Plugger Spazzring",
+	DUNGEON_BOSS_PLUGGER_SPAZZRING_INFO = "Plugger Spazzring starts off neutral, but can quickly turn hostile, aggroing all the other patrons in the bar. It is advised to place  Dark Iron Ale Mug down in the corner by Lokhtos Darkbargainer, so the Patrons walk over, get stunned, and can be killed easily. This helps clear the area so Plugger Spazzring will not aggro nearly Patrons while engaged.\n\nPlugger Spazzring will also turn hostile if you loot too many mugs on his table, or if a Rogue pickpockets him for  Grim Guzzler Key. Make sure you pull him when he patrols closest towards Lokhtos Darkbargainer, near the area you previously cleared.",
+	DUNGEON_BOSS_PLUGGER_SPAZZRING_STRATEGY = "Plugger Spazzring is a fairly easy fight, and is often soloed by Rogue for the powerful dagger. The main concern is his  Shadow Bolt which can be negated with a  Greater Shadow Protection Potion.",
+	
+	DUNGEON_BOSS_PHALANX = "Phalanx",
+	DUNGEON_BOSS_PHALANX_INFO = "",
+	DUNGEON_BOSS_PHALANX_STRATEGY = "To get through the room quickly just buy 6  Dark Iron Ale Mug from Plugger Spazzring to give to Private Rocknot. After three turn-ins of  Dark Iron Ale Mug to Private Rocknot, he will start to rage. This action causes Phalanx to activate to stop Private Rocknot. The door to the remainder of the dungeon is smashed open during the scuffle. Phalanx hit fairly hard with  Mighty Blow, but this does not warrant a lengthy strategy discussion.",
+	
+	DUNGEON_BOSS_LORD_INCENDIUS = "Lord Incendius",
+	DUNGEON_BOSS_LORD_INCENDIUS_INFO = "Lord Incendius is an optional boss, but most groups (even those doing Lava Runs) tend to grab him as he is an easy kill. He is also located by the Black Anvil, needed by Blacksmiths.",
+	DUNGEON_BOSS_LORD_INCENDIUS_STRATEGY = "Lord Incendius is not difficult, but tanks and group members need to make sure they don't get knocked off the platform because there is no getting back up outside of dying.",
+	
+	DUNGEON_BOSS_FINEOUS_DARKVIRE = "Fineous Darkvire",
+	DUNGEON_BOSS_FINEOUS_DARKVIRE_INFO = "Fineous Darkvire is an optional boss once you complete the quest required to kill him. As such, many groups opt to avoid him because it is a pain trying to clear all of the adds to reach him.",
+	DUNGEON_BOSS_FINEOUS_DARKVIRE_STRATEGY = "Fineous Darkvire is a rather straightforward boss. He hits incredibly hard and has a healing mechanic. As such, it is important to interrupt the heal and for healers to pre-cast heals to keep up with the damage output. Further, when poorly geared, it is important to make sure all the adds along the pathway are killed to avoid an accidental aggro causing a wipe.",
+	
+	DUNGEON_BOSS_WARDER_STILGISS_VEREK = "Warder Stilgiss and Verek Strategy (Rare Spawn)",
+	DUNGEON_BOSS_WARDER_STILGISS_VEREK_INFO = "",
+	DUNGEON_BOSS_WARDER_STILGISS_VEREK_STRATEGY = "Warder Stilgiss spawns with Verek. The fight is not difficult for a five man group. Just kill Warder Stilgiss first and then Verek next.",
+	
+	DUNGEON_BOSS_DARK_COFFER = "Dark Coffer",
+	DUNGEON_BOSS_DARK_COFFER_INFO = "",
+	DUNGEON_BOSS_DARK_COFFER_STRATEGY = "",
+	
+	DUNGEON_BOSS_AMBASSADOR_FLAMELASH = "Ambassador Flamelash",
+	DUNGEON_BOSS_AMBASSADOR_FLAMELASH_INFO = "Ambassador Flamelash is a DPS race is some sense. There are adds that spawn which rush to the boss. If they reach the boss, he gets a buff. However, these adds can easily be killed before reaching him. As such, the way to beat him is to kill the adds before they reach him and increase his damage beyond which the healer is able to heal.",
+	DUNGEON_BOSS_AMBASSADOR_FLAMELASH_STRATEGY = "Ambassador Flamelash summons adds continually throughout the encounter, which give him a buff if they reach him. As such, these adds need to be killed away from the boss. Keep his stacks low, and this is an incredibly easy fight.",
+	
+	DUNGEON_BOSS_PANZOR_THE_INVINCIBLE = "Panzor the Invincible",
+	DUNGEON_BOSS_PANZOR_THE_INVINCIBLE_INFO = "Panzor the Invincible is a rare boss spawn within The Mold Foundry. He is fairly annoying to casters because of  Spell Reflection, but outside of that, he is a fairly easy encounter.",
+	DUNGEON_BOSS_PANZOR_THE_INVINCIBLE_STRATEGY = "Panzor the Invincible is not a mob that will be encountered often. However, when encountered, the biggest thing is for casters to watch out for  Spell Reflection. other than that, it is an easy encounter.",
+	
+	DUNGEON_BOSS_CHEST_OF_THE_SEVEN = "Chest of the Seven - Summoners' Tomb",
+	DUNGEON_BOSS_CHEST_OF_THE_SEVEN_INFO = "Chest of The Seven is another fairly easy fight. This is a multistage encounter against 7 waves of dwarven spirits. Each spirit reflects a particular class (e.g., priest, warlock, and rogue); however, it isn't worth offering unique strategy for each. They are all quite easy to kill. The only concern is killing them too slowly, which might mean you get an additional dwarf before you've completely killed the one you're focusing as they are released on a set timer.",
+	DUNGEON_BOSS_CHEST_OF_THE_SEVEN_STRATEGY = "No real strategy other than killing each quickly. They will possess one or two abilities of their specific class, but in a weakened state. Try to kill them quickly to avoid fighting two or more at a time. The names of the seven dwarves are:",
+	
+	DUNGEON_BOSS_MAGMUS = "Magmus",
+	DUNGEON_BOSS_MAGMUS_INFO = "Magmus is a tricky fight because of the fires coming from each side throughout the chamber.",
+	DUNGEON_BOSS_MAGMUS_STRATEGY = "Magmus stands at the end of a long chamber. WIthin the chamber, there are two rows of fire belching golems. This fire is brutal and will kill you rapidly. As such, it is on the tank to put Magmus in a good position, so that the flames aren't an issue. Outside of the flames from the sides of the chamber, the fight is fairly easy. This fight is all about positioning the boss correctly.",
+	
+	DUNGEON_BOSS_PRINCESS_MOIRA_BRONZEBEARD = "Princess Moira Bronzebeard",
+	DUNGEON_BOSS_PRINCESS_MOIRA_BRONZEBEARD_INFO = "Princess Moira is under some mind control, you can choose to save or kill her as part of the encounter.",
+	DUNGEON_BOSS_PRINCESS_MOIRA_BRONZEBEARD_STRATEGY = "If you are choosing to save Princess Moira Bronzebeard, then your strategy is to keep her occupied with an off-tank, or someone who can interrupt her casts. because she can be fairly squishy. Further, she assists Emperor Dagran Thaurissan within the fight, so you can't allow her to simply free cast the entire encounter. As soon as Emperor Dagran Thaurissan dies, she breaks free from the mind control she was under to become friendly.\n\nHowever, if your intention is to kill Princess Moira Bronzebeard, then you burn her before killing Emperor Dagran Thaurissan. Make sure you have some form of interrupt because she can do a fair amount of damage, which can be hard to heal through coupled with the damage output of Emperor Dagran Thaurissan.",
+	
+	DUNGEON_BOSS_EMPEROR_DAGRAN_THAURISSAN = "Emperor Dagran Thaurissan",
+	DUNGEON_BOSS_EMPEROR_DAGRAN_THAURISSAN_INFO = "",
+	DUNGEON_BOSS_EMPEROR_DAGRAN_THAURISSAN_STRATEGY = "",
+
+
+	--lower blackrock spire
+	DUNGEON_HISTORY_LOWER_BLACKROCK_SPIRE = "The mighty fortress carved within the fiery bowels of Blackrock Mountain was designed by the master dwarf-mason, Franclorn Forgewright. Intended to be the symbol of Dark Iron power, the fortress was held by the sinister dwarves for centuries. However, Nefarian - the cunning son of the dragon, Deathwing - had other plans for the great keep. He and his draconic minions took control of the upper Spire and made war on the dwarves' holdings in the mountain's volcanic depths. Realizing that the dwarves were led by the mighty fire elemental, Ragnaros - Nefarian vowed to crush his enemies and claim the whole of Blackrock mountain for himself.\n\nLower Blackrock Spire (LBRS) The first part of the instance is referred to as the 'lower spire', or LBRS, and is the main chunk of the instance, intended for a single group of players. It can be accessed without a key by entering the Blackrock Spire and moving to the right. The lower spire is home to many different factions, such as the Bloodaxe Orc Clan, the trolls of Smolderthorn and the Spirestone ogres. Similarly, there is a wide variety of bosses. Overlord Wyrmthalak is the final boss of the Lower Blackrock Spire.",
+	
+	DUNGEON_NOTES_LOWER_BLACKROCK_SPIRE_1 = "Now that Shadow Hunter Vosh'gajin is down, move to the large ramp in her room that descends down into the next room. Fight your way through the packs of trolls. If you have  Operative Bijou, you'll find Bijou in this area. After speaking to Bijou, return to the middle of the room and head back down. There, you'll find more troll packs waiting for you. Pull each pack one-by-one, carefully and watch out for runners.\n\nClear the room, and you'll find  Bijou's Belongings. In the southwest corner of the room, you'll see the path leads to more rooms where at the end of the hallway, lies War Master Voone. Clear the remaining trash and get ready for another boss fight.",
+
+	DUNGEON_BOSS_SPIRESTONE_BUTCHER = "Spirestone Butcher (Rare)",
+	DUNGEON_BOSS_SPIRESTONE_BUTCHER_INFO = "Spirestone Butcher is a level 57 elite ogre.",
+	DUNGEON_BOSS_SPIRESTONE_BUTCHER_STRATEGY = "Spirestone Butcher, patrols the the hallway leading to Mok'doom, where Highlord Omokk resides.",
+	
+	DUNGEON_BOSS_SPIRESTONE_BATTLE_LORD = "Spirestone Battle Lord (Rare)",
+	DUNGEON_BOSS_SPIRESTONE_BATTLE_LORD_INFO = "Spirestone Battle Lord is a level 58 elite ogre that spawns rarely in the room near Highlord Omokk.",
+	DUNGEON_BOSS_SPIRESTONE_BATTLE_LORD_STRATEGY = "Spirestone Battle Lord is accompanied by two casters. Most groups opt to burn down the casters first and then move on to Spirestone Battle Lord, but you can also use CC here if you'd like. He's a typical melee mob, so make sure the tank has aggro before burning him down.",
+	
+	DUNGEON_BOSS_HIGHLORD_OMOKK = "Highlord Omokk",
+	DUNGEON_BOSS_HIGHLORD_OMOKK_INFO = "Highlord Omokk is a level 59 elite ogre located in Lower Blackrock Spire.",
+	DUNGEON_BOSS_HIGHLORD_OMOKK_STRATEGY = "Highlord Omokk is accompanied by two other Ogres. Most groups tend to CC one of the adds, while the tank picks up Highlord Omokk, keeping him away from the group, with their back against a wall due to Omokk's  Knock Away. Decide within your group how to handle the adds. Either CC both if possible and kill Highlord Omokk first, or keep one add CC'd the entire time, kill the other, then Omokk. The choice is yours, but be sure crowd control is involved because it will make this encounter a lot easier.\n\nHighlord Omokk himself hits pretty hard, so healers, be sure to keep an eye on the tank's health, especially if it gets low. With his  Enrage, he could dish out devastating damage, quickly.",
+	
+	DUNGEON_BOSS_SHADOW_HUNTER_VOSHGAJIN = "Shadow Hunter Vosh'gajin",
+	DUNGEON_BOSS_SHADOW_HUNTER_VOSHGAJIN_INFO = "Shadow Hunter Vosh'gajin is a level 59 elite troll located in Lower Blackrock Spire.",
+	DUNGEON_BOSS_SHADOW_HUNTER_VOSHGAJIN_STRATEGY = "Shadow Hunter Vosh'gajin is accompanied by two Smolderthorn Shadow Priests. Similar to Highlord Omokk, groups typically will CC one of the mobs, and pull Shadow Hunter Vosh'gajin away from the group. This is due to her  Hex, which can affect multiple group members at a time. Kill her both Smolderthorn Shadow Priests first, then focus down Shadow Hunter Vosh'gajin. If you have a  Mage or  Druid in the group, have them cleanse her  Curse of Blood.",
+	
+	DUNGEON_BOSS_WAR_MASTER_VOONE = "War Master Voone",
+	DUNGEON_BOSS_WAR_MASTER_VOONE_INFO = "War Master Voone is a level 59 elite troll located in Lower Blackrock Spire.",
+	DUNGEON_BOSS_WAR_MASTER_VOONE_STRATEGY = "War Master Voone is not accompanied by any guards, but he hits really hard. Do not engage in the fight until you're certain tank has generated enough threat to maintain aggro. Tanks - pull him close to a wall and keep your back to the wall. If War Master Voone switches targets, stop DPS until the tank gets him back.",
+	
+	DUNGEON_BOSS_MOR_GRAYHOOF = "Mor Grayhoof",
+	DUNGEON_BOSS_MOR_GRAYHOOF_INFO = "Mor Grayhoof can be summoned at War Master Voone's room in Lower Blackrock Spire with the  Brazier of Beckoning provided by one of the Tier 0.5 quests to kill him.",
+	DUNGEON_BOSS_MOR_GRAYHOOF_STRATEGY = "",
+	
+	DUNGEON_BOSS_BANNOCK_GRIMAXE = "Bannok Grimaxe <Firebrand Legion Champion> (Rare)",
+	DUNGEON_BOSS_BANNOCK_GRIMAXE_INFO = "Bannok Grimaxe is a highly sought-after rare spawn in Lower Blackrock Spire, because he has a chance to drop  Plans: Arcanite Reaper. He spawns in the room before Mother Smolderweb, among packs of orcs, by a cluster of tents. Be sure to use /tar Bannok to see if he's spawned. If he is, he's either sitting or sleeping in a corner.",
+	DUNGEON_BOSS_BANNOCK_GRIMAXE_STRATEGY = "",
+	
+	DUNGEON_BOSS_MOTHER_SMOLDERWEB = "Mother Smolderweb",
+	DUNGEON_BOSS_MOTHER_SMOLDERWEB_INFO = "Mother Smolderweb is a level 59 elite spider boss found within Lower Blackrock Spire.",
+	DUNGEON_BOSS_MOTHER_SMOLDERWEB_STRATEGY = "Mother Smolderweb's  Crystallize is an AoE frontal cone stun. So naturally, have your tank face her away from the group. She will periodically cast Mother's Milk, a poison that stuns her target and anyone within close proximity of them. Being attentive to these 2 abilities, you can burn her down relatively easy.",
+	
+	DUNGEON_BOSS_CRYSTAL_FANG = "Crystal Fang (Rare)",
+	DUNGEON_BOSS_CRYSTAL_FANG_INFO = "Crystal Fang is a rare spawn found in Lower Blackrock Spire.",
+	DUNGEON_BOSS_CRYSTAL_FANG_STRATEGY = "",
+	
+	DUNGEON_BOSS_UROK_DOOMHOWL = "Urok Doomhowl",
+	DUNGEON_BOSS_UROK_DOOMHOWL_INFO = "Urok Doomhowl is a level 60 elite summoned boss found within Lower Blackrock Spire.",
+	DUNGEON_BOSS_UROK_DOOMHOWL_STRATEGY = "When Urok Doomhowl's encounter begins, many waves of elite ogres will appear first, before Urok himself. The key is to utilize the pike that you placed in the Tribute Pile. Every 30 seconds, you can click on the pike while targeting an ogre to insta-kill single ogre from a wave. This will help manage the number of mobs you fight at once per wave. Don't forget to also utilize CC in addition to clicking the pike, as these waves can get overwhelming over time.\n\nAfter you kill about 10 or so, Urok Doomhowl will finally appear. He's has warrior type abilities, including his  Intimidating Roar fear. Make sure your tank has proper aggro before unleashing DPS on him.",
+	
+	DUNGEON_BOSS_QUARTERMASTER_ZIGRIS = "Quartermaster Zigris",
+	DUNGEON_BOSS_QUARTERMASTER_ZIGRIS_INFO = "Quartermaster Zigris is an elite boss found within Lower Blackrock Spire.",
+	DUNGEON_BOSS_QUARTERMASTER_ZIGRIS_STRATEGY = "",
+	
+	DUNGEON_BOSS_GIZRUL_THE_SLAVENER = "Gizrul the Slavener",
+	DUNGEON_BOSS_GIZRUL_THE_SLAVENER_INFO = "Gizrul the Slavener is an elite worg boss found within Lower Blackrock Spire.",
+	DUNGEON_BOSS_GIZRUL_THE_SLAVENER_STRATEGY = "Gizrul the Slavener hits pretty hard and combined with his abilities, can dish out devastating damage with  Fatal Bite, which will heal himself, and  Infected Bite, a nature DoT. As usual, have your tank pick him up and generate enough threat before you unleash your DPS on him.",
+	
+	DUNGEON_BOSS_HALYCON = "Halycon",
+	DUNGEON_BOSS_HALYCON_INFO = "Halycon is an elite worg boss found within Lower Blackrock Spire.",
+	DUNGEON_BOSS_HALYCON_STRATEGY = "Halycon comes with a group of Worg Pup. Tanks, pick up Halycon while the group kills the pup adds. Once the adds are done for, focus down Halycon. With her melee abilities,  Rend and  Thrash, she shouldn't be too challenging to take down. As soon as Halycon falls, replenish your health and mana ASAP, because Gizrul the Slavener will soon come running into battle!",
+	
+	DUNGEON_BOSS_OVERLORD_WYRMTHALAK = "Overlord Wyrmthalak",
+	DUNGEON_BOSS_OVERLORD_WYRMTHALAK_INFO = "Overlord Wyrmthalak is the final boss of Lower Blackrock Spire.",
+	DUNGEON_BOSS_OVERLORD_WYRMTHALAK_STRATEGY = "Tanks, face Overlord Wyrmthalak away from your party, with your back against a wall while generating your initial threat. He will summon adds during the fight when he reaches 50% health. Most groups will opt to CC the adds and burn Overlord Wyrmthalak down as quickly as possible, then move on to the adds once he's down.",
+
+
+
+		--upper blackrock spire
+	DUNGEON_HISTORY_UPPER_BLACKROCK_SPIRE = "The mighty fortress carved within the fiery bowels of Blackrock Mountain was designed by the master dwarf-mason, Franclorn Forgewright. Intended to be the symbol of Dark Iron power, the fortress was held by the sinister dwarves for centuries. However, Nefarian - the cunning son of the dragon, Deathwing - had other plans for the great keep. He and his draconic minions took control of the upper Spire and made war on the dwarves' holdings in the mountain's volcanic depths. Realizing that the dwarves were led by the mighty fire elemental, Ragnaros - Nefarian vowed to crush his enemies and claim the whole of Blackrock mountain for himself.\n\nUpper Blackrock Spire, or UBRS, is the second part of the instance. It is a much smaller area and intended for a 10-player raid group. The player cap was 15 prior to patch 1.10, when it was lowered to 10 to adjust the dungeon's difficulty.  Seal of Ascension, which can be obtained through a long series of quests following  Seal of Ascension, is required as a key to access the upper area by the left entrance. It allows the raid group to fight their way to the final boss, General Drakkisath, and to the final boss for the Dungeon Set 2 quest series, Lord Valthalak. It also grants the wielder protection against the chromatic attacks from Warchief Rend Blackhand's mount, Gyth.",
+
+	DUNGEON_NOTE_UPPER_BLACKROCK_SPIRE_1 = "Dragonspire Hall Strategy", --add this as an encounter?
+
+	DUNGEON_BOSS_PYROGUARD_EMBERSEER = "Pyroguard Emberseer - Hall of Binding",
+	DUNGEON_BOSS_PYROGUARD_EMBERSEER_INFO = "",
+	DUNGEON_BOSS_PYROGUARD_EMBERSEER_STRATEGY = "Click the Blackrock Altar to start the fight. The Incarcerators have low health, so killing them is quite easy. Just AoE them down with mages and locks.\n\nAs for Pyroguard, tanks should keep him away from the group to avoid multiple people getting hit with the fire nova. Outside of that, this fight is quite easy. Boss should die fairly quickly.",
+	
+	DUNGEON_BOSS_GORALUK = "Goraluk Anvilcrack",
+	DUNGEON_BOSS_GORALUK_INFO = "This fight is a basic encounter. Tank him against the wall apart from your group.",
+	DUNGEON_BOSS_GORALUK_STRATEGY = "",
+	
+	DUNGEON_BOSS_JED_RUNEWATCHER = "Jed Runewatcher (Rare)",
+	DUNGEON_BOSS_JED_RUNEWATCHER_INFO = "Just as with Goraluk, this fight is quite easy. Tank him back against the wall with raid group at range, which should lead to a straightforward kill.",
+	DUNGEON_BOSS_JED_RUNEWATCHER_STRATEGY = "",
+	
+	DUNGEON_BOSS_WARCHIEF_REND_BLACKHAND = "Warchief Rend Blackhand",
+	DUNGEON_BOSS_WARCHIEF_REND_BLACKHAND_INFO = "After seven to eight waves, Rend will appear riding on Gyth's back. To combat Gyth, the MT should face Gyth away from the raid to protect them from the breath.",
+	DUNGEON_BOSS_WARCHIEF_REND_BLACKHAND_STRATEGY = "At 20%, Rend will be knocked off Gyth's back. The raid should kill Gyth before switching to Rend.\n\nYour OT should immediately grab Rend as soon as he is knocked off Gyth, and position him to the side of the room. Once Gyth is slain, the raid will switch to Rend. Melee should attempt to avoid his whirlwind and cleave mechanics. He hits quite hard, so healing here is the biggest issue with killing Warchief Rend Blackhand as mana is already low going into this portion of the encounter.",
+	
+	DUNGEON_BOSS_GYTH = "Gyth",
+	DUNGEON_BOSS_GYTH_INFO  = "To combat Gyth, the MT should face Gyth away from the raid to protect them from the breath.",
+	DUNGEON_BOSS_GYTH_STRATEGY = "At 20%, Rend will be knocked off Gyth's back. The raid should kill Gyth before switching to Rend.",
+	
+	DUNGEON_BOSS_THE_BEAST = "The Beast",
+	DUNGEON_BOSS_THE_BEAST_INFO = "The goal here within The Furnace is to kill The Beast.",
+	DUNGEON_BOSS_THE_BEAST_STRATEGY = "The Beast is a decently difficult fight because of a few mechanics. The first is a charge that can't be avoided. As soon as the charge happens, he will return to the top aggroed target. The MT should always have the most aggro to ensure it returns properly.\n\nThe second mechanic that will cause issues is the fear. Raid groups should be at max range and spread out from The Beast to avoid this mechanic.\n\nFinally, there is a fire nova ability called Flamebreak that will do fire damage and cause a knockback. Tanks should have their back to a wall to avoid being knocked back. Everyone else should attempt to back at max range to avoid taking too much AoE damage.",
+	
+	DUNGEON_BOSS_LORD_VALTHALAK = "Lord Valthalak",
+	DUNGEON_BOSS_LORD_VALTHALAK_INFO = "Lord Valthalak can be summoned at The Beast's room in Upper Blackrock Spire with the  Brazier of Beckoning provided for the quest  Mea Culpa, Lord Valthalak.",
+	DUNGEON_BOSS_LORD_VALTHALAK_STRATEGY = "",
+	
+	DUNGEON_BOSS_GENERAL_DRAKKISATH = "General Drakkisath",
+	DUNGEON_BOSS_GENERAL_DRAKKISATH_INFO = "",
+	DUNGEON_BOSS_GENERAL_DRAKKISATH_STRATEGY = "General Drakkisath is the most difficult by far. The most common approach is the kite method, which many groups with hunters will use. It is significantly easier than the other method.\n\nIn the kiting method, the hunter will pull General Drakkisath and kite him back through into the Beast’s room. Once there, the Hunter with feign death returning Drakkisath to the raid. While this is going on, each tank will grab a Chromatic Elite Guard and burn it down. The MT will then be prepared to grab General Drakkisath. Face him away from the raid to account for the flame breath. General Drakkisath is easy on his own apart from the guards, which is why this method is favored amongst raid groups.\n\nThe second strategy is similar, but without the kite. Your group can tank both the adds and General Drakkisath at the starting position. The goal is to AoE Cleave the Chromatic Elite Guards down quickly. A possible assist here is to chain fear one of the guards with a warlock, which lessens the healing burden. Either way, this method is significantly harder at lower gear levels because of the damage output between the guards and General Drakkisath. Once the guards are dead, just as with the kiting method, General Drakkisath is fairly easy on his own",
+
+
+	--scholomance
+	DUNGEON_HISTORY_SCHOLOMANCE = "The Scholomance is housed within a series of crypts that lie beneath the ruined keep of Caer Darrow. Once owned by the noble Barov family, Caer Darrow fell to ruin following the Second War. As the wizard Kel'thuzad enlisted followers for his Cult of the Damned he would often promise immortality in exchange for serving his Lich King. The Barov family fell to Kel'thuzad's charismatic influence and donated the keep and its crypts to the Scourge. The cultists then killed the Barovs and turned the ancient crypts into a school for necromancy known as the Scholomance. Though Kel'thuzad no longer resides in the crypts, devoted cultists and instructors still remain. The powerful lich, Ras Frostwhisper, rules over the site and guards it in the Scourge's name - while the mortal necromancer, Darkmaster Gandling, serves as the school's insidious headmaster.",
+	
+	DUNGEON_BOSS_KIRTONOS_BLOOD_STEWARD = "Blood Steward of Kirtonos",
+	DUNGEON_BOSS_KIRTONOS_BLOOD_STEWARD_INFO = "Blood Steward of Kirtonos is a level 57 elite located in the Reliquary.",
+	DUNGEON_BOSS_KIRTONOS_BLOOD_STEWARD_STRATEGY = "She has a few curses that can be dispelled by  Mage &  Druid. Watch out for her  Paralyzing Poison as it stuns the target for 8 seconds. With those two things in mind, DPS her down!",
+	
+	DUNGEON_BOSS_KIRTONOS_THE_HERALD = "Kirtonos the Herald",
+	DUNGEON_BOSS_KIRTONOS_THE_HERALD_INFO = "Kirtonos the Herald is a level 60 elite located out on the porch. He can only be summoned if a person in your group has  Blood of Innocents.",
+	DUNGEON_BOSS_KIRTONOS_THE_HERALD_STRATEGY = "Kirtonos the Herald has two different forms, each having a strategy. Tank, grab aggro and keep your back to a wall to prevent knockback. In human form, Kirtonos the Herald uses his caster abilities, and have a  Mage &  Druid dispel the curse, especially if it's on your healer.\n\nWhen Kirtonos the Herald transforms into his gargoyle form, where it becomes more of a tank and spank fight so long as your tank maintains aggro.",
+	
+	DUNGEON_BOSS_JANDICE_BAROV = "Jandice Barov",
+	DUNGEON_BOSS_JANDICE_BAROV_INFO = "Jandice Barov is a level 61 elite who is found by using a torch on the south wall, as seen by the map below:",
+	DUNGEON_BOSS_JANDICE_BAROV_STRATEGY = "Jandice Barov will create several copies of herself that spread throughout the room. You can't AoE them down, so you must target them down individually. Some parties opt to ignore the adds and just focus down Jandice herself. Remember to have a  Mage &  Druid dispel her  Curse of Blood.",
+	
+	DUNGEON_BOSS_RATTLEGORE = "Rattlegore",
+	DUNGEON_BOSS_RATTLEGORE_INFO = "Rattlegore is a level 61 elite located in the Great Ossuary's Basement.",
+	DUNGEON_BOSS_RATTLEGORE_STRATEGY = "Pull Rattlegore once your surrounding area is clear. His abilities are melee focused, and he hits like a truck! Ranged, keep back as far as possible. Tank, face Rattlegore away from the group. Armor reducing abilities such as  Sunder Armor or  Expose Armor can help your team take him down quicker. Once dead, Rattlegore drops  Viewing Room Key.",
+	
+	DUNGEON_BOSS_MARDUK_BLACKPOOL = "Marduk Blackpool",
+	DUNGEON_BOSS_MARDUK_BLACKPOOL_INFO = "Marduk Blackpool is a level 58 elite located in the Viewing Room of Scholomance.",
+	DUNGEON_BOSS_MARDUK_BLACKPOOL_STRATEGY = "Tanks should hold Marduk Blackpool in place while ranged stand back, ensuring they are not affected by his  Defiling Aura. Melee, watch out for his  Shadow Shield - it deals damage each time you attack it as long as it's active. Other than those two factors, he's pretty easy to burn down.",
+	
+	DUNGEON_BOSS_VECTUS = "Vectus",
+	DUNGEON_BOSS_VECTUS_INFO = "Vectus is a level 60 elite located in the Viewing Room of Scholomance.",
+	DUNGEON_BOSS_VECTUS_STRATEGY = "Vectus is a pretty squishy target with fire-based spells. Watch out for his AoE abilities: don't stand in fire & you'll DPS him down pretty quickly.",
+	
+	DUNGEON_BOSS_RAS_FROSTWHISPER = "Ras Frostwhisper",
+	DUNGEON_BOSS_RAS_FROSTWHISPER_INFO = "Ras Frostwhisper is a level 60 elite located along the passage through the Viewing Room.",
+	DUNGEON_BOSS_RAS_FROSTWHISPER_STRATEGY = "Make sure the entire area surrounding Ras Frostwhisper is clear before engaging in the fight. He has several frost-type magic spells and abilities. Tank, face him away from the group, watch out for his  Fear and plan an interrupt rotation to minimize his spell casting.",
+	
+	DUNGEON_BOSS_KORMOK = "Kormok",
+	DUNGEON_BOSS_KORMOK_INFO = "Kormok can be summoned at Ras Frostwhisper's room in Scholomance with the  Brazier of Beckoning provided by one of the Tier 0.5 quests to kill him.",
+	DUNGEON_BOSS_KORMOK_STRATEGY = "",
+	
+	DUNGEON_BOSS_INSTRUCTOR_MALICIA = "Instructor Malicia",
+	DUNGEON_BOSS_INSTRUCTOR_MALICIA_INFO = "Instructor Malicia is a level 60 elite located in the southern room on the upper floor of Scholomance.",
+	DUNGEON_BOSS_INSTRUCTOR_MALICIA_STRATEGY = "Instructor Malicia has a few heals at her disposal, so be sure to sort out an interrupt rotation to minimize her casting. Have a  Mage &  Druid dispel her  Call of the Grave curse and DPS her down.",
+	
+	DUNGEON_BOSS_DOCTOR_THEOLEN_KRASTINOV = "Doctor Theolen Krastinov <The Butcher>",
+	DUNGEON_BOSS_DOCTOR_THEOLEN_KRASTINOV_INFO = "Doctor Theolen Krastinov is a level 60 elite located in the Eastern room on the Upper Level, called The Hall of the Damned.",
+	DUNGEON_BOSS_DOCTOR_THEOLEN_KRASTINOV_STRATEGY = "Have your tank pull Doctor Theolen Krastinov and keep their back to a wall. At 50% health, his attack speed will dramatically increase. Great time to use defensive and healing cooldowns. He has melee-only abilities, so keep the tank alive and burn him down!",
+	
+	DUNGEON_BOSS_LOREKEEPER_POLKELT = "Lorekeeper Polkelt",
+	DUNGEON_BOSS_LOREKEEPER_POLKELT_INFO = "Lorekeeper Polkelt is a level 60 elite located in the Northern room on the Upper Level.",
+	DUNGEON_BOSS_LOREKEEPER_POLKELT_STRATEGY = "Lorekeeper Polkelt has several toxic AoE abilities that are damaging when nearby. One strategy, an attempt to keep him at max range, is having someone in your party pull Lorekeeper Polkelt and jump off the upper-level railing, and as Lorekeeper Polkelt runs around the stairs, your tank can pick him up on the lower level. The rest of the party, remaining on the upper level, can range attack him safely without having to worry about his AoE abilities. If anyone is infected with his  Volatile Infection, make sure they spread out from the rest of the group.",
+	
+	DUNGEON_BOSS_THE_RAVENIAN = "The Ravenian",
+	DUNGEON_BOSS_THE_RAVENIAN_INFO = "The Ravenian is a level 60 elite located in the Southern room on the Lower Level (The Barov Family Vault).",
+	DUNGEON_BOSS_THE_RAVENIAN_STRATEGY = "The Ravenian should be tanked against a wall, facing away from the rest of the group. It's a melee-centric fight, and he hits pretty hard and fast. Watch out for his AoE abilities and ensure that the tank has generated enough threat before engaging him in combat.",
+	
+	DUNGEON_BOSS_LORD_ALEXEI_BAROV = "Lord Alexei Barov",
+	DUNGEON_BOSS_LORD_ALEXEI_BAROV_INFO = "Lord Alexei Barov is a level 60 elite located within the Eastern portion of the Lower Level (The Barov Family Vault).",
+	DUNGEON_BOSS_LORD_ALEXEI_BAROV_STRATEGY = "Lord Alexei Barov is considered one of the toughest bosses in Scholomance. Two skeletal bodyguards accompany him. In addition to that, the room he's in has toxic green liquid on the floor that you must not stand in. His bodyguards hit pretty hard, but they can be CC'd with  Shackle Undead or  Turn Undead, for example.\n\nHis AoE aura,  Unholy Aura, constantly ticks damage to anyone in range of it. Tanks must pull Alexei back at max range, so the aura does not afflict the rest of the group. His  Veil of Shadow can be detrimental to the group if not properly cleansed by a  Mage &  Druid. If you cannot cleanse the curse, healers, be sure to keep the tank topped off to the best of your ability, because when  Veil of Shadow strikes, you'll have a lot of difficulty healing your tank for 15 seconds.",
+	
+	DUNGEON_BOSS_LADY_ILLUCIA_BAROV = "Lady Illucia Barov",
+	DUNGEON_BOSS_LADY_ILLUCIA_BAROV_INFO = "Lady Illucia Barov is a level 60 elite located within the Northern room of the Lower Level (The Barov Family Vault).",
+	DUNGEON_BOSS_LADY_ILLUCIA_BAROV_STRATEGY = "The biggest concern with fighting Lady Illucia Barov is her ability to  Dominate Mind, which is a Mind Control mechanic. Be sure to stun or CC whoever is afflicted with  Dominate Mind. She can also cast an AoE  Silence and  Fear and so be sure her entire area is clear before engaging in combat.",
+	
+	DUNGEON_BOSS_DARKMASTER_GANDLING = "Darkmaster Gandling",
+	DUNGEON_BOSS_DARKMASTER_GANDLING_INFO = "Darkmaster Gandling is a level 61 elite located within the center of The Barov Family Vault, and spawns once you kill the final of the previous six bosses, so be sure you're not standing in the center to prematurely aggro him.",
+	DUNGEON_BOSS_DARKMASTER_GANDLING_STRATEGY = "Many tanks will keep Darkmaster Gandling in the center where he spawns, while the ranged will stay atop the stairs to keep a distance. He'll periodically teleport a player to an adjacent room, where they will be locked in until they defeat the enemies inside. Be aware and make plans in the event your tank or healer get teleported. An interrupt order works nicely for when he casts  Arcane Missiles. Have a  Mage or  Druid dispel  Improved Shadow Bolt as quickly as possible. Other than that, he has a lot of HP so properly execute the mechanics, and you'll be greatly rewarded for his defeat!",
+
+
+
 }
 
 addon.locales = locales[GetLocale()];
