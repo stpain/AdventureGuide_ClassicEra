@@ -20,25 +20,34 @@
     
     <Frame name="AdventureGuideHomeGridviewItemTemplate" mixin="AdventureGuideHomeGridviewItemMixin" enableMouse="true" virtual="true">
         <Layers>
-            <Layer level="BACKGROUND">
-                <Texture parentKey="background" atlas="ShipMission_FollowerListButton">
+            <Layer level="BACKGROUND" textureSubLevel="-1">
+                <Texture parentKey="border">
+                <Color r="0.6" g="0.55" b="0.0" a="0.3"/>
 					<Anchors>
 						<Anchor point="TOPLEFT" x="1" y="-1"/>
 						<Anchor point="BOTTOMRIGHT" x="-1" y="1"/>
 					</Anchors>
                 </Texture>
             </Layer>
-            <Layer level="HIGHLIGHT">
-                <Texture parentKey="background" atlas="communities-create-avatar-border-selected">
+            <Layer level="BACKGROUND" textureSubLevel="0">
+                <Texture parentKey="background" atlas="TalkingHeads-PortraitBg">
 					<Anchors>
-						<Anchor point="TOPLEFT" x="0" y="0"/>
-						<Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+						<Anchor point="TOPLEFT" x="2" y="-2"/>
+						<Anchor point="BOTTOMRIGHT" x="-2" y="2"/>
+					</Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="HIGHLIGHT">
+                <Texture parentKey="background" atlas="communities-create-avatar-border-selected" alpha="0.75">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="2" y="-2"/>
+						<Anchor point="BOTTOMRIGHT" x="-2" y="2"/>
 					</Anchors>
                 </Texture>
             </Layer>
             <Layer level="ARTWORK">
                 <Texture parentKey="icon">
-                    <TexCoords left="0.0" right="0.68" top="0.0" bottom="1" />
+                    <!-- <TexCoords left="0.0" right="0.68" top="0.0" bottom="1"/> -->
 					<Anchors>
 						<Anchor point="TOPLEFT" x="0" y="0"/>
 						<Anchor point="BOTTOMRIGHT" x="0" y="10"/>
@@ -46,8 +55,8 @@
                 </Texture>
             </Layer>
             <Layer level="OVERLAY">
-				<FontString parentKey="text" inherits="GameFontNormal">
-                    <Size y="44"/>
+				<FontString parentKey="text" inherits="GameFontNormalLarge">
+                    <Size y="50"/>
 					<Anchors>
 						<Anchor point="BOTTOMLEFT" x="0" y="0"/>
 						<Anchor point="BOTTOMRIGHT" x="0" y="0"/>

@@ -103,16 +103,43 @@ end
 
 AdventureGuideHomeGridviewItemMixin = {}
 function AdventureGuideHomeGridviewItemMixin:OnLoad()
-    self:SetScript("OnMouseDown", function()
-        if self.instance then
-            addon:TriggerEvent("Guide_OnInstanceSelected", self.instance)
-        end
-    end)
+
 end
 function AdventureGuideHomeGridviewItemMixin:SetDataBinding(binding)
-    self.instance = binding;
-    self.icon:SetTexture(binding.buttonFileID)
-    self.text:SetText(binding.name)
+    self.binding = binding;
+
+    if self.binding.contentType == "instance" then
+        self.icon:SetTexture(binding.buttonFileID)
+        self.icon:SetTexCoord(0,0.68,0,1)
+        self.icon:ClearAllPoints()
+        self.icon:SetPoint("TOPLEFT", 0, 0)
+        self.icon:SetPoint("BOTTOMRIGHT", 0, 10)
+        self.text:SetText(binding.name)
+
+        self:SetScript("OnMouseDown", function()
+            addon:TriggerEvent("Guide_OnInstanceSelected", self.binding)
+        end)
+
+    elseif self.binding.contentType == "menu" then
+        self.icon:SetTexCoord(0.1,0.9,0.1,0.9)
+        self.icon:ClearAllPoints()
+        self.icon:SetPoint("LEFT", 5, 0)
+        self.icon:SetPoint("RIGHT", -5, 0)
+        if binding.icon then
+            self.icon:SetTexture(binding.icon)
+        elseif binding.atlas then
+            self.icon:SetAtlas(binding.atlas, true)
+        end
+        self.text:SetText(binding.label)
+
+        if binding.onMouseDown then
+            self:SetScript("OnMouseDown", binding.onMouseDown)
+        end
+    end
+
+end
+function AdventureGuideHomeGridviewItemMixin:ResetDataBinding()
+    self:SetScript("OnMouseDown", nil)
 end
 
 

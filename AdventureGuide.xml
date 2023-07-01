@@ -16,7 +16,7 @@
                 </Texture>
             </Layer>
             <Layer level="ARTWORK">
-                <Texture atlas="AdventureMapLabel-Large">
+                <Texture atlas="AdventureMapLabel-Large" hidden="true">
                     <Size y="35"/>
                     <Anchors>
                         <Anchor point="TOPLEFT" x="260" y="-25"/>
@@ -27,9 +27,15 @@
         </Layers>
         <Frames>
             <Button parentKey="home" inherits="UIPanelButtonTemplate" text="Home">
-                <Size x="200" y="34"/>
+                <Size x="120" y="32"/>
                 <Anchors>
                     <Anchor point="TOPLEFT" x="60" y="-25"/>
+                </Anchors>
+            </Button>
+            <Button parentKey="subMenu1" inherits="UIPanelButtonTemplate" text="Home" hidden="true">
+                <Size x="120" y="32"/>
+                <Anchors>
+                    <Anchor point="LEFT" relativeKey="$parent.home" relativePoint="RIGHT" x="10" y="0"/>
                 </Anchors>
             </Button>
             <ScrollFrame parentKey="homeGridview" inherits="AdventureWidgetsGridviewTemplate">

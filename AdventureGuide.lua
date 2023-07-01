@@ -31,6 +31,7 @@ function AdventureGuideMixin:OnLoad()
 
     self.home:SetScript("OnClick", function()
         self:HideAllViews()
+        self:LoadHomeMenu()
         self.homeGridview:Show()
     end)
     self:SetScript("OnShow", function()
@@ -94,12 +95,45 @@ function AdventureGuideMixin:CreateMinimapButton()
     self.MinimapIcon:Register('AdventureMinimapIcon', self.MinimapButton, ADVENTURE_GUIDE_GLOBAL.minimapButton)
 end
 
-function AdventureGuideMixin:Database_OnInitialised()
-    
-    for k, v in ipairs(addon.dungeons) do
+function AdventureGuideMixin:LoadHomeMenu()
+    self.homeGridview:Flush()
+    self.homeGridview:SetMinMaxSize(200, 300)
+    local homeMenu = {
+        {
+            label = "Dungeons",
+            atlas = "groupfinder-background-dungeons",
+            contentType = "menu",
+            onMouseDown = function()
+                self:LoadDungeons()
+            end,
+        },
+        {
+            label = "Raids",
+            atlas = "groupfinder-background-raids-classic",
+            contentType = "menu",
+        },
+        {
+            label = "Quests",
+            atlas = "groupfinder-background-questing",
+            contentType = "menu",
+        },
+        {
+            label = "Class",
+            atlas = "groupfinder-background-scenarios",
+            contentType = "menu",
+        },
+    }
+    for k, v in ipairs(homeMenu) do
         self.homeGridview:Insert(v)
     end
     self.homeGridview:UpdateLayout()
+    self.subMenu1:SetScript("OnClick", nil)
+    self.subMenu1:Hide()
+end
+
+function AdventureGuideMixin:Database_OnInitialised()
+    
+    self:LoadHomeMenu()
 
     self:CreateMinimapButton()
 end
@@ -109,6 +143,22 @@ function AdventureGuideMixin:UpdateLayout()
     local x, y = self:GetSize()
 
     self.homeGridview:UpdateLayout()
+end
+
+function AdventureGuideMixin:LoadDungeons()
+    self.homeGridview:SetMinMaxSize(160, 220)
+    self.homeGridview:Flush()
+    for k, v in ipairs(addon.dungeons) do
+        v.contentType = "instance"; --cba going through every dungeon/raid table to add this
+        self.homeGridview:Insert(v)
+    end
+    self.homeGridview:UpdateLayout()
+    self.subMenu1:SetText("Dungeons")
+    self.subMenu1:SetScript("OnClick", function()
+        self:HideAllViews()
+        self.homeGridview:Show()
+    end)
+    self.subMenu1:Show()
 end
 
 function AdventureGuideMixin:Guide_OnInstanceSelected(instance)

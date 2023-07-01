@@ -4965,9 +4965,9 @@ addon.dungeons = {
         bosses = {
             --arena
             {
-                name = L.DUNGEON_BOSS_DIRE_MAUL_ARENA,
+                name = L.DUNGEON_BOSS_DIRE_MAUL_ARENA_RAZZA,
                 npcID = 11497,
-                info = "",
+                info = L.DUNGEON_BOSS_DIRE_MAUL_ARENA_INFO,
                 strategy = "",
                 abilities = {
                     22937,
@@ -4977,9 +4977,9 @@ addon.dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_DIRE_MAUL_ARENA,
+                name = L.DUNGEON_BOSS_DIRE_MAUL_ARENA_SKAAR,
                 npcID = 11498,
-                info = "",
+                info = L.DUNGEON_BOSS_DIRE_MAUL_ARENA_INFO,
                 strategy = "",
                 abilities = {
                     15708,
@@ -4990,9 +4990,9 @@ addon.dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_DIRE_MAUL_ARENA,
+                name = L.DUNGEON_BOSS_DIRE_MAUL_ARENA_MUSHGOG,
                 npcID = 11447,
-                info = "",
+                info = L.DUNGEON_BOSS_DIRE_MAUL_ARENA_INFO,
                 strategy = "",
                 abilities = {
                     22948,

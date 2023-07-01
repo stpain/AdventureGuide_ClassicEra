@@ -911,8 +911,8 @@ locales["enUS"] = {
 	DUNGEON_BOSS_RAMSTEIN_THE_GORGER_INFO = "Once you have cleared the room of all the patchwork mobs you will spawn Ramstein the Gorger. He is basically a tank and spank with aggro swap mechanics",
 	DUNGEON_BOSS_RAMSTEIN_THE_GORGER_STRATEGY = "He will cast  Knockout on the tank and swap aggro also using  Trample along the way. You should just be wary of this and have some heals ready for your DPS'ers as a healer.",
 	
-	DUNGEON_BOSS_BARON_RIVENDARE = "The final boss of Stratholme undead is Baron Rivendare.",
-	DUNGEON_BOSS_BARON_RIVENDARE_INFO = "",
+	DUNGEON_BOSS_BARON_RIVENDARE = "Baron Rivendare",
+	DUNGEON_BOSS_BARON_RIVENDARE_INFO = "The final boss of Stratholme undead is Baron Rivendare.",
 	DUNGEON_BOSS_BARON_RIVENDARE_STRATEGY = "Pull him to the right side of the room, the melee will follow suit and the ranged DPS and healer will go to the left side of the room and stand on the bone piles. This will allow all your ranged to avoid the  Unholy Aura, making the fight a lot easier on the healer. Melee should also be standing behind the boss to avoid his cleave. When the skeleton mobs spawn as a DPS, they are your primary focus; the tank shouldn't have to worry about picking all of these up as they die fairly quickly. Maintain the distance to avoid the aura as much as you can, and this fight is a lot easier.",
 
 
@@ -920,7 +920,10 @@ locales["enUS"] = {
 	--dire maul
 	DUNGEON_HISTORY_DIRE_MAUL = "Built thousands of years ago to house the kaldorei's arcane secrets, the formerly great city of Eldre'Thalas now lies in ruin, writhing with warped, twisted forces. Competing covens once fought for control of Dire Maul's corrupted energy, but they have since settled into uneasy truces, choosing to exploit the power within their own territories rather than continue to battle over the entire complex.",
 
-	DUNGEON_BOSS_DIRE_MAUL_ARENA = "The Razza, Skarr the Unbreakable and Mushgog all randomly spawn in the Arena. The spawn timer is unknown, but when they do spawn, you'll see a /yell from a goblin spectator telling you which one spawned. You can hear this yell from either inside or outside an instance in Dire Maul.",
+	DUNGEON_BOSS_DIRE_MAUL_ARENA_RAZZA = "Razza",
+	DUNGEON_BOSS_DIRE_MAUL_ARENA_SKAAR = "Skarr the Unbreakable",
+	DUNGEON_BOSS_DIRE_MAUL_ARENA_MUSHGOG = "Mushgog",
+	DUNGEON_BOSS_DIRE_MAUL_ARENA_INFO = "The Razza, Skarr the Unbreakable and Mushgog all randomly spawn in the Arena. The spawn timer is unknown, but when they do spawn, you'll see a /yell from a goblin spectator telling you which one spawned. You can hear this yell from either inside or outside an instance in Dire Maul.",
 
 	DUNGEON_BOSS_PUSILLIN = "Pusillin",
 	DUNGEON_BOSS_PUSILLIN_INFO = "Pusillin is a level 56-57 elite imp mini-boss located in Dire Maul East. He drops  Crescent Key.",
