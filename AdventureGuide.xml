@@ -1,6 +1,6 @@
 <Ui>
-    <Frame name="AdventureGuide" mixin="AdventureGuideMixin" parent="UIParent" inherits="PortraitFrameTemplate" frameStrata="HIGH" enableMouse="true" resizable="true" movable="true">
-        <Size x="900" y="500"/>
+    <Frame name="AdventureGuide" mixin="AdventureGuideMixin" parent="UIParent" inherits="PortraitFrameTemplate" frameStrata="HIGH" enableMouse="true"  movable="true">
+        <Size x="800" y="600"/>
         <Anchors>
             <Anchor point="CENTER" x="0" y="0"/>
         </Anchors>
@@ -8,7 +8,7 @@
             <Layer level="BACKGROUND">
                 <Texture textureSubLevel="-1">
                     <Color r="0.105" g="0.1" b="0.1" a="0.95"/>
-                    <Size y="35"/>
+                    <Size y="75"/>
                     <Anchors>
                         <Anchor point="TOPLEFT" x="0" y="-25"/>
                         <Anchor point="TOPRIGHT" x="0" y="-25"/>
@@ -32,13 +32,13 @@
                     <Anchor point="TOPLEFT" x="60" y="-25"/>
                 </Anchors>
             </Button>
-            <Button parentKey="subMenu1" inherits="UIPanelButtonTemplate" text="Home" hidden="true">
+            <Button parentKey="dungeons" inherits="UIPanelButtonTemplate" text="Dungeons">
                 <Size x="120" y="32"/>
                 <Anchors>
                     <Anchor point="LEFT" relativeKey="$parent.home" relativePoint="RIGHT" x="10" y="0"/>
                 </Anchors>
             </Button>
-            <ScrollFrame parentKey="homeGridview" inherits="AdventureWidgetsGridviewTemplate">
+            <ScrollFrame parentKey="gridview" inherits="AdventureWidgetsGridviewTemplate" hidden="true">
                 <Anchors>
                     <Anchor point="TOPLEFT" x="0" y="-60"/>
                     <Anchor point="BOTTOMRIGHT" x="-6" y="16"/>
@@ -48,20 +48,19 @@
             <Frame parentKey="content">
                 <Anchors>
                     <Anchor point="TOPLEFT" x="0" y="-60"/>
-                    <Anchor point="BOTTOMRIGHT" x="-6" y="16"/>
+                    <Anchor point="BOTTOMRIGHT" x="-6" y="6"/>
                 </Anchors>
             </Frame>
 
-            <Button parentKey="resize" inherits="PanelResizeButtonTemplate">
+            <!-- <Button parentKey="resize" inherits="PanelResizeButtonTemplate">
                 <Size x="16" y="16"/>
                 <Anchors>
                     <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
                 </Anchors>
-            </Button>
+            </Button> -->
         </Frames>
         <Scripts>
             <OnLoad method="OnLoad"/>
-            <OnUpdate method="OnUpdate"/>
             <OnDragStart>
                 self:StartMoving()
             </OnDragStart>

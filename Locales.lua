@@ -5,9 +5,9 @@
 
     The _STRATEGY texts are not meant as a defining method to defeat a boss and are given as a guide, new players may find it useful.
 
-    Any changes or alternatives are welcomed, please submit you change via a pull request on github.
+    Any changes or alternatives are welcomed, please submit your change via a pull request on github.
 
-    I do not own this data, all credits are given to the relevant author.
+    I do not own this data, all credits are given to the relevant author/poster of the text.
 ]]
 
 local name, addon = ...;
@@ -22,6 +22,7 @@ locales["enUS"] = {
             -3 fields per boss (name, info, strategy)
             -1 field for history
             -a generic 'trash' field
+			-notes DUNGEON_NOTES_DUNGEONNAME_1, _2 etc these will be used as 'pages' on the dungeon summary view and are good for dungeon events and special bosses etc
     ]]
 
     DUNGEON_TRASH = "Trash",

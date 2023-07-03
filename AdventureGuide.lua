@@ -4,21 +4,12 @@ local name, addon = ...;
 
 AdventureGuideMixin = {
     helptips = {},
-    isRefreshEnabled = false,
     views = {},
 }
 
 function AdventureGuideMixin:OnLoad()
 
     self:RegisterForDrag("LeftButton")
-    self.resize:Init(self, 700, 450, 1000, 650)
-
-    self.resize:HookScript("OnMouseDown", function()
-        self.isRefreshEnabled = true;
-    end)
-    self.resize:HookScript("OnMouseUp", function()
-        self.isRefreshEnabled = false;
-    end)
 
     self.portraitMask = self:CreateMaskTexture()
     self.portraitMask:SetAllPoints(AdventureGuidePortrait)
@@ -26,17 +17,18 @@ function AdventureGuideMixin:OnLoad()
     AdventureGuidePortrait:AddMaskTexture(self.portraitMask)
     AdventureGuidePortrait:SetTexture("Interface/Addons/AdventureGuide_ClassicEra/Media/tbd-icon")
 
-    self.homeGridview:InitFramePool("FRAME", "AdventureGuideHomeGridviewItemTemplate")
-    self.homeGridview:SetMinMaxSize(160, 220)
+    self.gridview:InitFramePool("FRAME", "AdventureGuideHomeGridviewItemTemplate")
+    self.gridview:SetMinMaxSize(160, 220)
 
     self.home:SetScript("OnClick", function()
+        self:SelectView("suggestedcontent")
+    end)
+
+    self.dungeons:SetScript("OnClick", function()
         self:HideAllViews()
-        self:LoadHomeMenu()
-        self.homeGridview:Show()
+        self:LoadDungeons()
     end)
-    self:SetScript("OnShow", function()
-        self:UpdateLayout()
-    end)
+
 
     addon:RegisterCallback("Database_OnInitialised", self.Database_OnInitialised, self)
     addon:RegisterCallback("Guide_OnInstanceSelected", self.Guide_OnInstanceSelected, self)
@@ -66,15 +58,6 @@ function AdventureGuideMixin:SelectView(view)
     end
 end
 
-function AdventureGuideMixin:OnUpdate()
-    if not self:IsVisible() then
-        return
-    end
-    if self.isRefreshEnabled then
-        addon:TriggerEvent("UI_OnSizeChanged")
-        self:UpdateLayout()
-    end
-end
 
 function AdventureGuideMixin:CreateMinimapButton()
     local ldb = LibStub("LibDataBroker-1.1")
@@ -95,75 +78,27 @@ function AdventureGuideMixin:CreateMinimapButton()
     self.MinimapIcon:Register('AdventureMinimapIcon', self.MinimapButton, ADVENTURE_GUIDE_GLOBAL.minimapButton)
 end
 
-function AdventureGuideMixin:LoadHomeMenu()
-    self.homeGridview:Flush()
-    self.homeGridview:SetMinMaxSize(200, 300)
-    local homeMenu = {
-        {
-            label = "Dungeons",
-            atlas = "groupfinder-background-dungeons",
-            contentType = "menu",
-            onMouseDown = function()
-                self:LoadDungeons()
-            end,
-        },
-        {
-            label = "Raids",
-            atlas = "groupfinder-background-raids-classic",
-            contentType = "menu",
-        },
-        {
-            label = "Quests",
-            atlas = "groupfinder-background-questing",
-            contentType = "menu",
-        },
-        {
-            label = "Class",
-            atlas = "groupfinder-background-scenarios",
-            contentType = "menu",
-        },
-    }
-    for k, v in ipairs(homeMenu) do
-        self.homeGridview:Insert(v)
-    end
-    self.homeGridview:UpdateLayout()
-    self.subMenu1:SetScript("OnClick", nil)
-    self.subMenu1:Hide()
-end
 
 function AdventureGuideMixin:Database_OnInitialised()
-    
-    self:LoadHomeMenu()
 
     self:CreateMinimapButton()
 end
 
-function AdventureGuideMixin:UpdateLayout()
-
-    local x, y = self:GetSize()
-
-    self.homeGridview:UpdateLayout()
-end
 
 function AdventureGuideMixin:LoadDungeons()
-    self.homeGridview:SetMinMaxSize(160, 220)
-    self.homeGridview:Flush()
+    self.gridview:SetMinMaxSize(160, 220)
+    self.gridview:Flush()
     for k, v in ipairs(addon.dungeons) do
         v.contentType = "instance"; --cba going through every dungeon/raid table to add this
-        self.homeGridview:Insert(v)
+        self.gridview:Insert(v)
     end
-    self.homeGridview:UpdateLayout()
-    self.subMenu1:SetText("Dungeons")
-    self.subMenu1:SetScript("OnClick", function()
-        self:HideAllViews()
-        self.homeGridview:Show()
-    end)
-    self.subMenu1:Show()
+    self.gridview:UpdateLayout()
+    self.gridview:Show()
 end
 
 function AdventureGuideMixin:Guide_OnInstanceSelected(instance)
     
-    self.homeGridview:Hide()
+    self.gridview:Hide()
     self:SelectView("instance")
 
 end

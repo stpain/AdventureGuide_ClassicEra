@@ -66,7 +66,6 @@ function AdventureGuideInstanceViewMixin:OnLoad()
 
     
     addon:RegisterCallback("Database_OnInitialised", self.Database_OnInitialised, self)
-    addon:RegisterCallback("UI_OnSizeChanged", self.UpdateLayout, self)
     addon:RegisterCallback("Guide_OnInstanceSelected", self.Guide_OnInstanceSelected, self)
 
     addon.api.addView(self)

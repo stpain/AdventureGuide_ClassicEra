@@ -47,6 +47,9 @@ Api.lua
 AdventureGuide.lua
 AdventureGuide.xml
 
+Views\SuggestedContent\SuggestedContent.lua
+Views\SuggestedContent\SuggestedContent.xml
+
 Views\Instance\Instance.lua
 Views\Instance\Instance.xml
 
