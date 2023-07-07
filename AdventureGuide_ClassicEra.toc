@@ -35,6 +35,10 @@ Widgets\Helptips.xml
 
 Locales.lua
 InstanceData.lua
+QuestData.lua
+ZoneData.lua
+
+#test.lua
 
 Callbacks.lua
 Database.lua
@@ -52,5 +56,8 @@ Views\SuggestedContent\SuggestedContent.xml
 
 Views\Instance\Instance.lua
 Views\Instance\Instance.xml
+
+Views\Zone\Zone.lua
+Views\Zone\Zone.xml
 
 Events.lua

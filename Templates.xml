@@ -99,6 +99,42 @@
     </Frame>
 
 
+    <Frame name="AdventureGuideZoneQuestListviewTemplate" mixin="AdventureGuideZoneQuestListviewMixin" virtual="true">
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture parentKey="background">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="0" y="0"/>
+						<Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+					</Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="ARTWORK">
+                <Texture parentKey="icon">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="0" y="0"/>
+						<Anchor point="BOTTOMLEFT" x="0" y="0"/>
+					</Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="OVERLAY">
+				<FontString parentKey="label" inherits="GameFontNormalSmall" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" relativeKey="$parent.icon" relativePoint="RIGHT" x="2" y="0"/>
+						<Anchor point="TOPRIGHT" x="0" y="0"/>
+						<Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+					</Anchors>
+					<!-- <Color r="1" g="1" b="1"/> -->
+				</FontString>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnLoad method="OnLoad"/>
+            <OnLeave method="OnLeave"/>
+        </Scripts>
+    </Frame>
+
+
     <Frame name="AdventureGuideInstanceQuestListviewTemplate" mixin="AdventureGuideInstanceQuestListviewMixin" enableMouse="true" virtual="true">
         <Layers>
             <Layer level="HIGHLIGHT">

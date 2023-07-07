@@ -8,8 +8,10 @@ function e:PLAYER_ENTERING_WORLD()
     addon.Database:Init()
 end
 
-function e:ADDON_LOADED()
-
+function e:ADDON_LOADED(...)
+    if (...) == name then
+        --addon.scanQuests()
+    end
 end
 
 e:SetScript("OnEvent", function(self, event, ...)

@@ -1,0 +1,67 @@
+<Ui>
+    <Frame name="AdventureGuideZoneView" mixin="AdventureGuideZoneMixin" hidden="true">
+        <Layers>
+            <Layer level="BACKGROUND">
+
+            </Layer>
+            <Layer level="ARTWORK">
+
+            </Layer>
+            <Layer level="OVERLAY">
+
+            </Layer>
+        </Layers>
+
+        <Frames>
+            <Frame parentKey="mapContainer">
+                <Anchors>
+                    <Anchor point="TOPLEFT" x="0" y="0"/>
+                    <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+                </Anchors>
+                <Layers>
+                    <Layer level="BACKGROUND">
+                        <Texture parentKey="canvas" setAllPoints="true">
+                            <Texcoords left="0" right="0.9765625" top="0" bottom="0.6513671875"/>
+                        </Texture>
+                    </Layer>
+                </Layers>
+            </Frame>
+
+            <Button parentKey="questsButton">
+                <Anchors>
+                    <Anchor point="TOPRIGHT" x="0" y="34"/>
+                </Anchors>
+                <Size x="30" y="30"/>
+                <NormalTexture atlas="QuestCollapse-Show-Up"/>
+                <PushedTexture atlas="QuestCollapse-Show-Down"/>
+            </Button>
+
+            <Frame parentKey="questListview" inherits="AdventureWidgetsListviewTemplate,InsetFrameTemplate" hidden="true">
+                <Size x="250"/>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeKey="$parent.mapContainer" relativePoint="TOPRIGHT" x="5" y="0"/>
+                    <Anchor point="BOTTOMLEFT" relativeKey="$parent.mapContainer" relativePoint="BOTTOMRIGHT" x="5" y="0"/>
+                </Anchors>
+                <KeyValues>
+                    <KeyValue key="frameType" value="FRAME" type="string"/>
+                    <KeyValue key="itemTemplate" value="AdventureGuideZoneQuestListviewTemplate" type="string"/>
+                    <KeyValue key="elementHeight" value="24" type="number"/>
+                </KeyValues>
+                <!-- <Layers>
+                    <Layer level="BACKGROUND">
+                        <Texture parentKey="background" atlas="ClassHall_StoneFrame-BackgroundTile" vertTile="true" horizTile="true">
+                            <Anchors>
+                                <Anchor point="TOPLEFT" x="0" y="0"/>
+                                <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+                            </Anchors>
+                        </Texture>
+                    </Layer>
+                </Layers> -->
+            </Frame>
+        </Frames>
+
+        <Scripts>
+            <OnLoad method="OnLoad"/>
+        </Scripts>
+    </Frame>
+</Ui>

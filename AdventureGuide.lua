@@ -32,6 +32,7 @@ function AdventureGuideMixin:OnLoad()
 
     addon:RegisterCallback("Database_OnInitialised", self.Database_OnInitialised, self)
     addon:RegisterCallback("Guide_OnInstanceSelected", self.Guide_OnInstanceSelected, self)
+    addon:RegisterCallback("Zone_OnSelected", self.Zone_OnSelected, self)
 
 end
 
@@ -100,6 +101,13 @@ function AdventureGuideMixin:Guide_OnInstanceSelected(instance)
     
     self.gridview:Hide()
     self:SelectView("instance")
+
+end
+
+function AdventureGuideMixin:Zone_OnSelected(id)
+    
+    self.gridview:Hide()
+    self:SelectView("zone")
 
 end
 

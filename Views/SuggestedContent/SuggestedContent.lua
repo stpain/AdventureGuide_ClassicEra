@@ -24,6 +24,10 @@ function AdventureGuideSuggestedContentMixin:OnLoad()
 
     self:LoadInitialSuggestions()
 
+    self.acceptSuggestion:SetScript("OnClick", function()
+        addon:TriggerEvent("Zone_OnSelected", 1429)
+    end)
+
     addon.api.addView(self)
 end
 

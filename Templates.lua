@@ -177,3 +177,62 @@ end
 function AdventureGuideInstanceQuestListviewMixin:OnLeave()
     GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
 end
+
+
+
+
+
+AdventureGuideZoneQuestListviewMixin = {}
+function AdventureGuideZoneQuestListviewMixin:OnLoad()
+
+end
+function AdventureGuideZoneQuestListviewMixin:SetDataBinding(binding, height)
+
+    self:SetHeight(height)
+
+    self.icon:SetSize(1,1)
+    self.icon:SetTexture(nil)
+
+    if binding.isStartQuest then
+        self.icon:SetWidth(1)
+        --self.background:SetAtlas("AdventureMapLabel-Large")
+    else
+        self.icon:SetWidth(height)
+        --self.background:SetAtlas(nil)
+    end
+
+    local questName = C_QuestLog.GetQuestInfo(binding.questId)
+    local objectives = C_QuestLog.GetQuestObjectives(binding.questId)
+    local completed = C_QuestLog.IsQuestFlaggedCompleted(binding.questId)
+
+    if not questName then
+        C_Timer.NewTicker(0.1, function()
+            questName = C_QuestLog.GetQuestInfo(binding.questId)
+
+            if binding.isStartQuest then
+                self.label:SetText(questName)
+            else
+                self.label:SetText("|cffffffff"..questName)
+            end
+        end, 5)
+    else
+        if binding.isStartQuest then
+            self.label:SetText(questName)
+        else
+            self.label:SetText("|cffffffff"..questName)
+        end
+    end
+
+    if binding.onEnter then
+        self:SetScript("OnEnter", binding.onEnter)
+    end
+    if binding.onMouseDown then
+        self:SetScript("OnMouseDown", binding.onMouseDown)
+    end
+end
+function AdventureGuideZoneQuestListviewMixin:ResetDataBinding()
+
+end
+function AdventureGuideZoneQuestListviewMixin:OnLeave()
+    GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
+end
