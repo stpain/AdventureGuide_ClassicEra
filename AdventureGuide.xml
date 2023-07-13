@@ -1,5 +1,5 @@
 <Ui>
-    <Frame name="AdventureGuide" mixin="AdventureGuideMixin" parent="UIParent" inherits="PortraitFrameTemplate" frameStrata="HIGH" enableMouse="true"  movable="true">
+    <Frame name="AdventureGuide" mixin="AdventureGuideMixin" parent="UIParent" inherits="PortraitFrameTemplate" frameStrata="HIGH" enableMouse="true" movable="true">
         <Size x="800" y="600"/>
         <Anchors>
             <Anchor point="CENTER" x="0" y="0"/>
@@ -27,15 +27,21 @@
         </Layers>
         <Frames>
             <Button parentKey="home" inherits="UIPanelButtonTemplate" text="Home">
-                <Size x="120" y="32"/>
+                <Size x="100" y="28"/>
                 <Anchors>
-                    <Anchor point="TOPLEFT" x="60" y="-25"/>
+                    <Anchor point="TOPLEFT" x="60" y="-27"/>
                 </Anchors>
             </Button>
             <Button parentKey="dungeons" inherits="UIPanelButtonTemplate" text="Dungeons">
-                <Size x="120" y="32"/>
+                <Size x="100" y="28"/>
                 <Anchors>
                     <Anchor point="LEFT" relativeKey="$parent.home" relativePoint="RIGHT" x="10" y="0"/>
+                </Anchors>
+            </Button>
+            <Button parentKey="zones" inherits="UIPanelButtonTemplate" text="Zones">
+                <Size x="100" y="28"/>
+                <Anchors>
+                    <Anchor point="LEFT" relativeKey="$parent.dungeons" relativePoint="RIGHT" x="10" y="0"/>
                 </Anchors>
             </Button>
             <ScrollFrame parentKey="gridview" inherits="AdventureWidgetsGridviewTemplate" hidden="true">

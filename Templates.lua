@@ -120,6 +120,35 @@ function AdventureGuideHomeGridviewItemMixin:SetDataBinding(binding)
             addon:TriggerEvent("Guide_OnInstanceSelected", self.binding)
         end)
 
+    elseif self.binding.contentType == "zone" then
+        self.icon:SetTexCoord(0.2,0.8,0.1,0.9)
+        self.icon:ClearAllPoints()
+        self.icon:SetPoint("TOPLEFT", 3, -3)
+        self.icon:SetPoint("BOTTOMRIGHT", -3, 53)
+
+        self.icon:SetAtlas(string.format("warboard-zone-classic-%s", binding.name:gsub(" ", "")))
+
+        --need to change this to use the zoneID
+        if binding.name == "Un'Goro Crater" then
+            self.icon:SetAtlas("warboard-zone-classic-UngoroCrater")
+        end
+        if binding.name == "The Hinterlands" then
+            self.icon:SetAtlas("warboard-zone-classic-Hinterlands")
+        end
+        if binding.name == "The Barrens" then
+            self.icon:SetAtlas("warboard-zone-classic-NorthernBarrens")
+        end
+        if binding.name == "Stranglethorn Vale" then
+            self.icon:SetAtlas("warboard-zone-classic-NorthernStranglethorn")
+        end
+
+        self.text:SetText(binding.name)
+
+        self:SetScript("OnMouseDown", function()
+            addon:TriggerEvent("Zone_OnSelected", self.binding)
+        end)
+
+
     elseif self.binding.contentType == "menu" then
         self.icon:SetTexCoord(0.1,0.9,0.1,0.9)
         self.icon:ClearAllPoints()
@@ -140,6 +169,7 @@ function AdventureGuideHomeGridviewItemMixin:SetDataBinding(binding)
 end
 function AdventureGuideHomeGridviewItemMixin:ResetDataBinding()
     self:SetScript("OnMouseDown", nil)
+    self.icon:SetTexture(nil)
 end
 
 
@@ -190,49 +220,99 @@ function AdventureGuideZoneQuestListviewMixin:SetDataBinding(binding, height)
 
     self:SetHeight(height)
 
-    self.icon:SetSize(1,1)
-    self.icon:SetTexture(nil)
+    self.completed:SetSize(height-2, height-2)
+    self.icon:SetSize(1,16)
 
     if binding.isStartQuest then
         self.icon:SetWidth(1)
-        --self.background:SetAtlas("AdventureMapLabel-Large")
+        self.icon:Hide()
+
+        self.label:SetFontObject("GameFontNormal")
     else
-        self.icon:SetWidth(height)
-        --self.background:SetAtlas(nil)
+        self.icon:SetWidth(11)
+        self.icon:Show()
+
+        self.label:SetFontObject("GameFontNormalSmall")
     end
 
-    local questName = C_QuestLog.GetQuestInfo(binding.questId)
-    local objectives = C_QuestLog.GetQuestObjectives(binding.questId)
-    local completed = C_QuestLog.IsQuestFlaggedCompleted(binding.questId)
-
-    if not questName then
-        C_Timer.NewTicker(0.1, function()
-            questName = C_QuestLog.GetQuestInfo(binding.questId)
-
-            if binding.isStartQuest then
-                self.label:SetText(questName)
-            else
-                self.label:SetText("|cffffffff"..questName)
-            end
-        end, 5)
-    else
+    local x = C_QuestLog.GetQuestInfo(binding.questID)
+    if x then
         if binding.isStartQuest then
-            self.label:SetText(questName)
+            self.label:SetText(C_QuestLog.GetQuestInfo(binding.questID))
         else
-            self.label:SetText("|cffffffff"..questName)
+            self.label:SetText(string.format("|cffffffff%s", C_QuestLog.GetQuestInfo(binding.questID)))
+        end 
+    else
+        C_Timer.After(0.5, function()
+            if binding.isStartQuest then
+                self.label:SetText(C_QuestLog.GetQuestInfo(binding.questID) or ".....waiting for data")
+            else
+                self.label:SetText(string.format("|cffffffff%s", C_QuestLog.GetQuestInfo(binding.questID) or ".....waiting for data"))
+            end 
+        end)
+    end
+
+    local completed = C_QuestLog.IsQuestFlaggedCompleted(binding.questID)
+    completed = C_QuestLog.IsQuestFlaggedCompleted(binding.questID)
+    if completed then
+        self.completed:SetAtlas("services-checkmark")
+    else
+        if binding.requiredQuests then
+            local previousCompleted = true
+            for k, questID in ipairs(binding.requiredQuests) do
+                previousCompleted = C_QuestLog.IsQuestFlaggedCompleted(questID)
+                previousCompleted = C_QuestLog.IsQuestFlaggedCompleted(questID)
+            end
+            if previousCompleted == false then
+                self.completed:SetAtlas("AdventureMapIcon-Lock")
+            end
+        else
+            self.completed:SetTexture(nil)
         end
     end
 
-    if binding.onEnter then
-        self:SetScript("OnEnter", binding.onEnter)
-    end
+    --might not be required
+    C_Timer.After(0.5, function()
+
+        local completed = C_QuestLog.IsQuestFlaggedCompleted(binding.questID)
+        completed = C_QuestLog.IsQuestFlaggedCompleted(binding.questID)
+        if completed then
+            self.completed:SetAtlas("services-checkmark")
+        else
+            if binding.requiredQuests then
+                local previousCompleted = true
+                for k, questID in ipairs(binding.requiredQuests) do
+                    previousCompleted = C_QuestLog.IsQuestFlaggedCompleted(questID)
+                    previousCompleted = C_QuestLog.IsQuestFlaggedCompleted(questID)
+                end
+                if previousCompleted == false then
+                    self.completed:SetAtlas("AdventureMapIcon-Lock")
+                end
+            else
+                self.completed:SetTexture(nil)
+            end
+        end
+    end)
+
+
+    self:SetScript("OnEnter", function()
+    
+    end)
+
     if binding.onMouseDown then
         self:SetScript("OnMouseDown", binding.onMouseDown)
     end
 end
 function AdventureGuideZoneQuestListviewMixin:ResetDataBinding()
-
+    self.label:SetText(" ")
+    self.completed:SetTexture(nil)
 end
 function AdventureGuideZoneQuestListviewMixin:OnLeave()
+    GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
+end
+
+
+AdventureGuideMapPoiMixin = {}
+function AdventureGuideMapPoiMixin:OnLeave()
     GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
 end

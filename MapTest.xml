@@ -1,0 +1,22 @@
+<Ui>
+	<Frame name="TestFrame" inherits="MapCanvasFrameTemplate" hidden="false" parent="UIParent">
+		<Size x="600" y="400"/>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Frames>
+			<Frame parentKey="BorderFrame"/>
+			<ScrollFrame inherits="MapCanvasFrameScrollContainerTemplate" setAllPoints="true"/>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				MapCanvasMixin.OnLoad(self);
+				self:SetShouldZoomInOnClick(true);
+				self:SetShouldPanOnClick(true);
+				self:SetShouldNavigateOnClick(true);
+				self:AddDataProvider(CreateFromMixins(MapHighlightDataProviderMixin));
+				self:SetMapID(1429);
+			</OnLoad>
+		</Scripts>
+	</Frame>
+</Ui>

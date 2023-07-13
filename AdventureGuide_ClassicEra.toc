@@ -34,11 +34,15 @@ Widgets\Helptips.lua
 Widgets\Helptips.xml
 
 Locales.lua
-InstanceData.lua
-QuestData.lua
-ZoneData.lua
 
-#test.lua
+Data.lua
+InstanceData.lua
+NpcData.lua
+ObjectData.lua
+ItemData.lua
+ZoneData.lua
+ChapterData.lua
+NodeData.lua
 
 Callbacks.lua
 Database.lua
@@ -61,3 +65,6 @@ Views\Zone\Zone.lua
 Views\Zone\Zone.xml
 
 Events.lua
+
+
+#MapTest.xml

@@ -29,6 +29,11 @@ function AdventureGuideMixin:OnLoad()
         self:LoadDungeons()
     end)
 
+    self.zones:SetScript("OnClick", function()
+        self:HideAllViews()
+        self:LoadZones()
+    end)
+
 
     addon:RegisterCallback("Database_OnInitialised", self.Database_OnInitialised, self)
     addon:RegisterCallback("Guide_OnInstanceSelected", self.Guide_OnInstanceSelected, self)
@@ -91,6 +96,37 @@ function AdventureGuideMixin:LoadDungeons()
     self.gridview:Flush()
     for k, v in ipairs(addon.dungeons) do
         v.contentType = "instance"; --cba going through every dungeon/raid table to add this
+        self.gridview:Insert(v)
+    end
+    self.gridview:UpdateLayout()
+    self.gridview:Show()
+end
+
+function AdventureGuideMixin:LoadZones()
+    self.gridview:SetMinMaxSize(160, 220)
+    self.gridview:Flush()
+    local t = {}
+    local excludedZones = {
+        [1455] = true, --ironforge
+        [1459] = true, --alterac valley
+        [1456] = true, --thunderbluff
+        [1460] = true, --warsong gulch
+        [1453] = true, --stormwind
+        [1457] = true, --darnassus
+        [1461] = true, --arathi basin
+        [1454] = true, --orgrimmar
+        [1458] = true, --undercity
+    }
+    for k, v in pairs(addon.zones) do
+        if not excludedZones[k] then
+            v.contentType = "zone";
+            table.insert(t, v)
+        end
+    end
+    table.sort(t, function(a, b)
+        return a.name < b.name
+    end)
+    for k, v in ipairs(t) do
         self.gridview:Insert(v)
     end
     self.gridview:UpdateLayout()

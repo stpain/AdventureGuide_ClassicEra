@@ -101,6 +101,14 @@
 
     <Frame name="AdventureGuideZoneQuestListviewTemplate" mixin="AdventureGuideZoneQuestListviewMixin" virtual="true">
         <Layers>
+            <Layer level="HIGHLIGHT">
+                <Texture parentKey="highlight" atlas="search-select">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="0" y="0"/>
+						<Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+					</Anchors>
+                </Texture>
+            </Layer>
             <Layer level="BACKGROUND">
                 <Texture parentKey="background">
 					<Anchors>
@@ -110,10 +118,14 @@
                 </Texture>
             </Layer>
             <Layer level="ARTWORK">
-                <Texture parentKey="icon">
+                <Texture parentKey="icon" atlas="friendslist-categorybutton-arrow-right">
 					<Anchors>
-						<Anchor point="TOPLEFT" x="0" y="0"/>
-						<Anchor point="BOTTOMLEFT" x="0" y="0"/>
+						<Anchor point="LEFT" x="1" y="0"/>
+					</Anchors>
+                </Texture>
+                <Texture parentKey="completed">
+					<Anchors>
+						<Anchor point="RIGHT" x="0" y="0"/>
 					</Anchors>
                 </Texture>
             </Layer>
@@ -121,8 +133,7 @@
 				<FontString parentKey="label" inherits="GameFontNormalSmall" justifyH="LEFT">
 					<Anchors>
 						<Anchor point="LEFT" relativeKey="$parent.icon" relativePoint="RIGHT" x="2" y="0"/>
-						<Anchor point="TOPRIGHT" x="0" y="0"/>
-						<Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+						<Anchor point="RIGHT" relativeKey="$parent.completed" relativePoint="LEFT" x="-2" y="0"/>
 					</Anchors>
 					<!-- <Color r="1" g="1" b="1"/> -->
 				</FontString>
@@ -130,7 +141,6 @@
         </Layers>
         <Scripts>
             <OnLoad method="OnLoad"/>
-            <OnLeave method="OnLeave"/>
         </Scripts>
     </Frame>
 
@@ -305,5 +315,25 @@
         </Scripts>
     </Frame>
 
+    <Frame name="AdventureGuideMapPoiTemplate" mixin="AdventureGuideMapPoiMixin" virtual="true" enableMouse="true">
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture parentKey="background" setAllPoints="true">
 
+                </Texture>
+                <MaskTexture parentKey="mask" file="Interface/CHARACTERFRAME/TempPortraitAlphaMask" hWrapMode="CLAMPTOBLACKADDITIVE" vWrapMode="CLAMPTOBLACKADDITIVE" hidden="true">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" x="0" y="0"/>
+                        <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+                    </Anchors>
+                    <MaskedTextures>
+                        <MaskedTexture childKey="background"/>
+                    </MaskedTextures>
+                </MaskTexture>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnLeave method="OnLeave"/>
+        </Scripts>
+    </Frame>
 </Ui>

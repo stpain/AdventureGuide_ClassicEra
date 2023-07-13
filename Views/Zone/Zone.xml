@@ -1,8 +1,17 @@
 <Ui>
-    <Frame name="AdventureGuideZoneView" mixin="AdventureGuideZoneMixin" hidden="true">
+    <Frame name="AdventureGuideZoneView" mixin="AdventureGuideZoneMixin" parent="UIParent">
+        <Anchors>
+            <Anchor point="TOPLEFT" x="0" y="0"/>
+        </Anchors>
+        <Size x="800" y="600"/>
         <Layers>
             <Layer level="BACKGROUND">
-
+                <Texture parentKey="background" atlas="ClassHall_StoneFrame-BackgroundTile" horizTile="true" vertTile="true">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" x="4" y="0"/>
+                        <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+                    </Anchors>
+                </Texture>
             </Layer>
             <Layer level="ARTWORK">
 
@@ -13,15 +22,29 @@
         </Layers>
 
         <Frames>
-            <Frame parentKey="mapContainer">
+            <Frame parentKey="mapContainer" parent="AdventureGuideZoneView" ignoreParentScale="true" inherits="MapCanvasFrameTemplate" hidden="false">
+                <Size x="100" y="100"/>
                 <Anchors>
-                    <Anchor point="TOPLEFT" x="0" y="0"/>
+                    <Anchor point="TOPLEFT" x="4" y="0"/>
+                    <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+                </Anchors>
+                <Frames>
+                    <Frame parentKey="BorderFrame"/>
+                    <ScrollFrame inherits="MapCanvasFrameScrollContainerTemplate"  setAllPoints="true">
+
+                    </ScrollFrame>
+                </Frames>
+            </Frame>
+
+            <Frame parentKey="infoContainer" hidden="true">
+                <Anchors>
+                    <Anchor point="TOPLEFT" x="4" y="0"/>
                     <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
                 </Anchors>
                 <Layers>
                     <Layer level="BACKGROUND">
-                        <Texture parentKey="canvas" setAllPoints="true">
-                            <Texcoords left="0" right="0.9765625" top="0" bottom="0.6513671875"/>
+                        <Texture parentKey="background" setAllPoints="true">
+                            <TexCoords left="0.0" right="0.767" top="0.0" bottom="0.82" />
                         </Texture>
                     </Layer>
                 </Layers>
@@ -35,28 +58,73 @@
                 <NormalTexture atlas="QuestCollapse-Show-Up"/>
                 <PushedTexture atlas="QuestCollapse-Show-Down"/>
             </Button>
+            <Button parentKey="showHerbs">
+                <Anchors>
+                    <Anchor point="RIGHT" relativeKey="$parent.questsButton" relativePoint="LEFT" x="-10" y="0"/>
+                </Anchors>
+                <Size x="30" y="30"/>
+                <NormalTexture atlas="Mobile-Herbalism"/>
+                <PushedTexture atlas="Mobile-Herbalism"/>
+                <HighlightTexture atlas="communities-create-avatar-border-hover"/>
+            </Button>
+            <Button parentKey="showOres">
+                <Anchors>
+                    <Anchor point="RIGHT" relativeKey="$parent.showHerbs" relativePoint="LEFT" x="-10" y="0"/>
+                </Anchors>
+                <Size x="30" y="30"/>
+                <NormalTexture atlas="Mobile-Mining"/>
+                <PushedTexture atlas="Mobile-Mining"/>
+                <HighlightTexture atlas="communities-create-avatar-border-hover"/>
+            </Button>
+            <Button parentKey="showQuests">
+                <Anchors>
+                    <Anchor point="RIGHT" relativeKey="$parent.showOres" relativePoint="LEFT" x="-10" y="0"/>
+                </Anchors>
+                <Size x="30" y="30"/>
+                <NormalTexture atlas="Mobile-QuestIcon"/>
+                <PushedTexture atlas="Mobile-QuestIcon"/>
+                <HighlightTexture atlas="communities-create-avatar-border-hover"/>
+            </Button>
 
-            <Frame parentKey="questListview" inherits="AdventureWidgetsListviewTemplate,InsetFrameTemplate" hidden="true">
+            <Frame parentKey="popout" inherits="InsetFrameTemplate" hidden="true">
                 <Size x="250"/>
                 <Anchors>
-                    <Anchor point="TOPLEFT" relativeKey="$parent.mapContainer" relativePoint="TOPRIGHT" x="5" y="0"/>
+                    <Anchor point="TOPLEFT" relativeKey="$parent.mapContainer" relativePoint="TOPRIGHT" x="5" y="40"/>
                     <Anchor point="BOTTOMLEFT" relativeKey="$parent.mapContainer" relativePoint="BOTTOMRIGHT" x="5" y="0"/>
                 </Anchors>
-                <KeyValues>
-                    <KeyValue key="frameType" value="FRAME" type="string"/>
-                    <KeyValue key="itemTemplate" value="AdventureGuideZoneQuestListviewTemplate" type="string"/>
-                    <KeyValue key="elementHeight" value="24" type="number"/>
-                </KeyValues>
-                <!-- <Layers>
+                <Layers>
                     <Layer level="BACKGROUND">
-                        <Texture parentKey="background" atlas="ClassHall_StoneFrame-BackgroundTile" vertTile="true" horizTile="true">
+                        <Texture atlas="challenges-timerbg">
+                            <Size x="248" y="38"/>
                             <Anchors>
-                                <Anchor point="TOPLEFT" x="0" y="0"/>
-                                <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+                                <Anchor point="TOPLEFT" x="1" y="-1"/>
                             </Anchors>
                         </Texture>
                     </Layer>
-                </Layers> -->
+                    <Layer level="OVERLAY">
+                        <FontString parentKey="info" font="Fonts\FRIZQT__.ttf" text="Quests 1/10">
+                            <Size x="248" y="38"/>
+                            <Color r="1" g="1" b="1"/>
+                            <FontHeight val="18"/>
+                            <Anchors>
+                                <Anchor point="TOPLEFT" x="1" y="-1"/>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Frames>
+                    <Frame parentKey="questListview" inherits="AdventureWidgetsListviewTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" x="1" y="-41"/>
+                            <Anchor point="BOTTOMRIGHT" x="-1" y="1"/>
+                        </Anchors>
+                        <KeyValues>
+                            <KeyValue key="frameType" value="FRAME" type="string"/>
+                            <KeyValue key="itemTemplate" value="AdventureGuideZoneQuestListviewTemplate" type="string"/>
+                            <KeyValue key="elementHeight" value="24" type="number"/>
+                        </KeyValues>
+                    </Frame>
+                </Frames>
             </Frame>
         </Frames>
 
