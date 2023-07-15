@@ -64,6 +64,18 @@ function AdventureGuideMixin:SelectView(view)
     end
 end
 
+function AdventureGuideMixin:ShowMap()
+
+    if self:IsVisible() then
+        self:Hide()
+        return
+    end
+
+    local mapID = C_Map.GetBestMapForUnit("player")
+    self:Show()
+    addon:TriggerEvent("Zone_OnSelected", mapID)
+
+end
 
 function AdventureGuideMixin:CreateMinimapButton()
     local ldb = LibStub("LibDataBroker-1.1")

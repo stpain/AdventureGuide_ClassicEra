@@ -1,5 +1,22 @@
 <Ui>
 
+    <Font name="AdventureGuideFontNormal_NoShadow" font="Fonts\FRIZQT__.ttf" virtual="true">
+		<Color r="1.0" g="0.82" b="0"/>
+        <FontHeight val="11"/>
+	</Font>
+    <Font name="AdventureGuideFontNormalTiny_NoShadow" font="Fonts\FRIZQT__.ttf" virtual="true">
+		<Color r="1.0" g="0.82" b="0"/>
+        <FontHeight val="7"/>
+	</Font>
+    <Font name="AdventureGuideFontNormalSmall_NoShadow" font="Fonts\FRIZQT__.ttf" virtual="true">
+		<Color r="1.0" g="0.82" b="0"/>
+        <FontHeight val="9"/>
+	</Font>
+    <Font name="AdventureGuideFontNormalLarge_NoShadow" font="Fonts\FRIZQT__.ttf" virtual="true">
+		<Color r="1.0" g="0.82" b="0"/>
+        <FontHeight val="13"/>
+	</Font>
+
     <Frame name="AdventureSmallHighlightButton" mixin="AdventureButtonMixin" virtual="true" enableMouse="true">
         <Size x="25" y="25"/>
         <Layers>
@@ -17,6 +34,63 @@
             <OnLeave method="OnLeave"/>
         </Scripts>
 	</Frame>
+
+    <Button name="AdventurePortraitButton" mixin="AdventurePortraitButtonMixin" virtual="true" enableMouse="true">
+        <Size x="32" y="32"/>
+        <Layers>
+            <Layer level="HIGHLIGHT">
+                <Texture atlas="GarrMission_CurrentEncounter-Glow" setAllPoints="true">
+                    <!-- <Size x="25" y="25"/> -->
+                    <!-- <Anchors>
+                        <Anchor point="CENTER"/>
+                    </Anchors> -->
+                </Texture>
+            </Layer>
+            <Layer level="BACKGROUND">
+                <Texture parentKey="background" setAllPoints="true">
+                    <Color r="0" g="0" b="0"/>
+                </Texture>
+                <MaskTexture parentKey="mask" file="Interface/CHARACTERFRAME/TempPortraitAlphaMask" hWrapMode="CLAMPTOBLACKADDITIVE" vWrapMode="CLAMPTOBLACKADDITIVE">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" x="4" y="-4"/>
+                        <Anchor point="BOTTOMRIGHT" x="-4" y="4"/>
+                    </Anchors>
+                    <MaskedTextures>
+                        <MaskedTexture childKey="background"/>
+                    </MaskedTextures>
+                </MaskTexture>
+            </Layer>
+            <Layer level="ARTWORK">
+                <Texture parentKey="icon">
+                    <Size x="16" y="16"/>
+                    <Anchors>
+                        <Anchor point="CENTER"/>
+                    </Anchors>
+                </Texture>
+                <MaskTexture parentKey="mask" file="Interface/CHARACTERFRAME/TempPortraitAlphaMask" hWrapMode="CLAMPTOBLACKADDITIVE" vWrapMode="CLAMPTOBLACKADDITIVE">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" x="4" y="-4"/>
+                        <Anchor point="BOTTOMRIGHT" x="-4" y="4"/>
+                    </Anchors>
+                    <MaskedTextures>
+                        <MaskedTexture childKey="icon"/>
+                    </MaskedTextures>
+                </MaskTexture>
+            </Layer>
+            <Layer level="OVERLAY">
+                <Texture atlas="worldquest-tracker-ring-selected">
+                    <Size x="36" y="36"/>
+                    <Anchors>
+                        <Anchor point="CENTER" x="0" y="0"/>
+                    </Anchors>
+                </Texture>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnLoad method="OnLoad"/>
+            <OnLeave method="OnLeave"/>
+        </Scripts>
+	</Button>
     
     <Frame name="AdventureGuideHomeGridviewItemTemplate" mixin="AdventureGuideHomeGridviewItemMixin" enableMouse="true" virtual="true">
         <Layers>
@@ -130,7 +204,7 @@
                 </Texture>
             </Layer>
             <Layer level="OVERLAY">
-				<FontString parentKey="label" inherits="GameFontNormalSmall" justifyH="LEFT">
+				<FontString parentKey="label" justifyH="LEFT">
 					<Anchors>
 						<Anchor point="LEFT" relativeKey="$parent.icon" relativePoint="RIGHT" x="2" y="0"/>
 						<Anchor point="RIGHT" relativeKey="$parent.completed" relativePoint="LEFT" x="-2" y="0"/>
@@ -141,6 +215,7 @@
         </Layers>
         <Scripts>
             <OnLoad method="OnLoad"/>
+            <OnLeave method="OnLeave"/>
         </Scripts>
     </Frame>
 
@@ -179,7 +254,7 @@
 						<Anchor point="BOTTOMLEFT" x="0" y="0"/>
 						<Anchor point="RIGHT"  relativeKey="$parent.icon" relativePoint="LEFT" x="-2" y="0"/>
 					</Anchors>
-					<Color r="0.1" g="0.1" b="0.1"/>
+					<Color r="1" g="1" b="1"/>
 				</FontString>
             </Layer>
         </Layers>
@@ -253,24 +328,24 @@
         <Layers>
             <Layer level="BACKGROUND">
                 <Texture parentKey="backgroundTop" atlas="loottab-set-background" alpha="0.85">
-                    <Size y="22"/>
+                    <Size y="18"/>
 					<Anchors>
-						<Anchor point="TOPLEFT" x="44" y="0"/>
-						<Anchor point="TOPRIGHT" x="44" y="0"/>
+						<Anchor point="TOPLEFT" x="36" y="0"/>
+						<Anchor point="TOPRIGHT" x="36" y="0"/>
 					</Anchors>
                 </Texture>
                 <Texture parentKey="backgroundBottom" atlas="OBJBonusBar-Top" alpha="0.6">
                     <TexCoords left="0.0" right="1.0" top="1.0" bottom="0.0" />
-                    <Size y="44"/>
+                    <Size y="36"/>
 					<Anchors>
-						<Anchor point="BOTTOMLEFT" x="44" y="1"/>
-						<Anchor point="BOTTOMRIGHT" x="44" y="1"/>
+						<Anchor point="BOTTOMLEFT" x="36" y="1"/>
+						<Anchor point="BOTTOMRIGHT" x="36" y="1"/>
 					</Anchors>
                 </Texture>
             </Layer>
             <Layer level="ARTWORK" textureSubLevel="-1">
                 <Texture parentKey="icon">
-                    <Size x="38" y="38"/>
+                    <Size x="30" y="30"/>
 					<Anchors>
 						<Anchor point="LEFT" x="3" y="0"/>
 					</Anchors>
@@ -278,30 +353,33 @@
             </Layer>
             <Layer level="ARTWORK" textureSubLevel="1">
                 <Texture parentKey="iconBorder">
-                    <Size x="44" y="44"/>
+                    <Size x="36" y="36"/>
 					<Anchors>
 						<Anchor point="LEFT" x="0" y="0"/>
 					</Anchors>
                 </Texture>
             </Layer>
             <Layer level="OVERLAY">
-				<FontString parentKey="label" inherits="GameFontNormal_NoShadow" justifyH="LEFT">
-                    <Size y="22"/>
+				<FontString parentKey="label" font="Fonts\FRIZQT__.ttf" justifyH="LEFT">
+                    <Size y="18"/>
+                    <FontHeight val="10"/>
 					<Anchors>
-						<Anchor point="TOPLEFT" x="50" y="0"/>
+						<Anchor point="TOPLEFT" x="38" y="0"/>
 						<Anchor point="TOPRIGHT" x="0" y="0"/>
 					</Anchors>
 					<Color r="1" g="1" b="1"/>
 				</FontString>
-				<FontString parentKey="class" inherits="GameFontNormal_NoShadow">
-                    <Size y="22"/>
+				<FontString parentKey="class" font="Fonts\FRIZQT__.ttf">
+                    <Size y="18"/>
+                    <FontHeight val="9"/>
 					<Anchors>
-						<Anchor point="BOTTOMLEFT" x="50" y="1"/>
+						<Anchor point="BOTTOMLEFT" x="38" y="1"/>
 					</Anchors>
 					<Color r="0.1" g="0.1" b="0.1"/>
 				</FontString>
-				<FontString parentKey="subClass" inherits="GameFontNormal_NoShadow">
-                    <Size y="22"/>
+				<FontString parentKey="subClass" font="Fonts\FRIZQT__.ttf">
+                    <Size y="18"/>
+                    <FontHeight val="9"/>
 					<Anchors>
 						<Anchor point="BOTTOMRIGHT" x="0" y="1"/>
 					</Anchors>

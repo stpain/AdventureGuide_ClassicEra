@@ -1,6 +1,6 @@
 <Ui>
-    <Frame name="AdventureGuide" mixin="AdventureGuideMixin" parent="UIParent" inherits="PortraitFrameTemplate" frameStrata="HIGH" enableMouse="true" movable="true">
-        <Size x="800" y="600"/>
+    <Frame name="AdventureGuide" mixin="AdventureGuideMixin" ignoreParentScale="true"  parent="UIParent" inherits="PortraitFrameTemplate" frameStrata="HIGH" enableMouse="true" movable="true">
+        <Size x="765" y="430"/>
         <Anchors>
             <Anchor point="CENTER" x="0" y="0"/>
         </Anchors>
@@ -53,8 +53,8 @@
 
             <Frame parentKey="content">
                 <Anchors>
-                    <Anchor point="TOPLEFT" x="0" y="-60"/>
-                    <Anchor point="BOTTOMRIGHT" x="-6" y="6"/>
+                    <Anchor point="TOPLEFT" x="2" y="-60"/>
+                    <Anchor point="BOTTOMRIGHT" x="-4" y="4"/>
                 </Anchors>
             </Frame>
 

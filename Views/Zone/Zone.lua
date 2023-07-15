@@ -50,21 +50,10 @@ AdventureGuideZoneMixin = {
 
 function AdventureGuideZoneMixin:OnLoad()
 
-    self.infoContainer.background:SetTexture(521750)
-
-    self.questsButton:SetScript("OnClick", function()
-        self.popout:SetShown(not self.popout:IsVisible())
-
-        if self.popout:IsVisible() then
-            self.questsButton:SetNormalAtlas("QuestCollapse-Hide-Up")
-            self.questsButton:SetPushedAtlas("QuestCollapse-Hide-Down")
-        else
-            self.questsButton:SetNormalAtlas("QuestCollapse-Show-Up")
-            self.questsButton:SetPushedAtlas("QuestCollapse-Show-Down")
-        end
-    end)
-
-    self.showHerbs:SetScript("OnClick", function()
+    self.mapContainer.showHerbs:SetAtlas("Mobile-Herbalism")
+    self.mapContainer.showHerbs.icon:ClearAllPoints()
+    self.mapContainer.showHerbs.icon:SetPoint("CENTER", 0, 1)
+    self.mapContainer.showHerbs:SetScript("OnClick", function()
         self.showHerbs = not self.showHerbs
         if self.showHerbs then
             if addon.nodes.herbs[self.selectedZone.zoneID] then
@@ -91,7 +80,8 @@ function AdventureGuideZoneMixin:OnLoad()
         end
     end)
 
-    self.showOres:SetScript("OnClick", function()
+    self.mapContainer.showOres:SetAtlas("Mobile-Mining")
+    self.mapContainer.showOres:SetScript("OnClick", function()
         self.showOres = not self.showOres
         if self.showOres then
             if addon.nodes.mining[self.selectedZone.zoneID] then
@@ -119,7 +109,9 @@ function AdventureGuideZoneMixin:OnLoad()
         end
     end)
 
-    self.showQuests:SetScript("OnClick", function()
+    self.mapContainer.showQuests:SetAtlas("AdventureMapIcon-SandboxQuest")
+    self.mapContainer.showQuests.icon:SetSize(13,19)
+    self.mapContainer.showQuests:SetScript("OnClick", function()
         self.showQuests = not self.showQuests;
         if self.showQuests then
             self:ShowAvailableQuestStarters(self.selectedZone.zoneID)
@@ -129,7 +121,6 @@ function AdventureGuideZoneMixin:OnLoad()
     end)
 
     addon:RegisterCallback("Zone_OnSelected", self.Zone_OnSelected, self)
-    addon:RegisterCallback("Zone_DrawMapPoi", self.DrawMapPoi, self)
     addon:RegisterCallback("Zone_ClearMapPoi", self.ClearMapPoi, self)
     addon:RegisterCallback("Quest_OnQuestAccepted", self.OnQuestsChanged, self)
     addon:RegisterCallback("Quest_OnQuestTurnIn", self.OnQuestsChanged, self)
@@ -138,32 +129,81 @@ function AdventureGuideZoneMixin:OnLoad()
     self.herbPoi = CreateFramePool("FRAME", self.mapContainer.ScrollContainer.Child, "AdventureGuideMapPoiTemplate")
     self.miningPoi = CreateFramePool("FRAME", self.mapContainer.ScrollContainer.Child, "AdventureGuideMapPoiTemplate")
     self.questPoi = CreateFramePool("FRAME", self.mapContainer.ScrollContainer.Child, "AdventureGuideMapPoiTemplate")
+    self.groupPins = CreateFramePool("FRAME", self.mapContainer.ScrollContainer.Child, "AdventureGuideMapPoiTemplate")
 
     self.mapContainer.playerPin = CreateFrame("FRAME", nil, self.mapContainer.ScrollContainer.Child, "AdventureGuideMapPoiTemplate")
-    local pinSize = 42 * 0.6
+    local pinSize = 36
     self.mapContainer.playerPin:SetSize(pinSize, pinSize)
-    self.mapContainer.playerPin.background:SetAtlas("AdventureMapIcon-MissionCombat")
+    self.mapContainer.playerPin.background:SetAtlas("MinimapArrow")
+    --self.mapContainer.playerPin.background:SetAtlas("loottoast-arrow-blue")
 
-    -- self.mapContainer:SetScript("OnUpdate", function(f)
-    --     if f:IsVisible() then
-    --         local width, height = self.mapContainer.ScrollContainer.Child:GetSize()
+    self.mapContainer.groupPins = {}
 
-    --         local mapID = C_Map.GetBestMapForUnit("player")
-    --         if mapID == self.selectedZone.zoneID then
-    --             local position = C_Map.GetPlayerMapPosition(mapID, "player")
+    self.mapContainer:HookScript("OnUpdate", function(f)
+        if f:IsVisible() then
+            local width, height = self.mapContainer.ScrollContainer.Child:GetSize()
 
-    --             if position then
+            local mapID = C_Map.GetBestMapForUnit("player")
+            if mapID == self.selectedZone.zoneID then
+                self.mapContainer.playerPin:Show()
+                --self.groupPins:ReleaseAll()
+                local position = C_Map.GetPlayerMapPosition(mapID, "player")
+                local facing = GetPlayerFacing()
 
-    --                 local x, y = position:GetXY()
-    --                 local playerX = ((width/100) * (x*100)) - (pinSize / 2)
-    --                 local playerY = ((height/100) * (y*100)) - (pinSize / 2)
+                if position then
 
-    --                 self.mapContainer.playerPin:ClearAllPoints()
-    --                 self.mapContainer.playerPin:SetPoint("TOPLEFT", playerX, playerY * -1)
-    --             end
-    --         end
-    --     end
-    -- end)
+                    local x, y = position:GetXY()
+                    local playerX = ((width/100) * (x*100)) - (pinSize / 2)
+                    local playerY = ((height/100) * (y*100)) - (pinSize / 2)
+
+                    self.mapContainer.playerPin:ClearAllPoints()
+                    self.mapContainer.playerPin.background:SetRotation(facing)
+                    self.mapContainer.playerPin:SetPoint("TOPLEFT", playerX, playerY * -1)
+                end
+
+            else
+                self.mapContainer.playerPin:Hide()
+            end
+            if IsInRaid(1) then
+                -- for i = 1, GetNumGroupMembers(1) do
+                --     local raider = UnitName("raid"..i)
+                --     if not self.mapContainer.groupPins[i] then
+                --         local pin = self.groupPins:Acquire()
+                --         pin:SetSize(16,16)
+
+                --     end
+                -- end
+            else
+                if IsInGroup() then
+                    for i = 1, GetNumGroupMembers(1) do
+                        local member = UnitName("party"..i)
+                        if member then
+                            local mapID = C_Map.GetBestMapForUnit("party"..i)
+                            local position = C_Map.GetPlayerMapPosition(mapID, "party"..i)
+                            if position then
+                                if not self.mapContainer.groupPins[i] then
+                                    local pin = self.groupPins:Acquire()
+                                    pin:SetSize(16,16)
+                                    pin.background:SetAtlas("PartyMember")
+                                    local x, y = position:GetXY()
+                                    pin:ClearAllPoints()
+                                    pin:SetPoint("TOPLEFT", ((width/100) * (x*100)) - 8, ((height/100) * (y*100)) - 8 * -1)
+                                    self.mapContainer.groupPins[i] = pin
+                                else
+                                    local pin = self.mapContainer.groupPins[i]
+                                    pin:SetSize(16,16)
+                                    pin.background:SetAtlas("PartyMember")
+                                    local x, y = position:GetXY()
+                                    pin:ClearAllPoints()
+                                    pin:SetPoint("TOPLEFT", ((width/100) * (x*100)) - 8, ((height/100) * (y*100)) - 8 * -1)
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end)
 
     self.mapContainer:SetShouldZoomInOnClick(true);
     self.mapContainer:SetShouldPanOnClick(true);
@@ -199,6 +239,34 @@ end
 
 function AdventureGuideZoneMixin:Zone_OnSelected(zoneID)
     self.mapContainer:SetMapID(zoneID)
+
+    -- local addonX, addonY = AdventureGuide:GetSize()
+    -- local mapX, mapY = self.mapContainer:GetSize()
+    -- local mapScrollX, mapScrollY = self.mapContainer.ScrollContainer:GetSize()
+    -- local mapScrollChildX, mapScrollChildY = self.mapContainer.ScrollContainer.Child:GetSize()
+    -- print(string.format("Addon size: %0.1fx%0.1f", addonX, addonY))
+    -- print(string.format("Map Container size: %0.1fx%0.1f", mapX, mapY))
+    -- print(string.format("Map Container Scroll size: %0.1fx%0.1f", mapScrollX, mapScrollY))
+    -- print(string.format("Map Container Scroll Child size: %0.1fx%0.1f", mapScrollChildX, mapScrollChildY))
+
+    -- local scale = UIParent:GetScale()
+    -- local effectiveScale = UIParent:GetEffectiveScale()
+
+    -- print("======= with scaling * =======")
+
+    -- print(string.format("Addon size: %0.1fx%0.1f", addonX*scale, addonY*scale))
+    -- print(string.format("Map Container size: %0.1fx%0.1f", mapX*scale, mapY*scale))
+    -- print(string.format("Map Container Scroll size: %0.1fx%0.1f", mapScrollX*scale, mapScrollY*scale))
+    -- print(string.format("Map Container Scroll Child size: %0.1fx%0.1f", mapScrollChildX*scale, mapScrollChildY*scale))
+
+    -- print("======= with scaling / =======")
+
+    -- print(string.format("Addon size: %0.1fx%0.1f", addonX/scale, addonY/scale))
+    -- print(string.format("Map Container size: %0.1fx%0.1f", mapX/scale, mapY/scale))
+    -- print(string.format("Map Container Scroll size: %0.1fx%0.1f", mapScrollX/scale, mapScrollY/scale))
+    -- print(string.format("Map Container Scroll Child size: %0.1fx%0.1f", mapScrollChildX/scale, mapScrollChildY/scale))
+
+
 end
 
 function AdventureGuideZoneMixin:LoadZone(zone)
@@ -210,13 +278,21 @@ function AdventureGuideZoneMixin:LoadZone(zone)
 
     local faction = UnitFactionGroup("player")
     local _, _, classID = UnitClass("player")
-    --local level = UnitLevel("player")
+    local level = UnitLevel("player")
 
     self.selectedZone = zone
 
-    self:ShowAvailableQuestStarters(self.selectedZone.zoneID)
+    --self:ShowAvailableQuestStarters(self.selectedZone.zoneID)
 
-    self.popout.questListview.DataProvider:Flush()
+    self:ScanQuestLog()
+
+    self.sidePanel.questListview.DataProvider:Flush()
+
+    local log = addon.api.getCurrentQuestIDs()
+    local currentQuests = {}
+    for k, v in ipairs(log) do
+        currentQuests[v] = true
+    end
 
     if addon.questChapters[zone.zoneID] then
         local characterQuests = {}
@@ -248,20 +324,26 @@ function AdventureGuideZoneMixin:LoadZone(zone)
                     end
                 end
 
+                local flaggedComplete = C_QuestLog.IsQuestFlaggedCompleted(quest.questID)
 
                 if raceMatch  and classMatch then
                     table.insert(characterQuests, quest)
+
+                    if k == 1 and (quest.requiredLevel <= level) and (not flaggedComplete) then
+                        if not currentQuests[quest.questID] then
+                            self:DrawQuestStartInfo(quest)
+                        end
+                    end
                 end
 
-                local completed = C_QuestLog.IsQuestFlaggedCompleted(quest.questID)
-                if completed then
+                if flaggedComplete then
                     questsCompleted = questsCompleted + 1;
                 end
                 numQuests = numQuests + 1;
             end
         end
-        self.popout.questListview.DataProvider:InsertTable(characterQuests)
-        self.popout.info:SetText(string.format("Quests %d/%d", questsCompleted, #characterQuests))
+        self.sidePanel.questListview.DataProvider:InsertTable(characterQuests)
+        self.sidePanel.info:SetText(string.format("Quests %d/%d", questsCompleted, #characterQuests))
     end
 
     self.herbPoi:ReleaseAll()
@@ -270,6 +352,23 @@ function AdventureGuideZoneMixin:LoadZone(zone)
     self.showHerbs = false;
     self.showOres = false;
 
+end
+
+function AdventureGuideZoneMixin:ScanQuestLog()
+
+    local questIDs = addon.api.getQuestIDsForQuestsWaitingTurnIn()
+
+    for zone, chapters in pairs(addon.questChapters) do
+        for _, quests in ipairs(chapters) do
+            for k, quest in ipairs(quests) do
+                for _, questID in ipairs(questIDs) do
+                    if quest.questID == questID then
+                        self:DrawQuestFinishInfo(quest)
+                    end
+                end
+            end
+        end
+    end
 end
 
 function AdventureGuideZoneMixin:ShowAvailableQuestStarters(zoneID)
@@ -310,7 +409,7 @@ function AdventureGuideZoneMixin:ShowAvailableQuestStarters(zoneID)
                 if raceMatch  and classMatch and (not completed) then
 
                     if k == 1 and (quest.requiredLevel <= level) then
-                        self:DrawMapPoi(quest)
+                        self:DrawQuestStartInfo(quest)
                     end
                 end
 
@@ -321,112 +420,83 @@ end
 
 function AdventureGuideZoneMixin:OnQuestSelected(quest)
 
-    --self:DrawMapPoi()
 end
 
 function AdventureGuideZoneMixin:OnQuestsChanged()
 
-    -- if self.selectedZone then
-    --     self.popout.questListview.DataProvider:Flush()
-
-    --     if self.selectedZone.quests then
-    --         self.popout.questListview.DataProvider:InsertTable(self.selectedZone.quests)
-        
-    --         --this could prove overkill but to catch updates run it a few times
-    --         C_Timer.NewTicker(1, function()
-    --             local questsCompleted = 0;
-    --             for k, quest in ipairs(self.selectedZone.quests) do
-    --                 local completed = C_QuestLog.IsQuestFlaggedCompleted(quest.questID)
-    --                 if completed then
-    --                     questsCompleted = questsCompleted + 1;
-    --                 end
-    --             end
-    --             self.popout.info:SetText(string.format("Quests %d/%d", questsCompleted, #self.selectedZone.quests))
-    --         end, 3)
-    --     end
-    -- end
 end
 
-function AdventureGuideZoneMixin:DrawMapPoi(quest, ignoreCompleted)
-
-    --self.questPoi:ReleaseAll()
-
-    local completed = C_QuestLog.IsQuestFlaggedCompleted(quest.questID)
-    completed = C_QuestLog.IsQuestFlaggedCompleted(quest.questID)
-
-    if completed and (not ignoreCompleted) then
-        return
-    end
-
-    local questStarters = {}
+function AdventureGuideZoneMixin:DrawMapPoi(icon, w, h, x, y, tooltipUpdateFunc)
     
-    --list of item dropper npcs (or objects)
-    local droppers = {}
+    local poi = self.questPoi:Acquire()
 
-    if quest.start then
+    poi:ClearAllPoints()
+    poi:SetPoint("TOPLEFT", self.mapContainer.ScrollContainer.Child, "TOPLEFT", x, y)
 
-        --npc
-        if type(quest.start[1]) == "table" then
+    poi.background:SetAtlas(icon)
+    poi:SetSize(w, h)
+    poi:Show()
 
-            for k, npcID in ipairs(quest.start[1]) do
-                if addon.npcData[npcID] then
-                    table.insert(questStarters, {
-                        giver = addon.npcData[npcID],
-                        mapIcon = self.mapIcons.npc
-                    })
-                    table.insert(droppers, addon.npcData[npcID].name)
-                end
-            end
+    poi.UpdateTooltip = tooltipUpdateFunc;
 
-        --object
-        elseif type(quest.start[2]) == "table" then
+    poi:SetScript("OnEnter", function()
+        GameTooltip:SetOwner(poi, "ANCHOR_TOP")
+        poi.UpdateTooltip()
+    end)
+end
 
-            if addon.objectData[quest.start[2][1]] then
-                table.insert(questStarters, {
-                    giver = addon.objectData[quest.start[2][1]],
-                    mapIcon = self.mapIcons.object,
-                })
-                table.insert(droppers, addon.objectData[quest.start[2][1]].name)
-            end
+function AdventureGuideZoneMixin:DrawQuestFinishInfo(quest)
 
-        --item
-        elseif type(quest.start[3]) == "table" then
+    local turnInInfo = addon.api.getQuestFinishInformation(quest)
+    if turnInInfo then
+        
+        local width, height = self.mapContainer.ScrollContainer.Child:GetSize()
 
-            if addon.itemData[quest.start[3][1]] then
+        for k, turnIn in ipairs(turnInInfo) do
 
-                --item drops from an npc
-                if addon.itemData[quest.start[3][1]].dropsFrom[1] then
-                    for k, npcID in ipairs(addon.itemData[quest.start[3][1]].dropsFrom[1]) do
-                        if addon.npcData[npcID] then
-                            table.insert(questStarters, {
-                                giver = addon.npcData[npcID],
-                                mapIcon = self.mapIcons.item,
-                            })
-                            table.insert(droppers, addon.npcData[npcID].name)
+            if turnIn.giver.spawnLocations[self.selectedZone.zoneID] then
+
+                for k, v in ipairs(turnIn.giver.spawnLocations[self.selectedZone.zoneID]) do
+
+                    local x = (width / 100) * v[1];
+                    local y = (height / 100) * v[2];
+
+                    local ttUpdate = function()
+                        GameTooltip:ClearLines()
+                        local questName = C_QuestLog.GetQuestInfo(quest.questID)
+                        local objectives = C_QuestLog.GetQuestObjectives(quest.questID)
+                        GameTooltip:AddLine(questName)
+                    
+                        if type(objectives) == "table" then
+                            GameTooltip:AddLine(" ")
+                            for k, v in ipairs(objectives) do
+                                GameTooltip:AddLine(v.text, 1,1,1)
+                            end
                         end
+
+                        GameTooltip:AddLine(" ")
+                        GameTooltip:AddLine(string.format("|cffffffffQuestID [%d]", quest.questID))
+
+                        GameTooltip:Show()
                     end
 
-                --item drops from an object
-                elseif addon.itemData[quest.start[3][1]].dropsFrom[2] then
-                    for k, objectID in ipairs(addon.itemData[quest.start[3][1]].dropsFrom[2]) do
-                        if addon.objectData[objectID] then
-                            table.insert(questStarters, {
-                                giver = addon.objectData[objectID],
-                                mapIcon = self.mapIcons.item,
-                            })
-                            table.insert(droppers, addon.objectData[objectID].name)
-                        end
-                    end
+                    self:DrawMapPoi("QuestTurnin", 30, 30, x, y*-1, ttUpdate)
+
                 end
-
             end
-
         end
+
     end
 
-    local width, height = self.mapContainer.ScrollContainer.Child:GetSize()
+end
+
+function AdventureGuideZoneMixin:DrawQuestStartInfo(quest)
+
+    local questStarters, droppers = addon.api.getQuestStartInformation(quest)
 
     if questStarters then
+
+        local width, height = self.mapContainer.ScrollContainer.Child:GetSize()
 
         for k, starter in ipairs(questStarters) do
 
@@ -437,20 +507,10 @@ function AdventureGuideZoneMixin:DrawMapPoi(quest, ignoreCompleted)
                     local x = (width / 100) * v[1];
                     local y = (height / 100) * v[2];
 
-                    local poi = self.questPoi:Acquire()
-
-                    poi:ClearAllPoints()
-                    poi:SetPoint("TOPLEFT", self.mapContainer.ScrollContainer.Child, "TOPLEFT", x - (starter.mapIcon.x / 2), (y*-1) + (starter.mapIcon.y / 2))
-
-
-                    poi.background:SetAtlas(starter.mapIcon.atlas)
-                    poi:SetSize(starter.mapIcon.x * 0.5, starter.mapIcon.y * 0.5)
-                    poi:Show()
-
-                    poi.UpdateTooltip = function()
+                    local ttUpdate = function()
+                        GameTooltip:ClearLines()
                         local questName = C_QuestLog.GetQuestInfo(quest.questID)
                         local objectives = C_QuestLog.GetQuestObjectives(quest.questID)
-                        GameTooltip:SetOwner(poi, "ANCHOR_TOP")
                         GameTooltip:AddLine(questName)
                     
                         if type(objectives) == "table" then
@@ -483,15 +543,9 @@ function AdventureGuideZoneMixin:DrawMapPoi(quest, ignoreCompleted)
                         GameTooltip:Show()
                     end
 
-                    poi:SetScript("OnEnter", function()
-                        poi.UpdateTooltip()
-                    end)
+                    self:DrawMapPoi(starter.mapIcon.atlas, (starter.mapIcon.x * 0.55), (starter.mapIcon.y * 0.55), x, y*-1, ttUpdate)
 
                 end
-
-            else
-
-
             end
         end
     end

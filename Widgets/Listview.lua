@@ -28,6 +28,10 @@ function AdventureWidgetsListviewMixin:OnLoad()
         CreateAnchor("BOTTOMRIGHT", self, "BOTTOMRIGHT", -1, 1),
     };
     ScrollUtil.AddManagedScrollBarVisibilityBehavior(self.scrollBox, self.scrollBar, anchorsWithBar, anchorsWithoutBar);
+
+    --this is kinda hacky wacke but the map mixin from blizz is a SOAB and hates scaling
+    --so the addon now ignores scaling and i'm adding som slight compensation to various parts
+    self.scrollBar:SetScale(0.8)
 end
 
 function AdventureWidgetsListviewMixin:OnElementInitialize(element, elementData, isNew)

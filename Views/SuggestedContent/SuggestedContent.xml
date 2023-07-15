@@ -11,22 +11,22 @@
             </Layer>
             <Layer level="ARTWORK">
                 <Texture parentKey="leftPanel" atlas="adventureguide-pane-large">
-                    <Size x="335"/>
+                    <Size x="305"/>
                     <Anchors>
-                        <Anchor point="TOPLEFT" x="30" y="-60"/>
-                        <Anchor point="BOTTOMLEFT" x="30" y="60"/>
+                        <Anchor point="TOPLEFT" x="30" y="-10"/>
+                        <Anchor point="BOTTOMLEFT" x="30" y="10"/>
                     </Anchors>
                 </Texture>
                 <Texture parentKey="topRightPanel" atlas="adventureguide-pane-small">
-                    <Size x="344" y="181"/>
+                    <Size x="344" y="161"/>
                     <Anchors>
-                        <Anchor point="TOPRIGHT" x="-30" y="-60"/>
+                        <Anchor point="TOPRIGHT" x="-30" y="-10"/>
                     </Anchors>
                 </Texture>
                 <Texture parentKey="bottomRightPanel" atlas="adventureguide-pane-small">
-                    <Size x="344" y="181"/>
+                    <Size x="344" y="161"/>
                     <Anchors>
-                        <Anchor point="BOTTOMRIGHT" x="-30" y="60"/>
+                        <Anchor point="BOTTOMRIGHT" x="-30" y="10"/>
                     </Anchors>
                 </Texture>
             </Layer>

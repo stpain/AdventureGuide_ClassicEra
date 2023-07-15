@@ -10,6 +10,16 @@ function AdventureButtonMixin:OnLeave()
 end
 
 
+AdventurePortraitButtonMixin = {}
+function AdventurePortraitButtonMixin:OnLoad()
+
+end
+function AdventurePortraitButtonMixin:SetAtlas(atlas)
+    self.icon:SetAtlas(atlas)
+end
+function AdventurePortraitButtonMixin:OnLeave()
+    GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
+end
 
 AdventureGuideBasicListviewMixin = {}
 function AdventureGuideBasicListviewMixin:OnLoad()
@@ -92,6 +102,12 @@ function AdventureGuideLootListviewMixin:SetDataBinding(binding, height)
         self:SetScript("OnMouseDown", binding.onMouseDown)
     end
 
+    self:SetScript("OnMouseDown", function()
+        if binding.link and IsShiftKeyDown() then
+            HandleModifiedItemClick(binding.link)
+        end
+    end)
+
 end
 function AdventureGuideLootListviewMixin:ResetDataBinding()
 
@@ -145,7 +161,7 @@ function AdventureGuideHomeGridviewItemMixin:SetDataBinding(binding)
         self.text:SetText(binding.name)
 
         self:SetScript("OnMouseDown", function()
-            addon:TriggerEvent("Zone_OnSelected", self.binding)
+            addon:TriggerEvent("Zone_OnSelected", self.binding.zoneID)
         end)
 
 
@@ -227,12 +243,12 @@ function AdventureGuideZoneQuestListviewMixin:SetDataBinding(binding, height)
         self.icon:SetWidth(1)
         self.icon:Hide()
 
-        self.label:SetFontObject("GameFontNormal")
+        self.label:SetFontObject("AdventureGuideFontNormal_NoShadow")
     else
         self.icon:SetWidth(11)
         self.icon:Show()
 
-        self.label:SetFontObject("GameFontNormalSmall")
+        self.label:SetFontObject("AdventureGuideFontNormalSmall_NoShadow")
     end
 
     local x = C_QuestLog.GetQuestInfo(binding.questID)
@@ -296,7 +312,50 @@ function AdventureGuideZoneQuestListviewMixin:SetDataBinding(binding, height)
 
 
     self:SetScript("OnEnter", function()
-    
+        local questStarters, droppers = addon.api.getQuestStartInformation(binding)
+
+        if questStarters or droppers then
+            self.UpdateTooltip = function()
+
+                local questName = C_QuestLog.GetQuestInfo(binding.questID)
+                local objectives = C_QuestLog.GetQuestObjectives(binding.questID)
+                GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
+                GameTooltip:AddLine(questName)
+            
+                if type(objectives) == "table" then
+                    GameTooltip:AddLine(" ")
+                    for k, v in ipairs(objectives) do
+                        GameTooltip:AddLine(v.text, 1,1,1)
+                    end
+                end
+
+                if droppers and #droppers > 1 then
+                    for k, v in ipairs(droppers) do
+                        if k > 8 then
+                            GameTooltip:AddLine(string.format("and %d more...", (#droppers - 8)))
+                            break
+                        else
+                            GameTooltip:AddLine(string.format("|cffffffff%s", v))
+                        end
+                    end
+                else
+                    if type(questStarters) == "table" then
+                        GameTooltip:AddLine(" ")
+                        GameTooltip:AddLine("Starts from:")
+                        for k, starter in ipairs(questStarters) do
+                            GameTooltip:AddLine(string.format("|cffffffff%s", starter.giver.name))
+                        end
+                    end
+                end
+
+                GameTooltip:AddLine(" ")
+                GameTooltip:AddLine(string.format("|cffffffffQuestID [%d]", binding.questID))
+
+                GameTooltip:Show()
+
+            end
+            self.UpdateTooltip()
+        end
     end)
 
     if binding.onMouseDown then
