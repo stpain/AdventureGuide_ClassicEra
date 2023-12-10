@@ -31,7 +31,8 @@ function addon.api.getQuestIDsForQuestsWaitingTurnIn()
     local numEntries, numQuests = GetNumQuestLogEntries()
     local quests = {}
     for i = 1, numEntries do
-        local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID = GetQuestLogTitle(i)
+        local title, level, suggestedGroup, isHeader, isCollapsed, _isComplete, frequency, questID = GetQuestLogTitle(i)
+        local isComplete = IsQuestComplete(questID)
         if isComplete and (not isHeader) and (type(questID) == "number") then
             table.insert(quests, questID)
         end
@@ -42,18 +43,18 @@ end
 local questStartMapIcons = {
     npc = {
         atlas = "AdventureMapIcon-SandboxQuest",
-        x = 25,
-        y = 39,
+        w = 25,
+        h = 39,
     },
     object = {
         atlas = "AdventureMapIcon-SandboxQuest",
-        x = 25,
-        y = 39,
+        w = 25,
+        h = 39,
     },
     item = {
         atlas = "VignetteLoot",
-        x = 24,
-        y = 24,
+        w = 24,
+        h = 24,
     },
 }
 

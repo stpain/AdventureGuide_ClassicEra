@@ -9,6 +9,8 @@ AdventureGuideMixin = {
 
 function AdventureGuideMixin:OnLoad()
 
+    self:SetScale(0.85)
+
     self:RegisterForDrag("LeftButton")
 
     self.portraitMask = self:CreateMaskTexture()

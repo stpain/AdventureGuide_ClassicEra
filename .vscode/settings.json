@@ -106,6 +106,10 @@
         "OpacitySliderFrame",
         "CombatText_AddMessage",
         "COMBAT_TEXT_SCROLL_FUNCTION",
-        "MapHighlightDataProviderMixin"
+        "MapHighlightDataProviderMixin",
+        "BATTLEFIELD_MAP_PLAYER_SIZE",
+        "BATTLEFIELD_MAP_PARTY_MEMBER_SIZE",
+        "BATTLEFIELD_MAP_RAID_MEMBER_SIZE",
+        "GroupMembersDataProviderMixin"
     ]
 }

@@ -125,13 +125,38 @@ function AdventureGuideZoneMixin:OnLoad()
     addon:RegisterCallback("Quest_OnQuestAccepted", self.OnQuestsChanged, self)
     addon:RegisterCallback("Quest_OnQuestTurnIn", self.OnQuestsChanged, self)
 
-    self.mapPoi = CreateFramePool("FRAME", self.mapContainer.ScrollContainer.Child, "AdventureGuideMapPoiTemplate")
-    self.herbPoi = CreateFramePool("FRAME", self.mapContainer.ScrollContainer.Child, "AdventureGuideMapPoiTemplate")
-    self.miningPoi = CreateFramePool("FRAME", self.mapContainer.ScrollContainer.Child, "AdventureGuideMapPoiTemplate")
-    self.questPoi = CreateFramePool("FRAME", self.mapContainer.ScrollContainer.Child, "AdventureGuideMapPoiTemplate")
-    self.groupPins = CreateFramePool("FRAME", self.mapContainer.ScrollContainer.Child, "AdventureGuideMapPoiTemplate")
+    self.mapContainer:SetShouldZoomInOnClick(true);
+    self.mapContainer:SetShouldPanOnClick(true);
+    self.mapContainer:SetShouldNavigateOnClick(true);
+    self.mapContainer:AddDataProvider(CreateFromMixins(MapHighlightDataProviderMixin))
+    --self.mapContainer.ScrollContainer.targetScale = 1
+    self.mapContainer:SetMapID(1429)
 
-    self.mapContainer.playerPin = CreateFrame("FRAME", nil, self.mapContainer.ScrollContainer.Child, "AdventureGuideMapPoiTemplate")
+    -- self.mapContainer.groupMembersDataProvider = CreateFromMixins(GroupMembersDataProviderMixin);
+	-- self.mapContainer.groupMembersDataProvider:SetUnitPinSize("player", BATTLEFIELD_MAP_PLAYER_SIZE);
+	-- self.mapContainer.groupMembersDataProvider:SetUnitPinSize("party", BATTLEFIELD_MAP_PARTY_MEMBER_SIZE);
+	-- self.mapContainer.groupMembersDataProvider:SetUnitPinSize("raid", BATTLEFIELD_MAP_RAID_MEMBER_SIZE);
+	-- self.mapContainer:AddDataProvider(self.mapContainer.groupMembersDataProvider);
+
+    self.mapCanvas = self.mapContainer.ScrollContainer.Child:CreateTexture(nil, "OVERLAY")
+    self.mapCanvas:SetTexCoord(0.0, 0.9765625, 0.0, 0.6513671875)
+    self.mapCanvas:SetAllPoints()
+
+    --basically i didnt understand how any of the map pin stuff works, maybe as this is classic, maybe i'm just dumb
+    --so i added a frame over the top of the map, raised the %*@! out of it and use that to draw stuff on
+    self.mapCheatLayer = CreateFrame("FRAME", "AG_YOUR_MAP_PIN_MIXIN_FAILS_BLIZZ", self.mapContainer.ScrollContainer.Child)
+    self.mapCheatLayer:SetAllPoints()
+    self.mapCheatLayer:SetFrameLevel(9000)
+    self.mapCheatLayer:SetFrameStrata("TOOLTIP")
+    self.mapCheatLayer:Raise()
+
+    self.mapPoi = CreateFramePool("FRAME", self.mapCheatLayer, "AdventureGuideMapPoiTemplate")
+    self.herbPoi = CreateFramePool("FRAME", self.mapCheatLayer, "AdventureGuideMapPoiTemplate")
+    self.miningPoi = CreateFramePool("FRAME", self.mapCheatLayer, "AdventureGuideMapPoiTemplate")
+    self.questPoi = CreateFramePool("FRAME", self.mapCheatLayer, "AdventureGuideMapPoiTemplate")
+    self.groupPins = CreateFramePool("FRAME", self.mapCheatLayer, "AdventureGuideMapPoiTemplate")
+
+    self.mapContainer.playerPin = CreateFrame("FRAME", nil, self.mapCheatLayer, "AdventureGuideMapPoiTemplate")
     local pinSize = 36
     self.mapContainer.playerPin:SetSize(pinSize, pinSize)
     self.mapContainer.playerPin.background:SetAtlas("MinimapArrow")
@@ -139,23 +164,21 @@ function AdventureGuideZoneMixin:OnLoad()
 
     self.mapContainer.groupPins = {}
 
+    local groupPinSize = 48;
     self.mapContainer:HookScript("OnUpdate", function(f)
         if f:IsVisible() then
-            local width, height = self.mapContainer.ScrollContainer.Child:GetSize()
+            local width, height = self.mapCheatLayer:GetSize()
 
             local mapID = C_Map.GetBestMapForUnit("player")
             if mapID == self.selectedZone.zoneID then
                 self.mapContainer.playerPin:Show()
-                --self.groupPins:ReleaseAll()
                 local position = C_Map.GetPlayerMapPosition(mapID, "player")
                 local facing = GetPlayerFacing()
 
                 if position then
-
                     local x, y = position:GetXY()
                     local playerX = ((width/100) * (x*100)) - (pinSize / 2)
                     local playerY = ((height/100) * (y*100)) - (pinSize / 2)
-
                     self.mapContainer.playerPin:ClearAllPoints()
                     self.mapContainer.playerPin.background:SetRotation(facing)
                     self.mapContainer.playerPin:SetPoint("TOPLEFT", playerX, playerY * -1)
@@ -165,37 +188,36 @@ function AdventureGuideZoneMixin:OnLoad()
                 self.mapContainer.playerPin:Hide()
             end
             if IsInRaid(1) then
-                -- for i = 1, GetNumGroupMembers(1) do
-                --     local raider = UnitName("raid"..i)
-                --     if not self.mapContainer.groupPins[i] then
-                --         local pin = self.groupPins:Acquire()
-                --         pin:SetSize(16,16)
 
-                --     end
-                -- end
             else
                 if IsInGroup() then
                     for i = 1, GetNumGroupMembers(1) do
                         local member = UnitName("party"..i)
                         if member then
                             local mapID = C_Map.GetBestMapForUnit("party"..i)
-                            local position = C_Map.GetPlayerMapPosition(mapID, "party"..i)
-                            if position then
-                                if not self.mapContainer.groupPins[i] then
-                                    local pin = self.groupPins:Acquire()
-                                    pin:SetSize(16,16)
-                                    pin.background:SetAtlas("PartyMember")
+                            if mapID and (mapID == self.mapContainer:GetMapID()) then
+                                local position = C_Map.GetPlayerMapPosition(mapID, "party"..i)
+                                if position then
                                     local x, y = position:GetXY()
-                                    pin:ClearAllPoints()
-                                    pin:SetPoint("TOPLEFT", ((width/100) * (x*100)) - 8, ((height/100) * (y*100)) - 8 * -1)
-                                    self.mapContainer.groupPins[i] = pin
-                                else
-                                    local pin = self.mapContainer.groupPins[i]
-                                    pin:SetSize(16,16)
-                                    pin.background:SetAtlas("PartyMember")
-                                    local x, y = position:GetXY()
-                                    pin:ClearAllPoints()
-                                    pin:SetPoint("TOPLEFT", ((width/100) * (x*100)) - 8, ((height/100) * (y*100)) - 8 * -1)
+                                    x = ((width/100) * (x*100)) - (groupPinSize / 2)
+                                    y = ((height/100) * (y*100)) - (groupPinSize / 2)
+                                    if not self.mapContainer.groupPins[i] then
+                                        local pin = self.mapPoi:Acquire()
+                                        pin:SetSize(groupPinSize,groupPinSize)
+                                        pin.background:SetAtlas("PartyMember")
+                                        pin:Show()
+                                        pin:SetPoint("TOPLEFT", x, y*-1)
+                                        self.mapContainer.groupPins[i] = pin
+                                    else
+                                        local pin = self.mapContainer.groupPins[i]
+                                        pin:ClearAllPoints()
+                                        pin:Show()
+                                        pin:SetPoint("TOPLEFT", x, y*-1)
+                                    end
+                                end
+                            else
+                                for k, pin in ipairs(self.mapContainer.groupPins) do
+                                    pin:Hide()
                                 end
                             end
                         end
@@ -204,17 +226,6 @@ function AdventureGuideZoneMixin:OnLoad()
             end
         end
     end)
-
-    self.mapContainer:SetShouldZoomInOnClick(true);
-    self.mapContainer:SetShouldPanOnClick(true);
-    self.mapContainer:SetShouldNavigateOnClick(true);
-    self.mapContainer:AddDataProvider(CreateFromMixins(MapHighlightDataProviderMixin))
-    --self.mapContainer.ScrollContainer.targetScale = 1
-    self.mapContainer:SetMapID(1429)
-
-    self.mapCanvas = self.mapContainer.ScrollContainer.Child:CreateTexture(nil, "OVERLAY")
-    self.mapCanvas:SetTexCoord(0.0, 0.9765625, 0.0, 0.6513671875)
-    self.mapCanvas:SetAllPoints()
 
     -- self:SetScript("OnLeave", function()
     --     self:ClearMapPoi()
@@ -230,6 +241,9 @@ function AdventureGuideZoneMixin:OnLoad()
         else
             self:ClearMapPoi()
             self.mapCanvas:Hide()
+        end
+        for k, pin in ipairs(self.mapContainer.groupPins) do
+            pin:Hide()
         end
     end)
 
@@ -431,7 +445,7 @@ function AdventureGuideZoneMixin:DrawMapPoi(icon, w, h, x, y, tooltipUpdateFunc)
     local poi = self.questPoi:Acquire()
 
     poi:ClearAllPoints()
-    poi:SetPoint("TOPLEFT", self.mapContainer.ScrollContainer.Child, "TOPLEFT", x, y)
+    poi:SetPoint("TOPLEFT", self.mapContainer.ScrollContainer.Child, "TOPLEFT", x - (w/2), y + (h/2))
 
     poi.background:SetAtlas(icon)
     poi:SetSize(w, h)
@@ -480,7 +494,7 @@ function AdventureGuideZoneMixin:DrawQuestFinishInfo(quest)
                         GameTooltip:Show()
                     end
 
-                    self:DrawMapPoi("QuestTurnin", 30, 30, x, y*-1, ttUpdate)
+                    self:DrawMapPoi("QuestTurnin", 32, 32, x, y*-1, ttUpdate)
 
                 end
             end
@@ -543,7 +557,7 @@ function AdventureGuideZoneMixin:DrawQuestStartInfo(quest)
                         GameTooltip:Show()
                     end
 
-                    self:DrawMapPoi(starter.mapIcon.atlas, (starter.mapIcon.x * 0.55), (starter.mapIcon.y * 0.55), x, y*-1, ttUpdate)
+                    self:DrawMapPoi(starter.mapIcon.atlas, starter.mapIcon.w, starter.mapIcon.h, x, y*-1, ttUpdate)
 
                 end
             end

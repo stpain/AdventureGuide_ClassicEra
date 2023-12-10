@@ -10,8 +10,9 @@ function AdventureGuideInstanceViewMixin:OnLoad()
 
     self.content.lore.background:SetTexture(521750)
     self.content.encounters.background:SetTexture(521750)
-    self.content.lore.text:GetFontString():SetTextColor(CreateColor(0.002, 0.002, 0.001))
-    self.content.encounters.guidePanel:GetFontString():SetTextColor(CreateColor(0.002, 0.002, 0.001))
+    local r, g, b, a = CreateColor(0.002, 0.002, 0.001):GetRGBA()
+    self.content.lore.text:GetFontString():SetTextColor(r, g, b, a)
+    self.content.encounters.guidePanel:GetFontString():SetTextColor(r, g, b, a)
 
 
     self.sidePanel.infoButton:SetScript("OnMouseDown", function()
@@ -77,18 +78,12 @@ function AdventureGuideInstanceViewMixin:UpdateLayout()
     local x, y = self.content:GetSize()
 
     self.content.lore.icon:SetSize((x / 2) - 20, (y / 2))
+    self.content.lore.text:SetSize((x / 2) - 60, y - 60)
 
-    -- if self.selectedInstance then
-    --     self.lore.text:SetText(self.selectedInstance.history or "")
-
-    -- end
-
-    --self.content.encounters.bossListview:SetWidth((x / 2) - 60)
     self.content.encounters.lootListview:SetWidth((x / 2) - 30)
     self.content.encounters.abilitiesListview:SetWidth((x / 2) - 60)
     self.content.encounters.guidePanel:SetWidth((x / 2) - 60)
 
-    -- self.quests.questListview:SetWidth((x / 2) - 60)
 
 end
 
@@ -98,12 +93,13 @@ end
 
 function AdventureGuideInstanceViewMixin:Guide_OnInstanceSelected(instance)
 
-    -- self.selectedInstance = instance
-    -- self.selectedInstanceMapID = 1;
+    self.selectedInstance = instance
+    self.selectedInstanceMapID = 1;
+
+    self:UpdateLayout()
 
     self.content.lore.icon:SetTexture(instance.loreFileID)
     self.content.lore.text:SetText(instance.history)
-
 
     local loot = {}
 

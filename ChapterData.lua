@@ -32505,7 +32505,249 @@ addon.questChapters = {
 					}, -- [1]
 				},
 			}, -- [2]
+			{
+				["requiredRace"] = {
+					"allianceQuest", -- [1]
+				},
+				["questLevel"] = 29,
+				["questID"] = 391,
+				["title"] = "The Stockade Riots",
+				["requiredClass"] = {
+				},
+				["start"] = {
+					{
+						1719, -- [1]
+					}, -- [1]
+				},
+				["requiredQuests"] = {
+					389, -- [1]
+				},
+				["requiredLevel"] = 16,
+				["finish"] = {
+					{
+						1719, -- [1]
+					}, -- [1]
+				},
+			}, -- [2]
+			{
+				["requiredRace"] = {
+					"allianceQuest", -- [1]
+				},
+				["questLevel"] = 29,
+				["questID"] = 392,
+				["title"] = "The Curious Visitor",
+				["requiredClass"] = {
+				},
+				["start"] = {
+					{
+						1719, -- [1]
+					}, -- [1]
+				},
+				["requiredQuests"] = {
+					391, -- [1]
+				},
+				["requiredLevel"] = 16,
+				["finish"] = {
+					{
+						1646, -- [1]
+					}, -- [1]
+				},
+			}, -- [2]
+			{
+				["requiredRace"] = {
+					"allianceQuest", -- [1]
+				},
+				["questLevel"] = 29,
+				["questID"] = 393,
+				["title"] = "Shadow of the Past",
+				["requiredClass"] = {
+				},
+				["start"] = {
+					{
+						1646, -- [1]
+					}, -- [1]
+				},
+				["requiredQuests"] = {
+					392, -- [1]
+				},
+				["requiredLevel"] = 16,
+				["finish"] = {
+					{
+						332, -- [1]
+					}, -- [1]
+				},
+			}, -- [2]
+			{
+				["requiredRace"] = {
+					"allianceQuest", -- [1]
+				},
+				["questLevel"] = 31,
+				["questID"] = 350,
+				["title"] = "Look to an Old Friend",
+				["requiredClass"] = {
+				},
+				["start"] = {
+					{
+						332, -- [1]
+					}, -- [1]
+				},
+				["requiredQuests"] = {
+					393, -- [1]
+				},
+				["requiredLevel"] = 16,
+				["finish"] = {
+					{
+						482, -- [1]
+					}, -- [1]
+				},
+			}, -- [2]
+			{
+				["requiredRace"] = {
+					"allianceQuest", -- [1]
+				},
+				["questLevel"] = 31,
+				["questID"] = 2745,
+				["title"] = "Infiltrating the Castle",
+				["requiredClass"] = {
+				},
+				["start"] = {
+					{
+						482, -- [1]
+					}, -- [1]
+				},
+				["requiredQuests"] = {
+					350, -- [1]
+				},
+				["requiredLevel"] = 16,
+				["finish"] = {
+					{
+						7766, -- [1]
+					}, -- [1]
+				},
+			}, -- [2]
+			{
+				["requiredRace"] = {
+					"allianceQuest", -- [1]
+				},
+				["questLevel"] = 31,
+				["questID"] = 2746,
+				["title"] = "Items of Some Consequence",
+				["requiredClass"] = {
+				},
+				["start"] = {
+					{
+						7766, -- [1]
+					}, -- [1]
+				},
+				["requiredQuests"] = {
+					2745, -- [1]
+				},
+				["requiredLevel"] = 16,
+				["finish"] = {
+					{
+						7766, -- [1]
+					}, -- [1]
+				},
+			}, -- [2]
 		}, -- [7]
+		{
+			{
+				["requiredRace"] = {
+					"allianceQuest", -- [1]
+				},
+				["questLevel"] = 31,
+				["isStartQuest"] = true,
+				["questID"] = 434,
+				["title"] = "The Attack!",
+				["requiredClass"] = {
+				},
+				["start"] = {
+					{
+						7766, -- [1]
+					}, -- [1]
+				},
+				["requiredQuests"] = {
+				},
+				["requiredLevel"] = 16,
+				["finish"] = {
+					{
+						482, -- [1]
+					}, -- [1]
+				},
+			}, -- [1]
+			{
+				["requiredRace"] = {
+					"allianceQuest", -- [1]
+				},
+				["questLevel"] = 31,
+				["questID"] = 394,
+				["title"] = "The Head of the Beast",
+				["requiredClass"] = {
+				},
+				["start"] = {
+					{
+						482, -- [1]
+					}, -- [1]
+				},
+				["requiredQuests"] = {
+					434,
+				},
+				["requiredLevel"] = 16,
+				["finish"] = {
+					{
+						332, -- [1]
+					}, -- [1]
+				},
+			}, -- [1]
+			{
+				["requiredRace"] = {
+					"allianceQuest", -- [1]
+				},
+				["questLevel"] = 31,
+				["questID"] = 395,
+				["title"] = "Brotherhood's End",
+				["requiredClass"] = {
+				},
+				["start"] = {
+					{
+						332, -- [1]
+					}, -- [1]
+				},
+				["requiredQuests"] = {
+					394,
+				},
+				["requiredLevel"] = 16,
+				["finish"] = {
+					{
+						1646, -- [1]
+					}, -- [1]
+				},
+			}, -- [1]
+			{
+				["requiredRace"] = {
+					"allianceQuest", -- [1]
+				},
+				["questLevel"] = 31,
+				["questID"] = 396,
+				["title"] = "An Audience with the King",
+				["requiredClass"] = {
+				},
+				["start"] = {
+					{
+						1646, -- [1]
+					}, -- [1]
+				},
+				["requiredQuests"] = {
+					395,
+				},
+				["requiredLevel"] = 16,
+				["finish"] = {
+					{
+						1749, -- [1]
+					}, -- [1]
+				},
+			}, -- [1]
+		}, -- [8]
 		{
 			{
 				["requiredRace"] = {
@@ -51844,13 +52086,37 @@ addon.questChapters = {
 					}, -- [1]
 				},
 			}, -- [12]
+			-- {
+			-- 	["requiredRace"] = {
+			-- 		"allianceQuest", -- [1]
+			-- 	},
+			-- 	["questLevel"] = 29,
+			-- 	["questID"] = 526,
+			-- 	["title"] = "Lightforge Ingots",
+			-- 	["requiredClass"] = {
+			-- 	},
+			-- 	["start"] = {
+			-- 		{
+			-- 			1217, -- [1]
+			-- 		}, -- [1]
+			-- 	},
+			-- 	["requiredQuests"] = {
+			-- 		324, -- [1]
+			-- 	},
+			-- 	["requiredLevel"] = 20,
+			-- 	["finish"] = {
+			-- 		{
+			-- 			1217, -- [1]
+			-- 		}, -- [1]
+			-- 	},
+			-- }, -- [13]
 			{
 				["requiredRace"] = {
 					"allianceQuest", -- [1]
 				},
 				["questLevel"] = 29,
-				["questID"] = 526,
-				["title"] = "Lightforge Ingots",
+				["questID"] = 322,
+				["title"] = "Blessed Arm",
 				["requiredClass"] = {
 				},
 				["start"] = {
@@ -51864,7 +52130,55 @@ addon.questChapters = {
 				["requiredLevel"] = 20,
 				["finish"] = {
 					{
-						1217, -- [1]
+						1416, -- [1]
+					}, -- [1]
+				},
+			}, -- [13]
+			{
+				["requiredRace"] = {
+					"allianceQuest", -- [1]
+				},
+				["questLevel"] = 29,
+				["questID"] = 325,
+				["title"] = "Armed and Ready",
+				["requiredClass"] = {
+				},
+				["start"] = {
+					{
+						1416, -- [1]
+					}, -- [1]
+				},
+				["requiredQuests"] = {
+					322, -- [1]
+				},
+				["requiredLevel"] = 20,
+				["finish"] = {
+					{
+						311, -- [1]
+					}, -- [1]
+				},
+			}, -- [13]
+			{
+				["requiredRace"] = {
+					"allianceQuest", -- [1]
+				},
+				["questLevel"] = 32,
+				["questID"] = 55,
+				["title"] = "Armed and Ready",
+				["requiredClass"] = {
+				},
+				["start"] = {
+					{
+						311, -- [1]
+					}, -- [1]
+				},
+				["requiredQuests"] = {
+					325, -- [1]
+				},
+				["requiredLevel"] = 20,
+				["finish"] = {
+					{
+						311, -- [1]
 					}, -- [1]
 				},
 			}, -- [13]

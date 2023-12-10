@@ -1,5 +1,5 @@
 <Ui>
-    <Frame name="AdventureGuide" mixin="AdventureGuideMixin" ignoreParentScale="true"  parent="UIParent" inherits="PortraitFrameTemplate" frameStrata="HIGH" enableMouse="true" movable="true">
+    <Frame name="AdventureGuide" mixin="AdventureGuideMixin" hidden="true" ignoreParentScale="true"  parent="UIParent" inherits="PortraitFrameTemplate" frameStrata="HIGH" enableMouse="true" movable="true">
         <Size x="765" y="430"/>
         <Anchors>
             <Anchor point="CENTER" x="0" y="0"/>

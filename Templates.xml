@@ -362,7 +362,7 @@
             <Layer level="OVERLAY">
 				<FontString parentKey="label" font="Fonts\FRIZQT__.ttf" justifyH="LEFT">
                     <Size y="18"/>
-                    <FontHeight val="10"/>
+                    <FontHeight val="11"/>
 					<Anchors>
 						<Anchor point="TOPLEFT" x="38" y="0"/>
 						<Anchor point="TOPRIGHT" x="0" y="0"/>
@@ -371,7 +371,7 @@
 				</FontString>
 				<FontString parentKey="class" font="Fonts\FRIZQT__.ttf">
                     <Size y="18"/>
-                    <FontHeight val="9"/>
+                    <FontHeight val="10"/>
 					<Anchors>
 						<Anchor point="BOTTOMLEFT" x="38" y="1"/>
 					</Anchors>
@@ -379,7 +379,7 @@
 				</FontString>
 				<FontString parentKey="subClass" font="Fonts\FRIZQT__.ttf">
                     <Size y="18"/>
-                    <FontHeight val="9"/>
+                    <FontHeight val="10"/>
 					<Anchors>
 						<Anchor point="BOTTOMRIGHT" x="0" y="1"/>
 					</Anchors>
@@ -387,6 +387,16 @@
 				</FontString>
             </Layer>
         </Layers>
+        <Frames>
+            <Button parentKey="addToList">
+                <Size x="14" y="14"/>
+                <Anchors>
+                    <Anchor point="TOPRIGHT" x="-2" y="-1"/>
+                </Anchors>
+                <NormalTexture atlas="bags-icon-addslots"/>
+                <HighlightTexture atlas="bags-glow-white"/>
+            </Button>
+        </Frames>
         <Scripts>
             <OnLoad method="OnLoad"/>
             <OnLeave method="OnLeave"/>

@@ -47,8 +47,7 @@
                         <Frames>
                             <Frame parentKey="text" inherits="ScrollingFontTemplate">
                                 <Anchors>
-                                    <Anchor point="TOPLEFT" relativeKey="$parent.icon" relativePoint="TOPRIGHT" x="40" y="-50"/>
-                                    <Anchor point="BOTTOMRIGHT" x="-30" y="50"/>
+                                    <Anchor point="TOPRIGHT" x="-40" y="-40"/>
                                 </Anchors>
                                 <KeyValues>
                                     <KeyValue key="fontName" value="AdventureGuideFontNormal_NoShadow"/>
@@ -57,7 +56,7 @@
                         </Frames>
                     </Frame>
 
-                    <Frame parentKey="encounters" setAllPoints="true">
+                    <Frame parentKey="encounters" setAllPoints="true" hidden="true">
                         <Layers>
                             <Layer level="BACKGROUND">
                                 <Texture parentKey="background" setAllPoints="true">
@@ -135,7 +134,7 @@
                         </Frames>
                     </Frame>
 
-                    <Frame parentKey="maps" setAllPoints="true">
+                    <Frame parentKey="maps" setAllPoints="true" hidden="true">
                         <Layers>
                             <Layer level="OVERLAY">
                                 <Texture parentKey="background">
