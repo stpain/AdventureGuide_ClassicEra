@@ -1,4 +1,4 @@
-## Interface: 11403
+## Interface: 11500
 ## Author: TheBoringDad
 ## Version: 0.1
 ## Title: AdventureGuide_ClassicEra
@@ -32,16 +32,18 @@ Widgets\ScrollFrame.xml
 Widgets\Slider.xml
 Widgets\Helptips.lua
 Widgets\Helptips.xml
+Widgets\TabFrame.lua
+Widgets\TabFrame.xml
 
 Locales.lua
+
+RawQuestData.lua
 
 Data.lua
 InstanceData.lua
 NpcData.lua
 ObjectData.lua
 ItemData.lua
-ZoneData.lua
-ChapterData.lua
 NodeData.lua
 
 Callbacks.lua
@@ -55,16 +57,7 @@ Api.lua
 AdventureGuide.lua
 AdventureGuide.xml
 
-Views\SuggestedContent\SuggestedContent.lua
-Views\SuggestedContent\SuggestedContent.xml
-
-Views\Instance\Instance.lua
-Views\Instance\Instance.xml
-
-Views\Zone\Zone.lua
-Views\Zone\Zone.xml
-
 Events.lua
 
-
-#MapTest.xml
+OptionsInterface.lua
+OptionsInterface.xml

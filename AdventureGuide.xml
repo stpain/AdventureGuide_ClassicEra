@@ -1,69 +1,548 @@
 <Ui>
-    <Frame name="AdventureGuide" mixin="AdventureGuideMixin" hidden="true" ignoreParentScale="true"  parent="UIParent" inherits="PortraitFrameTemplate" frameStrata="HIGH" enableMouse="true" movable="true">
-        <Size x="765" y="430"/>
+    <Frame name="AdventureGuide" mixin="AdventureGuideMixin" hidden="false" ignoreParentScale="true" parent="UIParent" inherits="PortraitFrameTemplate" frameStrata="HIGH" enableMouse="true" movable="true">
+        <Size x="874" y="500"/>
         <Anchors>
             <Anchor point="CENTER" x="0" y="0"/>
         </Anchors>
         <Layers>
             <Layer level="BACKGROUND">
-                <Texture textureSubLevel="-1">
-                    <Color r="0.105" g="0.1" b="0.1" a="0.95"/>
-                    <Size y="75"/>
+                <!-- <Texture atlas="ClassHall_StoneFrame-BackgroundTile" vertTile="true" horizTile="true">
                     <Anchors>
-                        <Anchor point="TOPLEFT" x="0" y="-25"/>
-                        <Anchor point="TOPRIGHT" x="0" y="-25"/>
+                        <Anchor point="TOPLEFT" x="2" y="-25"/>
+                        <Anchor point="BOTTOMRIGHT" x="-4" y="3"/>
+                    </Anchors>
+                </Texture> -->
+                <Texture>
+                    <Color r="0.24" g="0.21" b="0.18" a="0.9"/>
+                    <Anchors>
+                        <Anchor point="TOPLEFT" x="2" y="-25"/>
+                        <Anchor point="BOTTOMRIGHT" x="-4" y="3"/>
                     </Anchors>
                 </Texture>
             </Layer>
             <Layer level="ARTWORK">
-                <Texture atlas="AdventureMapLabel-Large" hidden="true">
-                    <Size y="35"/>
+                <Texture atlas="_GeneralFrame-HorizontalBar" horizTile="true">
                     <Anchors>
-                        <Anchor point="TOPLEFT" x="260" y="-25"/>
-                        <Anchor point="TOPRIGHT" x="-120" y="-25"/>
+                        <Anchor point="TOPLEFT" x="2" y="-60"/>
+                        <Anchor point="TOPRIGHT" x="-4" y="60"/>
                     </Anchors>
+                    <Size y="8"/>
                 </Texture>
             </Layer>
         </Layers>
         <Frames>
-            <Button parentKey="home" inherits="UIPanelButtonTemplate" text="Home">
-                <Size x="100" y="28"/>
-                <Anchors>
-                    <Anchor point="TOPLEFT" x="60" y="-27"/>
-                </Anchors>
-            </Button>
-            <Button parentKey="dungeons" inherits="UIPanelButtonTemplate" text="Dungeons">
-                <Size x="100" y="28"/>
-                <Anchors>
-                    <Anchor point="LEFT" relativeKey="$parent.home" relativePoint="RIGHT" x="10" y="0"/>
-                </Anchors>
-            </Button>
-            <Button parentKey="zones" inherits="UIPanelButtonTemplate" text="Zones">
-                <Size x="100" y="28"/>
-                <Anchors>
-                    <Anchor point="LEFT" relativeKey="$parent.dungeons" relativePoint="RIGHT" x="10" y="0"/>
-                </Anchors>
-            </Button>
-            <ScrollFrame parentKey="gridview" inherits="AdventureWidgetsGridviewTemplate" hidden="true">
-                <Anchors>
-                    <Anchor point="TOPLEFT" x="0" y="-60"/>
-                    <Anchor point="BOTTOMRIGHT" x="-6" y="16"/>
-                </Anchors>
-            </ScrollFrame>
+			<Frame name="$parentNavBar" inherits="NavBarTemplate" parentKey="navBar">
+				<Size x="590" y="34"/>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="61" y="-22"/>
+				</Anchors>
+				<Layers>
+					<Layer level="BORDER" textureSubLevel="-5">
+						<Texture name="$parentInsetBotLeftCorner" inherits="UI-Frame-InnerBotLeftCorner" parentKey="InsetBorderBottomLeft">
+							<Anchors>
+								<Anchor point="BOTTOMLEFT"  x="-3" y="-3"/>
+							</Anchors>
+						</Texture>
+						<Texture name="$parentInsetBotRightCorner" inherits="UI-Frame-InnerBotRight" parentKey="InsetBorderBottomRight">
+							<Anchors>
+								<Anchor point="BOTTOMRIGHT"  x="3" y="-3"/>
+							</Anchors>
+						</Texture>
+						<Texture name="$parentInsetBottomBorder" inherits="_UI-Frame-InnerBotTile" parentKey="InsetBorderBottom">
+							<Anchors>
+								<Anchor point="BOTTOMLEFT" relativeTo="$parentInsetBotLeftCorner" relativePoint="BOTTOMRIGHT"/>
+								<Anchor point="BOTTOMRIGHT" relativeTo="$parentInsetBotRightCorner" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+						</Texture>
+						<Texture name="$parentInsetLeftBorder" inherits="!UI-Frame-InnerLeftTile" parentKey="InsetBorderLeft">
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-3" y="0"/>
+								<Anchor point="BOTTOMLEFT" relativeTo="$parentInsetBotLeftCorner" relativePoint="TOPLEFT"/>
+							</Anchors>
+						</Texture>
+						<Texture name="$parentInsetRightBorder" inherits="!UI-Frame-InnerRightTile" parentKey="InsetBorderRight">
+							<Anchors>
+								<Anchor point="TOPRIGHT"  x="3" y="0"/>
+								<Anchor point="BOTTOMRIGHT" relativeTo="$parentInsetBotRightCorner" relativePoint="TOPRIGHT"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnShow>
+					</OnShow>
+				</Scripts>
+			</Frame>
 
-            <Frame parentKey="content">
+            <Frame parentKey="home" parentArray="views" hidden="false">
                 <Anchors>
-                    <Anchor point="TOPLEFT" x="2" y="-60"/>
-                    <Anchor point="BOTTOMRIGHT" x="-4" y="4"/>
+                    <Anchor point="TOPLEFT" x="4" y="-68"/>
+                    <Anchor point="BOTTOMRIGHT" x="-225" y="6"/>
                 </Anchors>
+                <Layers>
+                    <Layer level="BACKGROUND" textureSubLevel="-1">
+                        <!-- <Texture parentKey="bannerTopLeft" atlas="UI-Frame-Neutral-TitleLeft" useAtlasSize="true">
+                            <Anchors>
+                                <Anchor point="TOPLEFT" x="20" y="-20"/>
+                            </Anchors>
+                        </Texture>
+                        <Texture parentKey="bannerTopRight" atlas="UI-Frame-Neutral-TitleRight" useAtlasSize="true">
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" x="-20" y="-20"/>
+                            </Anchors>
+                        </Texture> -->
+                        <Texture parentKey="leftPanelBackground" atlas="UI-Frame-Neutral-CardParchmentWider">
+                            <Anchors>
+                                <Anchor point="TOPLEFT" x="30" y="-30"/>
+                                <Anchor point="BOTTOMRIGHT" x="-30" y="30"/>
+                            </Anchors>
+                        </Texture>
+                    </Layer>
+                    <Layer level="BACKGROUND" textureSubLevel="-2">
+                        <Texture parentKey="background" atlas="warboard-background">
+                            <Anchors>
+                                <Anchor point="TOPLEFT" x="0" y="0"/>
+                                <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+                            </Anchors>
+                        </Texture>
+                        <!-- <Texture atlas="_UI-Frame-Neutral-TitleMiddle" useAtlasSize="true" horizTile="true">
+                            <Anchors>
+                                <Anchor point="LEFT" relativeKey="$parent.bannerTopLeft" relativePoint="RIGHT" x="-60" y="0"/>
+                                <Anchor point="RIGHT" relativeKey="$parent.bannerTopRight" relativePoint="LEFT" x="60" y="0"/>
+                            </Anchors>
+                        </Texture> -->
+                    </Layer>
+                </Layers>
+                <Frames>
+                    <Button parentKey="quests" inherits="AdventureGuideHomeButtonTemplate">
+                        <Size x="260" y="100"/>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeKey="$parent.leftPanelBackground" relativePoint="TOPLEFT" x="30" y="-40"/>
+                        </Anchors>
+                        <KeyValues>
+                            <KeyValue key="iconAtlas" value="Mobile-QuestIcon" type="string"/>
+                            <KeyValue key="labelText" value="Quests" type="string"/>
+                        </KeyValues>
+                    </Button>
+                    <Button parentKey="dungeons" inherits="AdventureGuideHomeButtonTemplate">
+                        <Size x="260" y="100"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeKey="$parent.quests" relativePoint="RIGHT" x="0" y="0"/>
+                        </Anchors>
+                        <KeyValues>
+                            <KeyValue key="iconAtlas" value="Mobile-CombatBadgeIcon" type="string"/>
+                            <KeyValue key="labelText" value="Dungeons" type="string"/>
+                        </KeyValues>
+                    </Button>
+                    <Button parentKey="lists" inherits="AdventureGuideHomeButtonTemplate">
+                        <Size x="260" y="100"/>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeKey="$parent.quests" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+                        </Anchors>
+                        <KeyValues>
+                            <KeyValue key="iconAtlas" value="Mobile-TreasureIcon" type="string"/>
+                            <KeyValue key="labelText" value="Item Lists" type="string"/>
+                        </KeyValues>
+                    </Button>
+                    <Button parentKey="character" inherits="AdventureGuideHomeButtonTemplate">
+                        <Size x="260" y="100"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeKey="$parent.lists" relativePoint="RIGHT" x="0" y="0"/>
+                        </Anchors>
+                        <Layers>
+                            <Layer level="BORDER">
+                                <Texture parentKey="ring" atlas="charactercreate-ring-metallight">
+                                    <Size x="80" y="80"/>
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" x="5" y="-5"/>
+                                    </Anchors>
+                                </Texture>
+                            </Layer>
+                        </Layers>
+                        <KeyValues>
+                            <KeyValue key="iconAtlas" value="classicon-paladin" type="string"/>
+                            <KeyValue key="labelText" value="Character" type="string"/>
+                            <KeyValue key="showMask" value="true" type="bool"/>
+                        </KeyValues>
+                    </Button>
+                    <Button parentKey="map" inherits="AdventureGuideHomeButtonTemplate">
+                        <Size x="260" y="100"/>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeKey="$parent.lists" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+                        </Anchors>
+                        <KeyValues>
+                            <KeyValue key="iconAtlas" value="Mobile-BonusIcon" type="string"/>
+                            <KeyValue key="labelText" value="World Map" type="string"/>
+                        </KeyValues>
+                    </Button>
+                    <!-- <Button parentKey="testMapLoadButton" inherits="UIPanelButtonTemplate" text="World Map">
+                        <Size x="160" y="24"/>
+                        <Anchors>
+                            <Anchor point="BOTTOM" relativeKey="$parent.leftPanelBackground" relativePoint="BOTTOM" x="0" y="40"/>
+                        </Anchors>
+                    </Button> -->
+                </Frames>
             </Frame>
 
-            <!-- <Button parentKey="resize" inherits="PanelResizeButtonTemplate">
-                <Size x="16" y="16"/>
+            <Frame parentKey="quests" parentArray="views" hidden="true">
                 <Anchors>
-                    <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+                    <Anchor point="TOPLEFT" x="2" y="-68"/>
+                    <Anchor point="BOTTOMRIGHT" x="-225" y="4"/>
                 </Anchors>
-            </Button> -->
+                <Layers>
+                    <Layer level="BACKGROUND">
+                        <Texture setAllPoints="true">
+                            <Color r="0.09" g="0.07" b="0.05" a="0.9"/>
+                        </Texture>
+                    </Layer>
+                </Layers>
+
+            </Frame>
+            <Frame parentKey="character" parentArray="views" hidden="true">
+                <Anchors>
+                    <Anchor point="TOPLEFT" x="2" y="-68"/>
+                    <Anchor point="BOTTOMRIGHT" x="-225" y="4"/>
+                </Anchors>
+                <Layers>
+                    <Layer level="BACKGROUND">
+                        <Texture parentKey="background" alpha="0.5" setAllPoints="true">
+                            
+                        </Texture>
+                    </Layer>
+                </Layers>
+                <Frames>
+                    <PlayerModel parentKey="model">
+                        <Size x="200"/>
+                        <Anchors>
+                            <Anchor point="TOPRIGHT" x="0" y="0"/>
+                            <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+                        </Anchors>
+                    </PlayerModel>
+
+                    <StatusBar parentKey="levelBar" orientation="HORIZONTAL" minValue="0" maxValue="60" defaultValue="55">
+                        <BarTexture atlas="nameplates-bar-background-white"/>
+                        <BarColor r="1" g="1" b="1" a="1"/>
+                        <Size y="30"/>
+                        <Anchors>
+                            <Anchor point="TOPLEFT" x="30" y="-30"/>
+                            <Anchor point="TOPRIGHT" x="-30" y="-30"/>
+                        </Anchors>
+                    </StatusBar>
+                </Frames>
+            </Frame>
+
+            <Frame parentKey="dungeons" parentArray="views" hidden="true">
+                <Anchors>
+                    <Anchor point="TOPLEFT" x="2" y="-68"/>
+                    <Anchor point="BOTTOMRIGHT" x="-225" y="4"/>
+                </Anchors>
+                <Layers>
+                    <Layer level="BACKGROUND">
+                        <Texture setAllPoints="true">
+                            <Color r="0.09" g="0.07" b="0.05" a="0.9"/>
+                        </Texture>
+                    </Layer>
+                </Layers>
+                <Frames>
+                    <ScrollFrame parentKey="gridview" inherits="AdventureWidgetsGridviewTemplate" hidden="false">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" x="0" y="0"/>
+                            <Anchor point="BOTTOMRIGHT" x="-24" y="0"/>
+                        </Anchors>
+                    </ScrollFrame>
+                </Frames>
+            </Frame>
+
+            <Frame parentKey="lists" parentArray="views" hidden="true">
+                <Anchors>
+                    <Anchor point="TOPLEFT" x="2" y="-68"/>
+                    <Anchor point="BOTTOMRIGHT" x="-225" y="4"/>
+                </Anchors>
+                <Layers>
+                    <Layer level="BACKGROUND">
+                        <Texture setAllPoints="true">
+                            <Color r="0.09" g="0.07" b="0.05" a="0.9"/>
+                        </Texture>
+                    </Layer>
+                </Layers>
+                <Frames>
+                    <Button parentKey="newList" inherits="UIPanelButtonTemplate" text="New List">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" x="30" y="-30"/>
+                        </Anchors>
+                        <Size x="180" y="22"/>
+                    </Button>
+                    <Frame parentKey="listSelection" inherits="AdventureWidgetsListviewTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" x="30" y="-60"/>
+                            <Anchor point="BOTTOMLEFT" x="30" y="45"/>
+                        </Anchors>
+                        <Size x="180"/>
+                        <KeyValues>
+                            <KeyValue key="itemTemplate" value="AdventureGuideSimpleIconLabelFrame" type="string"/>
+                            <KeyValue key="elementHeight" value="24" type="number"/>
+                            <KeyValue key="enableSelection" value="true" type="boolean"/>
+                        </KeyValues>
+                    </Frame>
+                    <Frame parentKey="listItems" inherits="AdventureWidgetsListviewTemplate">
+                        <Anchors>
+                            <Anchor point="TOPRIGHT" x="-30" y="-60"/>
+                            <Anchor point="BOTTOMRIGHT" x="-30" y="45"/>
+                            <Anchor point="LEFT" relativeKey="$parent.listSelection" relativePoint="RIGHT" x="30" y="0"/>
+                        </Anchors>
+                        <KeyValues>
+                            <KeyValue key="itemTemplate" value="AdventureGuideSimpleIconLabelFrame" type="string"/>
+                            <KeyValue key="elementHeight" value="24" type="number"/>
+                        </KeyValues>
+                    </Frame>
+                </Frames>
+            </Frame>
+
+            <Frame name="$parentWorldMap" parentArray="views" parentKey="worldMap" parent="AdventureGuide" hidden="true" frameLevel="9" frameStrata="HIGH" ignoreParentScale="true" inherits="MapCanvasFrameTemplate">
+                <HitRectInsets left="0" right="0" top="20" bottom="0"/>
+                <Size x="1" y="1"/>
+                <Anchors>
+                    <Anchor point="TOPLEFT" x="2" y="-38"/>
+                    <Anchor point="BOTTOMRIGHT" x="-190" y="1"/>
+                </Anchors>
+                <Frames>
+                    <Frame parentKey="BorderFrame"/>
+                    <ScrollFrame inherits="MapCanvasFrameScrollContainerTemplate">
+
+                    </ScrollFrame>
+                    <Button parentKey="showHerbs" frameStrata="DIALOG" frameLevel="6" inherits="AdventurePortraitButton">
+                        <Anchors>
+                            <Anchor point="TOPRIGHT" relativeKey="$parent.mapContainer" relativePoint="TOPRIGHT" x="-1" y="-26"/>
+                        </Anchors>
+                    </Button>
+                    <Button parentKey="showOres" frameStrata="DIALOG" frameLevel="6" inherits="AdventurePortraitButton">
+                        <Anchors>
+                            <Anchor point="RIGHT" relativeKey="$parent.showHerbs" relativePoint="LEFT" x="-6" y="0"/>
+                        </Anchors>
+                    </Button>
+                    <Button parentKey="showQuests" frameStrata="DIALOG" frameLevel="6" inherits="AdventurePortraitButton">
+                        <Anchors>
+                            <Anchor point="RIGHT" relativeKey="$parent.showOres" relativePoint="LEFT" x="-6" y="0"/>
+                        </Anchors>
+                    </Button>
+                </Frames>
+            </Frame>
+
+            <Frame parentKey="dungeonDetails" parentArray="views" hidden="true">
+                <Anchors>
+                    <Anchor point="TOPLEFT" x="2" y="-60"/>
+                    <Anchor point="BOTTOMRIGHT" x="-225" y="4"/>
+                </Anchors>
+                <Frames>
+                    <Frame parentKey="lore" setAllPoints="true">
+                        <Layers>
+                            <Layer level="BACKGROUND">
+                                <Texture parentKey="background" setAllPoints="true">
+                                    <TexCoords left="0.0" right="0.767" top="0.0" bottom="0.82" />
+                                </Texture>
+                            </Layer>
+                            <Layer level="ARTWORK">
+                                <Texture parentKey="artwork">
+                                    <Size x="307" y="218"/>
+                                    <Texcoords left="0" right="0.76" top="0" bottom="0.68"/>
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" x="10" y="-10"/>
+                                    </Anchors>
+                                </Texture>
+                            </Layer>
+                        </Layers>
+                        <Frames>
+                            <Frame parentKey="encountersList" inherits="AdventureWidgetsListviewTemplate">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeKey="$parent.artwork" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+                                    <Anchor point="TOPRIGHT" relativeKey="$parent.artwork" relativePoint="BOTTOMRIGHT" x="0" y="0"/>
+                                    <Anchor point="BOTTOM" x="20" y="0"/>
+                                </Anchors>
+                                <KeyValues>
+                                    <KeyValue key="frameType" value="FRAME" type="string"/>
+                                    <KeyValue key="itemTemplate" value="AdventureGuideSimpleIconLabelFrame" type="string"/>
+                                    <KeyValue key="elementHeight" value="22" type="number"/>
+                                </KeyValues>
+                            </Frame>
+                            <Frame parentKey="history" inherits="ScrollingFontTemplate">
+                                <Size x="267" y="376"/>
+                                <Anchors>
+                                    <Anchor point="TOPRIGHT" x="-40" y="-40"/>
+                                </Anchors>
+                                <KeyValues>
+                                    <KeyValue key="fontName" value="AdventureGuideFontNormal_NoShadow"/> 
+                                </KeyValues>
+                            </Frame>
+                            <Frame parentKey="encounterDetails" hidden="true">
+                                <Size x="327"/>
+                                <Anchors>
+                                    <Anchor point="TOPRIGHT" x="0" y="0"/>
+                                    <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+                                </Anchors>
+                                <Layers>
+                                    <Layer level="ARTWORK">
+                                        <Texture parentKey="artwork" atlas="GarrMission_RewardsBanner">
+                                            <Anchors>
+                                                <Anchor point="TOPLEFT" x="15" y="-5"/>
+                                                <Anchor point="TOPRIGHT" x="-15" y="-5"/>
+                                            </Anchors>
+                                            <Size y="80"/>
+                                        </Texture>
+                                    </Layer>
+                                    <Layer level="OVERLAY">
+                                        <FontString parentKey="header" inherits="GameFontNormal_NoShadow" text="Boss">
+                                            <Anchors>
+                                                <Anchor point="TOPLEFT" x="50" y="-15"/>
+                                                <Anchor point="TOPRIGHT" x="-50" y="-15"/>
+                                            </Anchors>
+                                            <Size y="50"/>
+                                            <Color r="0" g="0" b="0"/>
+                                        </FontString>
+                                    </Layer>
+                                </Layers>
+                                <Frames>
+                                    <Frame parentKey="abilitiesListview" inherits="AdventureWidgetsListviewTemplate">
+                                        <Size y="100"/>
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" x="20" y="-100"/>
+                                            <Anchor point="TOPRIGHT" x="-20" y="-100"/>
+                                        </Anchors>
+                                        <KeyValues>
+                                            <KeyValue key="frameType" value="FRAME" type="string"/>
+                                            <KeyValue key="itemTemplate" value="AdventureGuideEncounterAbilitiesListviewTemplate" type="string"/>
+                                            <KeyValue key="elementHeight" value="24" type="number"/>
+                                        </KeyValues>
+                                        <Layers>
+                                            <Layer level="OVERLAY">
+                                                <FontString parentKey="label" inherits="GameFontNormal_NoShadow" text="Abilities">
+                                                    <Anchors>
+                                                        <Anchor point="TOPLEFT" x="2" y="18"/>
+                                                    </Anchors>
+                                                    <Color r="0" g="0" b="0"/>
+                                                </FontString>
+                                            </Layer>
+                                        </Layers>
+                                    </Frame>
+                                    <Frame parentKey="guidePanel" inherits="ScrollingFontTemplate" hidden="true">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeKey="$parent.abilitiesListview" relativePoint="BOTTOMLEFT" x="0" y="-20"/>
+                                            <Anchor point="BOTTOMRIGHT" x="-30" y="30"/>
+                                        </Anchors>
+                                        <KeyValues>
+                                            <KeyValue key="fontName" value="AdventureGuideFontNormal_NoShadow"/>
+                                        </KeyValues>
+                                    </Frame>
+                                    <Frame parentKey="lootListview" inherits="AdventureWidgetsListviewTemplate" hidden="false">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeKey="$parent.abilitiesListview" relativePoint="BOTTOMLEFT" x="0" y="-30"/>
+                                            <Anchor point="BOTTOMRIGHT" x="-20" y="30"/>
+                                        </Anchors>
+                                        <KeyValues>
+                                            <KeyValue key="frameType" value="FRAME" type="string"/>
+                                            <KeyValue key="itemTemplate" value="AdventureGuideLootListviewItemTemplate" type="string"/>
+                                            <KeyValue key="elementHeight" value="36" type="number"/>
+                                        </KeyValues>
+                                        <Layers>
+                                            <Layer level="OVERLAY">
+                                                <FontString parentKey="label" inherits="GameFontNormal_NoShadow" text="Loot">
+                                                    <Anchors>
+                                                        <Anchor point="TOPLEFT" x="2" y="18"/>
+                                                    </Anchors>
+                                                    <Color r="0" g="0" b="0"/>
+                                                </FontString>
+                                            </Layer>
+                                        </Layers>
+                                    </Frame>
+                                </Frames>
+                            </Frame>
+                        </Frames>
+                    </Frame>
+
+                    <Frame parentKey="maps" setAllPoints="true" hidden="true">
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <Texture parentKey="background">
+                                    <Texcoords left="0" right="0.9765625" top="0" bottom="0.6513671875"/>
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" x="0" y="0"/>
+                                        <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+                                    </Anchors>
+                                </Texture>
+                            </Layer>
+                        </Layers>
+                        <Frames>
+                            <Button parentKey="previous">
+                                <Size x="30" y="30"/>
+                                <Anchors>
+                                    <Anchor point="BOTTOM" x="-25" y="2"/>
+                                </Anchors>
+                            </Button>
+                            <Button parentKey="next">
+                                <Size x="30" y="30"/>
+                                <Anchors>
+                                    <Anchor point="BOTTOM" x="25" y="2"/>
+                                </Anchors>
+                            </Button>
+                        </Frames>
+                    </Frame>
+                </Frames>
+            </Frame>
+
+            <Frame parentKey="sidePanel">
+                <Anchors>
+                    <Anchor point="BOTTOMLEFT" relativeKey="$parent.worldMap" relativePoint="BOTTOMRIGHT" x="0" y="2"/>
+                    <Anchor point="TOPRIGHT" x="-4" y="-68"/>
+                </Anchors>
+                <Layers>
+                    <Layer level="BACKGROUND">
+                        <Texture parentKey="questsHeader" atlas="StoryHeader-BG">
+                            <Anchors>
+                                <Anchor point="TOPLEFT" x="-4" y="0"/>
+                                <Anchor point="TOPRIGHT" x="4" y="0"/>
+                            </Anchors>
+                            <Size y="60"/>
+                        </Texture>
+                    </Layer>
+                    <Layer level="BACKGROUND" textureSubLevel="-1">
+                        <Texture parentKey="background" atlas="QuestLogBackground">
+                            <Anchors>
+                                <Anchor point="TOPLEFT" x="0" y="0"/>
+                                <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+                            </Anchors>
+                            <Size y="60"/>
+                        </Texture>
+                    </Layer>
+                    <Layer level="OVERLAY">
+                        <FontString parentKey="zoneLabel" inherits="GameFontWhite" text="Zone label" justifyH="LEFT">
+                            <Anchors>
+                                <Anchor point="TOPLEFT" x="20" y="0"/>
+                                <Anchor point="TOPRIGHT" x="-20" y="0"/>
+                            </Anchors>
+                            <Size y="20"/>
+                        </FontString>
+                        <FontString parentKey="progressText" inherits="GameFontNormalSmall" text="ProgressInfo" justifyH="LEFT">
+                            <Anchors>
+                                <Anchor point="TOPLEFT" x="20" y="-22"/>
+                                <Anchor point="TOPRIGHT" x="-20" y="-22"/>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Frames>
+                    <Frame parentKey="questListview" inherits="AdventureWidgetsListviewTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" x="1" y="-41"/>
+                            <Anchor point="BOTTOMRIGHT" x="-1" y="1"/>
+                        </Anchors>
+                        <KeyValues>
+                            <KeyValue key="frameType" value="FRAME" type="string"/>
+                            <KeyValue key="itemTemplate" value="AdventureGuideSimpleIconLabelFrame" type="string"/>
+                            <KeyValue key="elementHeight" value="24" type="number"/>
+                        </KeyValues>
+                    </Frame>
+                </Frames>
+            </Frame>
+
         </Frames>
         <Scripts>
             <OnLoad method="OnLoad"/>
@@ -74,5 +553,81 @@
                 self:StopMovingOrSizing()
             </OnDragStop>
         </Scripts>
+    </Frame>
+
+
+    <Frame name="AdventureGuideQuestTracker" mixin="AdventureGuideQuestTrackerMixin" movable="true">
+        <Anchors>
+            <Anchor point="TOPRIGHT" x="-100" y="-200"/>
+        </Anchors>
+        <Size x="238" y="100"/>
+        <Frames>
+            <Button parentKey="expandLog">
+                <NormalTexture atlas="auctionhouse-ui-dropdown-arrow-up"/>
+                <PushedTexture atlas="auctionhouse-ui-dropdown-arrow-down"/>
+                <Anchors>
+                    <Anchor point="TOPRIGHT" x="-24" y="-13"/>
+                </Anchors>
+                <Size x="16" y="15"/>
+            </Button>
+            <Frame parentKey="listview" inherits="AdventureWidgetsListviewTemplate"> 
+                <Anchors>
+                    <Anchor point="TOPLEFT" x="0" y="-35"/>
+                    <Anchor point="BOTTOMRIGHT" x="-5" y="0"/>
+                </Anchors>
+                <KeyValues>
+                    <KeyValue key="itemTemplate" value="AdventureGuideObjectiveTrackerTemplate" type="string"/>
+                    <KeyValue key="elementHeight" value="16" type="number"/>
+                </KeyValues>
+                <!-- <Layers>
+                    <Layer level="BACKGROUND" textureSubLevel="-1">
+                        <Texture parentKey="background">
+                            <Color r="0" g="0" b="0" a="0.2"/>
+                            <Anchors>
+                                <Anchor point="TOPLEFT" x="0" y="0"/>
+                                <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+                            </Anchors>
+                        </Texture>
+                    </Layer>
+                </Layers> -->
+            </Frame>
+        </Frames>
+        <Layers>
+            <Layer level="BACKGROUND" textureSubLevel="-1">
+                <Texture parentKey="backgroundHeader" atlas="Objective-Header">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" x="0" y="0"/>
+                        <Anchor point="TOPRIGHT" x="0" y="0"/>
+                    </Anchors>
+                    <Size y="69"/>
+                </Texture>
+            </Layer>
+            <Layer level="OVERLAY" textureSubLevel="-1">
+                <FontString parentKey="header" inherits="GameFontNormal" text="Quests" justifyH="LEFT">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" x="20" y="-14"/>
+                        <Anchor point="TOPRIGHT" x="-20" y="-14"/>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnLoad method="OnLoad"/>
+            <OnShow method="OnShow"/>
+            <OnDragStart>
+                self:StartMoving()
+            </OnDragStart>
+            <OnDragStop>
+                self:StopMovingOrSizing()
+            </OnDragStop>
+        </Scripts>
+    </Frame>
+
+
+    <Frame name="CombinedContainers" inherits="BasicFrameTemplate" parent="UIParent" movable="true" hidden="true">
+        <Anchors>
+            <Anchor point="CENTER" x="0" y="0"/>
+        </Anchors>
+        <Size x="380" y="300"/>
     </Frame>
 </Ui>

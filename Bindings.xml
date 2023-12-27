@@ -1,5 +1,5 @@
 <Bindings>
-    <Binding name="Open Guide" header="AdventureGuide" category="Adventure Guide ">
+    <Binding name="Open Guide" category="Adventure Guide ">
         AdventureGuide:Show()
     </Binding>
     <Binding name="Open Map" category="Adventure Guide ">

@@ -1,5 +1,7 @@
 local name, addon = ...;
 
+local Database = addon.Database;
+
 AdventureButtonMixin = {}
 
 function AdventureButtonMixin:OnLoad()
@@ -108,6 +110,39 @@ function AdventureGuideLootListviewMixin:SetDataBinding(binding, height)
         end
     end)
 
+    self.addToList:SetScript("OnClick", function()
+        local lists = Database:GetAllLists()
+        local menu = {
+            {
+                text = "Lists",
+                isTitle = true,
+                notCheckable = true,
+            },
+            {
+                text = "New List",
+                notCheckable = true,
+                func = function()
+                    StaticPopup_Show("NewList", nil, nil, { link = binding.link, })
+                end,
+            }
+        }
+        if next(lists) ~= nil then
+            table.insert(menu, addon.contextMenuSeparator)
+            for listName, items in pairs(lists) do
+                table.insert(menu, {
+                    text = listName,
+                    notCheckable = true,
+                    func = function()
+                        Database:AddItemToList(listName, {
+                            link = binding.link
+                        })
+                    end,
+                })
+            end
+        end
+        EasyMenu(menu, addon.contextMenu, "cursor", 0, 0, "MENU", 1.25)
+    end)
+
 end
 function AdventureGuideLootListviewMixin:ResetDataBinding()
 
@@ -117,73 +152,25 @@ function AdventureGuideLootListviewMixin:OnLeave()
 end
 
 
-AdventureGuideHomeGridviewItemMixin = {}
-function AdventureGuideHomeGridviewItemMixin:OnLoad()
+AdventureGuideDungeonGridviewItemMixin = {}
+function AdventureGuideDungeonGridviewItemMixin:OnLoad()
 
 end
-function AdventureGuideHomeGridviewItemMixin:SetDataBinding(binding)
-    self.binding = binding;
+function AdventureGuideDungeonGridviewItemMixin:SetDataBinding(binding)
 
-    if self.binding.contentType == "instance" then
-        self.icon:SetTexture(binding.buttonFileID)
-        self.icon:SetTexCoord(0,0.68,0,1)
-        self.icon:ClearAllPoints()
-        self.icon:SetPoint("TOPLEFT", 0, 0)
-        self.icon:SetPoint("BOTTOMRIGHT", 0, 10)
-        self.text:SetText(binding.name)
+    self.icon:SetTexture(binding.buttonFileID)
+    self.icon:SetTexCoord(0,0.68,0,1)
+    self.icon:ClearAllPoints()
+    self.icon:SetPoint("TOPLEFT", 0, 0)
+    self.icon:SetPoint("BOTTOMRIGHT", 0, 10)
+    self.text:SetText(binding.name)
 
-        self:SetScript("OnMouseDown", function()
-            addon:TriggerEvent("Guide_OnInstanceSelected", self.binding)
-        end)
-
-    elseif self.binding.contentType == "zone" then
-        self.icon:SetTexCoord(0.2,0.8,0.1,0.9)
-        self.icon:ClearAllPoints()
-        self.icon:SetPoint("TOPLEFT", 3, -3)
-        self.icon:SetPoint("BOTTOMRIGHT", -3, 53)
-
-        self.icon:SetAtlas(string.format("warboard-zone-classic-%s", binding.name:gsub(" ", "")))
-
-        --need to change this to use the zoneID
-        if binding.name == "Un'Goro Crater" then
-            self.icon:SetAtlas("warboard-zone-classic-UngoroCrater")
-        end
-        if binding.name == "The Hinterlands" then
-            self.icon:SetAtlas("warboard-zone-classic-Hinterlands")
-        end
-        if binding.name == "The Barrens" then
-            self.icon:SetAtlas("warboard-zone-classic-NorthernBarrens")
-        end
-        if binding.name == "Stranglethorn Vale" then
-            self.icon:SetAtlas("warboard-zone-classic-NorthernStranglethorn")
-        end
-
-        self.text:SetText(binding.name)
-
-        self:SetScript("OnMouseDown", function()
-            addon:TriggerEvent("Zone_OnSelected", self.binding.zoneID)
-        end)
-
-
-    elseif self.binding.contentType == "menu" then
-        self.icon:SetTexCoord(0.1,0.9,0.1,0.9)
-        self.icon:ClearAllPoints()
-        self.icon:SetPoint("LEFT", 5, 0)
-        self.icon:SetPoint("RIGHT", -5, 0)
-        if binding.icon then
-            self.icon:SetTexture(binding.icon)
-        elseif binding.atlas then
-            self.icon:SetAtlas(binding.atlas, true)
-        end
-        self.text:SetText(binding.label)
-
-        if binding.onMouseDown then
-            self:SetScript("OnMouseDown", binding.onMouseDown)
-        end
-    end
+    self:SetScript("OnMouseDown", function()
+        addon:TriggerEvent("Guide_OnInstanceSelected", binding)
+    end)
 
 end
-function AdventureGuideHomeGridviewItemMixin:ResetDataBinding()
+function AdventureGuideDungeonGridviewItemMixin:ResetDataBinding()
     self:SetScript("OnMouseDown", nil)
     self.icon:SetTexture(nil)
 end
@@ -375,3 +362,387 @@ AdventureGuideMapPoiMixin = {}
 function AdventureGuideMapPoiMixin:OnLeave()
     GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
 end
+function AdventureGuideMapPoiMixin:SetPinData(data)
+    if data.atlas then
+        self.background:SetAtlas(data.atlas)
+    end
+end
+
+
+
+AdventureGuideSimpleIconLabelMixin = {}
+function AdventureGuideSimpleIconLabelMixin:OnLoad()
+
+end
+function AdventureGuideSimpleIconLabelMixin:SetDataBinding(binding, height)
+
+    --self.anim:Play()
+    local x, y = self:GetSize()
+
+    if binding.rightButton then
+        if binding.rightButton.size then
+            self.rightButton:SetSize(binding.rightButton.size[1], binding.rightButton.size[2])
+        else
+            self.rightButton:SetSize(height - 4, height - 4)
+        end
+
+        if binding.rightButton.atlas then
+            self.rightButton.icon:SetAtlas(binding.rightButton.atlas)
+        end
+
+        if binding.rightButton.onClick then
+            self.rightButton:SetScript("OnClick", binding.rightButton.onClick)
+        end
+
+        self.rightButton:Show()
+    else
+        self.rightButton:Hide()
+        self.rightButton:SetSize(1, height - 4)
+    end
+
+    if binding.backgroundAlpha then
+        self.background:SetAlpha(binding.backgroundAlpha)
+    else
+        self.background:SetAlpha(0)
+    end
+    if binding.backgroundAtlas then
+        self.background:SetAtlas(binding.backgroundAtlas)
+        self.background:SetAlpha(1)
+    else
+        if binding.backgroundRGB then
+            self.background:SetColorTexture(binding.backgroundRGB.r, binding.backgroundRGB.g, binding.backgroundRGB.b)
+         else
+             self.background:SetColorTexture(0,0,0)
+         end
+    end
+
+    if binding.label then
+        self.label:SetText(binding.label)
+    end
+    if binding.labelRight then
+        self.labelRight:SetText(binding.labelRight)
+    end
+
+    if binding.fontObject then
+        self.label:SetFontObject(binding.fontObject)
+        self.labelRight:SetFontObject(binding.fontObject)
+    else
+        self.label:SetFontObject(GameFontWhite)
+        self.labelRight:SetFontObject(GameFontWhite)
+    end
+
+    if binding.atlas then
+        self.icon:SetAtlas(binding.atlas)
+    elseif binding.icon then
+        self.icon:SetTexture(binding.icon)
+    end
+
+    if binding.iconCoords then
+        self.icon:SetTexCoord(binding.iconCoords[1], binding.iconCoords[2], binding.iconCoords[3], binding.iconCoords[4])
+    else
+        self.icon:SetTexCoord(0,1,0,1)
+    end
+
+    if not binding.icon and not binding.atlas then
+        self.icon:SetSize(1, height-4)
+    else
+        self.icon:SetSize(height-4, height-4)
+    end
+
+    if binding.showMask then
+        self.mask:Show()
+        local x, y = self.icon:GetSize()
+        self.icon:SetSize(x + 6, y + 6)
+        self.icon:ClearAllPoints()
+        self.icon:SetPoint("LEFT", 3, 0)
+    else
+        self.mask:Hide()
+        -- local x, y = self.icon:GetSize()
+        -- self.icon:SetSize(x - 2, y - 2)
+    end
+
+    if binding.onUpdate then
+        self:SetScript("OnUpdate", binding.onUpdate)
+    end
+
+    if binding.onMouseDown then
+        self:SetScript("OnMouseDown", binding.onMouseDown)
+        self:EnableMouse(true)
+    end
+
+    if binding.onMouseEnter then
+        self:SetScript("OnEnter", binding.onMouseEnter)
+        self:EnableMouse(true)
+    else
+        if binding.link then
+            self:SetScript("OnEnter", function()
+                GameTooltip:SetOwner(self, "ANCHOR_LEFT")
+                GameTooltip:SetHyperlink(binding.link)
+                GameTooltip:Show()
+            end)
+        end
+    end
+
+    if binding.onMouseLeave then
+        self:SetScript("OnLeave", binding.onMouseLeave)
+    else
+        self:SetScript("OnLeave", function()
+            GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
+        end)
+    end
+
+    -- if binding.getItemInfoFromID then
+    --     if binding.itemID then
+    --         local item = Item:CreateFromItemID(binding.itemID)
+    --         if not item:IsItemEmpty() then
+    --             item:ContinueOnItemLoad(function()
+    --                 local link = item:GetItemLink()
+    --                 self.label:SetText(link)
+    --                 self:EnableMouse(true)
+    --                 self:SetScript("OnEnter", function()
+    --                     GameTooltip:SetOwner(self, "ANCHOR_LEFT")
+    --                     GameTooltip:SetHyperlink(link)
+    --                     GameTooltip:Show()
+    --                 end)
+    --                 -- self:SetScript("OnLeave", function()
+    --                 --     GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
+    --                 -- end)
+    --                 self:SetScript("OnMouseDown", function()
+    --                     if IsControlKeyDown() then
+	-- 						DressUpItemLink(link)
+	-- 					elseif IsShiftKeyDown() then
+	-- 						HandleModifiedItemClick(link)
+	-- 					end
+    --                     if binding.onMouseDown then
+    --                         binding.onMouseDown()
+    --                     end
+    --                 end)
+
+    --                 addon:TriggerEvent("Profile_OnItemDataLoaded")
+    --             end)
+    --         end
+    --     end
+    -- end
+
+    --self.anim:Play()
+end
+function AdventureGuideSimpleIconLabelMixin:ResetDataBinding()
+    self:SetScript("OnMouseDown", nil)
+    self:SetScript("OnEnter", nil)
+    self:SetScript("OnLeave", nil)
+    self:EnableMouse(false)
+    self.icon:SetTexture(nil)
+    self.label:SetText("")
+    self.labelRight:SetText("")
+    self.rightButton:SetScript("OnClick", nil)
+    self.rightButton:Hide()
+end
+
+
+
+AdventureGuideObjectiveTrackerMixin = {}
+function AdventureGuideObjectiveTrackerMixin:OnLoad()
+
+end
+function AdventureGuideObjectiveTrackerMixin:GetDepth()
+    return 10;
+end
+function AdventureGuideObjectiveTrackerMixin:SetCollapseState()
+    print("boo")
+end
+function AdventureGuideObjectiveTrackerMixin:SetDataBinding(binding, height)
+
+    --self.anim:Play()
+    local x, y = self:GetSize()
+
+    self.questID = binding.questID
+    self.logIndex = binding.logIndex;
+    self.header = binding.header;
+
+    if binding.rightButton then
+        if binding.rightButton.size then
+            self.rightButton:SetSize(binding.rightButton.size[1], binding.rightButton.size[2])
+        else
+            self.rightButton:SetSize(height - 4, height - 4)
+        end
+
+        if binding.rightButton.atlas then
+            self.rightButton.icon:SetAtlas(binding.rightButton.atlas)
+        end
+
+        if binding.rightButton.onClick then
+            self.rightButton:SetScript("OnClick", binding.rightButton.onClick)
+        end
+
+        self.rightButton:Show()
+    else
+        self.rightButton:Hide()
+        self.rightButton:SetSize(1, height - 4)
+    end
+
+    if binding.backgroundAlpha then
+        self.background:SetAlpha(binding.backgroundAlpha)
+    else
+        self.background:SetAlpha(0)
+    end
+    if binding.backgroundAtlas then
+        self.background:SetAtlas(binding.backgroundAtlas)
+        self.background:SetAlpha(1)
+    else
+        if binding.backgroundRGB then
+            self.background:SetColorTexture(binding.backgroundRGB.r, binding.backgroundRGB.g, binding.backgroundRGB.b)
+         else
+             self.background:SetColorTexture(0,0,0)
+         end
+    end
+
+    if binding.label then
+        self.label:SetText(binding.label)
+    end
+    if binding.labelRight then
+        self.labelRight:SetText(binding.labelRight)
+    end
+
+    if binding.fontObject then
+        self.label:SetFontObject(binding.fontObject)
+        self.labelRight:SetFontObject(binding.fontObject)
+    else
+        self.label:SetFontObject(GameFontWhite)
+        self.labelRight:SetFontObject(GameFontWhite)
+    end
+
+    if binding.atlas then
+        self.icon:SetAtlas(binding.atlas)
+    elseif binding.icon then
+        self.icon:SetTexture(binding.icon)
+    end
+
+    if binding.iconCoords then
+        self.icon:SetTexCoord(binding.iconCoords[1], binding.iconCoords[2], binding.iconCoords[3], binding.iconCoords[4])
+    else
+        self.icon:SetTexCoord(0,1,0,1)
+    end
+
+    if not binding.icon and not binding.atlas then
+        self.icon:SetSize(1, height-4)
+    else
+        self.icon:SetSize(height-4, height-4)
+    end
+
+    if binding.showMask then
+        self.mask:Show()
+        local x, y = self.icon:GetSize()
+        self.icon:SetSize(x + 6, y + 6)
+        self.icon:ClearAllPoints()
+        self.icon:SetPoint("LEFT", 3, 0)
+    else
+        self.mask:Hide()
+        -- local x, y = self.icon:GetSize()
+        -- self.icon:SetSize(x - 2, y - 2)
+    end
+
+    if binding.onUpdate then
+        self:SetScript("OnUpdate", binding.onUpdate)
+    end
+
+    if binding.onMouseDown then
+        self:SetScript("OnMouseDown", binding.onMouseDown)
+        self:EnableMouse(true)
+    end
+
+    if binding.onMouseEnter then
+        self:SetScript("OnEnter", binding.onMouseEnter)
+        self:EnableMouse(true)
+    else
+        if binding.link then
+            self:SetScript("OnEnter", function()
+                GameTooltip:SetOwner(self, "ANCHOR_LEFT")
+                GameTooltip:SetHyperlink(binding.link)
+                GameTooltip:Show()
+            end)
+        end
+    end
+
+    if binding.onMouseLeave then
+        self:SetScript("OnLeave", binding.onMouseLeave)
+    else
+        self:SetScript("OnLeave", function()
+            GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
+        end)
+    end
+
+    -- if binding.getItemInfoFromID then
+    --     if binding.itemID then
+    --         local item = Item:CreateFromItemID(binding.itemID)
+    --         if not item:IsItemEmpty() then
+    --             item:ContinueOnItemLoad(function()
+    --                 local link = item:GetItemLink()
+    --                 self.label:SetText(link)
+    --                 self:EnableMouse(true)
+    --                 self:SetScript("OnEnter", function()
+    --                     GameTooltip:SetOwner(self, "ANCHOR_LEFT")
+    --                     GameTooltip:SetHyperlink(link)
+    --                     GameTooltip:Show()
+    --                 end)
+    --                 -- self:SetScript("OnLeave", function()
+    --                 --     GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
+    --                 -- end)
+    --                 self:SetScript("OnMouseDown", function()
+    --                     if IsControlKeyDown() then
+	-- 						DressUpItemLink(link)
+	-- 					elseif IsShiftKeyDown() then
+	-- 						HandleModifiedItemClick(link)
+	-- 					end
+    --                     if binding.onMouseDown then
+    --                         binding.onMouseDown()
+    --                     end
+    --                 end)
+
+    --                 addon:TriggerEvent("Profile_OnItemDataLoaded")
+    --             end)
+    --         end
+    --     end
+    -- end
+
+    --self.anim:Play()
+end
+function AdventureGuideObjectiveTrackerMixin:ResetDataBinding()
+    self:SetScript("OnMouseDown", nil)
+    self:SetScript("OnEnter", nil)
+    self:SetScript("OnLeave", nil)
+    self:EnableMouse(false)
+    self.icon:SetTexture(nil)
+    self.label:SetText("")
+    self.labelRight:SetText("")
+    self.rightButton:SetScript("OnClick", nil)
+    self.rightButton:Hide()
+end
+
+
+
+AdventureGuideHomeButtonMixin = {}
+function AdventureGuideHomeButtonMixin:OnLoad()
+    self.icon:SetAtlas(self.iconAtlas)
+    self.label:SetText(self.labelText)
+
+    self.mask:SetShown(self.showMask)
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

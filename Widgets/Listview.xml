@@ -2,10 +2,40 @@
     <Frame name="AdventureWidgetsListviewTemplate" mixin="AdventureWidgetsListviewMixin" virtual="true">
         <Frames>
             <Frame parentKey="scrollBox" inherits="WowScrollBoxList"/>
-            <EventFrame parentKey="scrollBar" inherits="WowTrimScrollBar">
+            <EventFrame parentKey="scrollBar" inherits="MinimalScrollBar">
                 <Anchors>
-                    <Anchor point="TOPRIGHT"/>
-                    <Anchor point="BOTTOMRIGHT"/>
+                    <Anchor point="TOPRIGHT" x="-3"/>
+                    <Anchor point="BOTTOMRIGHT" x="-3"/>
+                </Anchors>
+            </EventFrame>
+        </Frames>
+        <Scripts>
+            <OnLoad method="OnLoad"/>
+        </Scripts>
+    </Frame>
+
+    <Frame name="AdventureWidgetsNoTemplateListviewTemplate" mixin="AdventureWidgetsNoTemplateListviewMixin" virtual="true">
+        <Frames>
+            <Frame parentKey="scrollBox" inherits="WowScrollBoxList"/>
+            <EventFrame parentKey="scrollBar" inherits="MinimalScrollBar">
+                <Anchors>
+                    <Anchor point="TOPRIGHT" x="-3"/>
+                    <Anchor point="BOTTOMRIGHT" x="-3"/>
+                </Anchors>
+            </EventFrame>
+        </Frames>
+        <Scripts>
+            <OnLoad method="OnLoad"/>
+        </Scripts>
+    </Frame>
+
+    <Frame name="AdventureWidgetsTreeviewTemplate" mixin="AdventureWidgetsTreeviewMixin" virtual="true">
+        <Frames>
+            <Frame parentKey="scrollBox" inherits="WowScrollBoxList"/>
+            <EventFrame parentKey="scrollBar" inherits="MinimalScrollBar">
+                <Anchors>
+                    <Anchor point="TOPRIGHT" x="-3"/>
+                    <Anchor point="BOTTOMRIGHT" x="-3"/>
                 </Anchors>
             </EventFrame>
         </Frames>

@@ -1,0 +1,5 @@
+<Ui>
+    <Frame name="AdventureGuideTabFrameTemplate" mixin="AdventureGuideTabFrameMixin" virtual="true">
+
+    </Frame>
+</Ui>

@@ -29,6 +29,9 @@ function AdventureWidgetsGridviewMixin:OnLoad()
     self.rowIndex = 0
     self.numItemsPerRow = 1
     self.fixedColumnCount = false;
+
+    -- AdventureGuideScrollBarScrollDownButton.Normal:SetAtlas("minimal-scrollbar-arrow-bottom-down")
+    -- AdventureGuideScrollBarScrollDownButton:SetSize(17, 11)
 end
 
 function AdventureWidgetsGridviewMixin:InitFramePool(type, template)

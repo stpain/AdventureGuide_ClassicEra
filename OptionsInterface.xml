@@ -1,0 +1,120 @@
+<Ui>
+
+	<!-- <Texture atlas="Options_HorizontalDivider" useAtlasSize="true">
+		<Anchors>
+			<Anchor point="TOP" y="-50"/>
+		</Anchors>
+	</Texture> -->
+
+	<Frame name="AdventureGuideSettingsCheckBoxTemplate" mixin="AdventureGuideSettingsCheckBoxMixin" virtual="true">
+		<Size y="35"/>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString parentKey="label" inherits="GameFontNormal" justifyH="LEFT" text="Interface">
+					<Anchors>
+						<Anchor point="LEFT" x="45" y="0"/>
+					</Anchors>
+					<Size x="200" y="24"/>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<CheckButton parentKey="checkButton">
+				<Size x="30" y="29"/>
+				<Anchors>
+					<Anchor point="LEFT" x="246" y="0"/>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture parentKey="HoverBackground" inherits="HoverBackgroundTemplate"/>
+					</Layer>
+				</Layers>
+				<NormalTexture atlas="checkbox-minimal" useAtlasSize="true"/>
+				<PushedTexture atlas="checkbox-minimal" useAtlasSize="true"/>
+				<CheckedTexture atlas="checkmark-minimal" useAtlasSize="true"/>
+				<DisabledCheckedTexture atlas="checkmark-minimal-disabled" useAtlasSize="true"/>
+			</CheckButton>
+		</Frames>
+		<Scripts>
+			<OnLeave>
+				GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
+			</OnLeave>
+		</Scripts>
+	</Frame>
+
+
+	<Frame name="AdventureGuideSettingsSectionHeader" virtual="true">
+		<Size y="60"/>
+		<Anchors>
+			<Anchor point="TOPLEFT"/>
+			<Anchor point="TOPRIGHT"/>
+		</Anchors>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString parentKey="title" inherits="GameFontHighlightLarge" justifyH="LEFT">
+					<Anchors>
+						<Anchor point="LEFT" x="12" y="0"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+	</Frame>
+
+    <Frame name="AdventureGuideOptionsInterface">
+		<Frames>
+			<Frame parentKey="header">
+				<Size y="50"/>
+				<Anchors>
+					<Anchor point="TOPLEFT"/>
+					<Anchor point="TOPRIGHT"/>
+				</Anchors>
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString parentKey="title" inherits="GameFontHighlightHuge" justifyH="LEFT" text="Adventure Guide">
+							<Anchors>
+								<Anchor point="TOPLEFT" x="12" y="-22"/>
+							</Anchors>
+						</FontString>
+						<Texture atlas="Options_HorizontalDivider" useAtlasSize="true">
+							<Anchors>
+								<Anchor point="TOP" y="-50"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Button parentKey="defaultsButton" inherits="UIPanelButtonTemplate">
+						<Size x="96" y="22"/>
+						<Anchors>
+							<Anchor point="TOPRIGHT" x="-36" y="-16"/>
+						</Anchors>
+					</Button>
+					<!-- <Button parentKey="TutorialButton" inherits="MainHelpPlateButton" hidden="false">
+						<Anchors>
+							<Anchor point="TOPRIGHT" x="15" y="5"/>
+						</Anchors>
+						<HighlightTexture file="Interface\common\help-i" alphaMode="ADD" hidden="true">
+							<Size x="46" y="46"/>
+							<Anchors>
+								<Anchor point="CENTER"/>
+							</Anchors>
+							<Color r="1" g="1" b="1" a=".2"/>
+						</HighlightTexture>
+					</Button> -->
+				</Frames>
+			</Frame>
+
+			<Frame parentKey="listview" inherits="AdventureWidgetsNoTemplateListviewTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeKey="$parent.header" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+					<Anchor point="BOTTOMRIGHT" x="-10" y="0"/>
+				</Anchors>
+			</Frame>
+		</Frames>
+        <Scripts>
+            <OnLoad>
+				AdventureGuideOptionsInterface_OnLoad(self)
+			</OnLoad>
+        </Scripts>
+    </Frame>
+</Ui>

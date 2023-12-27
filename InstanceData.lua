@@ -2,9 +2,25 @@ local name, addon = ...;
 
 local L = addon.locales;
 
+
+---@class InstanceInformation
+---@field name string
+---@field id integer
+---@field loreFileID integer
+---@field buttonFileID integer
+---@field meta table
+---@field notes table
+---@field maps table
+---@field quests table
+---@field bosses table
+---@field history string
+
+
+---@type table<string, InstanceInformation>
 addon.dungeons = {
     {
         name = DUNGEON_FLOOR_RAGEFIRE1,
+        id = 3,
         loreFileID = 608250,
         buttonFileID = 608211,
         background = 608172,
@@ -101,6 +117,7 @@ addon.dungeons = {
     },
     {
         name = DUNGEON_FLOOR_THEDEADMINES1,
+        id = 5,
         loreFileID = 526404,
         buttonFileID = 522352,
         background = 522336,
@@ -267,6 +284,7 @@ addon.dungeons = {
     },
     {
         name = DUNGEON_FLOOR_WAILINGCAVERNS1,
+        id = 1,
         loreFileID = 608313,
         buttonFileID = 608229,
         background = 608190,
@@ -440,6 +458,7 @@ addon.dungeons = {
     },
     {
         name = "Shadowfang Keep",
+        id = 7,
         loreFileID = 526410,
         buttonFileID = 522358,
         background = 522342,
@@ -679,6 +698,7 @@ addon.dungeons = {
     },
     {
         name = DUNGEON_FLOOR_THESTOCKADE1,
+        id = 11,
         loreFileID = 608262,
         buttonFileID = 608223,
         background = 608184,
@@ -807,6 +827,7 @@ addon.dungeons = {
     },
     {
         name = "Blackfathom Deeps",
+        id = 9,
         loreFileID = 608234,
         buttonFileID = 608195,
         background = 608156,
@@ -989,6 +1010,7 @@ addon.dungeons = {
     },
     {
         name = "Gnomeregan",
+        id = 13,
         loreFileID = 608241,
         buttonFileID = 608202,
         background = 608163,
@@ -1143,8 +1165,10 @@ addon.dungeons = {
                     4415,
                     4413,
                     4411,
-                    19, 7742,
-                    20, 11828,
+                    7742,
+                    11828,
+                    -- 19, 7742,
+                    -- 20, 11828,
                 },
             },
             {
@@ -1183,6 +1207,7 @@ addon.dungeons = {
     },
     {
         name = "Razorfen Kraul",
+        id = 15,
         loreFileID = 608252,
         buttonFileID = 608213,
         background = 608174,
@@ -1351,6 +1376,7 @@ addon.dungeons = {
     },
     {
         name = "Scarlet Monastery",
+        id = 17,
         loreFileID = 608253,
         buttonFileID = 608214,
         background = 608175,
@@ -1635,6 +1661,7 @@ addon.dungeons = {
     },
     {
         name = "Razorfen Downs",
+        id = 19,
         loreFileID = 608251,
         buttonFileID = 608212,
         background = 608173,
@@ -1784,6 +1811,7 @@ addon.dungeons = {
     },
     {
         name = "Uldaman",
+        id = 21,
         loreFileID = 608264,
         buttonFileID = 608225,
         background = 608186,
@@ -2000,6 +2028,7 @@ addon.dungeons = {
     },
     {
         name = "Maraudon",
+        id = 25,
         loreFileID = 608248,
         buttonFileID = 608209,
         background = 608170,
@@ -2279,6 +2308,7 @@ addon.dungeons = {
     },
     {
         name = "Zul'Farrak",
+        id = 23,
         loreFileID = 608267,
         buttonFileID = 608230,
         background = 608191,
@@ -2504,6 +2534,7 @@ addon.dungeons = {
     },
     {
         name = "Sunken Temple",
+        id = 27,
         loreFileID = 608256,
         buttonFileID = 608217,
         background = 608178,
@@ -2769,6 +2800,7 @@ addon.dungeons = {
     },
     {
         name = "Blackrock Depths",
+        id = 29,
         loreFileID = 608235,
         buttonFileID = 608196,
         background = 608157,
@@ -3338,6 +3370,7 @@ addon.dungeons = {
     },
     {
         name = "Lower Blackrock Spire",
+        id = 31,
         loreFileID = 608236,
         buttonFileID = 608197,
         background = 608158,
@@ -3658,6 +3691,7 @@ addon.dungeons = {
     },
     {
         name = "Upper Blackrock Spire",
+        id = 43,
         loreFileID = 1041990,
         buttonFileID = 1042000,
         background = 608158,
@@ -3869,6 +3903,7 @@ addon.dungeons = {
     },
     {
         name = "Scholomance",
+        id = 2,
         loreFileID = 608254,
         buttonFileID = 608215,
         background = 608176,
@@ -4438,6 +4473,7 @@ addon.dungeons = {
     },
     {
         name = "Stratholme",
+        id = 39,
         loreFileID = 608255,
         buttonFileID = 608216,
         background = 608177,
@@ -4888,6 +4924,7 @@ addon.dungeons = {
     },
     {
         name = "Dire Maul",
+        id = {33,35,37}, --e, w, n
         loreFileID = 608239,
         buttonFileID = 608200,
         background = 608161,
