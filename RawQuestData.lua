@@ -27213,6 +27213,14 @@ addon.rawQuestDataKeyed = {
 			62, -- [1]
 		},
 		["objectives"] = {
+			["area"] = {
+				[1429] = {
+					{
+						60.0,
+						50.0,
+					}
+				}
+			},
 		},
 	},
 	["qid-4976"] = {
@@ -162613,6 +162621,10 @@ addon.rawQuestDataKeyed = {
 			["items"] = {
 				5717, -- [1]
 			},
+		},
+		["requiredQuest"] = {
+			1074, -- [1]
+			1077, -- [2]
 		},
 	},
 	["qid-1167"] = {

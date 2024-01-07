@@ -1,8 +1,23 @@
 local name, addon = ...;
 
+local flyoutLayout = {
+    TopLeftCorner =	{ atlas = "CharacterCreateDropdown-NineSlice-CornerTopLeft", x = -36, y = 30, },
+    TopRightCorner =	{ atlas = "CharacterCreateDropdown-NineSlice-CornerTopRight", x = 36, y = 30, },
+    BottomLeftCorner =	{ atlas = "CharacterCreateDropdown-NineSlice-CornerBottomLeft", x = -36, y = -40, },
+    BottomRightCorner =	{ atlas = "CharacterCreateDropdown-NineSlice-CornerBottomRight", x = 36, y = -40, },
+    TopEdge = { atlas = "_CharacterCreateDropdown-NineSlice-EdgeTop", },
+    BottomEdge = { atlas = "_CharacterCreateDropdown-NineSlice-EdgeBottom", },
+    LeftEdge = { atlas = "!CharacterCreateDropdown-NineSlice-EdgeLeft", },
+    RightEdge = { atlas = "!CharacterCreateDropdown-NineSlice-EdgeRight", },
+    Center = { atlas = "CharacterCreateDropdown-NineSlice-Center", },
+}
+
 AdventureWidgetsDropDownTemplateMixin = {}
 
 function AdventureWidgetsDropDownTemplateMixin:OnLoad()
+
+    --NineSliceUtil.ApplyLayout(self.flyout, NineSliceLayouts.CharacterCreateDropdown)
+    NineSliceUtil.ApplyLayout(self.flyout, flyoutLayout)
 
     if not addon.dropdownWidgets then
         addon.dropdownWidgets = {}
@@ -52,7 +67,11 @@ function AdventureWidgetsDropDownTemplateMixin:SetMenu(t)
     if menulength > 7 then
         self.flyout:SetHeight(182)
     else
-        self.flyout:SetHeight(menulength * 27)
+        self.flyout:SetHeight(menulength * 28)
+    end
+
+    if menulength == 1 then
+        self.flyout:SetHeight(40)
     end
 
     self.maxWidth = 0.0;

@@ -265,6 +265,23 @@
         "GameFontNormalTiny",
         "GameFontWhiteTiny",
         "CreateScrollBoxListTreeListView",
-        "MinimapCluster"
+        "MinimapCluster",
+        "QuestUtils_IsQuestWorldQuest",
+        "DropDownList1",
+        "FauxScrollFrame_GetOffset",
+        "GetQuestDifficultyColor",
+        "MINIMAP_TRACKING_NONE",
+        "TOWNSFOLK_TRACKING_TEXT",
+        "QuestScrollFrame",
+        "LOOT_ITEM_SELF",
+        "LOOT_ITEM_PUSHED_SELF",
+        "GameFontHighlight",
+        "GameFontHighlightLarge",
+        "NineSliceLayouts",
+        "ABANDON_QUEST",
+        "IGNORE",
+        "BankFrame",
+        "CHARACTER",
+        "xx"
     ]
 }

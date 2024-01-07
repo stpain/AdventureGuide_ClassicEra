@@ -1,5 +1,5 @@
 <Ui>
-    <Slider name="AdventureSlider" minValue="1" maxValue="60" valueStep="1" inherits="OptionsSliderTemplate" virtual="true">
+    <Slider name="AdventureSliderLeftLabel" minValue="1" maxValue="60" valueStep="1" inherits="MinimalSliderTemplate" virtual="true">
         <Layers>
             <Layer level="OVERLAY">
                 <FontString parentKey="label" inherits="GameFontNormalSmall">

@@ -1,4 +1,20 @@
 <Ui>
+    <Frame name="AdventureHelpTipTemplate_NoArrow" inherits="GlowBoxTemplate" mixin="AdventureHelpTipMixin" virtual="true" enableMouse="true" frameStrata="TOOLTIP">
+		<Layers>
+			<Layer level="OVERLAY">
+				<FontString parentKey="text" inherits="GameFontHighlightLeft" justifyH="LEFT" justifyV="MIDDLE">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" x="5" y="-5"/>
+                        <Anchor point="BOTTOMRIGHT" x="-5" y="5"/>
+                    </Anchors>
+                </FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnShow method="OnShow"/>
+		</Scripts>
+	</Frame>
+
     <Frame name="AdventureHelpTipTemplate_BottomArrow" inherits="GlowBoxTemplate" mixin="AdventureHelpTipMixin" virtual="true" enableMouse="true" frameStrata="TOOLTIP">
 		<Layers>
 			<Layer level="OVERLAY">

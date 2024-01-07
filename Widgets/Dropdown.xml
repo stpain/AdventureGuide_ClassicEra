@@ -3,7 +3,7 @@
         <Layers>
             <Layer level="BACKGROND">
                 <Texture parentKey="background">
-                    <Color r="0" g="0" b="0" a="0.9"/>
+                    <Color r="0" g="0" b="0" a="0.1"/>
                 </Texture>
             </Layer>
             <Layer level="HIGHLIGHT">
@@ -33,8 +33,8 @@
     </Frame>
 
     <Button name="AdventureWidgetsDropDownTemplate" mixin="AdventureWidgetsDropDownTemplateMixin" virtual="true">
-        <NormalTexture atlas="PetList-ButtonBackground"/>
-        <HighlightTexture atlas="PetList-ButtonHighlight"/>
+        <NormalTexture atlas="charactercreate-customize-dropdownbox"/>
+        <HighlightTexture atlas="charactercreate-customize-dropdownbox-hover"/>
         <Frames>
             <Frame parentKey="label" setAllPoints="true">
                 <Layers>
@@ -48,10 +48,10 @@
                     </Layer>
                 </Layers>
             </Frame>
-            <Frame parentKey="flyout" frameLevel="7" frameStrata="DIALOG" hidden="true" inherits="InsetFrameTemplate">
+            <Frame parentKey="flyout" frameLevel="7" frameStrata="DIALOG" hidden="true">
                 <Size y="230"/>
                 <Anchors>
-                    <Anchor point="TOP" relativePoint="BOTTOM" x="0" y="4"/>
+                    <Anchor point="TOP" relativePoint="BOTTOM" x="0" y="3"/>
                     <!-- <Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" x="10" y="5"/> -->
                 </Anchors>
                 <Frames>

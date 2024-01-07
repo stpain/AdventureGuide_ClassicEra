@@ -6,6 +6,8 @@ local e = CreateFrame("FRAME")
 e:RegisterEvent("ADDON_LOADED")
 e:RegisterEvent("PLAYER_ENTERING_WORLD")
 
+e:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_SHOW")
+
 e:RegisterEvent("QUEST_ACCEPTED")
 e:RegisterEvent("QUEST_TURNED_IN")
 e:RegisterEvent("QUEST_LOG_UPDATE")
@@ -15,6 +17,24 @@ e:RegisterEvent('BANKFRAME_OPENED')
 e:RegisterEvent('BANKFRAME_CLOSED')
 e:RegisterEvent('BAG_UPDATE_DELAYED')
 e:RegisterEvent('BAG_OPEN')
+
+e:RegisterEvent('UNIT_STATS')
+
+
+function e:PLAYER_INTERACTION_MANAGER_FRAME_SHOW(...)
+    local interaction = ...;
+    if interaction == 5 or interaction == 12 then
+        if Database:GetConfig("interface.autoVendorJunk") == true then
+            addon.api.vendorJunk()
+        end
+    end
+end
+
+function e:UNIT_STATS(...)
+    if ... == "player" then
+        addon:TriggerEvent("Character_OnStatsChanged")
+    end
+end
 
 function e:QUEST_LOG_CRITERIA_UPDATE()
     addon:TriggerEvent("Quest_OnQuestCriteriaUpdated")
@@ -67,11 +87,15 @@ end
 --this means you can view your alts items
 function e:BAG_UPDATE_DELAYED()
     local bags = addon.api.scanPlayerContainers()
-    Database:UpdateTable("containers", addon.thisCharacter, bags)
+    local dbVar = Database:GetTable("containers", addon.thisCharacter)
+    dbVar.copper = bags.copper
+    dbVar.bags = bags.bags
+
+    Database:UpdateTable("containers", addon.thisCharacter, dbVar)
 end
 
 function e:PLAYER_ENTERING_WORLD(isInitial, isReload)
-    addon.Database:Init()
+    addon.Database:Init() --pass in true to reset the db
 
     local name, realm = UnitName("player")
     if not realm then
@@ -102,13 +126,9 @@ function e:ADDON_LOADED(...)
 
         e:modBags()
         --e:createItemToQuestMapping()
+
     end
 end
-
-
-
-
-
 
 
 
@@ -363,25 +383,57 @@ end
 function e:modBags()
 
     local overlays = {
-        junkOverlay = "bags-glow-artifact",
+        --junkOverlay = "bags-glow-artifact",
         greenOverlay = "bags-glow-green",
         blueOverlay = "bags-glow-blue",
         purpleOverlay = "bags-glow-purple",
+        --questOverlay = "bags-glow-heirloom"
+        questOverlay = "bags-glow-artifact"
     }
 
-    for b = 1, 5 do
-        for s = 0, 32 do
-            if _G['ContainerFrame'..b..'Item'..s] then
-                local f = _G['ContainerFrame'..b..'Item'..s]
+    -- for b = 1, 5 do
+    --     for s = 0, 32 do
+    --         if _G['ContainerFrame'..b..'Item'..s] then
+    --             local f = _G['ContainerFrame'..b..'Item'..s]
+    --             if f then
+    --                 for k, v in pairs(overlays) do
+    --                     f[k] = f:CreateTexture(nil, "OVERLAY")
+    --                     f[k]:SetAllPoints()
+    --                     f[k]:SetAtlas(v)
+    --                     f[k]:Hide()
+
+    --                     f:HookScript("OnClick", function(f, button)
+
+    --                     end)
+    --                 end
+    --             end
+    --         end
+    --     end
+    -- end
+
+    for containerIndex = 1, 13 do
+        for slot = 1, 36 do
+            local itemButton = _G["ContainerFrame" .. containerIndex .. "Item" .. slot]
+            if itemButton then
+
                 for k, v in pairs(overlays) do
-                    f[k] = f:CreateTexture(nil, "OVERLAY")
-                    f[k]:SetAllPoints()
-                    f[k]:SetAtlas(v)
-                    f[k]:Hide()
+                    itemButton[k] = itemButton:CreateTexture(nil, "OVERLAY")
+                    itemButton[k]:SetAllPoints()
+                    itemButton[k]:SetAtlas(v)
+                    itemButton[k]:Hide()
                 end
+
+                -- itemButton:HookScript("OnClick", function(but)
+                --     local info = C_Container.GetContainerItemInfo(but:GetParent():GetID(), but:GetID());
+                --     if info and IsAltKeyDown() then
+                --         addon:TriggerEvent("Character_OnContainerItemClicked", info)
+                --     end
+                -- end)
             end
         end
     end
+
+
 end
 
 --_G["ContainerFrame1Item1"]
@@ -416,35 +468,87 @@ end
 
 
 
+--[[
+    quest flags
+
+    1, generate the table of flags for class/race combos
+    2, update quest db with a new field for flag
+    3, write functions (predicates) to perform the checks - see below
+
+
+
+
+
+
+
+local HORDE_BIT = tonumber("11101100100000000000", 2)
+local ALLIANCE_BIT = tonumber("00010011010000000000", 2)
+
+local questFlag = tonumber("11101100101111111111", 2) --any horde character regardless of class, match a horde race AND any class
+
+local function isAlliance(quest)
+    return (quest.flag & ALLIANCE_BIT) ~= 0
+
+    --assume as a function call this is slower and poor performance
+    --return bit.band(testFlag, ALLIANCE_BIT) ~= 0
+end
+
+--968712
+
+local function myCharacterMask(class, race)
+    
+    local classBit = foo[class]
+    local raceBit = bar[race]
+
+    return classBit | raceBit
+end
+
+]]
+
+
+local classID_new = {
+    [1] = 1, --                 0000000000 0000000001  
+    [2] = 2, --                 0000000000 0000000010
+    [3] = 4, --                 0000000000 0000000100
+    [4] = 8, --                 0000000000 0000001000
+    [5] = 16, --                0000000000 0000010000
+    [6] = 32, --                0000000000 0000100000
+    [7] = 64, --                0000000000 0001000000
+    [8] = 128, --               0000000000 0010000000
+    [9] = 256, --               0000000000 0100000000
+    [11] = 512, --              0000000000 1000000000
+}
 
 
 local classID = {
-    [1] = 1,
-    [2] = 2,
-    [4] = 3,
-    [8] = 4,
-    [16] = 5,
-    [32] = 6,
-    [64] = 7,
-    [128] = 8,
-    [256] = 9,
-    [1024] = 11,
+    [1] = 1, --                 0000000000 0000000001  
+    [2] = 2, --                 0000000000 0000000010
+    [4] = 3, --                 0000000000 0000000100
+    [8] = 4, --                 0000000000 0000001000
+    [16] = 5, --                0000000000 0000010000
+    [32] = 6, --                0000000000 0000100000
+    [64] = 7, --                0000000000 0001000000
+    [128] = 8, --               0000000000 0010000000
+    [256] = 9, --               0000000000 0100000000
+    [1024] = 11, --             0000000000 1000000000
 }
 
 local raceID = {
-    [0] = "any",
-    [1] = 1,
-    [2] = 2,
-    [4] = 3,
-    [8] = 4,
-    [16] = 5,
-    [32] = 6,
-    [64] = 7,
-    [128] = 8,
-    [512] = 10,
-    [1024] = 11,
-    [77] = "allianceQuest",
-    [178] = "hordeQuest",
+    [0] = "any", --             1111111111 0000000000 1047552
+
+    [1] = 1, --human            0000000001 0000000000 1024
+    [2] = 2, --orc              0000000010 0000000000 2048
+    [4] = 3, --dwarf            0000000100 0000000000 4096
+    [8] = 4, --nelf             0000001000 0000000000 8192
+    [16] = 5, --undead          0000010000 0000000000 16384
+    [32] = 6, --tauren          0000100000 0000000000 32768
+    [64] = 7, --gnome           0001000000 0000000000 65536
+    [128] = 8, --troll          0010000000 0000000000 131072
+    [512] = 10, --belf          0100000000 0000000000 262144
+    [1024] = 11, --goat         1000000000 0000000000 524288
+
+    [77] = "allianceQuest", --  0001001101 0000000000 78848
+    [178] = "hordeQuest",   --  1110110010 0000000000 968704
 }
 
 local questSorting = {

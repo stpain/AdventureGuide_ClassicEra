@@ -6,8 +6,56 @@ local configDefaults = {
     interface = {
         highlightBagSlots = false,
         combineBags = false,
+        autoVendorJunk = false,
     },
-    
+    map = {
+        npc = {
+            atlas = "QuestNormal",
+            x = 28,
+            y = 28,
+        },
+        object = {
+            atlas = "AdventureMapIcon-SandboxQuest",
+            x = 20,
+            y = 31,
+        },
+        item = {
+            atlas = "VignetteLoot",
+            x = 24,
+            y = 24,
+        },
+        questStartItemLooted = {
+            atlas = "QuestBlob",
+            x = 24,
+            y = 24,
+        },
+        questTurnInNpc = {
+            atlas = "QuestTurnin",
+            x = 26,
+            y = 26,
+        },
+        questStarterNpc = {
+            atlas = "QuestNormal",
+            x = 22,
+            y = 22,
+        },
+        questStarterObject = {
+            atlas = "AdventureMapIcon-SandboxQuest",
+            x = 25,
+            y = 39,
+        },
+        questObjectiveItem = {
+            atlas = "ChallengeMode-icon-chest",
+            x = 19,
+            y = 20,
+        },
+        questObjectiveNpc = {
+            --atlas = "QuestBlob", --ShipMission_DangerousSkull
+            atlas = "countdown-swords",
+            x = 21,
+            y = 21,
+        },
+    },
 }
 
 local datebaseDefaults = {
@@ -18,6 +66,7 @@ local datebaseDefaults = {
     notes = {},
     quests = {},
     containers = {},
+    outfits = {},
 }
 
 function Database:Init(forceReset)
@@ -65,6 +114,7 @@ function Database:SetConfig(key, val)
         else
             self.db.config[key] = val
         end
+        addon:TriggerEvent("Database_OnConfigChanged", key, val)
     end
 end
 
@@ -121,6 +171,10 @@ function Database:GetTable(tab, nameRealm)
     end
 end
 
+function Database:GetList(name)
+    return self.db.lists[name]
+end
+
 function Database:GetAllLists()
     return self.db.lists or {}
 end
@@ -129,7 +183,7 @@ function Database:AddItemToList(list, item)
     if self.db then
         if self.db.lists[list] then
             table.insert(self.db.lists[list].items, item)
-            addon:TriggerEvent("Database_OnListChanged", list)
+            addon:TriggerEvent("Database_OnListChanged", list, self.db.lists[list])
         end
     end
 end
@@ -160,6 +214,47 @@ function Database:NewList(list, nameRealm, item)
     end
 end
 
+
+function Database:GetOutfits()
+    return self.db.outfits or {}
+end
+
+function Database:DeleteOutfit(name)
+    if self.db then
+        local keyToRemove;
+        for k, v in ipairs(self.db.outfits) do
+            if v.name == name then
+                keyToRemove = k
+            end
+        end
+        if keyToRemove then
+            table.remove(self.db.outfits, keyToRemove)
+            addon:TriggerEvent("Database_OnOutfitDeleted")
+        end
+    end
+end
+
+function Database:NewOutfit(outfit, nameRealm)
+    if self.db then
+        if not self.db.outfits then
+            self.db.outfits = {}
+        end
+        table.insert(self.db.outfits, {
+            name = outfit,
+            character = nameRealm,
+            items = {},
+            icon = 0,
+        })
+        -- self.db.outfits[outfit] = {
+        --     created = time(),
+        --     character = nameRealm,
+        --     items = {},
+        --     icon = 0,
+        -- }
+        addon:TriggerEvent("Database_OnNewOutfit", self.db.outfits[#self.db.outfits]) --Database_OnOutfitChanged
+    end
+end
+
 function Database:GetCharacterInfo(nameRealm)
     if self.db and self.db.characters[nameRealm] then
         return self.db.characters[nameRealm]
@@ -174,9 +269,7 @@ function Database:NewCharacter(nameRealm, classID, raceID)
             raceID = raceID,
         }
 
-        --self.db.lists[nameRealm] = {}
         self.db.quests[nameRealm] = {}
-        self.db.notes[nameRealm] = {}
         self.db.containers[nameRealm] = {}
     end
 end

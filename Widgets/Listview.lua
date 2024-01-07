@@ -55,7 +55,9 @@ function AdventureWidgetsListviewMixin:OnElementInitialize(element, elementData,
 end
 
 function AdventureWidgetsListviewMixin:OnElementReset(element)
-    element:ResetDataBinding()
+    if element.ResetDataBinding then
+        element:ResetDataBinding()
+    end
 end
 
 
@@ -102,7 +104,9 @@ function AdventureWidgetsNoTemplateListviewMixin:OnLoad()
 end
 
 function AdventureWidgetsNoTemplateListviewMixin:OnElementReset(element)
-    element:ResetDataBinding()
+    if element.ResetDataBinding then
+        element:ResetDataBinding()
+    end
 end
 
 

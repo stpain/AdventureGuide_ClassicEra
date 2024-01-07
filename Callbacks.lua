@@ -4,10 +4,17 @@ local name, addon = ...;
 Mixin(addon, CallbackRegistryMixin)
 addon:GenerateCallbackEvents({
     "Database_OnInitialised",
+    "Database_OnConfigChanged",
 
     "Database_OnNewList",
     "Database_OnListDeleted",
     "Database_OnListChanged",
+    "Database_OnNewOutfit",
+    "Database_OnOutfitChanged",
+    "Database_OnOutfitDeleted",
+
+    "Character_OnStatsChanged",
+    "Character_OnContainerItemClicked",
 
     "Guide_OnInstanceSelected",
     "Zone_OnSelected",

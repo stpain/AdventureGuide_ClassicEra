@@ -1,6 +1,37 @@
 local name, addon = ...;
 
 addon.itemData = {
+	[1015] = {
+		dropsFrom = {
+			{
+				3825, -- [1]
+				628,
+				923,
+				1258,
+				3823,
+				565,
+				3824,
+				213,
+				3863,
+				10644,
+				3861,
+				521,
+				3862,
+				4274,
+			}, -- [1]
+		},
+		itemID = 1015,
+		name = "Lean Wolf Flank",
+	},
+	[2665] = {
+		dropsFrom = {
+			{
+				1303, -- [1]
+			}, -- [1]
+		},
+		itemID = 2665,
+		name = "Stormwind Seasoning Herbs",
+	},
 	[19064] = {
 		dropsFrom = {
 			{
@@ -21026,9 +21057,12 @@ addon.itemData = {
 	},
 	[5519] = {
 		dropsFrom = {
-			[2] = {
-				19021, -- [1]
-			},
+			-- [2] = {
+			-- 	19021, -- [1] -- rusty chest is an object but requires you to kill slimes, its not on slime loot table btu the chest appeasr after killing
+			-- },
+			{
+				3928,
+			}
 		},
 		itemID = 5519,
 		name = "Iron Pommel",

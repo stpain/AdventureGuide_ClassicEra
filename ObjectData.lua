@@ -1,6 +1,18 @@
 local name, addon = ...;
 
 addon.objectData = {
+	[19021] = {
+		["objectID"] = 19021,
+		["name"] = "Rusty Chest",
+		["spawnLocations"] = {
+			[1455] = {
+				{
+					28.87, -- [1]
+					31.06, -- [2]
+				}, -- [1]
+			},
+		},
+	},
 	[171769] = {
 		["objectID"] = 171769,
 		["name"] = "Dwarven Brazier",

@@ -209,24 +209,264 @@
                             
                         </Texture>
                     </Layer>
+                    <!-- <Layer level="ARTWORK">
+                        <Texture parentKey="equipmentHeaderArt" atlas="GarrMission_RewardsBanner">
+                            <Size x="190" y="60"/>
+                            <Anchors>
+                                <Anchor point="TOPRIGHT" x="-28" y="-40"/>
+                            </Anchors>
+                        </Texture>
+                    </Layer> -->
                 </Layers>
                 <Frames>
-                    <PlayerModel parentKey="model">
-                        <Size x="200"/>
+
+                    <Frame parentKey="statsContainer">
                         <Anchors>
-                            <Anchor point="TOPRIGHT" x="0" y="0"/>
-                            <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+                            <Anchor point="TOPLEFT" x="26" y="-60"/>
+                            <Anchor point="BOTTOMRIGHT" x="-232" y="30"/>
                         </Anchors>
-                    </PlayerModel>
+                        <Layers>
+                            <Layer level="BACKGROUND">
+                                <Texture setAllPoints="true">
+                                    <Color r="0.09" g="0.07" b="0.05" a="0.4"/>
+                                </Texture>
+                            </Layer>
+                            <Layer level="ARTWORK">
+                                <!-- <Texture parentKey="centerIcon" atlas="ChallengeMode-SpikeyStar">
+                                    <Size x="100" y="100"/>
+                                    <Anchors>
+                                        <Anchor point="CENTER" x="0" y="0"/>
+                                    </Anchors>
+                                </Texture>
+
+                                <Line thickness="2">
+                                    <Color r="0.828125" g="0.625" b="0.0" a="1.0"/>
+                                    <StartAnchor point="CENTER" x="0" y="0"/>
+                                    <EndAnchor point="CENTER" x="-60" y="60"/>
+                                </Line>
+                                <Line thickness="2">
+                                    <Color r="0.828125" g="0.625" b="0.0" a="1.0"/>
+                                    <StartAnchor point="CENTER" x="0" y="0"/>
+                                    <EndAnchor point="CENTER" x="60" y="60"/>
+                                </Line>
+                                <Line thickness="2">
+                                    <Color r="0.828125" g="0.625" b="0.0" a="1.0"/>
+                                    <StartAnchor point="CENTER" x="0" y="0"/>
+                                    <EndAnchor point="CENTER" x="60" y="-60"/>
+                                </Line>
+                                <Line thickness="2">
+                                    <Color r="0.828125" g="0.625" b="0.0" a="1.0"/>
+                                    <StartAnchor point="CENTER" x="0" y="0"/>
+                                    <EndAnchor point="CENTER" x="-60" y="-60"/>
+                                </Line>
+
+                                <Line thickness="2">
+                                    <Color r="0.828125" g="0.625" b="0.0" a="1.0"/>
+                                    <StartAnchor point="CENTER" x="-60" y="60"/>
+                                    <EndAnchor point="CENTER" x="-160" y="60"/>
+                                </Line>
+                                <Line thickness="2">
+                                    <Color r="0.828125" g="0.625" b="0.0" a="1.0"/>
+                                    <StartAnchor point="CENTER" x="60" y="60"/>
+                                    <EndAnchor point="CENTER" x="160" y="60"/>
+                                </Line>
+                                <Line thickness="2">
+                                    <Color r="0.828125" g="0.625" b="0.0" a="1.0"/>
+                                    <StartAnchor point="CENTER" x="60" y="-60"/>
+                                    <EndAnchor point="CENTER" x="160" y="-60"/>
+                                </Line>
+                                <Line thickness="2">
+                                    <Color r="0.828125" g="0.625" b="0.0" a="1.0"/>
+                                    <StartAnchor point="CENTER" x="-60" y="-60"/>
+                                    <EndAnchor point="CENTER" x="-160" y="-60"/>
+                                </Line> -->
+
+                            </Layer>
+                        </Layers>
+
+                        <Frames>
+
+                            <Frame parentKey="attributes" inherits="AdventureGuideCharacterStatsSection">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" x="0" y="0"/>
+                                </Anchors>
+                                <Size x="130" y="150"/>
+                                <KeyValues>
+                                    <KeyValue key="iconAtlas" value="GarrMission_MissionIcon-Recruit" type="string"/>
+                                    <KeyValue key="headerText" value="Attributes" type="string"/>
+                                </KeyValues>
+                            </Frame>
+
+                            <Frame parentKey="defence" inherits="AdventureGuideCharacterStatsSection">
+                                <Anchors>
+                                    <Anchor point="LEFT" relativeKey="$parent.attributes" relativePoint="RIGHT" x="0" y="0"/>
+                                </Anchors>
+                                <Size x="130" y="150"/>
+                                <KeyValues>
+                                    <KeyValue key="iconAtlas" value="GarrMission_MissionIcon-Defense" type="string"/>
+                                    <KeyValue key="headerText" value="Defence" type="string"/>
+                                </KeyValues>
+                            </Frame>
+
+                            <Frame parentKey="resistances" inherits="AdventureGuideCharacterStatsSection">
+                                <Anchors>
+                                    <Anchor point="LEFT" relativeKey="$parent.defence" relativePoint="RIGHT" x="0" y="0"/>
+                                </Anchors>
+                                <Size x="130" y="150"/>
+                                <KeyValues>
+                                    <KeyValue key="iconAtlas" value="GarrMission_MissionIcon-Generic" type="string"/>
+                                    <KeyValue key="headerText" value="Resistances" type="string"/>
+                                </KeyValues>
+                            </Frame>
+
+                            <Frame parentKey="melee" inherits="AdventureGuideCharacterStatsSection">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeKey="$parent.attributes" relativePoint="BOTTOM" x="0" y="-10"/>
+                                    <Anchor point="BOTTOMLEFT" x="0" y="0"/>
+                                </Anchors>
+                                <KeyValues>
+                                    <KeyValue key="iconAtlas" value="GarrMission_MissionIcon-Combat" type="string"/>
+                                    <KeyValue key="headerText" value="Melee" type="string"/>
+                                </KeyValues>
+                            </Frame>
+
+                            <Frame parentKey="ranged" inherits="AdventureGuideCharacterStatsSection">
+                                <Size x="130"/>
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeKey="$parent.melee" relativePoint="TOPRIGHT" x="0" y="0"/>
+                                    <Anchor point="BOTTOMLEFT" relativeKey="$parent.melee" relativePoint="BOTTOMRIGHT" x="0" y="0"/>
+                                </Anchors>
+                                <KeyValues>
+                                    <KeyValue key="iconAtlas" value="GarrMission_MissionIcon-Patrol" type="string"/>
+                                    <KeyValue key="headerText" value="Ranged" type="string"/>
+                                </KeyValues>
+                            </Frame>
+
+                            <Frame parentKey="spell" inherits="AdventureGuideCharacterStatsSection">
+                                <Size x="130"/>
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeKey="$parent.ranged" relativePoint="TOPRIGHT" x="0" y="0"/>
+                                    <Anchor point="BOTTOMLEFT" relativeKey="$parent.ranged" relativePoint="BOTTOMRIGHT" x="0" y="0"/>
+                                </Anchors>
+                                <KeyValues>
+                                    <KeyValue key="iconAtlas" value="GarrMission_MissionIcon-Training" type="string"/>
+                                    <KeyValue key="headerText" value="Spells" type="string"/>
+                                </KeyValues>
+                            </Frame>
+
+                        </Frames>
+                    </Frame>
+
+                    <Frame parentKey="characterHelptip" inherits="AdventureHelpTipTemplate_NoArrow" hidden="true">
+                        <Anchors>
+                            <Anchor point="TOPRIGHT" x="-60" y="-60"/>
+                        </Anchors>
+                        <Size x="300" y="230"/>
+                    </Frame>
+
+                    <Button parentKey="selectOutfitDropdown" inherits="AdventureWidgetsDropDownTemplate"  text="New Outfit">
+                        <Size x="154" y="34"/>
+                        <Anchors>
+                            <Anchor point="TOPRIGHT" x="-45" y="-55"/>
+                        </Anchors>
+                    </Button>
+
+                    <Button parentKey="deleteOutfit">
+                        <Size x="18" y="18"/>
+                        <Anchors>
+                            <Anchor point="RIGHT" relativeKey="$parent.selectOutfitDropdown" relativePoint="LEFT" x="-5" y="0"/>
+                        </Anchors>
+                        <NormalTexture atlas="communities-icon-redx"/>
+                    </Button>
+
+                    <Button parentKey="outfitHelptip" inherits="MainHelpPlateButton">
+						<Anchors>
+							<Anchor point="LEFT" relativeKey="$parent.selectOutfitDropdown" relativePoint="RIGHT" x="-10" y="0"/>
+						</Anchors>
+						<HighlightTexture file="Interface\common\help-i" alphaMode="ADD" hidden="true">
+							<Size x="46" y="46"/>
+							<Anchors>
+								<Anchor point="CENTER"/>
+							</Anchors>
+							<Color r="1" g="1" b="1" a=".2"/>
+						</HighlightTexture>
+					</Button>
+
+                    <Frame parentKey="equipmentListview" inherits="AdventureWidgetsListviewTemplate">
+                        <Size x="214"/>
+                        <Anchors>
+                            <Anchor point="TOPRIGHT" x="-20" y="-90"/>
+                            <Anchor point="BOTTOMRIGHT" x="-20" y="30"/>
+                        </Anchors>
+                        <KeyValues>
+                            <KeyValue key="frameType" value="FRAME" type="string"/>
+                            <KeyValue key="itemTemplate" value="AdventureGuideSimpleIconLabelFrame" type="string"/>
+                            <KeyValue key="elementHeight" value="20" type="number"/>
+                        </KeyValues>
+                    </Frame>
+                    <Button parentKey="equipOutfit" inherits="UIPanelButtonTemplate" text="Equip">
+                        <Size x="100" y="22"/>
+						<Anchors>
+							<Anchor point="TOP" relativeKey="$parent.equipmentListview" relativePoint="BOTTOM" x="0" y="-5"/>
+						</Anchors>
+                    </Button>
 
                     <StatusBar parentKey="levelBar" orientation="HORIZONTAL" minValue="0" maxValue="60" defaultValue="55">
                         <BarTexture atlas="nameplates-bar-background-white"/>
                         <BarColor r="1" g="1" b="1" a="1"/>
-                        <Size y="30"/>
+                        <Size x="300" y="24"/>
                         <Anchors>
-                            <Anchor point="TOPLEFT" x="30" y="-30"/>
-                            <Anchor point="TOPRIGHT" x="-30" y="-30"/>
+                            <Anchor point="TOPRIGHT" x="-80" y="-18"/>
                         </Anchors>
+                        <Layers>
+                            <Layer level="BORDER">
+                                <Texture parentKey="leftArt" atlas="PetJournal-BattleSlotTitle-Left">
+                                    <Size x="30"/>
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" x="-26" y="10"/>
+                                        <Anchor point="BOTTOMLEFT" x="-26" y="-10"/>
+                                    </Anchors>
+                                </Texture>
+                                <Texture parentKey="rightArt" atlas="PetJournal-BattleSlotTitle-Right">
+                                    <Size x="30"/>
+                                    <Anchors>
+                                        <Anchor point="TOPRIGHT" x="20" y="10"/>
+                                        <Anchor point="BOTTOMRIGHT" x="20" y="-10"/>
+                                    </Anchors>
+                                </Texture>
+                                <Texture atlas="_BattleSlotTitle-Mid" horizTile="true">
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" relativeKey="$parent.leftArt" relativePoint="TOPRIGHT" x="0" y="0"/>
+                                        <Anchor point="BOTTOMRIGHT" relativeKey="$parent.rightArt" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+                                    </Anchors>
+                                </Texture>
+                                <Texture atlas="honorsystem-bar-frame-exhaustiontick" useAtlasSize="true">
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" x="43" y="7"/>
+                                    </Anchors>
+                                </Texture>
+                                <Texture atlas="honorsystem-bar-frame-exhaustiontick" useAtlasSize="true">
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" x="93" y="7"/>
+                                    </Anchors>
+                                </Texture>
+                                <Texture atlas="honorsystem-bar-frame-exhaustiontick" useAtlasSize="true">
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" x="143" y="7"/>
+                                    </Anchors>
+                                </Texture>
+                                <Texture atlas="honorsystem-bar-frame-exhaustiontick" useAtlasSize="true">
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" x="193" y="7"/>
+                                    </Anchors>
+                                </Texture>
+                                <Texture atlas="honorsystem-bar-frame-exhaustiontick" useAtlasSize="true">
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" x="243" y="7"/>
+                                    </Anchors>
+                                </Texture>
+                            </Layer>
+                        </Layers>
                     </StatusBar>
                 </Frames>
             </Frame>
@@ -488,7 +728,34 @@
                 </Frames>
             </Frame>
 
-            <Frame parentKey="sidePanel">
+            <Frame parentKey="characterSidePanel" hidden="true" parentArray="views">
+                <Anchors>
+                    <Anchor point="BOTTOMLEFT" relativeKey="$parent.worldMap" relativePoint="BOTTOMRIGHT" x="0" y="2"/>
+                    <Anchor point="TOPRIGHT" x="-4" y="-68"/>
+                </Anchors>
+                <Layers>
+                    <Layer level="BACKGROUND">
+                        <Texture parentKey="background">
+                            <Anchors>
+                                <Anchor point="TOPLEFT" x="0" y="0"/>
+                                <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+                            </Anchors>
+                        </Texture>
+                    </Layer>
+                </Layers>
+                <Frames>
+                    <PlayerModel parentKey="model">
+                        <Size x="200"/>
+                        <Anchors>
+                            <Anchor point="TOPRIGHT" x="0" y="0"/>
+                            <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+                        </Anchors>
+                    </PlayerModel>
+                </Frames>
+            </Frame>
+
+
+            <Frame parentKey="mapQuestLog" parentArray="views">
                 <Anchors>
                     <Anchor point="BOTTOMLEFT" relativeKey="$parent.worldMap" relativePoint="BOTTOMRIGHT" x="0" y="2"/>
                     <Anchor point="TOPRIGHT" x="-4" y="-68"/>

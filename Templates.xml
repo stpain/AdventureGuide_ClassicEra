@@ -208,7 +208,6 @@
                 <FontString parentKey="label" inherits="GameFontWhite" justifyH="LEFT">
                     <Anchors>
                         <Anchor point="LEFT" relativePoint="RIGHT" relativeKey="$parent.icon" x="6" y="0"/>
-                        <Anchor point="RIGHT" x="-1" y="0"/>
                     </Anchors>
                 </FontString>
                 <FontString parentKey="labelRight" inherits="GameFontWhite" justifyH="RIGHT">
@@ -254,6 +253,13 @@
 				<Texture parentKey="background" alpha="0.0">	
                     <Color r="0" g="0" b="0"/>			
 					<Anchors>
+						<Anchor point="TOPLEFT" x="10" y="0"/>
+						<Anchor point="BOTTOMRIGHT" x="-10" y="0"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="backgroundArtwork" alpha="0.0">	
+                    <Color r="0" g="0" b="0"/>			
+					<Anchors>
 						<Anchor point="TOPLEFT" x="1" y="0"/>
 						<Anchor point="BOTTOMRIGHT" x="0" y="1"/>
 					</Anchors>
@@ -276,7 +282,6 @@
                 <FontString parentKey="label" inherits="GameFontWhite" justifyH="LEFT">
                     <Anchors>
                         <Anchor point="LEFT" relativePoint="RIGHT" relativeKey="$parent.icon" x="6" y="0"/>
-                        <Anchor point="RIGHT" x="-1" y="0"/>
                     </Anchors>
                 </FontString>
                 <FontString parentKey="labelRight" inherits="GameFontWhite" justifyH="RIGHT">
@@ -287,15 +292,16 @@
             </Layer>
         </Layers>
         <Frames>
-            <Button parentKey="rightButton" hidden="true">
+            <Button parentKey="rightButton">
                 <Anchors>
-                    <Anchor point="RIGHT" x="-1" y="0"/>
+                    <Anchor point="RIGHT" x="-4" y="0"/>
                 </Anchors>
-                <Layers>
+                <Size x="16" y="16"/>
+                <!-- <Layers>
                     <Layer level="BACKGROUND">
                         <Texture parentKey="icon" setAllPoints="true"/>
                     </Layer>
-                </Layers>
+                </Layers> -->
             </Button>
         </Frames>
         <Animations>
@@ -577,6 +583,58 @@
         </Scripts>
     </Frame>
 
+
+    <Frame name="AdventureGuideCharacterStatsSection" mixin="AdventureGuideCharacterStatsSectionMixin" virtual="true">
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture parentKey="icon">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" x="2" y="0"/>
+                    </Anchors>
+                    <Size x="28" y="28"/>
+                </Texture>
+            </Layer>
+            <Layer level="ARTWORK">
+                <!-- <Texture parentKey="ring" atlas="charactercreate-ring-metallight">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" x="-10" y="10"/>
+                    </Anchors>
+                    <Size x="50" y="50"/>
+                </Texture> -->
+                <Line thickness="1">
+                    <Color r="0.828125" g="0.625" b="0.0" a="1.0"/>
+                    <StartAnchor point="TOPLEFT" x="6" y="-28"/>
+                    <EndAnchor point="TOPRIGHT" x="-6" y="-28"/>
+                </Line>
+            </Layer>
+            <Layer level="OVERLAY">
+                <FontString parentKey="header" inherits="GameFontNormal">
+                    <FontHeight val="10"/>
+					<Anchors>
+						<Anchor point="TOPRIGHT" x="-10" y="-10"/>
+					</Anchors>
+				</FontString>
+            </Layer>
+        </Layers>
+
+        <Frames>
+            <Frame parentKey="listview" inherits="AdventureWidgetsListviewTemplate">
+                <Anchors>
+                    <Anchor point="TOPLEFT" x="-6" y="-28"/>
+                    <Anchor point="BOTTOMRIGHT" x="-6" y="0"/>
+                </Anchors>
+                <KeyValues>
+                    <KeyValue key="frameType" value="FRAME" type="string"/>
+                    <KeyValue key="itemTemplate" value="AdventureGuideSimpleIconLabelFrame" type="string"/>
+                    <KeyValue key="elementHeight" value="16" type="number"/>
+                </KeyValues>
+            </Frame>
+        </Frames>
+
+        <Scripts>
+            <OnLoad method="OnLoad"/>
+        </Scripts>
+    </Frame>
 
 
 </Ui>

@@ -46,6 +46,8 @@ ObjectData.lua
 ItemData.lua
 NodeData.lua
 
+TempData.lua
+
 Callbacks.lua
 Database.lua
 

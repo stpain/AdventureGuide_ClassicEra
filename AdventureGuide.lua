@@ -1,6 +1,7 @@
 local name, addon = ...;
 
 local Database = addon.Database;
+local L = addon.locales;
 
 StaticPopupDialogs.WowheadQuestPopup = {
     text = "%s",
@@ -44,58 +45,33 @@ StaticPopupDialogs.NewList = {
     showAlert = false,
 }
 
+StaticPopupDialogs.NewOutfit = {
+    text = "New Outfit",
+    button1 = ACCEPT,
+    button2 = CANCEL,
+    OnAccept = function(self, data)
+        local str = self.editBox:GetText()
+        if str and (#str > 0) and (str ~= " ") then
+            local outfit = str;
+            Database:NewOutfit(outfit, addon.thisCharacter, data)
+        end
+    end,
+    OnCancel = function(self)
+
+    end,
+    timeout = 0,
+    hasEditBox = true,
+    whileDead = true,
+    hideOnEscape = true,
+    preferredIndex = 3,
+    showAlert = false,
+}
+
 
 local playerPinSize = 27;
 local groupPinSize = 48;
 local nodePinSize = 11;
-local mapIcons = {
-    npc = {
-        atlas = "QuestNormal",
-        x = 28,
-        y = 28,
-    },
-    object = {
-        atlas = "AdventureMapIcon-SandboxQuest",
-        x = 20,
-        y = 31,
-    },
-    item = {
-        atlas = "VignetteLoot",
-        x = 24,
-        y = 24,
-    },
-    questStartItemLooted = {
-        atlas = "QuestBlob",
-        x = 24,
-        y = 24,
-    },
-    questTurnInNpc = {
-        atlas = "QuestTurnin",
-        x = 32,
-        y = 32,
-    },
-    questStarterNpc = {
-        atlas = "QuestNormal",
-        x = 28,
-        y = 28,
-    },
-    questStarterObject = {
-        atlas = "AdventureMapIcon-SandboxQuest",
-        x = 25,
-        y = 39,
-    },
-    questObjectiveItem = {
-        atlas = "ChallengeMode-icon-chest",
-        x = 19,
-        y = 20,
-    },
-    questObjectiveNpc = {
-        --atlas = "QuestBlob", --ShipMission_DangerousSkull
-        atlas = "countdown-swords",
-        x = 28,
-        y = 28,
-    },
-}
+
 
 
 local homeLayout = {
@@ -142,17 +118,21 @@ local dungeonLayout = {
     Center = { atlas = "ChatBubble-NineSlice-Center", },
 }
 
-local tabLayout = {
-    TopLeftCorner =	{ atlas = "optionsframe-nineslice-cornertopleft", x = -12, y = 12, },
-    TopRightCorner =	{ atlas = "optionsframe-nineslice-cornertopright", x = 12, y = 12, },
-    BottomLeftCorner =	{ atlas = "optionsframe-nineslice-cornerbottomleft", x = -12, y = -12, },
-    BottomRightCorner =	{ atlas = "optionsframe-nineslice-cornerbottomright", x = 12, y = -12, },
-    TopEdge = { atlas = "_optionsframe-nineslice-edgetop", },
-    BottomEdge = { atlas = "_optionsframe-nineslice-edgebottom"},
-    LeftEdge = { atlas = "!OptionsFrame-NineSlice-EdgeLeft", },
-    RightEdge = { atlas = "!OptionsFrame-NineSlice-EdgeRight", },
+local characterModelLayout = {
+    TopLeftCorner =	{ atlas = "optionsframe-nineslice-cornertopleft", x = 0, y = 0, },
+    TopRightCorner =	{ atlas = "optionsframe-nineslice-cornertopright", x = 0, y = 0, },
+    BottomLeftCorner =	{ atlas = "optionsframe-nineslice-cornerbottomleft",  x = 0, y = 0, },
+    BottomRightCorner =	{ atlas = "optionsframe-nineslice-cornerbottomright", x = 0, y = 0, },
     --Center = { atlas = "ChatBubble-NineSlice-Center", },
 }
+
+-- local characterLevelBarLayout =
+-- {
+--     threeSliceHorizontal = true,
+--     ["LeftEdge"] = { atlas = "PetJournal-BattleSlotTitle-Left" },
+--     ["RightEdge"] = { atlas = "PetJournal-BattleSlotTitle-Right" },
+--     ["Center"] = { atlas = "_BattleSlotTitle-Mid" },
+-- };
 
 
 AdventureGuideMixin = {}
@@ -164,7 +144,8 @@ function AdventureGuideMixin:OnLoad()
     NineSliceUtil.ApplyLayout(self.dungeons, dungeonLayout)
     NineSliceUtil.ApplyLayout(self.lists.listSelection, listsListSelectionLayout)
     NineSliceUtil.ApplyLayout(self.lists.listItems, listsListSelectionLayout)
-    --NineSliceUtil.ApplyLayout(self.character.tabContainer, tabLayout)
+    NineSliceUtil.ApplyLayout(self.character, listsLayout)
+    NineSliceUtil.ApplyLayout(self.characterSidePanel, characterModelLayout)
 
     self:SetScale(0.85)
 
@@ -192,6 +173,7 @@ function AdventureGuideMixin:OnLoad()
     self.worldMapPoiPool = CreateFramePool("FRAME", self.mapCheatLayer, "AdventureGuideMapPoiTemplate")
     self.herbPoi = CreateFramePool("FRAME", self.mapCheatLayer, "AdventureGuideMapPoiTemplate")
     self.miningPoi = CreateFramePool("FRAME", self.mapCheatLayer, "AdventureGuideMapPoiTemplate")
+    self.groupMembersPool = CreateFramePool("FRAME", self.mapCheatLayer, "AdventureGuideMapPoiTemplate")
 
     self.worldMap.showHerbs:SetAtlas("Mobile-Herbalism")
     self.worldMap.showHerbs.icon:ClearAllPoints()
@@ -284,6 +266,88 @@ function AdventureGuideMixin:OnLoad()
     hooksecurefunc("ContainerFrame_Update", function(frame)
         addon.api.showButtonGlowForContainerFrame(frame)
     end)
+    hooksecurefunc("ContainerFrameItemButton_OnModifiedClick", function(itemButton, hardwareButton)
+        local info = C_Container.GetContainerItemInfo(itemButton:GetParent():GetID(), itemButton:GetID());
+        if info and (hardwareButton == "RightButton") and IsAltKeyDown() then
+            addon:TriggerEvent("Character_OnContainerItemClicked", info)
+        end
+    end)
+
+    -- local function ParseGUID(unit)
+    --     local guid = UnitGUID(unit)
+    --     local name = UnitName(unit)
+    --     if guid then
+    --         local link = unitLink:format(guid, name) -- clickable link
+    --         local unit_type = strsplit("-", guid)
+    --         if unit_type == "Creature" or unit_type == "Vehicle" then
+    --             local _, _, server_id, instance_id, zone_uid, npc_id, spawn_uid = strsplit("-", guid)
+    --             print(format("%s is a creature with NPC ID %d", link, npc_id))
+    --         elseif unit_type == "Player" then
+    --             local _, server_id, player_id = strsplit("-", guid)
+    --             print(format("%s is a player with ID %s", link, player_id))
+    --         end
+    --     end
+    -- end
+    GameTooltip:HookScript('OnShow', function(tooltip)
+        local data = tooltip:GetOwner()
+        if data.arg1 and data.arg1 == "adventureguide-dropdown-tooltip-hook" then
+            tooltip:SetHyperlink(data.arg2)
+        end
+    end)
+
+    GameTooltip:HookScript('OnTooltipSetUnit', function(tooltip)
+        local unitName, unit = tooltip:GetUnit()
+
+        local guid = UnitGUID(unit)
+        local name = UnitName(unit)
+        if guid then
+            local unitLink = "|cffffff00|Hunit:%s|h[%s]|h|r"
+            local link = unitLink:format(guid, name) -- clickable link
+            local unit_type = strsplit("-", guid)
+            if unit_type == "Creature" or unit_type == "Vehicle" then
+                local _, _, _, _, _, npc_id = strsplit("-", guid)
+                npc_id = tonumber(npc_id)
+                --print(npc_id, type(npc_id))
+                if addon.npcData[npc_id] then
+                    --print("got npc ID")
+                    for k, v in ipairs(addon.currentQuestLogIDs) do
+                        if addon.rawQuestDataKeyed["qid-"..v.questID] then
+                            local questConfig = addon.rawQuestDataKeyed["qid-"..v.questID]
+                            if questConfig.objectives and type(questConfig.objectives.npc) == "table" then
+                                --print("got npc ID table for quest config")
+                                for k, npcID in ipairs(questConfig.objectives.npc) do
+                                    --print(npcID, npc_id)
+                                    if npcID == npc_id then
+                                        if v.readyForTurnIn then
+                                            tooltip:AddDoubleLine(GetQuestLink(v.questID), CreateAtlasMarkup("orderhalltalents-done-checkmark", 20, 20))
+                                        else
+                                            tooltip:AddLine(GetQuestLink(v.questID))
+                                        end
+                                    end
+                                end
+                            end
+                            if questConfig.objectives and type(questConfig.objectives.items) == "table" then
+                                for k, itemID in ipairs(questConfig.objectives.items) do
+                                    if addon.itemData[itemID] and addon.itemData[itemID].dropsFrom[1] then
+                                        for k, npcID in ipairs(addon.itemData[itemID].dropsFrom[1]) do
+                                            if npcID == npc_id then
+                                                if v.readyForTurnIn then
+                                                    tooltip:AddDoubleLine(GetQuestLink(v.questID), CreateAtlasMarkup("orderhalltalents-done-checkmark", 20, 20))
+                                                else
+                                                    tooltip:AddLine(GetQuestLink(v.questID))
+                                                end
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+
+    end)
 
     GameTooltip:HookScript('OnTooltipSetItem', function(tooltip)
         local name, link = tooltip:GetItem()
@@ -295,7 +359,10 @@ function AdventureGuideMixin:OnLoad()
                     local info = Database:SearchContainersForItem(itemID)
                     if info then
                         for nameRealm, counts in pairs(info) do
-                            tooltip:AddDoubleLine(addon.api.colourizeTextForCharacter(nameRealm, nameRealm), addon.api.colourizeTextForCharacter(nameRealm, string.format("Bags: %d, Bank: %d", counts.bags, counts.bank)))
+                            tooltip:AddDoubleLine(
+                                addon.api.colourizeTextForCharacter(nameRealm, nameRealm), 
+                                addon.api.colourizeTextForCharacter(nameRealm, string.format("Bags: %d, Bank: %d", counts.bags, counts.bank))
+                            )
                         end
                     end
 
@@ -304,6 +371,15 @@ function AdventureGuideMixin:OnLoad()
                         for k, v in ipairs(addon.itemIDToQuestID[itemID]) do
                             local title = C_QuestLog.GetQuestInfo(v)
                             tooltip:AddDoubleLine(title, v)
+                        end
+                    end
+
+                    local lists = addon.api.searchListsForItem(itemID)
+                    if #lists > 0 then
+                        tooltip:AddLine(" ")
+                        tooltip:AddLine("Lists")
+                        for k, v in ipairs(lists) do
+                            tooltip:AddLine(v.list)
                         end
                     end
                 end)
@@ -367,10 +443,27 @@ function AdventureGuideMixin:OnLoad()
     addon:RegisterCallback("Quest_OnQuestTurnIn", self.Quest_OnQuestTurnIn, self)
     addon:RegisterCallback("Database_OnNewList", self.Database_OnNewList, self)
     addon:RegisterCallback("Database_OnListChanged", self.Database_OnListChanged, self)
+    addon:RegisterCallback("Database_OnNewOutfit", self.Character_OnNewOutfit, self)
+    addon:RegisterCallback("Database_OnOutfitChanged", self.Character_OnOutfitChanged, self)
     addon:RegisterCallback("Database_OnListDeleted", self.Database_OnListDeleted, self)
     addon:RegisterCallback("Guide_OnInstanceSelected", self.Guide_OnInstanceSelected, self)
+    addon:RegisterCallback("Database_OnConfigChanged", self.Database_OnConfigChanged, self)
+    addon:RegisterCallback("Database_OnOutfitDeleted", self.Database_OnOutfitDeleted, self)
+    addon:RegisterCallback("Character_OnStatsChanged", self.Character_OnStatsChanged, self)
+    addon:RegisterCallback("Character_OnContainerItemClicked", self.Character_OnContainerItemClicked, self)
 
 
+    self.character.characterHelptip:SetText(L.CHARACTER_HELPTIP)
+    self.character.outfitHelptip:SetScale(0.8)
+    self.character.outfitHelptip:SetScript("OnClick", function()
+        self.character.characterHelptip:SetShown(not self.character.characterHelptip:IsVisible())
+    end)
+    self.character.equipOutfit:SetScript("OnClick", function()
+        self:Character_ApplySelectedOutfit()
+    end)
+    self.character.deleteOutfit:SetScript("OnClick", function()
+        self:Character_DeleteOutfit()
+    end)
 
     self.home.map:SetScript("OnClick", function()
         self.worldMap:SetMapID(947)
@@ -406,11 +499,47 @@ function AdventureGuideMixin:OnLoad()
 
 end
 
+function AdventureGuideMixin:Character_OnContainerItemClicked(item)
+    addon.api.addItemToList({
+        link = item.hyperlink,
+        count = 1,
+    })
+end
+
+function AdventureGuideMixin:CreateSlashCommands()
+    SLASH_ADVENTUREGUIDE1 = '/adventureguide'
+    SlashCmdList['ADVENTUREGUIDE'] = function(msg)
+        local arg1, arg2 = strsplit(" ", msg)
+        if arg1 == "" then
+            self:Show()
+
+        elseif arg1 == "equip" then
+            self:Character_ApplySelectedOutfit(arg2)
+        end
+    end
+end
+
+function AdventureGuideMixin:Database_OnConfigChanged(key, val)
+    local mapID = self.worldMap:GetMapID()
+    if mapID then
+        self:UpdateQuestList(mapID)
+    end
+end
+
 function AdventureGuideMixin:OpenTo(view)
     for k, frame in ipairs(self.views) do
         frame:Hide()
     end
     self[view]:Show()
+
+    --bit meh but set the side panel here based on view selected
+    if view == "character" then
+        self.mapQuestLog:Hide()
+        self.characterSidePanel:Show()
+    else
+        self.mapQuestLog:Show()
+        self.characterSidePanel:Hide()
+    end
 end
 
 function AdventureGuideMixin:Guide_OnInstanceSelected(instance)
@@ -456,15 +585,484 @@ function AdventureGuideMixin:Character_OnShow()
     }
     NavBar_AddButton(self.navBar, navButton)
 
-    self.character.model:SetUnit("player")
+    self:LoadCharacter()
 end
+
+function AdventureGuideMixin:Character_OnNewOutfit(outfit)
+    self.character.selectedOutfit = outfit;
+
+    self:Character_CreateOutfitDropdownMenu()
+    self.character.selectOutfitDropdown:SetText(outfit.name)
+
+    local currentEquipment = addon.api.getPlayerEquipment()
+    outfit.items = currentEquipment;
+
+    self:Character_LoadOutfitItems(outfit.items)
+end
+
+function AdventureGuideMixin:Character_OnOutfitSelected(outfit)
+    self.character.selectedOutfit = outfit;
+    self:Character_LoadOutfitItems(outfit.items)
+end
+
+function AdventureGuideMixin:Character_OnOutfitChanged(outfit)
+    self:Character_LoadOutfitItems(outfit.items)
+end
+
+function AdventureGuideMixin:Database_OnOutfitDeleted()
+    self:Character_LoadOutfitItems({})
+    self.character.selectOutfitDropdown:SetText("")
+    self.character.selectedOutfit = nil
+    self:Character_CreateOutfitDropdownMenu()
+end
+
+function AdventureGuideMixin:Character_OnStatsChanged()
+
+    local resistances = addon.api.getPlayerResistances(UnitLevel("player"))
+    local res = {}
+    for k, v in ipairs(resistances) do
+        table.insert(res, {
+            label = string.format("|cffffffff%s|r", v.name),
+            labelRight = v.total,
+            fontObject = GameFontNormalSmall,
+        })
+    end
+    self.character.statsContainer.resistances.listview.scrollView:SetDataProvider(CreateDataProvider(res))
+
+    local stats = addon.api.getPaperDollStats()
+
+    local attributes = {}
+    for k, v in ipairs(stats.attributes) do
+        table.insert(attributes, {
+            label = string.format("|cffffffff%s|r", v.name),
+            labelRight = v.val,
+            fontObject = GameFontNormalSmall,
+        })
+    end
+    self.character.statsContainer.attributes.listview.scrollView:SetDataProvider(CreateDataProvider(attributes))
+
+    local def = {}
+    for stat, val in pairs(stats.defence) do
+        table.insert(def, {
+            label = string.format("|cffffffff%s|r", stat),
+            labelRight = val,
+            fontObject = GameFontNormalSmall,
+        })
+    end
+    table.sort(def, function(a, b)
+        return a.label < b.label
+    end)
+    self.character.statsContainer.defence.listview.scrollView:SetDataProvider(CreateDataProvider(def))
+
+    local melee = {}
+    for stat, val in pairs(stats.melee) do
+        table.insert(melee, {
+            label = string.format("|cffffffff%s|r", stat),
+            labelRight = val,
+            fontObject = GameFontNormalSmall,
+        })
+    end
+    table.sort(melee, function(a, b)
+        return a.label < b.label
+    end)
+    self.character.statsContainer.melee.listview.scrollView:SetDataProvider(CreateDataProvider(melee))
+
+    local ranged = {}
+    for stat, val in pairs(stats.ranged) do
+        table.insert(ranged, {
+            label = string.format("|cffffffff%s|r", stat),
+            labelRight = val,
+            fontObject = GameFontNormalSmall,
+        })
+    end
+    table.sort(ranged, function(a, b)
+        return a.label < b.label
+    end)
+    self.character.statsContainer.ranged.listview.scrollView:SetDataProvider(CreateDataProvider(ranged))
+
+    local spell = {}
+    for stat, val in pairs(stats.spell) do
+        if type(val) == "number" then
+            if stat == "SpellCrit" then
+                table.insert(spell, {
+                    label = string.format("|cffffffff%s|r", stat),
+                    labelRight = val,
+                    fontObject = GameFontNormalSmall,
+                    onMouseEnter = function(f)
+                        GameTooltip:SetOwner(f, "ANCHOR_RIGHT")
+                        GameTooltip:AddLine(" ")
+                        for k, v in ipairs(stats.spell.tooltips.crit) do
+                            GameTooltip:AddDoubleLine(v.name, v.val)
+                        end
+                        GameTooltip:Show()
+                    end,
+                })
+            elseif stat == "SpellDamage" then
+                table.insert(spell, {
+                    label = string.format("|cffffffff%s|r", stat),
+                    labelRight = val,
+                    fontObject = GameFontNormalSmall,
+                    onMouseEnter = function(f)
+                        GameTooltip:SetOwner(f, "ANCHOR_RIGHT")
+                        GameTooltip:AddLine(" ")
+                        for k, v in ipairs(stats.spell.tooltips.damage) do
+                            GameTooltip:AddDoubleLine(v.name, v.val)
+                        end
+                        GameTooltip:Show()
+                    end,
+                })
+            else
+                table.insert(spell, {
+                    label = string.format("|cffffffff%s|r", stat),
+                    labelRight = val,
+                    fontObject = GameFontNormalSmall,
+                })
+            end
+        end
+    end
+    table.sort(spell, function(a, b)
+        return a.label < b.label
+    end)
+    self.character.statsContainer.spell.listview.scrollView:SetDataProvider(CreateDataProvider(spell))
+
+end
+
+function AdventureGuideMixin:Character_DeleteOutfit()
+    if self.character.selectedOutfit then
+        Database:DeleteOutfit(self.character.selectedOutfit.name)
+    end
+end
+
+function AdventureGuideMixin:Character_ApplySelectedOutfit(name)
+
+    if name then
+        local outfits = Database:GetOutfits()
+        for k, v in ipairs(outfits) do
+            if v.name == name and v.character == addon.thisCharacter then
+                self:Character_OnOutfitSelected(v)
+            end
+        end
+    end
+
+    if not self.character.selectedOutfit then
+        return
+    end
+
+    local bagsWithEmptySlots = {}
+    local emptySlotindex = 1
+    for bag = 0, 4 do
+        local freeSlots = C_Container.GetContainerFreeSlots(bag)
+        if #freeSlots > 0 then
+            for k, v in ipairs(freeSlots) do
+                bagsWithEmptySlots[emptySlotindex] = bag
+                emptySlotindex = emptySlotindex + 1;
+            end
+        end
+    end
+
+    --DevTools_Dump(bagsWithEmptySlots)
+
+    local function equipItem(invSlot, bag, slot)
+        local info = C_Container.GetContainerItemInfo(bag, slot)
+        if info then
+            local itemLoc = ItemLocation:CreateFromBagAndSlot(bag, slot)
+            if itemLoc then
+                local itemGUID = C_Item.GetItemGUID(itemLoc)
+                if invSlot.guid == itemGUID then
+
+                    --this seems to work well with the bank items
+                    --the logic is to pick up the new item and swap with what was in the slot
+                    --in theory this means that items being removed will have an empty slot waiting
+                    --however ignored slots create a potential issue as they require bag/bank space to be available (see below)
+                    C_Container.PickupContainerItem(bag, slot)
+                    PickupInventoryItem(GetInventorySlotInfo(invSlot.slot))
+
+                    --EquipItemByName(info.hyperlink, GetInventorySlotInfo(invSlot.slot))
+
+                    --it could work better to use container item as the bag/slot are known
+                    --C_Container.UseContainerItem(bag, slot)
+
+                    return true
+                end
+            end
+        end
+        return false;
+    end
+
+    local i = 1;
+    C_Timer.NewTicker(0.01, function() --ticker might not be needed with the pre mapping of empty slots
+        local v = self.character.selectedOutfit.items[i]
+        if v.guid then
+            local equipped = false;
+            for bag = 0, 4 do
+                if equipped == false then
+                    for slot = 1, C_Container.GetContainerNumSlots(bag) do
+                        equipped = equipItem(v, bag, slot)
+                    end
+                end
+            end
+
+            if BankFrame:IsVisible() then
+                for slot = 1, C_Container.GetContainerNumSlots(-1) do
+                    equipped = equipItem(v, -1, slot)
+                end
+                for bag = 5, 11 do
+                    if equipped == false then
+                        for slot = 1, C_Container.GetContainerNumSlots(bag) do
+                            equipped = equipItem(v, bag, slot)
+                        end
+                    end
+                end
+            end
+
+        else
+
+            --the premapped empty slots should remain as anything swapped before would go into the slot created by the new item beign equipped
+            --this will attempt to remove an item and place into an empty slot
+            --if no empty slots exist put the item back into its slot
+            if #bagsWithEmptySlots > 0 then
+                local bag = bagsWithEmptySlots[#bagsWithEmptySlots]
+                if bag == 0 then
+                    PickupInventoryItem(GetInventorySlotInfo(v.slot))
+                    PutItemInBackpack()
+                    bagsWithEmptySlots[#bagsWithEmptySlots] = nil
+                else
+                    PickupInventoryItem(GetInventorySlotInfo(v.slot))
+                    PutItemInBag(C_Container.ContainerIDToInventoryID(bag))
+                    bagsWithEmptySlots[#bagsWithEmptySlots] = nil
+                end
+
+                --unequipping unsuccessful so place item back
+                if CursorHasItem() then
+                    PickupInventoryItem(GetInventorySlotInfo(v.slot))
+                end
+            end
+        end
+
+        i = i + 1;
+    end, #self.character.selectedOutfit.items)
+
+
+    C_Timer.After(0.5, function()
+        self.characterSidePanel.model:SetUnit("player")
+    end)
+end
+
+function AdventureGuideMixin:Character_LoadOutfitItems(items)
+
+    local function createEquipmentItemEntry(invSlot, bag, slot)
+        local t = {}
+        local info = C_Container.GetContainerItemInfo(bag, slot)
+        if info then
+            local _, _, _, equipLoc, icon, classID, subClassID = GetItemInfoInstant(info.hyperlink)
+            if classID == 2 or classID == 4 then
+
+                
+                -- local thisSlotID = GetInventorySlotInfo(v.slot)
+                -- local itemSlotID = C_Item.GetItemInventoryTypeByID(info.itemID)
+                -- print(info.hyperlink, _G[v.slot], _G[equipLoc])
+
+                --[[
+                    there has to be a way to control which items match for the slot
+                    so the menu will only show items that can go into a slot
+
+                    for now just show all items, users will need a little manual effort
+                ]]
+
+                local itemLoc = ItemLocation:CreateFromBagAndSlot(bag, slot)
+                if itemLoc then
+                    local itemGUID = C_Item.GetItemGUID(itemLoc)
+                    t = {
+                        text = info.hyperlink,
+                        notCheckable = true,
+                        func = function()
+                            invSlot.link = info.hyperlink
+                            invSlot.guid = itemGUID
+                            addon:TriggerEvent("Database_OnOutfitChanged", self.character.selectedOutfit)
+                        end,
+                        arg1 = "adventureguide-dropdown-tooltip-hook",
+                        arg2 = info.hyperlink,
+                        tooltipOnButton = true,
+                        tooltipTitle = string.format("%s ", name),
+                    }
+
+                end
+
+            end
+        end
+        return t;
+    end
+
+    local t = {}
+    for k, v in ipairs(items) do
+        table.insert(t, {
+            label = v.link,
+            icon = v.icon,
+            iconSize = { 22, 22 },
+            onMouseEnter = function(f)
+                if v.link then
+                    GameTooltip:SetOwner(f, "ANCHOR_RIGHT")
+                    GameTooltip:SetHyperlink(v.link)
+                    GameTooltip:Show()
+                end
+            end,
+            onMouseDown = function(f, b)
+                if b == "RightButton" and self.character.selectedOutfit then
+                    local menu = {
+                        {
+                            text = string.format("Choose item - |cffffffff%s", _G[v.slot]),
+                            isTitle = true,
+                            notCheckable = true,
+                        },
+                        {
+                            text = IGNORE,
+                            notCheckable = true,
+                            func = function()
+                                v.link = false
+                                v.guid = false
+                                addon:TriggerEvent("Database_OnOutfitChanged", self.character.selectedOutfit)
+                            end,
+                        },
+                    }
+
+                    local equippedItems = addon.api.getPlayerEquipment()
+                    for k, v1 in ipairs(equippedItems) do
+                        if (v.slot == v1.slot) and (v1.link ~= false) then
+                            table.insert(menu, {
+                                text = string.format("Current: %s", v1.link),
+                                notCheckable = true,
+                                func = function()
+                                    v.link = v1.link
+                                    v.guid = v1.guid
+                                    addon:TriggerEvent("Database_OnOutfitChanged", self.character.selectedOutfit)
+                                end,
+                            })
+                        end
+                    end
+
+                    table.insert(menu, addon.contextMenuSeparator)
+
+                    for bag = 0, 4 do
+                        for slot = 1, C_Container.GetContainerNumSlots(bag) do
+                            local itemEntry = createEquipmentItemEntry(v, bag, slot)
+                            table.insert(menu, itemEntry)
+                        end
+                    end
+
+                    if BankFrame:IsVisible() then
+                        table.insert(menu, addon.contextMenuSeparator)
+                        table.insert(menu, {
+                            text = "Items in Bank",
+                            isTitle = true,
+                            notCheckable = true,
+                        })
+
+                        for slot = 1, C_Container.GetContainerNumSlots(-1) do
+                            local itemEntry = createEquipmentItemEntry(v, -1, slot)
+                            table.insert(menu, itemEntry)
+                        end
+                        for bag = 5, 11 do
+                            for slot = 1, C_Container.GetContainerNumSlots(bag) do
+                                local itemEntry = createEquipmentItemEntry(v, bag, slot)
+                                table.insert(menu, itemEntry)
+                            end
+                        end
+                    else
+                        table.insert(menu, addon.contextMenuSeparator)
+                        table.insert(menu, {
+                            text = "Bank items not available.",
+                            isTitle = true,
+                            notCheckable = true,
+                        })
+                    end
+
+                    EasyMenu(menu, addon.contextMenu, "cursor", 0, 0, "MENU", 1.25)
+                end
+            end,
+        })
+    end
+    self.character.equipmentListview.scrollView:SetDataProvider(CreateDataProvider(t))
+
+end
+
+function AdventureGuideMixin:Character_CreateOutfitDropdownMenu()
+    local outfitMenu = {
+        {
+            text = "New Outfit",
+            icon = "communities-icon-addgroupplus",
+            func = function()
+                StaticPopup_Show("NewOutfit")
+            end,
+        },
+    }
+    local outfits = Database:GetOutfits()
+    for i = #outfits, 1, -1 do
+        local outfit = outfits[i]
+        if outfit.character == addon.thisCharacter then
+            table.insert(outfitMenu, {
+                text = outfit.name,
+                func = function()
+                    self:Character_OnOutfitSelected(outfit)
+                end,
+            })
+        end
+    end
+    self.character.selectOutfitDropdown:SetMenu(outfitMenu)
+end
+
+function AdventureGuideMixin:LoadCharacter()
+
+    --self.character.statsContainer.centerIcon:SetRotation(math.pi / 4)
+
+    local _, race = UnitRace("player")
+    self.characterSidePanel.background:SetAtlas(string.format("transmog-background-race-%s", race:lower()))
+    
+    self.characterSidePanel.model:SetUnit("player")
+
+    local level = UnitLevel("player")
+    self.character.levelBar:SetValue(level)
+
+    local _, class = UnitClass("player")
+    if RAID_CLASS_COLORS[class] then
+        local r, g, b = RAID_CLASS_COLORS[class]:GetRGB()
+        self.character.levelBar:SetStatusBarColor(r, g, b, 0.4)
+    end
+
+    self:Character_CreateOutfitDropdownMenu()
+
+    local equipment = addon.api.getPlayerEquipment()
+    self:Character_LoadOutfitItems(equipment)
+
+    self:Character_OnStatsChanged()
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function AdventureGuideMixin:Database_OnListDeleted(list)
     self:Lists_LoadLists()
 end
 
-function AdventureGuideMixin:Database_OnListChanged(list)
-    self:Lists_LoadLists()
+function AdventureGuideMixin:Database_OnListChanged(name, list)
+
+    if self.lists.selectedList then
+        if self.lists.selectedList == name then
+            self:Lists_LoadItems(list.items)
+        end
+    else
+        self:Lists_LoadLists()
+    end
 end
 
 function AdventureGuideMixin:Lists_LoadItems(items)
@@ -521,6 +1119,7 @@ function AdventureGuideMixin:Lists_LoadLists()
 
             onMouseDown = function(_, button)
                 if button == "LeftButton" then
+                    self.lists.selectedList = v.listName
                     self:Lists_LoadItems(v.items)
                 end
                 self:CreateBaseNavMenu()
@@ -541,10 +1140,42 @@ function AdventureGuideMixin:Lists_LoadLists()
     self.lists.listSelection.scrollView:SetDataProvider(CreateDataProvider(t))
 end
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function AdventureGuideMixin:Quest_OnQuestLogUpdated()
-
-    --local questLog = addon.api.scanQuestLog()
-
     local mapID = C_Map.GetBestMapForUnit("player")
     if mapID == self.worldMap:GetMapID() then
         self:UpdateQuestList(mapID)
@@ -588,7 +1219,7 @@ function AdventureGuideMixin:UpdateUnitPins()
                                 x = ((width/100) * (x*100)) - (groupPinSize / 2)
                                 y = ((height/100) * (y*100)) - (groupPinSize / 2)
                                 if not self.worldMap.groupPins[i] then
-                                    local pin = self.worldMapPoiPool:Acquire()
+                                    local pin = self.groupMembersPool:Acquire()
                                     pin:SetSize(groupPinSize,groupPinSize)
                                     pin.background:SetAtlas("PartyMember")
                                     pin:Show()
@@ -640,9 +1271,9 @@ function AdventureGuideMixin:UpdateMapPinSizes()
 
         --self.worldMap.playerPin:SetSize(playerPinSize * scaler, playerPinSize * scaler)
 
-        for widget in self.worldMapPoiPool:EnumerateActive() do
-            if mapIcons[widget.type] then
-                widget:SetSize(mapIcons[widget.type].x * scaler, mapIcons[widget.type].y * scaler)
+        for pin in self.worldMapPoiPool:EnumerateActive() do
+            if Database.db.config.map[pin.type] then
+                pin:SetSize(Database.db.config.map[pin.type].x * scaler, Database.db.config.map[pin.type].y * scaler)
             end
         end
     end
@@ -692,21 +1323,35 @@ function AdventureGuideMixin:Map_OnZoneChanged(id)
 end
 
 
-function AdventureGuideMixin:AddMapPin(pinType, x, y, tooltipUpdateFunc)
+function AdventureGuideMixin:AddMapPin(pinType, x, y, tooltipUpdateFunc, level)
+
+    local pinSettings = Database:GetConfig("map."..pinType)
+
+    if not pinSettings then
+        print("No pin setting data for", pinType)
+    end
 
     local x1, y1 = self.worldMap.ScrollContainer.Child:GetSize()
     x = (x * (x1/100))
     y = (y * (y1/100)) * -1
 
     local poi = self.worldMapPoiPool:Acquire()
+
+    if level then
+        poi:SetFrameLevel(level)
+    else
+        poi:SetFrameLevel(0)
+    end
+
+
     poi.type = pinType;
 
-    local w, h = mapIcons[pinType].x, mapIcons[pinType].y
+    local w, h = pinSettings.x, pinSettings.y
 
     poi:ClearAllPoints()
     poi:SetPoint("TOPLEFT", self.worldMap.ScrollContainer.Child, "TOPLEFT", x - (w/2), y + (h/2))
 
-    poi.background:SetAtlas(mapIcons[pinType].atlas)
+    poi.background:SetAtlas(pinSettings.atlas)
     poi:SetSize(w, h)
     poi:Show()
 
@@ -721,32 +1366,47 @@ end
 
 
 function AdventureGuideMixin:Quest_OnQuestAccepted()
-    self:UpdateQuestList(self.worldMap:GetMapID())
+    local mapID = self.worldMap:GetMapID()
+    if not mapID then
+        mapID = C_Map.GetBestMapForUnit("player")
+    end
+    C_Timer.After(0.5, function()
+        self:UpdateQuestList(mapID)
+    end)
 end
 
 function AdventureGuideMixin:Quest_OnQuestTurnIn()
-    self:UpdateQuestList(self.worldMap:GetMapID())
+    local mapID = self.worldMap:GetMapID()
+    if not mapID then
+        mapID = C_Map.GetBestMapForUnit("player")
+    end
+    C_Timer.After(0.5, function()
+        self:UpdateQuestList(mapID)
+    end)
 end
 
 --TODO: construct this better
 function AdventureGuideMixin:UpdateQuestList(mapID)
 
+    self.worldMapPoiPool:ReleaseAll()
+
     if not self.worldMap:IsVisible() then
         return
     end
-
 
     local info = C_Map.GetMapInfo(mapID)
     if not info then
         return
     end
-    self.sidePanel.zoneLabel:SetText(info.name.." ["..mapID.."]")
+    self.mapQuestLog.zoneLabel:SetText(info.name.." ["..mapID.."]")
 
-    self.worldMapPoiPool:ReleaseAll()
+    local numQuests, numQuestsCompleted = 0,0;
 
     --C_QuestLog.SetMapForQuestPOIs(id)
 
-    self.sidePanel.questListview.DataProvider:Flush()
+    local questsHandled = {}
+
+    self.mapQuestLog.questListview.DataProvider:Flush()
     local questChains = self:GetQuestChainsForMapID(mapID)
     if questChains then
         for k, questIDs in ipairs(questChains) do
@@ -754,33 +1414,20 @@ function AdventureGuideMixin:UpdateQuestList(mapID)
 
                 if type(questID) == "number" then
 
-                    local ttUpdate = function()
-                        GameTooltip:ClearLines()
-                        local questName = C_QuestLog.GetQuestInfo(questID)
-                        local objectives = C_QuestLog.GetQuestObjectives(questID)
-                        GameTooltip:AddLine(questName)
-                    
-                        if type(objectives) == "table" then
-                            GameTooltip:AddLine(" ")
-                            for k, v in ipairs(objectives) do
-                                GameTooltip:AddLine(v.text, 1,1,1)
-                            end
-                        end
+                    questsHandled[questID] = true;
 
-                        GameTooltip:AddLine(" ")
-                        GameTooltip:AddLine(string.format("|cffffffffQuestID [%d]", questID))
+                    numQuests = numQuests + 1
 
-                        GameTooltip:Show()
-                    end
-
+                    local title = C_QuestLog.GetQuestInfo(questID)
                     local completed = C_QuestLog.IsQuestFlaggedCompleted(questID)
                     local readyForTurnIn = IsQuestComplete(questID)
                     local isOnQuest = C_QuestLog.IsOnQuest(questID)
-                    local title = C_QuestLog.GetQuestInfo(questID)
 
                     local rightLabel = "";
                     if completed then
                         rightLabel = CreateAtlasMarkup("orderhalltalents-done-checkmark", 20, 20)
+
+                        numQuestsCompleted = numQuestsCompleted + 1;
                     end
                     if isOnQuest then
                         rightLabel = CreateAtlasMarkup("minortalents-icon-book", 20, 20)
@@ -789,12 +1436,12 @@ function AdventureGuideMixin:UpdateQuestList(mapID)
                         rightLabel = CreateAtlasMarkup("QuestTurnin", 20, 20)
                     end
 
-                    self.sidePanel.questListview.DataProvider:Insert({
+                    self.mapQuestLog.questListview.DataProvider:Insert({
                         label = title or questID,
                         labelRight = rightLabel,
                         fontObject = (k == 1) and GameFontNormal or GameFontWhite,
                         onMouseEnter = function()
-                            GameTooltip:SetOwner(self.sidePanel.questListview, "ANCHOR_RIGHT")
+                            GameTooltip:SetOwner(self.mapQuestLog.questListview, "ANCHOR_RIGHT")
                             GameTooltip:SetHyperlink("|Hquest:"..questID)
                             GameTooltip:AddLine(" ")
                             GameTooltip:AddLine(string.format("[%d]", questID))
@@ -815,34 +1462,71 @@ function AdventureGuideMixin:UpdateQuestList(mapID)
                     })
 
                     -- should there be an icon shown for this quest
-                    local showQuest = self:ShouldShowQuestStartInfo(questID)
+                    local showQuest = self:ShouldShowQuestForCharacter(questID)
 
-                    --showing the start point of quests
-                    if showQuest and not completed then
-                        self:ShowQuestStartPoint(questID, mapID, ttUpdate)
-                    end
+                    if showQuest then
+    
+                        local ttUpdate = function()
+                            GameTooltip:ClearLines()
+                            local questName = C_QuestLog.GetQuestInfo(questID)
+                            local objectives = C_QuestLog.GetQuestObjectives(questID)
+                            GameTooltip:AddLine(questName)
+                        
+                            if type(objectives) == "table" then
+                                GameTooltip:AddLine(" ")
+                                for k, v in ipairs(objectives) do
+                                    GameTooltip:AddLine(v.text, 1,1,1)
+                                end
+                            end
+    
+                            GameTooltip:AddLine(" ")
+                            GameTooltip:AddLine(string.format("|cffffffffQuestID [%d]", questID))
+    
+                            GameTooltip:Show()
+                        end
 
 
-                    if isOnQuest then
+                        if not isOnQuest and not completed then
+                            self:ShowQuestStartPoint(questID, mapID, ttUpdate)
+                        end
 
-                        if readyForTurnIn then
-                            self:ShowQuestFinishPoint(questID, mapID, ttUpdate)
+                        if isOnQuest then
 
-                        else
-                            self:ShowQuestObjectives(questID, mapID, title)
+                            if readyForTurnIn then
+                                self:ShowQuestFinishPoint(questID, mapID, ttUpdate)
+    
+                            else
+                                self:ShowQuestObjectives(questID, mapID, title)
+                            end
+    
                         end
 
                     end
+
                 end
             end
         end
     end
+
+    self.mapQuestLog.progressText:SetText(string.format("Progress %d / %d", numQuestsCompleted, numQuests))
 end
 
 
 
 function AdventureGuideMixin:ShowQuestObjectives(questID, mapID, title)
     local questConfig = addon.rawQuestDataKeyed["qid-"..questID]
+
+    if type(questConfig.objectives.area) == "table" then
+        if questConfig.objectives.area[mapID] then
+            for k, v in ipairs(questConfig.objectives.area[mapID]) do
+                self:AddMapPin("questObjectiveNpc", v[1], v[2], function() 
+                    GameTooltip:ClearLines()
+                    GameTooltip:AddLine(title)
+                    GameTooltip:Show()
+                end)
+            end
+        end
+    end
 
     if type(questConfig.objectives.npc) == "table" then
         for k, npcID in ipairs(questConfig.objectives.npc) do
@@ -917,13 +1601,13 @@ function AdventureGuideMixin:ShowQuestFinishPoint(questID, mapID, ttUpdate)
         if questConfig.finishPoint.npc then
             if questConfig.finishPoint.spawnLocations and questConfig.finishPoint.spawnLocations[mapID] then
                 local coords = questConfig.finishPoint.spawnLocations[mapID][1]
-                self:AddMapPin("questTurnInNpc", coords[1], coords[2], ttUpdate)
+                self:AddMapPin("questTurnInNpc", coords[1], coords[2], ttUpdate, 10)
             end
         end
         if questConfig.finishPoint.object then
             if questConfig.finishPoint.spawnLocations and questConfig.finishPoint.spawnLocations[mapID] then
                 local coords = questConfig.finishPoint.spawnLocations[mapID][1]
-                self:AddMapPin("questTurnInNpc", coords[1], coords[2], ttUpdate)
+                self:AddMapPin("questTurnInNpc", coords[1], coords[2], ttUpdate, 10)
             end
         end
     end
@@ -1110,20 +1794,20 @@ function AdventureGuideMixin:LoadInstance(instance)
     end
     self.dungeonDetails.lore.encountersList.scrollView:SetDataProvider(CreateDataProvider(encounters))
 
-    self.sidePanel.questListview.DataProvider:Flush()
-    self.sidePanel.zoneLabel:SetText(instance.name)
+    self.mapQuestLog.questListview.DataProvider:Flush()
+    self.mapQuestLog.zoneLabel:SetText(instance.name)
     if instance.quests then
         for k, questID in ipairs(instance.quests) do
             local questName = C_QuestLog.GetQuestInfo(questID)
             local objectives = C_QuestLog.GetQuestObjectives(questID)
             local completed = C_QuestLog.IsQuestFlaggedCompleted(questID)
 
-            self.sidePanel.questListview.DataProvider:Insert({
+            self.mapQuestLog.questListview.DataProvider:Insert({
                 label = questName,
                 isCompleted = completed,
 
                 onMouseEnter = function()
-                    GameTooltip:SetOwner(self.sidePanel.questListview, "ANCHOR_RIGHT")
+                    GameTooltip:SetOwner(self.mapQuestLog.questListview, "ANCHOR_RIGHT")
                     GameTooltip:SetHyperlink("|Hquest:"..questID)
                     GameTooltip:AddLine(" ")
                     GameTooltip:AddLine(string.format("[%d]", questID))
@@ -1417,6 +2101,8 @@ function AdventureGuideMixin:Database_OnInitialised()
 
     self:CreateMinimapButton()
 
+    self:CreateSlashCommands()
+
     local category = Settings.RegisterCanvasLayoutCategory(AdventureGuideOptionsInterface, "Adventure Guide")
     Settings.RegisterAddOnCategory(category)
 
@@ -1436,8 +2122,6 @@ function AdventureGuideMixin:Database_OnInitialised()
         else
             self.character.background:SetAtlas(string.format("Artifacts-%s-BG", class:gsub("^%l", string.upper)))
         end
-
-        NineSliceUtil.ApplyLayout(self.character, listsLayout)
     end
 
 end
@@ -1472,8 +2156,8 @@ end
 --[[
     test db stuff
 ]]
+function AdventureGuideMixin:ShouldShowQuestForCharacter(questID, ignoreLevel)
 
-function AdventureGuideMixin:ShouldShowQuestStartInfo(questID, ignoreLevel)
 
     local _, _, raceID = UnitRace("player")
     local _, _, classID = UnitClass("player")
@@ -1514,9 +2198,7 @@ function AdventureGuideMixin:ShouldShowQuestStartInfo(questID, ignoreLevel)
             end
         end
 
-        local isOnQuest = C_QuestLog.IsOnQuest(questID)
-
-        if classCheck and raceCheck and preQuestCheck and not isOnQuest then
+        if classCheck and raceCheck and preQuestCheck then
             if ignoreLevel then
                 return true
 
@@ -1601,6 +2283,18 @@ end
 
 
 
+function AdventureGuideMixin:Quests_LoadQuests()
+
+    local quests = {}
+
+    for qid, info in pairs(addon.rawQuestDataKeyed) do
+        local title = C_QuestLog.GetTitleForQuestID(info.questID)
+        table.insert(quests, {
+            label = title or info.questID,
+        })
+    end
+
+end
 
 
 
@@ -1617,6 +2311,24 @@ end
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+--[[
+    this needs a massive rework
+
+    its works for now but investigate a proper treeview DataProvider and Mixin
+]]
 
 
 AdventureGuideQuestTrackerMixin = {
@@ -1628,13 +2340,14 @@ AdventureGuideQuestTrackerMixin = {
         red = RED_FONT_COLOR,
     },
     log = {},
+    headersExpanded = {},
 }
 
 function AdventureGuideQuestTrackerMixin:OnLoad()
     self:RegisterForDrag("LeftButton")
-    addon:RegisterCallback("Quest_OnQuestCriteriaUpdated", self.Quest_OnQuestCriteriaUpdated, self)
-    addon:RegisterCallback("Quest_OnQuestAccepted", self.Quest_OnQuestAccepted, self)
-    addon:RegisterCallback("Quest_OnQuestTurnIn", self.Quest_OnQuestTurnIn, self)
+    --addon:RegisterCallback("Quest_OnQuestCriteriaUpdated", self.Quest_OnQuestCriteriaUpdated, self)
+    --addon:RegisterCallback("Quest_OnQuestAccepted", self.Quest_OnQuestAccepted, self)
+    --addon:RegisterCallback("Quest_OnQuestTurnIn", self.Quest_OnQuestTurnIn, self)
     addon:RegisterCallback("Quest_OnQuestLogUpdated", self.Quest_OnQuestLogUpdated, self)
 
     QuestWatchFrame:HookScript("OnShow", function(f) f:Hide() end)
@@ -1642,46 +2355,58 @@ function AdventureGuideQuestTrackerMixin:OnLoad()
 
     self.isLogExpanded = true
     self.expandLog:SetScript("OnClick", function()
-        self.isLogExpanded = not self.isLogExpanded;
+
         if self.isLogExpanded then
-            ExpandQuestHeader(0)
-        else
             CollapseQuestHeader(0)
+            -- self.listview.scrollView:ForEachFrame(function(f)
+            --     if f.isHeader then
+            --         f.isExpanded = false;
+            --     end
+            -- end)
+        else
+            ExpandQuestHeader(0)
         end
+
+        self.isLogExpanded = not self.isLogExpanded;
+         
     end)
 end
 
 function AdventureGuideQuestTrackerMixin:OnShow()
-    self:ScanLog()
-    self.listview.scrollView:SetDataProvider(CreateDataProvider(self.log))
+    self:SetListview()
 end
 
-function AdventureGuideQuestTrackerMixin:Quest_OnQuestCriteriaUpdated()
+-- function AdventureGuideQuestTrackerMixin:Quest_OnQuestCriteriaUpdated()
 
-end
+-- end
 
 function AdventureGuideQuestTrackerMixin:Quest_OnQuestLogUpdated()
-    self:ScanLog()
-    self.listview.scrollView:SetDataProvider(CreateDataProvider(self.log))
+    self:SetListview()
     local height = (#self.log * 17) + 45
     self:SetHeight((height < 450) and height or 450)
     self:ClearAllPoints()
     self:SetPoint("TOPRIGHT", MinimapCluster, "BOTTOM", 10, 0)
 end
 
-function AdventureGuideQuestTrackerMixin:Quest_OnQuestAccepted()
-    self:ScanLog()
-    self.listview.scrollView:SetDataProvider(CreateDataProvider(self.log))
-end
+-- function AdventureGuideQuestTrackerMixin:Quest_OnQuestAccepted()
+--     self:SetListview()
+-- end
 
-function AdventureGuideQuestTrackerMixin:Quest_OnQuestTurnIn()
+-- function AdventureGuideQuestTrackerMixin:Quest_OnQuestTurnIn()
+--     self:SetListview()
+-- end
+
+function AdventureGuideQuestTrackerMixin:SetListview()
     self:ScanLog()
     self.listview.scrollView:SetDataProvider(CreateDataProvider(self.log))
 end
 
 function AdventureGuideQuestTrackerMixin:ScanLog()
 
+    addon.currentQuestLogIDs = {}
+
     self.log = {}
+    self.headersExpanded = {}
 
     local playerLevel = UnitLevel("player")
     --local questCount = 0;
@@ -1696,6 +2421,11 @@ function AdventureGuideQuestTrackerMixin:ScanLog()
             local questLink = GetQuestLink(questID)
             local readyForTurnIn = IsQuestComplete(questID)
             readyForTurnIn = IsQuestComplete(questID)
+
+            table.insert(addon.currentQuestLogIDs, {
+                questID = questID,
+                readyForTurnIn = readyForTurnIn,
+            })
 
             local objectives = C_QuestLog.GetQuestObjectives(questID)
 
@@ -1732,9 +2462,40 @@ function AdventureGuideQuestTrackerMixin:ScanLog()
                 questID = questID,
                 logIndex = i,
                 header = header,
+                --backgroundAlpha = 0.2,
                 -- GetDepth = function()
                 --     return 1;
                 -- end,
+                onMouseDown = function(f, button)
+                    if button == "RightButton" then
+                        local menu = {
+                            {
+                                text = title,
+                                isTitle = true,
+                                notCheckable = true,
+                            },
+                            {
+                                text = ABANDON_QUEST,
+                                notCheckable = true,
+                                func = function()
+                                    SelectQuestLogEntry(i)
+                                    SetAbandonQuest()
+                                    AbandonQuest()
+                                end,
+                            },
+                            -- {
+                            --     text = "Dump",
+                            --     notCheckable = true,
+                            --     func = function()
+                            --         local questDescription, questObjectives = GetQuestLogQuestText(i)
+                            --         DevTools_Dump({questDescription, questObjectives})
+                            --     end,
+                            -- }
+                        }
+                        EasyMenu(menu, addon.contextMenu, "cursor", 0, 0, "MENU", 1.25)
+                    end
+
+                end,
             })
 
             numQuests = numQuests + 1;
@@ -1767,22 +2528,28 @@ function AdventureGuideQuestTrackerMixin:ScanLog()
             -- questCount = 0;
             header = title;
 
+            self.headersExpanded[i] = not isCollapsed
+
             table.insert(self.log, {
                 label = (isHeader == true) and title or string.format("|cffffffff%s", title),
                 fontObject = GameFontNormalSmall,
                 backgroundAtlas = "OBJBonusBar-Top",
-                onMouseDown = function(f)
-                    if not f.isExpanded then
-                        ExpandQuestHeader(i)
-                        f.isExpanded = true
-                    else
-                        CollapseQuestHeader(i)
-                        f.isExpanded = false
-                    end
-                end,
+                --backgroundAlpha = 0.2,
+                isExpanded = self.isLogExpanded,
                 questID = questID,
                 logIndex = i,
                 header = header,
+                isHeader = true;
+                onRightButtonClick = function(b)
+                    --DevTools_Dump(self.headersExpanded)
+                    if self.headersExpanded[i] == false then
+                        ExpandQuestHeader(i)
+                        self.headersExpanded[i] = true
+                    else
+                        CollapseQuestHeader(i)
+                        self.headersExpanded[i] = false
+                    end
+                end
                 -- GetDepth = function()
                 --     return 0;
                 -- end,

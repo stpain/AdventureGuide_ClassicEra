@@ -42,6 +42,34 @@
 		</Scripts>
 	</Frame>
 
+	<Frame name="AdventureGuideSettingsMapIconTemplate" mixin="AdventureGuideSettingsMapIconMixin" virtual="true">
+		<Size y="35"/>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString parentKey="label" inherits="GameFontNormal" justifyH="LEFT" text="Interface">
+					<Anchors>
+						<Anchor point="LEFT" x="45" y="0"/>
+					</Anchors>
+					<Size x="200" y="24"/>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button parentKey="dropdown" inherits="AdventureWidgetsDropDownTemplate">
+				<Size x="180" y="40"/>
+				<Anchors>
+					<Anchor point="LEFT" x="246" y="0"/>
+				</Anchors>
+			</Button>
+			<Slider parentKey="slider" inherits="AdventureSliderLeftLabel">
+				<Size x="120" y="16"/>
+				<Anchors>
+					<Anchor point="LEFT" relativeKey="$parent.dropdown" relativePoint="RIGHT" x="60" y="0"/>
+				</Anchors>
+			</Slider>
+		</Frames>
+	</Frame>
+
 
 	<Frame name="AdventureGuideSettingsSectionHeader" virtual="true">
 		<Size y="60"/>

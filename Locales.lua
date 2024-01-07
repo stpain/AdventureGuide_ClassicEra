@@ -1,5 +1,5 @@
 --[[
-    This file contains the data that is displayed when viewing an instance.
+    Dungeon locales
 
     This data has been compiled from various sources (wowpedia, wowhead and general discussions on multiple platforms).
 
@@ -13,7 +13,16 @@
 local name, addon = ...;
 
 local locales = {}
-locales["enUS"] = {
+locales.enUS = {
+
+
+	--[[
+		character stats:
+			-the keys returned from the api to get character stats and resistances can be used here to set display values
+			-keys start with lower letters
+	]]
+	CHARACTER_HELPTIP = "You can manage your character's equipment here.\n\nTo create a new equipment set open the dropdown and select New Outfit then give it a name.\n\nThe set will be created with your current gear loaded into the list. Right click a slot to view your available items (take care as its not slot specific yet).\n\nTo equip a set click on Equip, or use a macro \n/adventureguide equip [set name] (no spaces allowed)\n\nWarning, items in the bank will require you to have the bank open.",
+
 
     --[[
         dungeons:
@@ -32,7 +41,7 @@ locales["enUS"] = {
     
     DUNGEON_BOSS_TARAGAMAN = "Taragaman the Hungerer",
     DUNGEON_BOSS_TARAGAMAN_INFO = "Taragaman the Hungerer is a level 16 elite demon located at the center of the 'X' in the dungeon's second to last room.",
-    DUNGEON_BOSS_TARAGAMAN_STRATEGY = "Taragaman is stationed in the middle of a platform surrounded by lava. Have your tank pull him away from the edges of the platform so that  Uppercut does not knock him off the platform. Make sure your range is at max range so  Fire Nova inflicts minimal damage. The rest of the fight is a basic tank-and-spank.",
+    DUNGEON_BOSS_TARAGAMAN_STRATEGY = "Taragaman is stationed in the middle of a platform surrounded by lava. Have your tank pull him away from the edges of the platform so that  Uppercut does not knock him off the platform. Make sure your range is at max range so Fire Nova inflicts minimal damage. The rest of the fight is a basic tank-and-spank.",
 
     DUNGEON_BOSS_OGGLEFLINT = "Oggleflint",
     DUNGEON_BOSS_OGGLEFLINT_INFO = "Oggleflint is a level 16 elite trogg located in the small cave to the right of the large trogg room.",

@@ -111,36 +111,10 @@ function AdventureGuideLootListviewMixin:SetDataBinding(binding, height)
     end)
 
     self.addToList:SetScript("OnClick", function()
-        local lists = Database:GetAllLists()
-        local menu = {
-            {
-                text = "Lists",
-                isTitle = true,
-                notCheckable = true,
-            },
-            {
-                text = "New List",
-                notCheckable = true,
-                func = function()
-                    StaticPopup_Show("NewList", nil, nil, { link = binding.link, })
-                end,
-            }
-        }
-        if next(lists) ~= nil then
-            table.insert(menu, addon.contextMenuSeparator)
-            for listName, items in pairs(lists) do
-                table.insert(menu, {
-                    text = listName,
-                    notCheckable = true,
-                    func = function()
-                        Database:AddItemToList(listName, {
-                            link = binding.link
-                        })
-                    end,
-                })
-            end
-        end
-        EasyMenu(menu, addon.contextMenu, "cursor", 0, 0, "MENU", 1.25)
+        addon.api.addItemToList({
+            link = binding.link,
+            count = 1,
+        })
     end)
 
 end
@@ -421,6 +395,7 @@ function AdventureGuideSimpleIconLabelMixin:SetDataBinding(binding, height)
     end
     if binding.labelRight then
         self.labelRight:SetText(binding.labelRight)
+        self.label:SetPoint("RIGHT", -height, 0)
     end
 
     if binding.fontObject then
@@ -447,6 +422,10 @@ function AdventureGuideSimpleIconLabelMixin:SetDataBinding(binding, height)
         self.icon:SetSize(1, height-4)
     else
         self.icon:SetSize(height-4, height-4)
+    end
+
+    if binding.iconSize then
+        self.icon:SetSize(binding.iconSize[1], binding.iconSize[2])
     end
 
     if binding.showMask then
@@ -547,38 +526,31 @@ end
 function AdventureGuideObjectiveTrackerMixin:GetDepth()
     return 10;
 end
-function AdventureGuideObjectiveTrackerMixin:SetCollapseState()
-    print("boo")
+function AdventureGuideObjectiveTrackerMixin:PrintStatus()
+    if self.isExpanded then
+        DevTools_Dump(self.isExpanded)
+    end
 end
 function AdventureGuideObjectiveTrackerMixin:SetDataBinding(binding, height)
 
     --self.anim:Play()
-    local x, y = self:GetSize()
+    -- local x, y = self:GetSize()
+    -- print(x, y)
+
+    self.isExpanded = binding.isExpanded;
 
     self.questID = binding.questID
     self.logIndex = binding.logIndex;
     self.header = binding.header;
+    self.isHeader = binding.isHeader;
 
-    if binding.rightButton then
-        if binding.rightButton.size then
-            self.rightButton:SetSize(binding.rightButton.size[1], binding.rightButton.size[2])
-        else
-            self.rightButton:SetSize(height - 4, height - 4)
-        end
-
-        if binding.rightButton.atlas then
-            self.rightButton.icon:SetAtlas(binding.rightButton.atlas)
-        end
-
-        if binding.rightButton.onClick then
-            self.rightButton:SetScript("OnClick", binding.rightButton.onClick)
-        end
-
+    if binding.isHeader then
+        self.rightButton:SetNormalTexture(252128)
+        self.rightButton:SetPushedTexture(252127)
+        self.rightButton:SetScript("OnClick", binding.onRightButtonClick)
         self.rightButton:Show()
-    else
-        self.rightButton:Hide()
-        self.rightButton:SetSize(1, height - 4)
     end
+
 
     if binding.backgroundAlpha then
         self.background:SetAlpha(binding.backgroundAlpha)
@@ -586,15 +558,16 @@ function AdventureGuideObjectiveTrackerMixin:SetDataBinding(binding, height)
         self.background:SetAlpha(0)
     end
     if binding.backgroundAtlas then
-        self.background:SetAtlas(binding.backgroundAtlas)
-        self.background:SetAlpha(1)
+        self.backgroundArtwork:SetAtlas(binding.backgroundAtlas)
+        self.backgroundArtwork:SetAlpha(1)
     else
-        if binding.backgroundRGB then
-            self.background:SetColorTexture(binding.backgroundRGB.r, binding.backgroundRGB.g, binding.backgroundRGB.b)
-         else
-             self.background:SetColorTexture(0,0,0)
-         end
+        self.backgroundArtwork:SetTexture(nil)
     end
+    if binding.backgroundRGB then
+        self.background:SetColorTexture(binding.backgroundRGB.r, binding.backgroundRGB.g, binding.backgroundRGB.b)
+     else
+         self.background:SetColorTexture(0,0,0)
+     end
 
     if binding.label then
         self.label:SetText(binding.label)
@@ -716,6 +689,9 @@ function AdventureGuideObjectiveTrackerMixin:ResetDataBinding()
     self.labelRight:SetText("")
     self.rightButton:SetScript("OnClick", nil)
     self.rightButton:Hide()
+
+    self.isExpanded = nil;
+    self.isHeader = nil;
 end
 
 
@@ -746,3 +722,8 @@ end
 
 
 
+AdventureGuideCharacterStatsSectionMixin = {}
+function AdventureGuideCharacterStatsSectionMixin:OnLoad()
+    self.header:SetText(self.headerText)
+    self.icon:SetAtlas(self.iconAtlas)
+end
