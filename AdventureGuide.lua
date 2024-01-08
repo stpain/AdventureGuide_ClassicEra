@@ -575,6 +575,8 @@ function AdventureGuideMixin:Quests_OnShow()
         id = 2,
     }
     NavBar_AddButton(self.navBar, navButton)
+
+    self:Quests_LoadQuests()
 end
 
 function AdventureGuideMixin:Character_OnShow()
@@ -2285,14 +2287,61 @@ end
 
 function AdventureGuideMixin:Quests_LoadQuests()
 
-    local quests = {}
+    local quests = {
+        UNKNOWN = {}
+    }
 
     for qid, info in pairs(addon.rawQuestDataKeyed) do
-        local title = C_QuestLog.GetTitleForQuestID(info.questID)
-        table.insert(quests, {
-            label = title or info.questID,
-        })
+
+        local _, questID = strsplit("-", qid)
+
+        if type(info.startMapID) == "number" then
+            local map = C_Map.GetMapInfo(info.startMapID)
+            if map and map.name then
+
+                if not quests[map.name] then
+                    quests[map.name] = {}
+                end
+
+                local title = C_QuestLog.GetQuestInfo(info.questID)
+                table.insert(quests[map.name], {
+                    title = title or info.questID,
+                })
+
+            else
+                local title = C_QuestLog.GetQuestInfo(info.questID)
+                table.insert(quests.UNKNOWN, {
+                    title = title or info.questID,
+                })
+            end
+
+        else
+            local title = C_QuestLog.GetQuestInfo(info.questID)
+            table.insert(quests.UNKNOWN, {
+                title = title or info.questID,
+            })
+        end
     end
+
+    local t = {}
+    for map, quests in pairs(quests) do
+        table.insert(t, {
+            label = map,
+            backgroundAlpha = 0.9,
+            backgroundRGB = {
+                r = 0.3,
+                g = 0.2,
+                b = 0.1,
+            }
+        })
+        for k, quest in ipairs(quests) do
+            table.insert(t, {
+                label = quest.title,
+            })
+        end
+    end
+
+    self.quests.listview.scrollView:SetDataProvider(CreateDataProvider(t))
 
 end
 
@@ -2560,3 +2609,21 @@ function AdventureGuideQuestTrackerMixin:ScanLog()
     end
 
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

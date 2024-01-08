@@ -256,94 +256,6 @@ function addon.api.scanQuestLog()
     --CollapseQuestHeader(0)
 end
 
-function addon.api.moveBagSlotButtons()
-
-    local parent = _G.CombinedContainers
-    local rowLimit = 10;
-    local j = 0;
-    local k = 0;
-    local quality
-    local t = {}
-    local width, height
-
-    for m = 1, 5 do
-        local frame = _G["ContainerFrame"..m]
-        local id = frame:GetID();
-        local name = frame:GetName();
-        local itemButton;
-
-        for i=1, 36, 1 do
-            itemButton = _G[name.."Item"..i];
-
-            if itemButton then
-
-                local info = C_Container.GetContainerItemInfo(id, itemButton:GetID());
-                quality = info and info.quality;
-                if info then
-                    local _, _, _, _, _, class, subClass = GetItemInfoInstant(info.hyperlink)
-    
-                    if quality then
-                        table.insert(t, {
-                            button = itemButton,
-                            quality = quality,
-                            classID = class,
-                            subClassID = subClass,
-                            name = info.itemName,
-                        })
-                    end
-                end
-
-
-                width, height = itemButton:GetSize()
-
-            end
-
-        end    
-    end
-    
-    table.sort(t, function (a, b)
-        if a.classID == b.classID then
-
-            if (a.classID == 2 and b.classID == 2) or (a.classID == 4 and b.classID == 4) then
-                if a.quality == b.quality then
-                    return a.name < b.name
-                else
-                    return a.quality < b.quality
-                end
-            else
-            if a.subClassID == b.subClassID then
-                if a.quality == b.quality then
-                    return a.name < b.name
-                else
-                    return a.quality < b.quality
-                end
-            else
-                return a.subClassID < b.subClassID
-            end
-            end
-        else
-            return a.classID < b.classID
-        end
-    end)
-
-    for _, v in ipairs(t) do
-        local itemButton = v.button
-        itemButton:ClearAllPoints()
-
-        local x = (width * j) + 4
-        local y = (height * k) - 24
-
-        itemButton:SetPoint("TOPLEFT", parent, "TOPLEFT", x, y)
-
-        j = j + 1;
-
-        if j == rowLimit then
-            j = 0;
-            k = k - 1;
-        end
-    end
-end
-
 
 function addon.api.vendorJunk()
     local sales = {}
@@ -425,12 +337,8 @@ end
 function addon.api.showButtonGlowForContainerFrame(frame)
 
     local showHighlights = Database:GetConfig("interface.highlightBagSlots")
-
     local id = frame:GetID();
-
-    --print("FrameID", id)
     local name = frame:GetName();
-    --print("FrameName", name)
     local itemButton;
     local quality;
 
@@ -508,7 +416,6 @@ function addon.api.showButtonGlowForContainerFrame(frame)
         end
     end
 
-    --addon.api.moveBagSlotButtons(frame)
 end
 
 

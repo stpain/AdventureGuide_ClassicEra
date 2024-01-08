@@ -50,15 +50,15 @@ end
 function AdventureWidgetsGridviewMixin:InsertCustomFrame(frame)
     if self.frames then
         local id = #self.frames
-        frame:SetID(id + 1);
+        --frame:SetID(id + 1);
         frame:SetParent(self.scrollChild)
         table.insert(self.frames, frame)
-        frame:Show()
-        frame:SetSize(100,100)
-        frame:ClearAllPoints()
-        frame:SetPoint("TOPLEFT", 0, 0)
+        --frame:Show()
+        --frame:SetSize(100,100)
+        --frame:ClearAllPoints()
+        --frame:SetPoint("TOPLEFT", 0, 0)
     end
-    --self:UpdateLayout()
+    self:UpdateLayout()
 end
 
 function AdventureWidgetsGridviewMixin:Insert(info)

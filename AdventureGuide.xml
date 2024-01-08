@@ -196,7 +196,19 @@
                         </Texture>
                     </Layer>
                 </Layers>
-
+                <Frames>
+                    <Frame parentKey="listview" inherits="AdventureWidgetsListviewTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" x="30" y="-60"/>
+                            <Anchor point="BOTTOMRIGHT" x="-30" y="45"/>
+                        </Anchors>
+                        <KeyValues>
+                            <KeyValue key="itemTemplate" value="AdventureGuideSimpleIconLabelFrame" type="string"/>
+                            <KeyValue key="elementHeight" value="24" type="number"/>
+                            <!-- <KeyValue key="enableSelection" value="true" type="boolean"/> -->
+                        </KeyValues>
+                    </Frame>
+                </Frames>
             </Frame>
             <Frame parentKey="character" parentArray="views" hidden="true">
                 <Anchors>
@@ -891,10 +903,4 @@
     </Frame>
 
 
-    <Frame name="CombinedContainers" inherits="BasicFrameTemplate" parent="UIParent" movable="true" hidden="true">
-        <Anchors>
-            <Anchor point="CENTER" x="0" y="0"/>
-        </Anchors>
-        <Size x="380" y="300"/>
-    </Frame>
 </Ui>
