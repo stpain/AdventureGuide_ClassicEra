@@ -1,0 +1,606 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
+
+    <Font name="SuggestedZoneHeaderFont" font="Fonts\MORPHEUS.ttf" virtual="true">
+		<Color r="0.02" g="0.02" b="0.04"/>
+        <FontHeight val="28"/>
+	</Font>
+
+    <Font name="SuggestedZoneHeaderFont_Smaller" font="Fonts\MORPHEUS.ttf" virtual="true">
+		<Color r="0.02" g="0.02" b="0.04"/>
+        <FontHeight val="23"/>
+	</Font>
+
+    <Font name="SuggestedZoneInfoFont" font="Fonts\MORPHEUS.ttf" virtual="true">
+		<Color r="0.02" g="0.02" b="0.04"/>
+        <FontHeight val="16"/>
+	</Font>
+
+    <Font name="AdventureGuide_DungeonHistoryFont" font="Fonts\MORPHEUS.ttf" virtual="true">
+		<Color r="0.02" g="0.02" b="0.04"/>
+        <FontHeight val="17"/>
+	</Font>
+
+
+    <Frame name="AdventureGuide" mixin="AdventureGuideMixin" ignoreParentScale="false" parent="UIParent" 
+        inherits="PortraitFrameTemplate" frameStrata="HIGH" enableMouse="true" movable="true">
+        
+        <Size x="1000" y="570"/>
+        <Anchors>
+            <Anchor point="CENTER" x="0" y="0"/>
+        </Anchors>
+
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture atlas="_Options_ListExpand_Middle">
+                    <Size y="36"/>
+                    <Anchors>
+                        <Anchor point="TOPLEFT" x="3" y="-22"/>
+                        <Anchor point="TOPRIGHT" x="-2" y="-22"/>
+                    </Anchors>
+                </Texture>
+            </Layer>
+        </Layers>
+
+        <Frames>
+
+			<Frame name="$parentNavBar" inherits="NavBarTemplate" parentKey="navBar" frameLevel="9" frameStrata="DIALOG" enableMouse="true">
+				<Size x="600" y="34"/>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="61" y="-22"/>
+				</Anchors>
+				<Layers>
+					<Layer level="BORDER" textureSubLevel="-5">
+						<Texture name="$parentInsetBotLeftCorner" inherits="UI-Frame-InnerBotLeftCorner" parentKey="InsetBorderBottomLeft">
+							<Anchors>
+								<Anchor point="BOTTOMLEFT"  x="-3" y="-3"/>
+							</Anchors>
+						</Texture>
+						<Texture name="$parentInsetBotRightCorner" inherits="UI-Frame-InnerBotRight" parentKey="InsetBorderBottomRight">
+							<Anchors>
+								<Anchor point="BOTTOMRIGHT"  x="3" y="-3"/>
+							</Anchors>
+						</Texture>
+						<Texture name="$parentInsetBottomBorder" inherits="_UI-Frame-InnerBotTile" parentKey="InsetBorderBottom">
+							<Anchors>
+								<Anchor point="BOTTOMLEFT" relativeTo="$parentInsetBotLeftCorner" relativePoint="BOTTOMRIGHT"/>
+								<Anchor point="BOTTOMRIGHT" relativeTo="$parentInsetBotRightCorner" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+						</Texture>
+						<Texture name="$parentInsetLeftBorder" inherits="!UI-Frame-InnerLeftTile" parentKey="InsetBorderLeft">
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-3" y="0"/>
+								<Anchor point="BOTTOMLEFT" relativeTo="$parentInsetBotLeftCorner" relativePoint="TOPLEFT"/>
+							</Anchors>
+						</Texture>
+						<Texture name="$parentInsetRightBorder" inherits="!UI-Frame-InnerRightTile" parentKey="InsetBorderRight">
+							<Anchors>
+								<Anchor point="TOPRIGHT"  x="3" y="0"/>
+								<Anchor point="BOTTOMRIGHT" relativeTo="$parentInsetBotRightCorner" relativePoint="TOPRIGHT"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnShow>
+					</OnShow>
+				</Scripts>
+			</Frame>
+
+            <EditBox parentKey="searchInputBox" inherits="InputBoxTemplate" frameLevel="9" frameStrata="DIALOG" autoFocus="false">
+                <Size x="200" y="24"/>
+                <Anchors>
+                    <Anchor point="LEFT" relativeKey="$parent.navBar" relativePoint="RIGHT" x="40" y="0"/>
+                </Anchors>
+            </EditBox>
+
+            <Button name="$parentTab1" parentKey="tab1" parentArray="tabs" inherits="CharacterFrameTabButtonTemplate" id="1" text="HOME">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" x="12" y="1"/>
+                </Anchors>
+            </Button>
+            <Button name="$parentTab2" parentKey="tab2" parentArray="tabs" inherits="CharacterFrameTabButtonTemplate" id="2" text="QUEST_LOG">
+                <Anchors>
+                    <Anchor point="LEFT" relativeKey="$parent.tab1" relativePoint="RIGHT" x="-16" y="0"/>
+                </Anchors>
+            </Button>
+            <Button name="$parentTab3" parentKey="tab3" parentArray="tabs" inherits="CharacterFrameTabButtonTemplate" id="3" text="DUNGEONS">
+                <Anchors>
+                    <Anchor point="LEFT" relativeKey="$parent.tab2" relativePoint="RIGHT" x="-16" y="0"/>
+                </Anchors>
+            </Button>
+            <Button name="$parentTab4" parentKey="tab4" parentArray="tabs" inherits="CharacterFrameTabButtonTemplate" id="4" text="PVP">
+                <Anchors>
+                    <Anchor point="LEFT" relativeKey="$parent.tab3" relativePoint="RIGHT" x="-16" y="0"/>
+                </Anchors>
+            </Button>
+
+
+            <!-- views -->
+
+            <Frame parentKey="home" parentArray="views" hidden="false">
+                <Anchors>
+                    <Anchor point="TOPLEFT" x="3" y="-58"/>
+                    <Anchor point="BOTTOMRIGHT" x="-3" y="3"/>
+                </Anchors>
+
+                <Layers>
+                    <Layer level="BACKGROUND" textureSubLevel="1">
+                        <Texture parentKey="leftBorder" setAllPoints="true" atlas="ClassHall_StoneFrame-BackgroundTile" vertTile="true" horizTile="true">
+
+                        </Texture>
+                    </Layer>
+
+                </Layers>
+
+                <Frames>
+
+                    <Frame parentKey="suggestedZone">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" x="65" y="-53"/>
+                        </Anchors>
+                        <Size x="380" y="390"/>
+                        <Layers>
+                            <Layer level="BACKGROUND">
+                                <Texture atlas="adventureguide-pane-large" setAllPoints="true">
+
+                                </Texture>
+                            </Layer>
+                            <Layer level="ARTWORK" textureSubLevel="0">
+                                <Texture parentKey="portrait">
+                                    <Size x="150" y="70"/>
+                                    <Anchors>
+                                        <Anchor point="TOP" x="0" y="5"/>
+                                    </Anchors>
+                                </Texture>
+                                <MaskTexture parentKey="mask" file="Interface/CHARACTERFRAME/TempPortraitAlphaMask" hWrapMode="CLAMPTOBLACKADDITIVE" vWrapMode="CLAMPTOBLACKADDITIVE">
+                                    <Size x="74" y="74"/>
+                                    <Anchors>
+                                        <Anchor point="TOP" x="1" y="5"/>
+                                    </Anchors>
+                                    <MaskedTextures>
+                                        <MaskedTexture childKey="portrait"/>
+                                    </MaskedTextures>
+                                </MaskTexture>
+                            </Layer>
+                            <Layer level="ARTWORK" textureSubLevel="1">
+                                <Texture atlas="adventureguide-ring">
+                                    <Size x="120" y="120"/>
+                                    <Anchors>
+                                        <Anchor point="TOP" x="0" y="30"/>
+                                    </Anchors>
+                                </Texture>
+                            </Layer>
+                            <Layer level="OVERLAY">
+                                <FontString parentKey="header" inherits="SuggestedZoneHeaderFont">
+                                    <Size x="300" y="50"/>
+                                    <Anchors>
+                                        <Anchor point="TOP" x="0" y="-100"/>
+                                    </Anchors>
+                                </FontString>
+                                <FontString parentKey="info" inherits="GameFontNormal">
+                                    <Size x="100" y="200"/>
+                                    <Anchors>
+                                        <Anchor point="TOP" x="0" y="-170"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                        <Frames>
+                            <Button parentKey="selectZoneButton" inherits="UIPanelButtonTemplate" text="SELECT">
+                                <Size x="160" y="24"/>
+                                <Anchors>
+                                    <Anchor point="BOTTOM" x="0" y="60"/>
+                                </Anchors>
+                            </Button>
+
+                            <Button parentKey="previousZoneButton">
+                                <Size x="30" y="30"/>
+                                <Anchors>
+                                    <Anchor point="TOPRIGHT" relativeKey="$parent.selectZoneButton" relativePoint="BOTTOMLEFT" x="-30" y="5"/>
+                                </Anchors>
+                            </Button>
+
+                            <Button parentKey="nextZoneButton">
+                                <Size x="30" y="30"/>
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeKey="$parent.selectZoneButton" relativePoint="BOTTOMRIGHT" x="30" y="5"/>
+                                </Anchors>
+                            </Button>
+
+                        </Frames>
+                    </Frame>
+
+                    <Frame parentKey="suggestedDungeons">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeKey="$parent.suggestedZone" relativePoint="TOPRIGHT" x="90" y="0"/>
+                        </Anchors>
+                        <Size x="380" y="160"/>
+                        <Layers>
+                            <Layer level="BACKGROUND">
+                                <Texture atlas="adventureguide-pane-small">
+
+                                </Texture>
+                            </Layer>
+                            <Layer level="ARTWORK" textureSubLevel="0">
+                                <Texture parentKey="portrait" atlas="UI-LFG-RoleIcon-Generic">
+                                    <Size x="72" y="72"/>
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" x="-4" y="3"/>
+                                    </Anchors>
+                                </Texture>
+                                <!-- <MaskTexture parentKey="mask" file="Interface/CHARACTERFRAME/TempPortraitAlphaMask" hWrapMode="CLAMPTOBLACKADDITIVE" vWrapMode="CLAMPTOBLACKADDITIVE">
+                                    <Size x="74" y="74"/>
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" x="1" y="5"/>
+                                    </Anchors>
+                                    <MaskedTextures>
+                                        <MaskedTexture childKey="portrait"/>
+                                    </MaskedTextures>
+                                </MaskTexture> -->
+                            </Layer>
+                            <Layer level="ARTWORK" textureSubLevel="1">
+                                <Texture atlas="adventureguide-ring">
+                                    <Size x="100" y="100"/>
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" x="-20" y="20"/>
+                                    </Anchors>
+                                </Texture>
+                            </Layer>
+                            <Layer level="OVERLAY">
+                                <FontString parentKey="header" inherits="SuggestedZoneHeaderFont_Smaller">
+                                    <Size x="300" y="50"/>
+                                    <Anchors>
+                                        <Anchor point="TOP" x="0" y="-6"/>
+                                    </Anchors>
+                                </FontString>
+                                <FontString parentKey="info" inherits="SuggestedZoneInfoFont">
+                                    <Size x="300" y="160"/>
+                                    <Anchors>
+                                        <Anchor point="TOP" x="0" y="-20"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                    </Frame>
+
+                    <Frame parentKey="suggestedPvp">
+                        <Anchors>
+                            <Anchor point="BOTTOMLEFT" relativeKey="$parent.suggestedZone" relativePoint="BOTTOMRIGHT" x="90" y="0"/>
+                        </Anchors>
+                        <Size x="380" y="160"/>
+                        <Layers>
+                            <Layer level="BACKGROUND">
+                                <Texture atlas="adventureguide-pane-small">
+
+                                </Texture>
+                            </Layer>
+                            <Layer level="BORDER">
+                                <Texture atlas="adventureguide-ring">
+                                    <Size x="100" y="100"/>
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" x="-20" y="20"/>
+                                    </Anchors>
+                                </Texture>
+                            </Layer>
+                        </Layers>
+                    </Frame>
+
+                </Frames>
+
+            </Frame>
+
+            <Frame name="$parentWorldMap" parentArray="views" parentKey="worldMap" parent="AdventureGuide" hidden="true" useParentLevel="true"
+                frameStrata="HIGH" ignoreParentScale="true" inherits="MapCanvasFrameTemplate">
+
+                <HitRectInsets left="0" right="0" top="-20" bottom="0"/>
+                <Size x="1" y="1"/>
+                <Anchors>
+                    <Anchor point="TOPLEFT" x="1" y="-24"/>
+                    <Anchor point="BOTTOMRIGHT" x="-175" y="2"/>
+                </Anchors>
+                <!-- <Layers>
+                    <Layer level="BACKGROUND">
+                        <Texture setAllPoints="true">
+                            <Color r="0.5" g="0.5" b="0.5" a="0.1"/>
+                        </Texture>
+                    </Layer>
+                </Layers> -->
+                <Frames>
+                    <Frame parentKey="BorderFrame"/>
+                    <ScrollFrame inherits="MapCanvasFrameScrollContainerTemplate">
+
+                    </ScrollFrame>
+                    <!-- <Button parentKey="showHerbs" frameStrata="DIALOG" frameLevel="6" inherits="AdventurePortraitButton">
+                        <Anchors>
+                            <Anchor point="TOPRIGHT" relativeKey="$parent.mapContainer" relativePoint="TOPRIGHT" x="-1" y="-26"/>
+                        </Anchors>
+                    </Button>
+                    <Button parentKey="showOres" frameStrata="DIALOG" frameLevel="6" inherits="AdventurePortraitButton">
+                        <Anchors>
+                            <Anchor point="RIGHT" relativeKey="$parent.showHerbs" relativePoint="LEFT" x="-6" y="0"/>
+                        </Anchors>
+                    </Button>
+                    <Button parentKey="showQuests" frameStrata="DIALOG" frameLevel="6" inherits="AdventurePortraitButton">
+                        <Anchors>
+                            <Anchor point="RIGHT" relativeKey="$parent.showOres" relativePoint="LEFT" x="-6" y="0"/>
+                        </Anchors>
+                    </Button> -->
+                </Frames>
+            </Frame>
+
+            <Frame parentKey="questLog" hidden="true">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeKey="$parent.worldMap" relativePoint="TOPRIGHT" x="0" y="-28"/>
+                    <Anchor point="BOTTOMRIGHT" x="-4" y="2"/>
+                </Anchors>
+
+                <Layers>
+                    <Layer level="BACKGROUND" textureSubLevel="1">
+                        <Texture parentKey="leftBorder" atlas="!macropopup-left">
+                            <Anchors>
+                                <Anchor point="TOP" relativePoint="TOPLEFT" x="0" y="0"/>
+                                <Anchor point="BOTTOM" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+                            </Anchors>
+                            <Size x="8"/>
+                        </Texture>
+                    </Layer>
+                    <Layer level="BACKGROUND">
+                        <Texture parentKey="headerBackground" atlas="StoryHeader-BG">
+                            <Anchors>
+                                <Anchor point="TOPLEFT" x="-3" y="0"/>
+                                <Anchor point="TOPRIGHT" x="5" y="0"/>
+                            </Anchors>
+                            <Size y="68"/>
+                        </Texture>
+                    </Layer>
+                    <Layer level="BACKGROUND" textureSubLevel="-1">
+                        <Texture parentKey="background" atlas="QuestLogBackground"> <!-- NoQuestsBackground -->
+                            <Anchors>
+                                <Anchor point="TOPLEFT" x="0" y="-40"/>
+                                <Anchor point="TOPRIGHT" x="0" y="-40"/>
+                                <Anchor point="BOTTOM" x="0" y="0"/>
+                            </Anchors>
+                        </Texture>
+                    </Layer>
+
+                    <Layer level="OVERLAY">
+                        <FontString parentKey="mapNameLabel" inherits="GameFontNormalLarge">
+                            <Anchors>
+                                <Anchor point="TOPLEFT" x="0" y="0"/>
+                                <Anchor point="TOPRIGHT" x="0" y="0"/>
+                            </Anchors>
+                            <Size y="22"/>
+                        </FontString>
+                        <FontString parentKey="questProgressLabel" inherits="GameFontWhite">
+                            <Anchors>
+                                <Anchor point="TOPLEFT" x="0" y="-22"/>
+                                <Anchor point="TOPRIGHT" x="0" y="-22"/>
+                            </Anchors>
+                            <Size y="24"/>
+                        </FontString>
+                    </Layer>
+                </Layers>
+
+                <Frames>
+                    <Frame parentKey="treeview" inherits="TBDTreeviewTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" x="2" y="-48"/>
+                            <Anchor point="BOTTOMRIGHT" x="0" y="1"/>
+                        </Anchors>
+                        <KeyValues>
+                            <KeyValue key="itemTemplate" value="AdventureGuideQuestLogTreeviewItemTemplate" type="string"/>
+                            <KeyValue key="elementHeight" value="24" type="number"/>
+                        </KeyValues>
+                    </Frame>
+                </Frames>
+            </Frame>
+
+
+            <Frame parentKey="dungeons" parentArray="views" hidden="true">
+                <Anchors>
+                    <Anchor point="TOPLEFT" x="3" y="-58"/>
+                    <Anchor point="BOTTOMRIGHT" x="-3" y="3"/>
+                </Anchors>
+                <Frames>
+                    <Frame parentKey="dungeonSelectPage" setAllPoints="true">
+
+                        <Layers>
+                            <Layer level="BACKGROUND">
+                                <Texture atlas="communities-widebackground" setAllPoints="true">
+
+                                </Texture>
+                            </Layer>
+                        </Layers>
+
+                    </Frame>
+
+                    <Frame parentKey="lore" setAllPoints="true" hidden="true">
+                        <Layers>
+                            <Layer level="BACKGROUND">
+                                <!-- <Texture parentKey="background" setAllPoints="true">
+                                    <TexCoords left="0.0" right="0.767" top="0.0" bottom="0.82" />
+                                </Texture> -->
+                                <Texture parentKey="backgroundLeft" file="Interface\AddOns\AdventureGuide_ClassicEra\Media\SpellBook\SpellbookBackgroundEvergreen.png">
+                                    <TexCoords left="0.39404296875" right="0.78955078125" top="0.05078125" bottom="0.84375" />
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" x="0" y="0"/>
+                                        <Anchor point="BOTTOMLEFT" x="0" y="0"/>
+                                    </Anchors>
+                                </Texture>
+                                <Texture parentKey="backgroundRight" file="Interface\AddOns\AdventureGuide_ClassicEra\Media\SpellBook\SpellbookBackgroundEvergreen.png">
+                                    <TexCoords left="0.0" right="0.39404296875" top="0.05078125" bottom="0.84375" />
+                                    <Anchors>
+                                        <Anchor point="TOPRIGHT" x="0" y="0"/>
+                                        <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+                                    </Anchors>
+                                </Texture>
+                            </Layer>
+                            <Layer level="ARTWORK">
+                                <Texture parentKey="artwork">
+                                    <Size y="180"/>
+                                    <TexCoords left="0" right="0.8" top="0" bottom="0.63"/>
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" relativeKey="$parent.backgroundLeft" relativePoint="TOPLEFT" x="80" y="-60"/>
+                                        <Anchor point="TOPRIGHT" relativeKey="$parent.backgroundLeft" relativePoint="TOPRIGHT" x="-80" y="-60"/>
+                                    </Anchors>
+                                </Texture>
+                            </Layer>
+                        </Layers>
+                        <Frames>
+                            <Frame parentKey="encountersList" inherits="TBDListviewTemplate">
+                                <Anchors>
+                                    <Anchor point="TOP" relativeKey="$parent.artwork" relativePoint="BOTTOM" x="0" y="-10"/>
+                                    <Anchor point="BOTTOMLEFT" x="30" y="20"/>
+                                    <Anchor point="BOTTOMRIGHT" relativeKey="$parent.backgroundLeft" relativePoint="BOTTOMRIGHT" x="-30" y="20"/>
+                                </Anchors>
+                                <KeyValues>
+                                    <KeyValue key="frameType" value="FRAME" type="string"/>
+                                    <KeyValue key="itemTemplate" value="AdventureGuideSimpleIconLabelFrame" type="string"/>
+                                    <KeyValue key="elementHeight" value="22" type="number"/>
+                                </KeyValues>
+                            </Frame>
+                            <Frame parentKey="history" inherits="ScrollingFontTemplate">
+                                <Size y="380"/>
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeKey="$parent.backgroundRight" relativePoint="TOPLEFT" x="60" y="-60"/>
+                                    <Anchor point="TOPRIGHT" relativeKey="$parent.backgroundRight" relativePoint="TOPRIGHT" x="-60" y="-60"/>
+                                </Anchors>
+                                <KeyValues>
+                                    <KeyValue key="fontName" value="AdventureGuide_DungeonHistoryFont"/> 
+                                </KeyValues>
+                            </Frame>
+                            <Frame parentKey="encounterDetails" hidden="true">
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeKey="$parent.backgroundRight" relativePoint="TOPLEFT" x="30" y="-10"/>
+                                    <Anchor point="BOTTOMRIGHT" x="-30" y="30"/>
+                                </Anchors>
+                                <Layers>
+                                    <Layer level="ARTWORK">
+                                        <Texture parentKey="artwork" atlas="GarrMission_RewardsBanner">
+                                            <Anchors>
+                                                <Anchor point="TOPLEFT" x="15" y="-5"/>
+                                                <Anchor point="TOPRIGHT" x="-15" y="-5"/>
+                                            </Anchors>
+                                            <Size y="80"/>
+                                        </Texture>
+                                    </Layer>
+                                    <Layer level="OVERLAY">
+                                        <FontString parentKey="header" inherits="GameFontNormal_NoShadow" text="Boss">
+                                            <Anchors>
+                                                <Anchor point="TOPLEFT" x="80" y="-15"/>
+                                                <Anchor point="TOPRIGHT" x="-80" y="-15"/>
+                                            </Anchors>
+                                            <Size y="50"/>
+                                            <Color r="0" g="0" b="0"/>
+                                        </FontString>
+                                    </Layer>
+                                </Layers>
+                                <Frames>
+                                    <Frame parentKey="abilitiesListview" inherits="TBDListviewTemplate">
+                                        <Size y="100"/>
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" x="20" y="-100"/>
+                                            <Anchor point="TOPRIGHT" x="-20" y="-100"/>
+                                        </Anchors>
+                                        <KeyValues>
+                                            <KeyValue key="frameType" value="FRAME" type="string"/>
+                                            <KeyValue key="itemTemplate" value="AdventureGuideEncounterAbilitiesListviewTemplate" type="string"/>
+                                            <KeyValue key="elementHeight" value="26" type="number"/>
+                                        </KeyValues>
+                                        <Layers>
+                                            <Layer level="OVERLAY">
+                                                <FontString parentKey="label" inherits="GameFontNormal_NoShadow" text="Abilities">
+                                                    <Anchors>
+                                                        <Anchor point="TOPLEFT" x="2" y="18"/>
+                                                    </Anchors>
+                                                    <Color r="0" g="0" b="0"/>
+                                                </FontString>
+                                            </Layer>
+                                        </Layers>
+                                    </Frame>
+                                    <Frame parentKey="guidePanel" inherits="ScrollingFontTemplate" hidden="true">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeKey="$parent.abilitiesListview" relativePoint="BOTTOMLEFT" x="0" y="-20"/>
+                                            <Anchor point="BOTTOMRIGHT" x="-30" y="30"/>
+                                        </Anchors>
+                                        <KeyValues>
+                                            <KeyValue key="fontName" value="AdventureGuideFontNormal_NoShadow"/>
+                                        </KeyValues>
+                                    </Frame>
+                                    <Frame parentKey="lootListview" inherits="TBDListviewTemplate" hidden="false">
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" relativeKey="$parent.abilitiesListview" relativePoint="BOTTOMLEFT" x="0" y="-30"/>
+                                            <Anchor point="BOTTOMRIGHT" x="-20" y="20"/>
+                                        </Anchors>
+                                        <KeyValues>
+                                            <KeyValue key="frameType" value="FRAME" type="string"/>
+                                            <KeyValue key="itemTemplate" value="AdventureGuideLootListviewItemTemplate" type="string"/>
+                                            <KeyValue key="elementHeight" value="40" type="number"/>
+                                        </KeyValues>
+                                        <Layers>
+                                            <Layer level="OVERLAY">
+                                                <FontString parentKey="label" inherits="GameFontNormal_NoShadow" text="Loot">
+                                                    <Anchors>
+                                                        <Anchor point="TOPLEFT" x="2" y="18"/>
+                                                    </Anchors>
+                                                    <Color r="0" g="0" b="0"/>
+                                                </FontString>
+                                            </Layer>
+                                        </Layers>
+                                    </Frame>
+                                </Frames>
+                            </Frame>
+                        </Frames>
+                    </Frame>
+
+                    <Frame parentKey="maps" setAllPoints="true" hidden="true">
+                        <Layers>
+                            <Layer level="OVERLAY">
+                                <Texture parentKey="background">
+                                    <TexCoords left="0" right="0.9765625" top="0" bottom="0.6513671875"/>
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" x="0" y="0"/>
+                                        <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+                                    </Anchors>
+                                </Texture>
+                            </Layer>
+                        </Layers>
+                        <Frames>
+                            <Button parentKey="previous">
+                                <Size x="30" y="30"/>
+                                <Anchors>
+                                    <Anchor point="BOTTOM" x="-25" y="2"/>
+                                </Anchors>
+                            </Button>
+                            <Button parentKey="next">
+                                <Size x="30" y="30"/>
+                                <Anchors>
+                                    <Anchor point="BOTTOM" x="25" y="2"/>
+                                </Anchors>
+                            </Button>
+                        </Frames>
+                    </Frame>
+                </Frames>
+            </Frame>
+
+
+            <Frame parentKey="pvp" parentArray="views" hidden="true">
+
+            </Frame>
+
+        </Frames>
+
+        <Scripts>
+            <OnLoad method="OnLoad"/>
+            <OnShow method="OnShow"/>
+            <OnDragStart>
+                self:StartMoving()
+            </OnDragStart>
+            <OnDragStop>
+                self:StopMovingOrSizing()
+            </OnDragStop>
+        </Scripts>
+
+    </Frame>
+    
+</Ui>

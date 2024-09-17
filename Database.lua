@@ -1,14 +1,19 @@
-local name , addon = ...;
+local name , AdventureGuide = ...;
 
 local Database = {}
 
-local configDefaults = {
-    interface = {
-        highlightBagSlots = false,
-        combineBags = false,
-        autoVendorJunk = false,
+local datebaseDefaults = {
+    minimapButton = {},
+    characters = {},
+    lists = {},
+    notes = {},
+    quests = {},
+    containers = {},
+    outfits = {},
+    config = {
+        showObjectiveTracker = true,
     },
-    map = {
+    mapIcons = {
         npc = {
             atlas = "QuestNormal",
             x = 28,
@@ -58,17 +63,6 @@ local configDefaults = {
     },
 }
 
-local datebaseDefaults = {
-    minimapButton = {},
-    config = configDefaults,
-    characters = {},
-    lists = {},
-    notes = {},
-    quests = {},
-    containers = {},
-    outfits = {},
-}
-
 function Database:Init(forceReset)
     
     if not ADVENTURE_GUIDE_GLOBAL then
@@ -81,9 +75,11 @@ function Database:Init(forceReset)
 
     self.db = ADVENTURE_GUIDE_GLOBAL;
 
-    addon:TriggerEvent("Database_OnInitialised")
+    AdventureGuide.CallbackRegistry:TriggerEvent("Database_OnInitialized")
 end
 
+
+--[[
 function Database:GetConfig(key)
     if self.db then
         if key then
@@ -273,6 +269,6 @@ function Database:NewCharacter(nameRealm, classID, raceID)
         self.db.containers[nameRealm] = {}
     end
 end
+]]
 
-
-addon.Database = Database;
+AdventureGuide.Database = Database;

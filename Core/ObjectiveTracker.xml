@@ -1,0 +1,144 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
+    
+    <Button name="AdventureGuideObjectiveTrackerTemplate" mixin="AdventureGuideObjectiveTrackerMixin" virtual="true">
+        <Layers>
+            <Layer level="HIGHLIGHT">
+                <Texture parentKey="highlight" atlas="search-highlight" setAllPoints="true">
+
+                </Texture>
+            </Layer>
+            <Layer level="BACKGROUND">
+                <Texture parentKey="selected" atlas="search-select" hidden="true" setAllPoints="true">
+
+                </Texture>
+				<Texture parentKey="background" alpha="0.0">	
+                    <Color r="0" g="0" b="0"/>			
+					<Anchors>
+						<Anchor point="TOPLEFT" x="10" y="0"/>
+						<Anchor point="BOTTOMRIGHT" x="-10" y="0"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="backgroundArtwork" alpha="0.0">	
+                    <Color r="0" g="0" b="0"/>			
+					<Anchors>
+						<Anchor point="TOPLEFT" x="1" y="0"/>
+						<Anchor point="BOTTOMRIGHT" x="0" y="1"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="icon">
+					<Size x="32" y="32"/>				
+					<Anchors>
+						<Anchor point="LEFT" x="5" y="0"/>
+					</Anchors>
+				</Texture>
+                <MaskTexture parentKey="mask" file="Interface/CHARACTERFRAME/TempPortraitAlphaMask" hWrapMode="CLAMPTOBLACKADDITIVE" vWrapMode="CLAMPTOBLACKADDITIVE" hidden="true">
+                    <Size x="30" y="30"/>	
+                    <Anchors>
+                        <Anchor point="LEFT" x="5" y="0"/>
+                    </Anchors>
+                    <MaskedTextures>
+                        <MaskedTexture childKey="icon"/>
+                    </MaskedTextures>
+                </MaskTexture>
+                <FontString parentKey="label" inherits="GameFontWhite" justifyH="LEFT">
+                    <Anchors>
+                        <Anchor point="LEFT" relativePoint="RIGHT" relativeKey="$parent.icon" x="6" y="0"/>
+                    </Anchors>
+                </FontString>
+                <FontString parentKey="labelRight" inherits="GameFontWhite" justifyH="RIGHT">
+                    <Anchors>
+                        <Anchor point="RIGHT" x="-1" y="0"/>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Frames>
+            <Button parentKey="rightButton">
+                <Anchors>
+                    <Anchor point="RIGHT" x="-4" y="0"/>
+                </Anchors>
+                <Size x="16" y="16"/>
+                <!-- <Layers>
+                    <Layer level="BACKGROUND">
+                        <Texture parentKey="icon" setAllPoints="true"/>
+                    </Layer>
+                </Layers> -->
+            </Button>
+        </Frames>
+        <Animations>
+            <AnimationGroup parentKey="anim" setToFinalAlpha="true">
+                <Alpha parentKey="fadeIn" duration="0.3" fromAlpha="0" toAlpha="1"/>
+            </AnimationGroup>
+        </Animations>
+        <Scripts>
+            <OnLoad method="OnLoad"/>
+        </Scripts>
+    </Button>
+
+    <Frame name="AdventureGuideQuestTracker" mixin="AdventureGuideQuestTrackerMixin" movable="true">
+        <Anchors>
+            <Anchor point="TOPRIGHT" x="-100" y="-200"/>
+        </Anchors>
+        <Size x="238" y="400"/>
+        <Frames>
+            <Button parentKey="expandLog">
+                <NormalTexture atlas="auctionhouse-ui-dropdown-arrow-up"/>
+                <PushedTexture atlas="auctionhouse-ui-dropdown-arrow-down"/>
+                <Anchors>
+                    <Anchor point="TOPRIGHT" x="-24" y="-13"/>
+                </Anchors>
+                <Size x="16" y="15"/>
+            </Button>
+            <Frame parentKey="listview" inherits="TBDListviewTemplate"> 
+                <Anchors>
+                    <Anchor point="TOPLEFT" x="0" y="-35"/>
+                    <Anchor point="BOTTOMRIGHT" x="-5" y="0"/>
+                </Anchors>
+                <KeyValues>
+                    <KeyValue key="itemTemplate" value="AdventureGuideObjectiveTrackerTemplate" type="string"/>
+                    <KeyValue key="elementHeight" value="16" type="number"/>
+                </KeyValues>
+                <!-- <Layers>
+                    <Layer level="BACKGROUND" textureSubLevel="-1">
+                        <Texture parentKey="background">
+                            <Color r="0" g="0" b="0" a="0.2"/>
+                            <Anchors>
+                                <Anchor point="TOPLEFT" x="0" y="0"/>
+                                <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+                            </Anchors>
+                        </Texture>
+                    </Layer>
+                </Layers> -->
+            </Frame>
+        </Frames>
+        <Layers>
+            <Layer level="BACKGROUND" textureSubLevel="-1">
+                <Texture parentKey="backgroundHeader" atlas="Objective-Header">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" x="0" y="0"/>
+                        <Anchor point="TOPRIGHT" x="0" y="0"/>
+                    </Anchors>
+                    <Size y="69"/>
+                </Texture>
+            </Layer>
+            <Layer level="OVERLAY" textureSubLevel="-1">
+                <FontString parentKey="header" inherits="GameFontNormal" text="Quests" justifyH="LEFT">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" x="20" y="-14"/>
+                        <Anchor point="TOPRIGHT" x="-20" y="-14"/>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnLoad method="OnLoad"/>
+            <OnShow method="OnShow"/>
+            <OnDragStart>
+                self:StartMoving()
+            </OnDragStart>
+            <OnDragStop>
+                self:StopMovingOrSizing()
+            </OnDragStop>
+        </Scripts>
+    </Frame>
+</Ui>

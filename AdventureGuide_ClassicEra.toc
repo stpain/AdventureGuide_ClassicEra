@@ -1,10 +1,11 @@
-## Interface: 11500
+## Interface: 11503
 ## Author: TheBoringDad
-## Version: 0.1
+## Version: 0.11
 ## Title: AdventureGuide_ClassicEra
 ## Notes: An addon for adventures
 ## SavedVariables: ADVENTURE_GUIDE_GLOBAL
 ## SavedVariablesPerCharacter: ADVENTURE_GUIDE_CHARACTER
+## Dependencies: TbdWidgets
 
 Libs\LibStub\LibStub.lua
 #Libs\LibGraph-2.0\LibGraph-2.0.lua
@@ -20,46 +21,46 @@ Libs\LibCraftInfo-1.0\LibCraftInfo-1.0.xml
 Libs\HereBeDragons\HereBeDragons-2.0.lua
 Libs\HereBeDragons\HereBeDragons-Pins-2.0.lua
 
-Widgets\Listview.lua
-Widgets\Listview.xml
-Widgets\Gridview.lua
-Widgets\Gridview.xml
-Widgets\Dropdown.lua
-Widgets\Dropdown.xml
-Widgets\Checkbox.xml
-Widgets\ScrollFrame.lua
-Widgets\ScrollFrame.xml
-Widgets\Slider.xml
-Widgets\Helptips.lua
-Widgets\Helptips.xml
-Widgets\TabFrame.lua
-Widgets\TabFrame.xml
-
 Locales.lua
 
-RawQuestData.lua
+Data\RawQuestData.lua
+Data\QuestChainData.lua
+Data\Data.lua
+Data\InstanceData.lua
+Data\NpcData.lua
+Data\ObjectData.lua
+Data\ItemData.lua
+Data\NodeData.lua
 
-Data.lua
-InstanceData.lua
-NpcData.lua
-ObjectData.lua
-ItemData.lua
-NodeData.lua
-
-TempData.lua
 
 Callbacks.lua
-Database.lua
-
-Templates.lua
-Templates.xml
-
-Api.lua
-
-AdventureGuide.lua
-AdventureGuide.xml
+#Database.lua
+SavedVariables.lua
 
 Events.lua
 
-OptionsInterface.lua
-OptionsInterface.xml
+#Options\OptionsInterface.lua
+#Options\OptionsInterface.xml
+
+Api\GatheringNodeAPI.lua
+Api\QuestAPI.lua
+Api\WorldMapAPI.lua
+Api\MiniMapAPI.lua
+
+Templates\Templates.lua
+Templates\Templates.xml
+
+Templates\QuestLog.lua
+Templates\QuestLog.xml
+
+Templates\Dungeons.lua
+Templates\Dungeons.xml
+
+Templates\MapPin.lua
+Templates\MapPin.xml
+
+Core\AdventureGuide.lua
+Core\AdventureGuide.xml
+
+Core\ObjectiveTracker.lua
+Core\ObjectiveTracker.xml

@@ -3,6 +3,14 @@
         AdventureGuide:Show()
     </Binding>
     <Binding name="Open Map" category="Adventure Guide ">
-        AdventureGuide:ShowMap()
+        if AdventureGuide:IsVisible() then
+            AdventureGuide:Hide()
+        else
+            AdventureGuide:OpenTo("worldMap")
+            local mapID = C_Map.GetBestMapForUnit("player")
+            if mapID then
+                AdventureGuide.worldMap:SetMapID(mapID)
+            end
+        end
     </Binding>
 </Bindings>

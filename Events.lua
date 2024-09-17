@@ -1,141 +1,252 @@
-local name, addon = ...;
+local name, AdventureGuide = ...;
 
-local Database = addon.Database;
+local SavedVariables = AdventureGuide.SavedVariables;
 
-local e = CreateFrame("FRAME")
-e:RegisterEvent("ADDON_LOADED")
-e:RegisterEvent("PLAYER_ENTERING_WORLD")
+local EventFrame = CreateFrame("FRAME")
+--EventFrame:RegisterEvent("ADDON_LOADED")
+EventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 
-e:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_SHOW")
+-- EventFrame:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_SHOW")
 
-e:RegisterEvent("QUEST_ACCEPTED")
-e:RegisterEvent("QUEST_TURNED_IN")
-e:RegisterEvent("QUEST_LOG_UPDATE")
-e:RegisterEvent("QUEST_LOG_CRITERIA_UPDATE")
+EventFrame:RegisterEvent("QUEST_ACCEPTED")
+EventFrame:RegisterEvent("QUEST_TURNED_IN")
+EventFrame:RegisterEvent("QUEST_LOG_UPDATE")
+--EventFrame:RegisterEvent("QUEST_LOG_CRITERIA_UPDATE")
+EventFrame:RegisterEvent("QUEST_WATCH_UPDATE")
+EventFrame:RegisterEvent("QUEST_REMOVED")
 
-e:RegisterEvent('BANKFRAME_OPENED')
-e:RegisterEvent('BANKFRAME_CLOSED')
-e:RegisterEvent('BAG_UPDATE_DELAYED')
-e:RegisterEvent('BAG_OPEN')
+EventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+EventFrame:RegisterEvent("PLAYER_LEVEL_CHANGED")
 
-e:RegisterEvent('UNIT_STATS')
+-- EventFrame:RegisterEvent('BANKFRAME_OPENED')
+-- EventFrame:RegisterEvent('BANKFRAME_CLOSED')
+-- EventFrame:RegisterEvent('BAG_UPDATE_DELAYED')
+-- EventFrame:RegisterEvent('BAG_OPEN')
 
+-- EventFrame:RegisterEvent('UNIT_STATS')
 
-function e:PLAYER_INTERACTION_MANAGER_FRAME_SHOW(...)
-    local interaction = ...;
-    if interaction == 5 or interaction == 12 then
-        if Database:GetConfig("interface.autoVendorJunk") == true then
-            addon.api.vendorJunk()
+EventFrame:SetScript("OnEvent", function(self, event, ...)
+    if self[event] then
+        self[event](self, ...)
+    end
+end)
+
+function EventFrame:PLAYER_ENTERING_WORLD(isInitial, isReload)
+
+    if isInitial or isReload then
+    
+        SavedVariables:Init() --pass in true to reset the db
+
+        local name, realm = UnitName("player")
+        if not realm then
+            realm = GetNormalizedRealmName()
         end
+        local nameRealm = string.format("%s-%s", name, realm)
+        local _, _, classID = UnitClass("player")
+        local _, _, raceID = UnitRace("player")
+
+        AdventureGuide.thisCharacter = nameRealm;
+
     end
+
+
+    --self:CreateNpcLocales()
+
 end
 
-function e:UNIT_STATS(...)
+function EventFrame:UNIT_STATS(...)
     if ... == "player" then
-        addon:TriggerEvent("Character_OnStatsChanged")
     end
 end
 
-function e:QUEST_LOG_CRITERIA_UPDATE()
-    addon:TriggerEvent("Quest_OnQuestCriteriaUpdated")
+function EventFrame:PLAYER_LEVEL_CHANGED(oldLevel, newLevel, real)
+    C_Timer.After(1, function()
+        AdventureGuide.CallbackRegistry:TriggerEvent("Player_OnLevelChanged")
+    end)
 end
 
-function e:QUEST_LOG_UPDATE()
-
-    addon:TriggerEvent("Quest_OnQuestLogUpdated")
-
-    -- if CombatText_AddMessage then
-
-    --     local numEntries, numQuests = GetNumQuestLogEntries()
-    --     for i = 1, numEntries do
-    --         local title, level, suggestedGroup, isHeader, isCollapsed, isComplete = GetQuestLogTitle(i)
-    --         if not isHeader then
-    --             if isComplete then
-    --                 CombatText_AddMessage(title .. " - complete", COMBAT_TEXT_SCROLL_FUNCTION, 1, 1, 1)
-    --             end
-    --         end
-    --     end
-
-    -- end
-
-   -- C_QuestLog.GetQuestObjectives
+function EventFrame:QUEST_WATCH_UPDATE(questID)
+    C_Timer.After(1, function()
+        if IsQuestComplete(questID) then
+            AdventureGuide.CallbackRegistry:TriggerEvent("Quest_OnQuestCriteriaCompleted", questID)
+        end
+    end)
 end
 
-function e:QUEST_ACCEPTED()
-    addon:TriggerEvent("Quest_OnQuestAccepted")
+function EventFrame:ZONE_CHANGED_NEW_AREA()
+    AdventureGuide.CallbackRegistry:TriggerEvent("Zone_OnChangedNewArea")
 end
 
-function e:QUEST_TURNED_IN()
-    addon:TriggerEvent("Quest_OnQuestTurnIn")
+function EventFrame:QUEST_LOG_UPDATE()
+    AdventureGuide.CallbackRegistry:TriggerEvent("Quest_OnQuestLogUpdated")
+end
+
+function EventFrame:QUEST_REMOVED(questID)
+    AdventureGuide.CallbackRegistry:TriggerEvent("Quest_OnQuestRemoved", questID)
+end
+
+function EventFrame:QUEST_ACCEPTED(questLogIndex)
+    local questID = select(8, GetQuestLogTitle(questLogIndex))
+    AdventureGuide.CallbackRegistry:TriggerEvent("Quest_OnQuestAccepted", questID)
+end
+
+function EventFrame:QUEST_TURNED_IN(questID)
+    AdventureGuide.CallbackRegistry:TriggerEvent("Quest_OnQuestTurnIn", questID)
 end
 
 
 local bankScanned = false
-function e:BANKFRAME_CLOSED()
-    if bankScanned == false then
-        local bags = addon.api.scanPlayerContainers(true)
-        Database:UpdateTable("containers", addon.thisCharacter, bags)
-        bankScanned = true;
-    end
+function EventFrame:BANKFRAME_CLOSED()
+
 end
-function e:BANKFRAME_OPENED()
-    local bags = addon.api.scanPlayerContainers(true)
-    Database:UpdateTable("containers", addon.thisCharacter, bags)
-    bankScanned = false;
+function EventFrame:BANKFRAME_OPENED()
+
 end
 
 --this means you can view your alts items
-function e:BAG_UPDATE_DELAYED()
-    local bags = addon.api.scanPlayerContainers()
-    local dbVar = Database:GetTable("containers", addon.thisCharacter)
-    dbVar.copper = bags.copper
-    dbVar.bags = bags.bags
+function EventFrame:BAG_UPDATE_DELAYED()
 
-    Database:UpdateTable("containers", addon.thisCharacter, dbVar)
 end
 
-function e:PLAYER_ENTERING_WORLD(isInitial, isReload)
-    addon.Database:Init() --pass in true to reset the db
+function EventFrame:ADDON_LOADED(...)
 
-    local name, realm = UnitName("player")
-    if not realm then
-        realm = GetNormalizedRealmName()
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function EventFrame:CreateNpcLocales()
+
+    ADVENTURE_GUIDE_GLOBAL = {}
+
+    for npcID, info in pairs(AdventureGuide.NpcData) do
+        --ADVENTURE_GUIDE_GLOBAL[info.name:gsub(" ", "_"):gsub("'", ""):upper()] = info.name
+
+        ADVENTURE_GUIDE_GLOBAL[npcID] = {
+            name = info.name:gsub(" ", "_"):gsub("'", ""):upper(),
+            spawnLocations = info.spawnLocations,
+            npcID = npcID,
+        }
     end
-    local nameRealm = string.format("%s-%s", name, realm)
-    local _, _, classID = UnitClass("player")
-    local _, _, raceID = UnitRace("player")
-
-    addon.thisCharacter = nameRealm;
-
-    addon.Database:NewCharacter(nameRealm, classID, raceID)
 end
 
-function e:ADDON_LOADED(...)
-    if (...) == name then
-        --self:generateZoneData()
-        --self:generateNpcData()
-        --self:generateData()
-        --self:generateNodeData()
-        --self:sortQuests()
 
-        
-        --self:ScanCodexQuests()
-        --self:processRawQuestData()
-        --self:generateQuestDb()
-        --self:generateObjectData()
 
-        e:modBags()
-        --e:createItemToQuestMapping()
 
+
+
+
+
+
+
+
+
+
+
+--[[
+
+
+
+
+
+
+    classID|raceID|faction|level 4|3|1|6
+
+    0000|000|0|000001
+
+    WARRIOR     1   0000
+    PALADIN     2   0001
+    HUNTER      3   0010
+    ROGUE       4   0011
+    PRIEST      5   0100
+    DK  
+    SHAMAN      7   0110
+    MAGE        8   0111
+    WARLOCK     9   1000
+    MONK
+    DRUID       11  1010
+
+    HUMAN       1   000
+    ORC         2   001
+    DWARF       3   010
+    NIGHTELF    4   011
+    UNDEAD      5   100
+    TAUREN      6   101
+    GNOME       7   110
+    TROLL       8   111
+
+    ALLIANCE        0
+    HORDE           1
+
+
+
+
+
+    THIS IS OLD CODE WHICH MAY PROVE USEFUL DURING DEVELOPMENT - MIGHT ALSO BE JUNK
+
+
+
+
+function EventFrame:makePlusmouseData()
+
+    ADVENTURE_GUIDE_CHARACTER = {}
+    
+    for mapID, items in pairs(addon.nodes.herbs) do
+        for k, v in ipairs(items) do
+            local item = Item:CreateFromItemID(v.itemID)
+            if not item:IsItemEmpty() then
+                item:ContinueOnItemLoad(function()
+                    ADVENTURE_GUIDE_CHARACTER[v.itemID] = {
+                        name = item:GetItemName(),
+                        link = item:GetItemLink(),
+                        category = "herbs"
+                    }
+                end)
+            end
+        end
     end
+    for mapID, items in pairs(addon.nodes.mining) do
+        for k, v in ipairs(items) do
+            local item = Item:CreateFromItemID(v.itemID)
+            if not item:IsItemEmpty() then
+                item:ContinueOnItemLoad(function()
+                    ADVENTURE_GUIDE_CHARACTER[v.itemID] = {
+                        name = item:GetItemName(),
+                        link = item:GetItemLink(),
+                        category = "mining"
+                    }
+                end)
+            end
+        end
+    end
+
+
 end
 
-
-
-
-
-
-function e:createItemToQuestMapping()
+function EventFrame:createItemToQuestMapping()
 
     local t = {}
 
@@ -161,30 +272,10 @@ function e:createItemToQuestMapping()
     ADVENTURE_GUIDE_CHARACTER = t;
 end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 local function decodeLoc(id)
 	return floor(id/1000000)/10000, floor(id % 1000000 / 100)/10000
 end
-function e:generateNodeData()
+function EventFrame:generateNodeData()
 
     ADVENTURE_GUIDE_CHARACTER = {
         mining = {},
@@ -231,7 +322,7 @@ function e:generateNodeData()
 
 end
 
-function e:generateData()
+function EventFrame:generateData()
 
     ADVENTURE_GUIDE_CHARACTER = {}
 
@@ -281,7 +372,7 @@ function e:generateData()
 
 end
 
-function e:generateNpcData()
+function EventFrame:generateNpcData()
 
     ADVENTURE_GUIDE_CHARACTER = {}
 
@@ -307,7 +398,7 @@ function e:generateNpcData()
     end
 end
 
-function e:generateZoneData()
+function EventFrame:generateZoneData()
 
     ADVENTURE_GUIDE_CHARACTER = {}
 
@@ -377,10 +468,7 @@ function e:generateZoneData()
     end
 end
 
---addon.codexQuestData
-
-
-function e:modBags()
+function EventFrame:modBags()
 
     local overlays = {
         --junkOverlay = "bags-glow-artifact",
@@ -436,9 +524,7 @@ function e:modBags()
 
 end
 
---_G["ContainerFrame1Item1"]
-
-function e:generateObjectData()
+function EventFrame:generateObjectData()
 
     ADVENTURE_GUIDE_CHARACTER = {}
     for objectID, info in pairs(objectData) do
@@ -466,46 +552,6 @@ function e:generateObjectData()
     end
 end
 
-
-
---[[
-    quest flags
-
-    1, generate the table of flags for class/race combos
-    2, update quest db with a new field for flag
-    3, write functions (predicates) to perform the checks - see below
-
-
-
-
-
-
-
-local HORDE_BIT = tonumber("11101100100000000000", 2)
-local ALLIANCE_BIT = tonumber("00010011010000000000", 2)
-
-local questFlag = tonumber("11101100101111111111", 2) --any horde character regardless of class, match a horde race AND any class
-
-local function isAlliance(quest)
-    return (quest.flag & ALLIANCE_BIT) ~= 0
-
-    --assume as a function call this is slower and poor performance
-    --return bit.band(testFlag, ALLIANCE_BIT) ~= 0
-end
-
---968712
-
-local function myCharacterMask(class, race)
-    
-    local classBit = foo[class]
-    local raceBit = bar[race]
-
-    return classBit | raceBit
-end
-
-]]
-
-
 local classID_new = {
     [1] = 1, --                 0000000000 0000000001  
     [2] = 2, --                 0000000000 0000000010
@@ -518,7 +564,6 @@ local classID_new = {
     [9] = 256, --               0000000000 0100000000
     [11] = 512, --              0000000000 1000000000
 }
-
 
 local classID = {
     [1] = 1, --                 0000000000 0000000001  
@@ -590,10 +635,7 @@ local questSorting = {
     [365] = "questSort_AQwar",
 }
 
-
-
-
-function e:processRawQuestData()
+function EventFrame:processRawQuestData()
 
     ADVENTURE_GUIDE_CHARACTER = {}
 
@@ -622,9 +664,7 @@ function e:processRawQuestData()
 
 end
 
-
-
-function e:generateQuestDb()
+function EventFrame:generateQuestDb()
     
     ADVENTURE_GUIDE_CHARACTER = {}
 
@@ -681,9 +721,7 @@ function e:generateQuestDb()
 
 end
 
-
-
-function e:ScanCodexQuests()
+function EventFrame:ScanCodexQuests()
     
     ADVENTURE_GUIDE_CHARACTER = {}
 
@@ -710,10 +748,10 @@ function e:ScanCodexQuests()
             local newEndPoint = {}
             if endPoint.U then
                 newEndPoint.npc = endPoint.U;
-                if addon.npcData[endPoint.U[1]] then
-                    newEndPoint.spawnLocations = addon.npcData[endPoint.U[1]].spawnLocations
+                if addon.npcData[endPoint.U[1] ] then
+                    newEndPoint.spawnLocations = addon.npcData[endPoint.U[1] ].spawnLocations
 
-                    for zoneID, _ in pairs(addon.npcData[endPoint.U[1]].spawnLocations) do
+                    for zoneID, _ in pairs(addon.npcData[endPoint.U[1] ].spawnLocations) do
                         endZone = zoneID
                     end
                 end
@@ -733,10 +771,10 @@ function e:ScanCodexQuests()
 
             if endPoint.O then
                 newEndPoint.object = endPoint.O;
-                if addon.objectData[endPoint.O[1]] then
-                    newEndPoint.spawnLocations = addon.objectData[endPoint.O[1]].spawnLocations
+                if addon.objectData[endPoint.O[1] ] then
+                    newEndPoint.spawnLocations = addon.objectData[endPoint.O[1] ].spawnLocations
 
-                    for zoneID, _ in pairs(addon.objectData[endPoint.O[1]].spawnLocations) do
+                    for zoneID, _ in pairs(addon.objectData[endPoint.O[1] ].spawnLocations) do
                         endZone = zoneID
                     end
                 end
@@ -751,10 +789,10 @@ function e:ScanCodexQuests()
             local newStartPoint = {}
             if startPoint.U then
                 newStartPoint.npc = startPoint.U;
-                if addon.npcData[startPoint.U[1]] then
-                    newStartPoint.spawnLocations = addon.npcData[startPoint.U[1]].spawnLocations
+                if addon.npcData[startPoint.U[1] ] then
+                    newStartPoint.spawnLocations = addon.npcData[startPoint.U[1] ].spawnLocations
 
-                    for zoneID, _ in pairs(addon.npcData[startPoint.U[1]].spawnLocations) do
+                    for zoneID, _ in pairs(addon.npcData[startPoint.U[1] ].spawnLocations) do
                         startZone = zoneID
                     end
                 end
@@ -788,10 +826,10 @@ function e:ScanCodexQuests()
 
             if startPoint.O then
                 newStartPoint.object = startPoint.O;
-                if addon.objectData[startPoint.O[1]] then
-                    newStartPoint.spawnLocations = addon.objectData[startPoint.O[1]].spawnLocations
+                if addon.objectData[startPoint.O[1] ] then
+                    newStartPoint.spawnLocations = addon.objectData[startPoint.O[1] ].spawnLocations
 
-                    for zoneID, _ in pairs(addon.objectData[startPoint.O[1]].spawnLocations) do
+                    for zoneID, _ in pairs(addon.objectData[startPoint.O[1] ].spawnLocations) do
                         startZone = zoneID
                     end
                 end
@@ -840,19 +878,7 @@ function e:ScanCodexQuests()
 
 end
 
-
-
-
-
-
-
-
-
-
-
-
-
-function e:processQuests()
+function EventFrame:processQuests()
 
 
     ADVENTURE_GUIDE_CHARACTER = {}
@@ -865,7 +891,7 @@ function e:processQuests()
                 table.insert(races, raceID[v])
             end
         else
-            races = {raceID[data[6]]}
+            races = {raceID[data[6] ]}
         end
 
         local class = {}
@@ -874,7 +900,7 @@ function e:processQuests()
                 table.insert(class, classID[v])
             end
         else
-            class = {classID[data[7]]}
+            class = {classID[data[7] ]}
         end
 
         local requiredQuests = {}
@@ -890,11 +916,11 @@ function e:processQuests()
             if data[17] < 0 then
                 filter = questSorting[data[17]*-1]
             else
-                if addon.subzoneToZoneID[data[17]] then
-                    local zoneID = addon.subzoneToZoneID[data[17]]
+                if addon.subzoneToZoneID[data[17] ] then
+                    local zoneID = addon.subzoneToZoneID[data[17] ]
                     filter = addon.zoneIdToMapId[zoneID]
                 else
-                    filter = addon.zoneIdToMapId[data[17]]
+                    filter = addon.zoneIdToMapId[data[17] ]
                 end
             end
         end
@@ -923,7 +949,7 @@ function e:processQuests()
     end
 end
 
-function e:sortQuests()
+function EventFrame:sortQuests()
 
     ADVENTURE_GUIDE_CHARACTER = {}
 
@@ -940,9 +966,9 @@ function e:sortQuests()
 
             table.insert(chainStarters, {
                 questID = questIDs[1],
-                title = addon.rawQuestData[questIDs[1]][1],
-                levelRequired = addon.rawQuestData[questIDs[1]][4],
-                questLevel = addon.rawQuestData[questIDs[1]][5],
+                title = addon.rawQuestData[questIDs[1] ][1],
+                levelRequired = addon.rawQuestData[questIDs[1] ][4],
+                questLevel = addon.rawQuestData[questIDs[1] ][5],
             })
             
         end
@@ -1002,8 +1028,4 @@ function e:sortQuests()
 
 end
 
-e:SetScript("OnEvent", function(self, event, ...)
-    if self[event] then
-        self[event](self, ...)
-    end
-end)
+]]--

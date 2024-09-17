@@ -1,31 +1,24 @@
-local name, addon = ...;
+local name, AdventureGuide = ...;
 
+AdventureGuide.CallbackRegistry = CreateFromMixins(CallbackRegistryMixin)
+AdventureGuide.CallbackRegistry:OnLoad()
+AdventureGuide.CallbackRegistry:GenerateCallbackEvents({
+    "SavedVariables_OnInitialized",
 
-Mixin(addon, CallbackRegistryMixin)
-addon:GenerateCallbackEvents({
-    "Database_OnInitialised",
-    "Database_OnConfigChanged",
+    "Player_OnLevelChanged",
 
-    "Database_OnNewList",
-    "Database_OnListDeleted",
-    "Database_OnListChanged",
-    "Database_OnNewOutfit",
-    "Database_OnOutfitChanged",
-    "Database_OnOutfitDeleted",
+    "InternalMap_OnZoneChanged",
+    "InternalMap_SetMapID",
 
-    "Character_OnStatsChanged",
-    "Character_OnContainerItemClicked",
-
-    "Guide_OnInstanceSelected",
-    "Zone_OnSelected",
-    "Zone_DrawMapPoi",
-    "Zone_ClearMapPoi",
-
-    "Map_OnZoneChanged",
+    "Zone_OnChangedNewArea",
 
     "Quest_OnQuestAccepted",
     "Quest_OnQuestTurnIn",
     "Quest_OnQuestLogUpdated",
-    "Quest_OnQuestCriteriaUpdated",
+    "Quest_OnQuestCriteriaCompleted",
+    "Quest_OnQuestRemoved",
+
+    "Quest_OnQuestLogQuestEntered",
+    "Quest_OnQuestLogQuestLeave",
+
 })
-CallbackRegistryMixin.OnLoad(addon);
