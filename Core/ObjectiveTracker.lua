@@ -201,6 +201,7 @@ AdventureGuideQuestTrackerMixin = {
 
 function AdventureGuideQuestTrackerMixin:OnLoad()
     self:RegisterForDrag("LeftButton")
+    self.resize:Init(self, 80, 100, 300, 600)
     --addon:RegisterCallback("Quest_OnQuestCriteriaUpdated", self.Quest_OnQuestCriteriaUpdated, self)
     --addon:RegisterCallback("Quest_OnQuestAccepted", self.Quest_OnQuestAccepted, self)
     --addon:RegisterCallback("Quest_OnQuestTurnIn", self.Quest_OnQuestTurnIn, self)

@@ -6,10 +6,11 @@
         if AdventureGuide:IsVisible() then
             AdventureGuide:Hide()
         else
-            AdventureGuide:OpenTo("worldMap")
             local mapID = C_Map.GetBestMapForUnit("player")
             if mapID then
                 AdventureGuide.worldMap:SetMapID(mapID)
+                AdventureGuide:OpenTo("worldMap")
+                AdventureGuide:Show()
             end
         end
     </Binding>

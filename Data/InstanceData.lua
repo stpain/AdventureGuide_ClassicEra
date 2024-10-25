@@ -1006,7 +1006,7 @@ AdventureGuide.Dungeons = {
                 },
             }
         },
-        history = L.DUNGEON_HISTORY_WAILING_CAVERNS,
+        history = L.DUNGEON_HISTORY_BLACKFATHOM_DEEPS,
     },
     {
         name = "Gnomeregan",

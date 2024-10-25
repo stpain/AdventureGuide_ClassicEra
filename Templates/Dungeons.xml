@@ -14,10 +14,15 @@
                 </Texture>
             </Layer>
             <!-- <Layer level="HIGHLIGHT">
-                <Texture parentKey="highlight" atlas="ShipMission_FollowerListButton-Select" setAllPoints="true"/>
+                <Texture parentKey="highlight" atlas="ShipMission_FollowerListButton-Select">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" x="3" y="-3"/>
+                        <Anchor point="BOTTOMRIGHT" x="-3" y="3"/>
+                    </Anchors>
+                </Texture>
             </Layer> -->
             <Layer level="OVERLAY">
-                <Texture parentKey="border" atlas="UI-Frame-Neutral-Portrait" setAllPoints="true"/>
+                <Texture parentKey="border" atlas="UI-Frame-Neutral-PortraitDisable" setAllPoints="true"/>
 
                 <Texture parentKey="labelBackground" >
                     <Size y="20"/>
@@ -40,7 +45,38 @@
 
         <Scripts>
             <OnLoad method="OnLoad"/>
+            <OnEnter method="OnEnter"/>
+            <OnLeave method="OnLeave"/>
         </Scripts>
+    </Button>
+
+    <Button name="AdventureGuideDungeonEncounterListviewButtonTemplate" mixin="AdventureGuideDungeonEncounterListviewButtonMixin" virtual="true">
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture parentKey="background">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" x="4" y="-4"/>
+                        <Anchor point="BOTTOMRIGHT" x="-4" y="4"/>
+                    </Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="HIGHLIGHT">
+                <Texture parentKey="highlight" atlas="ShipMission_FollowerListButton-Select">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" x="3" y="-3"/>
+                        <Anchor point="BOTTOMRIGHT" x="-3" y="3"/>
+                    </Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="OVERLAY">
+                <FontString parentKey="label" inherits="QuestFont_Large">
+                    <Color r="0.02" g="0.02" b="0.04"/>
+                    <Anchors>
+                        <Anchor point="CENTER" x="10" y="0"/>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
     </Button>
 
 </Ui>

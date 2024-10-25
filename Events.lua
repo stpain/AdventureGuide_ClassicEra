@@ -1,5 +1,31 @@
 local name, AdventureGuide = ...;
 
+
+
+
+--[[
+    temp fix
+]]
+if not InterfaceOptions_AddCategory then
+    function InterfaceOptions_AddCategory(AddonThing)
+        local category, layout = Settings.RegisterCanvasLayoutCategory(AddonThing, AddonThing.name, AddonThing.name);
+        category.ID = AddonThing.name;
+        Settings.RegisterAddOnCategory(category)
+    end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
 local SavedVariables = AdventureGuide.SavedVariables;
 
 local EventFrame = CreateFrame("FRAME")
@@ -18,6 +44,8 @@ EventFrame:RegisterEvent("QUEST_REMOVED")
 EventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 EventFrame:RegisterEvent("PLAYER_LEVEL_CHANGED")
 
+EventFrame:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+
 -- EventFrame:RegisterEvent('BANKFRAME_OPENED')
 -- EventFrame:RegisterEvent('BANKFRAME_CLOSED')
 -- EventFrame:RegisterEvent('BAG_UPDATE_DELAYED')
@@ -33,25 +61,38 @@ end)
 
 function EventFrame:PLAYER_ENTERING_WORLD(isInitial, isReload)
 
-    if isInitial or isReload then
-    
-        SavedVariables:Init() --pass in true to reset the db
-
-        local name, realm = UnitName("player")
-        if not realm then
-            realm = GetNormalizedRealmName()
-        end
-        local nameRealm = string.format("%s-%s", name, realm)
-        local _, _, classID = UnitClass("player")
-        local _, _, raceID = UnitRace("player")
-
-        AdventureGuide.thisCharacter = nameRealm;
+    if isInitial then
 
     end
 
+    SavedVariables:Init()
+    SavedVariables:UpdateDefaults()
 
-    --self:CreateNpcLocales()
+    local name, realm = UnitName("player")
+    if not realm then
+        realm = GetNormalizedRealmName()
+    end
+    local nameRealm = string.format("%s-%s", name, realm)
+    local _, _, classID = UnitClass("player")
+    local _, _, raceID = UnitRace("player")
+    local level = UnitLevel("player")
 
+    SavedVariables:NewProfile(nameRealm, classID, level, raceID)
+    local currentProfile = SavedVariables:GetProfile(nameRealm)
+    AdventureGuide.ActiveProfile = AdventureGuide.CharacterProfile:CreateFromData(currentProfile)
+    if ViragDevTool_AddData then
+        ViragDevTool_AddData(AdventureGuide.ActiveProfile, "AdventureGuide_ActiveProfile")
+    end
+    AdventureGuide.ActiveProfile:UpdateCompletedQuests()
+
+end
+
+function EventFrame:NAME_PLATE_UNIT_ADDED(unitToken)
+    AdventureGuide.CallbackRegistry:TriggerEvent("NamePlate_OnUnitAdded", unitToken)
+end
+
+function EventFrame:NAME_PLATE_UNIT_REMOVED(unitToken)
+    AdventureGuide.CallbackRegistry:TriggerEvent("NamePlate_OnUnitRemoved", unitToken)
 end
 
 function EventFrame:UNIT_STATS(...)
@@ -59,9 +100,13 @@ function EventFrame:UNIT_STATS(...)
     end
 end
 
-function EventFrame:PLAYER_LEVEL_CHANGED(oldLevel, newLevel, real)
+function EventFrame:PLAYER_LEVEL_UP()
+    print("leveled up", UnitLevel("player"))
     C_Timer.After(1, function()
+        print("leveled up", UnitLevel("player"))
+        local newLevel = UnitLevel("player")
         AdventureGuide.CallbackRegistry:TriggerEvent("Player_OnLevelChanged")
+        AdventureGuide.ActiveProfile:SetPlayerLevel(newLevel)
     end)
 end
 
@@ -82,15 +127,18 @@ function EventFrame:QUEST_LOG_UPDATE()
 end
 
 function EventFrame:QUEST_REMOVED(questID)
+    AdventureGuide.ActiveProfile:RemoveQuest(questID)
     AdventureGuide.CallbackRegistry:TriggerEvent("Quest_OnQuestRemoved", questID)
 end
 
 function EventFrame:QUEST_ACCEPTED(questLogIndex)
     local questID = select(8, GetQuestLogTitle(questLogIndex))
+    AdventureGuide.ActiveProfile:SetQuestAccepted(questID)
     AdventureGuide.CallbackRegistry:TriggerEvent("Quest_OnQuestAccepted", questID)
 end
 
 function EventFrame:QUEST_TURNED_IN(questID)
+    AdventureGuide.ActiveProfile:SetQuestTurnedIn(questID)
     AdventureGuide.CallbackRegistry:TriggerEvent("Quest_OnQuestTurnIn", questID)
 end
 

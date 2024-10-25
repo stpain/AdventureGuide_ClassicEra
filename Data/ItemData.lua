@@ -6,7 +6,7 @@ local name, AdventureGuide = ...;
 
 	Note:
 		If a quest doesn't show on the maps it could be that the objectives involve finding an item and the itemID isn't here
-		This table shows [itemID] = { ddropsFrom = { [1] = npcIDs, [2] = gameObjects = {},}}
+		This table shows [itemID] = { dropsFrom = { [1] = npcIDs, [2] = gameObjects = {},}}
 ]]
 
 AdventureGuide.ItemData = {
@@ -593,6 +593,9 @@ AdventureGuide.ItemData = {
 	},
 	[5645] = {
 		dropsFrom = {
+			[2] = {
+				19551,
+			}
 		},
 		itemID = 5645,
 		name = "Filled Tourmaline Phial",
@@ -18644,6 +18647,9 @@ AdventureGuide.ItemData = {
 	},
 	[5639] = {
 		dropsFrom = {
+			[2] = {
+				19550,
+			}
 		},
 		itemID = 5639,
 		name = "Filled Jade Phial",
@@ -19103,6 +19109,9 @@ AdventureGuide.ItemData = {
 	},
 	[5184] = {
 		dropsFrom = {
+			[2] = {
+				19549,
+			}
 		},
 		itemID = 5184,
 		name = "Filled Crystal Phial",

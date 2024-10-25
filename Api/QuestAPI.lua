@@ -8,95 +8,69 @@ local Quest = CreateFromMixins(DataProviderMixin)
 --[[
 
 
-    classID|raceID|faction|level 4|3|1|6
+    classID|raceID|level
 
-    0000|000|0|000001
 
-    WARRIOR     1   0000
-    PALADIN     2   0001
-    HUNTER      3   0010
-    ROGUE       4   0011
-    PRIEST      5   0100
-    DK  
-    SHAMAN      7   0110
-    MAGE        8   0111
-    WARLOCK     9   1000
-    MONK
-    DRUID       11  1010
-
-    HUMAN       1   000
-    ORC         2   001
-    DWARF       3   010
-    NIGHTELF    4   011
-    UNDEAD      5   100
-    TAUREN      6   101
-    GNOME       7   110
-    TROLL       8   111
-
-    ALLIANCE        0
-    HORDE           1
 
 ]]
 
-local bitAssignments = {
-    WARRIOR     =   0000,
-    PALADIN     =   0001,
-    HUNTER      =   0010,
-    ROGUE       =   0011,
-    PRIEST      =   0100,
-    SHAMAN      =   0110,
-    MAGE        =   0111,
-    WARLOCK     =   1000,
-    DRUID       =   1010,
 
-    HUMAN       =   0000,
-    ORC         =   0001,
-    DWARF       =   0010,
-    NIGHTELF    =   0011,
-    UNDEAD      =   0100,
-    TAUREN      =   0101,
-    GNOME       =   0110,
-    TROLL       =   0111,
-
-    ALLIANCE    =   0,
-    HORDE       =    1,
+local classBitMasks = {
+    [1]     = tonumber(0000000001, 2),
+    [2]     = tonumber(0000000010, 2),
+    [3]     = tonumber(0000000100, 2),
+    [4]     = tonumber(0000001000, 2),
+    [5]     = tonumber(0000010000, 2),
+    [6]     = tonumber(0000100000, 2),
+    [7]     = tonumber(0001000000, 2),
+    [8]     = tonumber(0010000000, 2),
+    [9]     = tonumber(0100000000, 2),
+    [11]    = tonumber(1000000000, 2),
 }
 
-local classID = {
-    [1] = 1, --                 0000000001  
-    [2] = 2, --                 0000000010
-    [4] = 3, --                 0000000100
-    [8] = 4, --                 0000001000
-    [16] = 5, --                0000010000
-    [32] = 6, --                0000100000
-    [64] = 7, --                0001000000
-    [128] = 8, --               0010000000
-    [256] = 9, --               0100000000
-    [1024] = 11, --             1000000000
+local raceBitMasks = {
+    [1]     = tonumber(0000000001, 2),
+    [2]     = tonumber(0000000010, 2),
+    [3]     = tonumber(0000000100, 2),
+    [4]     = tonumber(0000001000, 2),
+    [5]     = tonumber(0000010000, 2),
+    [6]     = tonumber(0000100000, 2),
+    [7]     = tonumber(0001000000, 2),
+    [8]     = tonumber(0010000000, 2),
+
+
+    ["allianceQuest"] = tonumber(0001001101, 2),
+    ["hordeQuest"] = tonumber(0010110010, 2),
 }
 
-local raceID = {
-    [1] = 0000000001,
-    [2] = 0000000010,
-    [3] = 0000000100,
-    [4] = 0000001000,
-    [5] = 0000010000,
-    [6] = 0000100000,
-    [7] = 0001000000,
-    [8] = 0010000000,
-
-
-    ["allianceQuest"] = 0001001101,
-    ["hordeQuest"] = 1110110010,
-}
 
 function Quest:GenerateQuestBitMasks()
+
+    --ADVENTURE_GUIDE_GLOBAL
+
+    self.bitChecks = {}
     
     for kqid, questInfo in pairs(AdventureGuide.RawQuestData) do
 
-        local classBits = questInfo.class and classID[questInfo.class] or 1111111111;
-        local raceBits = questInfo.race and raceID[questInfo.race] or 1111111111;
+        --if this quest has a classID requirement then grab the bit string for it
+        --otherwise it must be for all classes so return full 1's
+        local classBits = questInfo.class and classBitMasks[questInfo.class] or tonumber(1111111111, 2);
+
+        --same for raceIDs
+        local raceBits = questInfo.race and raceBitMasks[questInfo.race] or tonumber(1111111111, 2);
     
+        self.bitChecks[questInfo.questID] = {
+            classBits = classBits,
+            raceBits = raceBits,
+        }
+
+        --add for faction quests
+        -- if questInfo.race == "allianceQuest" then
+        --     raceBits = raceID.allianceQuest
+        -- elseif questInfo.race == "hordeQuest" then
+        --     raceBits = raceID.hordeQuest
+        -- end
+
 
 
     end
@@ -129,7 +103,7 @@ end
 
 function Quest:GetNextQuests(questID)
 
-    print("getting next quests for", questID)
+    --print("getting next quests for", questID)
 
     local ret = {}
 
@@ -163,7 +137,7 @@ function Quest:GetNextQuests(questID)
 
     ret = GetKeysArray(temp)
 
-    DevTools_Dump(ret)
+    --DevTools_Dump(ret)
 
     return ret;
 end
@@ -227,6 +201,47 @@ function Quest:GetQuestCompletedInfoForMapID(mapID)
     end
 
     return numQuests, numQuestsCompleted;
+end
+
+function Quest:GetQuestNpcObjectiveData(questID)
+
+    if C_QuestLog.IsOnQuest(questID) ~= true then
+        return {}
+    end
+    
+    local questData = self:GetQuestData(questID)
+
+    local ret = {}
+
+    if questData.objectives then
+
+        if questData.objectives.npc then
+
+            for k, npcID in ipairs(questData.objectives.npc) do
+                table.insert(ret, npcID)
+            end
+        end
+    end
+
+    if questData.objectives.items then
+            
+        for k, itemID in ipairs(questData.objectives.items) do
+            
+            local itemDroppers = self:GetQuestItemDroppers(itemID)
+
+            if itemDroppers then
+
+                if itemDroppers.dropperType == "npc" then
+
+                    for _, npcID in ipairs(itemDroppers.droppers) do
+                        table.insert(ret, npcID)
+                    end
+                end
+            end
+        end
+    end
+
+    return ret;
 end
 
 function Quest:GetQuestObjectiveDataForMapID(questID, mapID)
@@ -409,13 +424,16 @@ end
         than was the character eligible based on race/class etc
 
         The final arg can be used to flip this, passing true will ignore any completion data and return
-        true if the character was eligible
+        true if the character was eligible and has or hasnt completed it, just were they able to accept it
 
     TODO:
         Eventually a lot of this will be replaced with a bit system to flag quests and remove the 
         race/class checks involved here
 ]]
-function Quest:IsQuestAvailableForPlayer(questID, classID, race, level, ignoreCompleted)
+function Quest:IsQuestAvailableForPlayer(questID, class, race, level, ignoreCompleted)
+
+    print("----------------------------------------------------")
+    print(string.format("Checking for quest:%d for class %d race %d level %d", questID, class, race, level))
 
     --print(questID)
     if not ignoreCompleted and (C_QuestLog.IsQuestFlaggedCompleted(questID) == true) then
@@ -430,54 +448,83 @@ function Quest:IsQuestAvailableForPlayer(questID, classID, race, level, ignoreCo
 
     local questData = self:GetQuestData(questID)
 
+    -- if questID > 3110 and questID < 3130 then
+    -- print("-----------")
+    -- DevTools_Dump(questData)
+    -- print(questID, class, race, level, ignoreCompleted)
+    -- end
+
     if type(questData.requiredQuest) == "table" then
+        -- if questID == 3903 then
+        --     print("---", questID, "---")
+        --     for k, v in ipairs(questData.requiredQuest) do
+        --         local markedCompleted =C_QuestLog.IsQuestFlaggedCompleted(v)
+        --         print(k, v, markedCompleted)
+        --     end
+        -- end
         for k, v in ipairs(questData.requiredQuest) do
-            if C_QuestLog.IsQuestFlaggedCompleted(v) == false then
+            local markedCompleted = C_QuestLog.IsQuestFlaggedCompleted(v)
+            markedCompleted = C_QuestLog.IsQuestFlaggedCompleted(v)
+            if markedCompleted == false then
+                print("quest required not completed", v)
                 return false;
             end
         end
     end
 
-    local classCheck, raceCheck, levelCheck = true, true, true;
-    if classID then
-        if questData.class then
-            if questData.class ~= classID then
-                classCheck = false
-            end
-        else
+    -- local classBitMask = classBitMasks[class]
+    -- local raceBitMask = raceBitMasks[race]
 
+    -- if questData.class then
+    --     if self.bitChecks and self.bitChecks[questID] then
+            
+    --         local classMatch = bit.band(self.bitChecks[questID].classBits, classBitMask)
+
+    --         --local raceMatch = bit.band(self.bitChecks[questID].raceBits, raceBitMask)
+
+    --         print(questID, self.bitChecks[questID].classBits, classBitMask, classMatch)
+    --     else
+
+    --     end
+    -- end
+
+
+    if questData.class then
+        print("quest data has class value")
+        if questData.class ~= class then
+            print("class not a match")
+            return false
         end
     end
 
-    if race then
-        if questData.race then
+    if questData.race then
+        if questData.race == "allianceQuest" then
+            if race ~= 1 and race ~= 3 and race ~= 4 and race ~= 7 then
+                return false
+            end
+        elseif questData.race == "hordeQuest" then
+            if race ~= 2 and race ~= 5 and race ~= 6 and race ~= 8 then
+                return false
+            end
+        else
             if questData.race ~= race then
-                raceCheck = false;
-            end
-
-            if questData.race == "allianceQuest" then
-                if race == 1 or race == 3 or race == 4 or race == 7 then
-                    raceCheck = true
-                end
-            end
-            if questData.race == "hordeQuest" then
-                if race == 2 or race == 5 or race == 6 or race == 8 then
-                    raceCheck = true
-                end
+                return false;
             end
         end
     end
 
     if level then
+        print("got level check")
         if questData.minLevel then
+            print("quest has minLevel")
             if level < questData.minLevel then
-                levelCheck = false;
+                print("level provided to low")
+                return false;
             end
         end
     end
 
-    return classCheck and raceCheck and levelCheck;
-
+    return true;
 end
 
 function Quest:GetQuestRace(questID)
@@ -512,13 +559,13 @@ function Quest:GetQuestTurnInLocation(questID)
     return false;
 end
 
-local function QuestSortFunc(questA, questB)
-    if questA:GetData().minLevel and questB:GetData().minLevel then
-        return questA:GetData().minLevel < questB:GetData().minLevel
-    end
-end
-
 function Quest:GenerateQuestTreeDataProviderForMapID(mapID)
+
+    local function QuestSortFunc(questA, questB)
+        if questA:GetData().minLevel and questB:GetData().minLevel then
+            return questA:GetData().minLevel < questB:GetData().minLevel
+        end
+    end
 
     local _, _, classID = UnitClass("player")
     local _, _, race = UnitRace("player")
@@ -633,67 +680,6 @@ end
 -- local data = Quest:CreateDataTable()
 -- Quest:Init(data)
 
+--Quest:GenerateQuestBitMasks()
+
 AdventureGuide.QuestAPI = Quest;
-
-
-
-
---[[
-
-    load the current mapID quests into a dataprovider
-
-    load mapIDs as they are encountered
-
-]]
-
-
-
-local QuestDataProviders = {
-    dataProviders = {},
-}
-
-function QuestDataProviders:GetOrCreateMapDataProvider(mapID)
-    
-    if not self.dataProviders[mapID] then
-        self.dataProviders[mapID] = CreateDataProvider({})
-
-
-
-    else
-        return self.dataProviders[mapID]
-    end
-end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- do
---     for _, mapID in pairs(AdventureGuide.ZoneIdToMapId) do
---         QuestDataProviders[mapID] = CreateDataProvider({})
-
---         local questForMapID = Quest:GetAllQuestsForMapID(mapID)
---         if questForMapID then
-            
---         end
---     end
--- end

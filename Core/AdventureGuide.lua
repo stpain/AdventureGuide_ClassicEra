@@ -8,6 +8,33 @@ local WorldMapAPI = AdventureGuide.WorldMapAPI;
 local MiniMapAPI = AdventureGuide.MiniMapAPI;
 local SavedVariables = AdventureGuide.SavedVariables;
 
+local contextMenuSeparator = {
+    hasArrow = false;
+    dist = 0;
+    text = "",
+    isTitle = true;
+    isUninteractable = true;
+    notCheckable = true;
+    iconOnly = true;
+    icon = "Interface\\Common\\UI-TooltipDivider-Transparent";
+    tCoordLeft = 0;
+    tCoordRight = 1;
+    tCoordTop = 0;
+    tCoordBottom = 1;
+    tSizeX = 0;
+    tSizeY = 8;
+    tFitDropDownSizeX = true;
+    iconInfo = {
+        tCoordLeft = 0,
+        tCoordRight = 1,
+        tCoordTop = 0,
+        tCoordBottom = 1,
+        tSizeX = 0,
+        tSizeY = 8,
+        tFitDropDownSizeX = true
+    }
+}
+
 AdventureGuideMixin = {}
 
 function AdventureGuideMixin:OnLoad()
@@ -67,6 +94,13 @@ function AdventureGuideMixin:OnLoad()
         self.tabs[k]:SetScript("OnClick", func)
     end
 
+    self.profileButton:SetScript("OnClick", function()
+        self:OpenTo("profile")
+        self:CreateBaseNavMenu()
+        self:AddNavButtonForProfile()
+    end)
+    self.profile.background:SetAtlas(string.format("legionmission-complete-background-%s", select(2, UnitClass("player")):lower()))
+
     AdventureGuide.CallbackRegistry:RegisterCallback("InternalMap_OnZoneChanged", self.InternalMap_OnZoneChanged, self)
     AdventureGuide.CallbackRegistry:RegisterCallback("InternalMap_SetMapID", self.InternalMap_SetMapID, self)
     AdventureGuide.CallbackRegistry:RegisterCallback("Zone_OnChangedNewArea", self.Zone_OnChangedNewArea, self)
@@ -83,9 +117,15 @@ function AdventureGuideMixin:OnLoad()
 
     AdventureGuide.CallbackRegistry:RegisterCallback("Player_OnLevelChanged", self.Player_OnLevelChanged, self)
 
+    AdventureGuide.CallbackRegistry:RegisterCallback("NamePlate_OnUnitAdded", self.NamePlate_OnUnitAdded, self)
+    AdventureGuide.CallbackRegistry:RegisterCallback("NamePlate_OnUnitRemoved", self.NamePlate_OnUnitRemoved, self)
+
     self.home:SetScript("OnShow", function()
         PanelTemplates_SetTab(self, 1);
     end)
+
+    self.questsForCurrentMap = {}
+
     self.worldMap:SetScript("OnShow", function()
         self.questLog:Show()
         local mapID = self.worldMap:GetMapID()
@@ -135,11 +175,30 @@ local function createMenuEntry(label, func)
     return {
         text = label,
         func = func,
-        notCheckable = true,
     }
 end
 
-function AdventureGuideMixin:OpenMiniMapMenu()
+function AdventureGuideMixin:CreateContextMenu(parent, menu)
+    MenuUtil.CreateContextMenu(parent, function(parent, rootDescription)
+
+        for _, element in ipairs(menu) do
+            if element.isTitle then
+                rootDescription:CreateTitle(element.text)
+
+            elseif element.isSeparater then
+                rootDescription:CreateSpacer()
+
+            elseif element.isDivider then
+                rootDescription:CreateDivider()
+
+            else
+                rootDescription:CreateButton(element.text, element.func)
+            end
+        end
+    end)
+end
+
+function AdventureGuideMixin:OpenMiniMapMenu(parent)
 
     local currentMinimapMapID = C_Map.GetBestMapForUnit("player")
 
@@ -161,10 +220,12 @@ function AdventureGuideMixin:OpenMiniMapMenu()
         ReloadUI()
     end))
 
-    EasyMenu(menu, self.contextMenu, "cursor", 0, 0, "MENU")
+    self:CreateContextMenu(parent, menu)
 end
 
 function AdventureGuideMixin:SavedVariables_OnInitialized()
+
+    --AdventureGuide.CharacterProfile
     
     if Menu and Menu.ModifyMenu then
         Menu.ModifyMenu("MENU_UNIT_SELF", function(owner, rootDescription, contextData)
@@ -172,30 +233,29 @@ function AdventureGuideMixin:SavedVariables_OnInitialized()
             rootDescription:CreateTitle(addonName);
             rootDescription:CreateButton("Open", function() self:Show() end);
         end);
-
-    else
-
-        self.contextMenu = CreateFrame("Frame", "AdventureGuideContextMenu", UIParent, "UIDropDownMenuTemplate")
-
-        local ldb = LibStub("LibDataBroker-1.1")
-        self.MinimapButton = ldb:NewDataObject('AdventureMinimapIcon', {
-            type = "launcher",
-            icon = 133742,
-            OnClick = function(f, button)
-                if button == "LeftButton" then
-                    self:SetShown(not self:IsVisible())
-                else
-                    self:OpenMiniMapMenu()
-                end
-            end,
-            OnTooltipShow = function(tooltip)
-                if not tooltip or not tooltip.AddLine then return end
-                tooltip:AddLine(L.ADDON_NAME)
-            end,
-        })
-        self.MinimapIcon = LibStub("LibDBIcon-1.0")
-        self.MinimapIcon:Register('AdventureMinimapIcon', self.MinimapButton, SavedVariables.db.minimapButton)
     end
+
+    self.contextMenu = CreateFrame("Frame", "AdventureGuideContextMenu", UIParent, "UIDropDownMenuTemplate")
+
+    local ldb = LibStub("LibDataBroker-1.1")
+    self.MinimapButton = ldb:NewDataObject('AdventureMinimapIcon', {
+        type = "launcher",
+        icon = 133742,
+        OnClick = function(f, button)
+            if button == "LeftButton" then
+                self:SetShown(not self:IsVisible())
+            else
+                self:OpenMiniMapMenu(f)
+            end
+        end,
+        OnTooltipShow = function(tooltip)
+            if not tooltip or not tooltip.AddLine then return end
+            tooltip:AddLine(L.ADDON_NAME)
+        end,
+    })
+    self.MinimapIcon = LibStub("LibDBIcon-1.0")
+    self.MinimapIcon:Register('AdventureMinimapIcon', self.MinimapButton, SavedVariables.db.minimapButton)
+    
 
     C_Timer.After(5, function()
 
@@ -262,9 +322,9 @@ function AdventureGuideMixin:InitializeDungeonTab()
     local r, g, b, a = CreateColor(0.002, 0.002, 0.001):GetRGBA()
     self.dungeons.lore.history:GetFontString():SetTextColor(r, g, b, a)
 
-    local xOffset, yOffset = 10, -15
+    local xOffset, yOffset = 15, -15
     local rowLimit, rowCount, numRows = 5, 1, 1;
-    local width, height = 195, 120;
+    local width, height = 200, 120;
     for k, dungeonInfo in ipairs(AdventureGuide.Dungeons) do
         local dungeonButton = CreateFrame("Button", nil, self.dungeons.dungeonSelectPage, "AdventureGuideDungeonSelectButtonTemplate")
         dungeonButton:SetSize(width, height)
@@ -316,6 +376,7 @@ function AdventureGuideMixin:LoadInstance(instance)
     self.selectedInstanceMapID = 1;
 
     self:ToggleDungeonLoreMap("lore")
+    self.dungeons.lore.artwork:Show()
     self.dungeons.lore.history:Show()
     self.dungeons.lore.encounterDetails:Hide()
 
@@ -340,11 +401,11 @@ function AdventureGuideMixin:LoadInstance(instance)
     local encounters = {}
     for k, boss in ipairs(instance.bosses) do
         table.insert(encounters, {
-            label = boss.name,
-            fontObject = GameFontBlack,
+            name = boss.name,
 
-            onMouseDown = function()
+            onClick = function()
 
+                self.dungeons.lore.artwork:Hide()
                 self.dungeons.lore.history:Hide()
                 self.dungeons.lore.encounterDetails:Show()
 
@@ -515,6 +576,17 @@ function AdventureGuideMixin:AddNavButtonForDungeons()
     NavBar_AddButton(self.navBar, navButtonForDungeon);
 end
 
+function AdventureGuideMixin:AddNavButtonForProfile()
+    local navButtonForProfile = {
+        id = 2,
+        name = "Profile",
+        OnClick = function()
+            self:OpenTo("profile")
+        end,
+    }
+    NavBar_AddButton(self.navBar, navButtonForProfile);
+end
+
 function AdventureGuideMixin:AddNavMenuForDungeon(dungeonInfo)
     local menu = {
         {
@@ -597,11 +669,25 @@ function AdventureGuideMixin:CreateNavButtonForMapZone(mapID)
 
         --DevTools_Dump(instances)
 
-        local instanceMenu = {}
+        local zoneDropdownMenu = {
+            -- {
+            --     text = "Map Icons",
+            --     func = function() end,
+            -- },
+        }
+        -- table.insert(zoneDropdownMenu, createMenuEntry("Herbs", function()
+        
+        -- end))
+        -- table.insert(zoneDropdownMenu, createMenuEntry("Ores", function()
+        
+        -- end))
 
         local navButtonForZone;
 
         if #instances > 0 then
+
+            --table.insert(zoneDropdownMenu, contextMenuSeparator)
+
             for k, instance in ipairs(instances) do
                 local button = {
                     text = instance.name,
@@ -610,13 +696,13 @@ function AdventureGuideMixin:CreateNavButtonForMapZone(mapID)
                         self:AddNavMenuForDungeon(instance)
                     end,
                 }
-                table.insert(instanceMenu, button)
+                table.insert(zoneDropdownMenu, button)
             end
             navButtonForZone = {
                 id = 3,
                 name = info.name,
                 listFunc = function()
-                    return instanceMenu
+                    return zoneDropdownMenu
                 end,
                 OnClick = function()
                     --self.worldMap:SetMapID()
@@ -627,6 +713,9 @@ function AdventureGuideMixin:CreateNavButtonForMapZone(mapID)
             navButtonForZone = {
                 id = 3,
                 name = info.name,
+                -- listFunc = function()
+                --     return zoneDropdownMenu
+                -- end,
                 OnClick = function()
                     self:ShowMapZone(mapID)
                 end,
@@ -793,7 +882,7 @@ end
 ]]
 function AdventureGuideMixin:Quest_OnQuestAccepted(questID)
 
-    print("quest accepted", questID)
+    --print("quest accepted", questID)
 
     -- WorldMapAPI:RemoveQuestGiverPins(questID)
     -- MiniMapAPI:RemoveQuestGiverPins(questID)
@@ -812,13 +901,15 @@ end
 ]]
 function AdventureGuideMixin:Quest_OnQuestCriteriaCompleted(questID)
 
-    print("quest objectives fulfilled")
+    --print("quest objectives fulfilled")
 
     -- WorldMapAPI:RemoveQuestObjectivePins(questID)
     -- MiniMapAPI:RemoveQuestObjectivePins(questID)
 
     WorldMapAPI:AddQuestTurnInsForQuestID(questID, self.worldMap:GetMapID())
     MiniMapAPI:AddQuestTurnInsForQuestID(questID, C_Map.GetBestMapForUnit("player"))
+
+    self:IterNameplates()
 
 end
 
@@ -829,7 +920,7 @@ end
 ]]
 function AdventureGuideMixin:Quest_OnQuestTurnIn(questID)
 
-    print("quest turned in")
+    --print("quest turned in")
 
     -- WorldMapAPI:RemoveQuestTurnInPins(questID)
     -- MiniMapAPI:RemoveQuestTurnInPins(questID)
@@ -880,7 +971,9 @@ function AdventureGuideMixin:Zone_OnChangedNewArea()
         self:LoadMiniMapQuestDataForMapID(mapID)
 
         --WorldMapAPI:AddGatheringNodePinsForMapID(mapID)
-        MiniMapAPI:AddGatheringNodePinsForMapID(mapID, "herbs")
+        --MiniMapAPI:AddGatheringNodePinsForMapID(mapID, "herbs")
+
+        self.questsForCurrentMap = QuestAPI:GetQuestsForMapID(mapID)
     end
 end
 
@@ -901,4 +994,77 @@ end
 
 function AdventureGuideMixin:LoadQuestLogForMapID(mapID)
     self.questLog.treeview.scrollView:SetDataProvider(AdventureGuide.QuestAPI:GenerateQuestTreeDataProviderForMapID(mapID))
+end
+
+
+--move icon management here and just tack on questIDs when nameplates are added
+function AdventureGuideMixin:IterNameplates()
+    local nameplates = C_NamePlate.GetNamePlates()
+    if nameplates and #nameplates > 0 then
+        for _, nameplate in ipairs(nameplates) do
+            if nameplate.AdventureGuideIconQuestIDs then
+                local allQuestsCompleted = true
+                for _, qid in ipairs(nameplate.AdventureGuideIconQuestIDs) do
+                    if not IsQuestComplete(qid) then
+                        allQuestsCompleted = false
+                    end
+                end
+                if allQuestsCompleted then
+                    nameplate.AdventureGuideIcon:Hide()
+                end
+            end
+        end
+    end
+end
+
+
+function AdventureGuideMixin:NamePlate_OnUnitRemoved(unitToken)
+    local unitName = UnitName(unitToken)
+    local nameplate = C_NamePlate.GetNamePlateForUnit(unitToken);
+    if nameplate.AdventureGuideIcon then
+        nameplate.AdventureGuideIcon:Hide()
+        nameplate.AdventureGuideIconQuestIDs = {}
+    end
+end
+
+function AdventureGuideMixin:NamePlate_OnUnitAdded(unitToken)
+
+    local unitName = UnitName(unitToken)
+    local nameplate = C_NamePlate.GetNamePlateForUnit(unitToken);
+    if not nameplate.AdventureGuideIcon then
+        local icon = nameplate:CreateTexture(nil, "OVERLAY")
+        icon:SetPoint("RIGHT", nameplate, "LEFT", -10, 0)
+        icon:SetSize(30, 30)
+        icon:SetAtlas("UI-LFG-RoleIcon-DPS")
+        icon:Hide()
+        nameplate.AdventureGuideIcon = icon;
+    end
+
+    nameplate.AdventureGuideIcon:Hide()
+    nameplate.AdventureGuideIconQuestIDs = {}
+
+    if not self.questsForCurrentMap or (#self.questsForCurrentMap == 0) then
+        local mapID = C_Map.GetBestMapForUnit("player")
+        self.questsForCurrentMap = QuestAPI:GetQuestsForMapID(mapID)
+    end
+
+    for _, questID in ipairs(self.questsForCurrentMap) do
+
+        if not IsQuestComplete(questID) then
+            local npcIDs = QuestAPI:GetQuestNpcObjectiveData(questID)
+            if npcIDs and (#npcIDs > 0) then
+                for _, npcID in ipairs(npcIDs) do
+    
+                    --this is a sucky way to do this but this will need language locales setup to do name checking
+                    if AdventureGuide.NpcData[npcID] and AdventureGuide.NpcData[npcID].name == unitName then
+                        nameplate.AdventureGuideIcon:Show()
+                        table.insert(nameplate.AdventureGuideIconQuestIDs, questID)
+                    else
+                        nameplate.AdventureGuideIcon:Hide()
+                    end
+                end
+            end 
+        end
+    end
+
 end

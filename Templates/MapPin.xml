@@ -31,6 +31,7 @@
             <OnEnter method="OnEnter"/>
             <OnLeave method="OnLeave"/>
             <OnLoad method="OnLoad"/>
+            <!-- <OnUpdate method="OnUpdate"/> -->
         </Scripts>
     </Frame>
 

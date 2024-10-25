@@ -75,7 +75,7 @@
         </Scripts>
     </Button>
 
-    <Frame name="AdventureGuideQuestTracker" mixin="AdventureGuideQuestTrackerMixin" movable="true">
+    <Frame name="AdventureGuideQuestTracker" mixin="AdventureGuideQuestTrackerMixin" movable="true" resizable="true">
         <Anchors>
             <Anchor point="TOPRIGHT" x="-100" y="-200"/>
         </Anchors>
@@ -98,18 +98,25 @@
                     <KeyValue key="itemTemplate" value="AdventureGuideObjectiveTrackerTemplate" type="string"/>
                     <KeyValue key="elementHeight" value="16" type="number"/>
                 </KeyValues>
-                <!-- <Layers>
+                <Layers>
                     <Layer level="BACKGROUND" textureSubLevel="-1">
                         <Texture parentKey="background">
-                            <Color r="0" g="0" b="0" a="0.2"/>
+                            <Color r="0" g="0" b="0" a="0.1"/>
                             <Anchors>
                                 <Anchor point="TOPLEFT" x="0" y="0"/>
                                 <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
                             </Anchors>
                         </Texture>
                     </Layer>
-                </Layers> -->
+                </Layers>
             </Frame>
+            
+            <Button parentKey="resize" inherits="PanelResizeButtonTemplate">
+                <Size x="16" y="16"/>
+                <Anchors>
+                    <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+                </Anchors>
+            </Button>
         </Frames>
         <Layers>
             <Layer level="BACKGROUND" textureSubLevel="-1">

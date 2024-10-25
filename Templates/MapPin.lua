@@ -1,6 +1,15 @@
 local addonName, AdventureGuide = ...;
 
 local Pins = LibStub("HereBeDragons-Pins-2.0");
+local QuestAPI = AdventureGuide.QuestAPI
+
+local function PinResetterFunc(pin)
+    pin.pinData = nil
+    pin.background:SetTexture(nil)
+    pin.mask:Hide()
+    pin.ring:Hide()
+    pin:ClearTooltipFunc()
+end
 
 AdventureGuideMapPoiMixin = {}
 function AdventureGuideMapPoiMixin:OnLoad()
@@ -52,40 +61,56 @@ function AdventureGuideMapPoiMixin:SetPinType()
     
 end
 
+
+function AdventureGuideMapPoiMixin:OnUpdate()
+    if self.pinData and self.pinData.questID then
+        local _, _, classID = UnitClass("player")
+        local _, _, race = UnitRace("player")
+        local level = UnitLevel("player")
+
+        if self.pinData.pinType == "questGiver" then
+            if QuestAPI:IsQuestAvailableForPlayer(self.pinData.questID, classID, race, level) then
+                print(self.pinData.questID, "true")
+            else
+                print(self.pinData.questID, "false")
+            end
+        end
+    else
+        Pins:RemoveMinimapIcon(addonName, self)
+        PinResetterFunc(self)
+    end
+end
+
 function AdventureGuideMapPoiMixin:OnHide()
     
 end
 
 function AdventureGuideMapPoiMixin:Quest_OnQuestLogQuestEntered(questID)
     --print(questID)
-    if self.pinData and self.pinData.questID and (self.pinData.parent == "worldmap") then
+    if self.pinData and self.pinData.questID and (self.pinData.parent == "worldmap") and (self.pinData.pinType == "questObjective") then
         --print("self", self.pinData.questID)
         if (self.pinData.questID == questID) then
             --print("showing", self.pinData.questID)
-            --self:Show()
+            self:Show()
         else
-            --self:Hide()
+            self:Hide()
         end
     end
 end
 
 function AdventureGuideMapPoiMixin:Quest_OnQuestLogQuestLeave()
-    if self.pinData and self.pinData.questID and (self.pinData.parent == "worldmap") then
-        --self:Show()
+    if self.pinData and self.pinData.questID and (self.pinData.parent == "worldmap") and (self.pinData.pinType == "questObjective") then
+        self:Show()
     end
 end
 
 function AdventureGuideMapPoiMixin:CheckDisplayStatus(questID, pinType)
     if self.pinData then
-        if (self.pinData.questID == questID) and (self.pinData.pinType == pinType) then
-            if self.pinData.parent == "minimap" then
-                Pins:RemoveMinimapIcon(addonName, self)
-                --print(string.format("Removed %s pin for %d", pinType, questID))
-            else
-
-            end
+        if (self.pinData.questID == questID) and (self.pinData.pinType == pinType) and (self.pinData.parent == "minimap") then
+            Pins:RemoveMinimapIcon(addonName, self)
+            PinResetterFunc(self)
         end
-    end    
+    end
 end
 
 function AdventureGuideMapPoiMixin:Quest_OnQuestAccepted(questID)

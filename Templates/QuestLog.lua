@@ -64,7 +64,7 @@ function AdventureGuideQuestLogTreeviewItemMixin:OnQuestsChanged()
 
             local completed = C_QuestLog.IsQuestFlaggedCompleted(self.questID)
             if completed then
-                self.label:SetText(string.format("%s %s", CreateAtlasMarkup("common-icon-checkmark", 20, 20), title))
+                self.label:SetText(string.format("%s %s", CreateAtlasMarkup("common-icon-checkmark", 20, 20), title or "-"))
                 return
             end
 

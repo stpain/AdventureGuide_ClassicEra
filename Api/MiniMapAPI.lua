@@ -7,17 +7,6 @@ local Pins = LibStub("HereBeDragons-Pins-2.0");
 local QuestAPI = AdventureGuide.QuestAPI;
 local GatheringNodeAPI = AdventureGuide.GatheringNodeAPI;
 
-local MiniMap = {
-    questGiverPins = {},
-    questTurninPins = {},
-    questObjectivePins = {},
-
-    nodePins = {
-        herbs = {},
-        mining = {},
-    }
-}
-
 local function PinResetterFunc(pool, pin)
     pin.pinData = nil
     pin.background:SetTexture(nil)
@@ -26,7 +15,25 @@ local function PinResetterFunc(pool, pin)
     pin:ClearTooltipFunc()
 end
 
-MiniMap.iconFramePool = CreateFramePool("Frame", Minimap, "AdventureGuideMapPoiTemplate", PinResetterFunc)
+---@class (exact) MiniMap
+---@field questGiverPins table
+---@field questTurninPins table
+---@field questObjectivePins table
+---@field nodePins table
+---@field iconFramePool table
+local MiniMap = {
+    questGiverPins = {},
+    questTurninPins = {},
+    questObjectivePins = {},
+
+    nodePins = {
+        herbs = {},
+        mining = {},
+    },
+
+    iconFramePool = CreateFramePool("Frame", Minimap, "AdventureGuideMapPoiTemplate", PinResetterFunc)
+}
+
 
 function MiniMap:GetXY(pinData)
     return (pinData.x / 100), (pinData.y / 100)
@@ -113,6 +120,7 @@ end
 
 function MiniMap:AddAllQuestGiversForMapID(mapID)
     
+    print("Minimap requesting quests for map")
     local questsForMap = QuestAPI:GetQuestsForMapID(mapID, true)
 
     local index = 1;
@@ -125,11 +133,11 @@ end
 
 function MiniMap:AddNextQuestsForMapID(mapID, currentQuestID)
 
-    print("adding next quests")
+    --print("adding next quests")
     
     local nextQuests = QuestAPI:GetNextQuests(currentQuestID)
 
-    DevTools_Dump(nextQuests)
+    --DevTools_Dump(nextQuests)
 
     if nextQuests and (#nextQuests > 0) then
         local index = 1;
@@ -142,7 +150,12 @@ end
 
 function MiniMap:AddQuestGiversForMapID(mapID, questID)
 
-    print("added", questID)
+    if not questID then
+        return;
+    end
+    if not mapID then
+        return;
+    end
 
     if self.questGiverPins[questID] then
         self:RemoveQuestGiverPins(questID)
@@ -245,7 +258,7 @@ function MiniMap:AddQuestObjectivesForMapID(mapID, questID, forceShow)
 
     if (C_QuestLog.IsOnQuest(questID) and not IsQuestComplete(questID)) or forceShow then
 
-        print("gettign minimap objective data")
+        --print("gettign minimap objective data")
 
         local objectiveData = QuestAPI:GetQuestObjectiveDataForMapID(questID, mapID)
 
@@ -282,11 +295,15 @@ function MiniMap:AddAllQuestObjectivesForMapID(mapID)
     
     local questsForMap = QuestAPI:GetQuestsForMapID(mapID)
 
-    local index = 1;
-    C_Timer.NewTicker(0.1, function()
-        self:AddQuestObjectivesForMapID(mapID, questsForMap[index])
-        index = index + 1
-    end, #questsForMap)
+    for _, questID in ipairs(questsForMap) do
+        self:AddQuestObjectivesForMapID(mapID, questID)
+    end
+
+    -- local index = 1;
+    -- C_Timer.NewTicker(0.1, function()
+    --     self:AddQuestObjectivesForMapID(mapID, questsForMap[index])
+    --     index = index + 1
+    -- end, #questsForMap)
 end
 
 
@@ -311,6 +328,7 @@ function MiniMap:ReleaseGatheringNodesForMapID(mapID, nodeType)
             for _, pin in ipairs(self.nodePins[nodeType][mapID]) do
                 self:RemovePin(pin)
             end
+            self.nodePins[nodeType][mapID] = nil
             return
         end
     end
@@ -319,18 +337,23 @@ function MiniMap:ReleaseGatheringNodesForMapID(mapID, nodeType)
         for _, pin in ipairs(self.nodePins.herbs[mapID]) do
             self:RemovePin(pin)
         end
+        self.nodePins.herbs[mapID] = nil
     end
     if self.nodePins.mining and self.nodePins.mining[mapID] then
         for _, pin in ipairs(self.nodePins.mining[mapID]) do
             self:RemovePin(pin)
         end
+        self.nodePins.mining[mapID] = nil
     end
 
 end
 
 function MiniMap:AddGatheringNodePinsForMapID(mapID, nodeType)
 
-    self:ReleaseGatheringNodesForMapID(mapID)
+    --self:ReleaseGatheringNodesForMapID(mapID)
+    if self.nodePins[nodeType][mapID] then
+        return
+    end
     
     local nodeData = GatheringNodeAPI:GetAllNodesForMapID(nodeType, mapID)
     if nodeData then

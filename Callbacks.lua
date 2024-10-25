@@ -21,4 +21,7 @@ AdventureGuide.CallbackRegistry:GenerateCallbackEvents({
     "Quest_OnQuestLogQuestEntered",
     "Quest_OnQuestLogQuestLeave",
 
+    "NamePlate_OnUnitAdded",
+    "NamePlate_OnUnitRemoved",
+
 })

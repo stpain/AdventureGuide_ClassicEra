@@ -1335,9 +1335,6 @@ AdventureGuide.QuestChainsForMapID = {
 	},
 	[1432] = {
 		{
-			353,
-		},
-		{
 			1655, -- [1]
 		}, -- [1]
 		{
@@ -1379,6 +1376,9 @@ AdventureGuide.QuestChainsForMapID = {
 			468, -- [1]
 			455, -- [2]
 		}, -- [10]
+		{
+			353,
+		},
 		{
 			1338, -- [1]
 		}, -- [11]
@@ -4910,8 +4910,29 @@ AdventureGuide.QuestChainsForMapID = {
 		}, -- [93]
 	},
 	[1438] = {
+
+		--druid quest
+		{
+			3120,
+		},
+		{
+			5925,
+		},
+
+		--hunter quest
+		{
+			3117,
+		},
+
+
+		--Mossy Tumors, starts in Darnassus has npc droppers in thsi mapID
+		{
+			923,
+		},
+
 		{
 			456, -- [1]
+			457,
 		}, -- [1]
 		{
 			458, -- [1]
@@ -5021,6 +5042,9 @@ AdventureGuide.QuestChainsForMapID = {
 		}, -- [28]
 		{
 			4495, -- [1]
+			3519,
+			3521,
+			3522,
 		}, -- [29]
 		{
 			3661, -- [1]
