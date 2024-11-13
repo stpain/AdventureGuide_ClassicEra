@@ -432,8 +432,7 @@ end
 ]]
 function Quest:IsQuestAvailableForPlayer(questID, class, race, level, ignoreCompleted)
 
-    print("----------------------------------------------------")
-    print(string.format("Checking for quest:%d for class %d race %d level %d", questID, class, race, level))
+    AdventureGuide.CallbackRegistry:TriggerEvent("Debug_AddMessage", string.format("Checking for quest:%d for class %d race %d level %d", questID, class, race, level))
 
     --print(questID)
     if not ignoreCompleted and (C_QuestLog.IsQuestFlaggedCompleted(questID) == true) then
@@ -466,7 +465,7 @@ function Quest:IsQuestAvailableForPlayer(questID, class, race, level, ignoreComp
             local markedCompleted = C_QuestLog.IsQuestFlaggedCompleted(v)
             markedCompleted = C_QuestLog.IsQuestFlaggedCompleted(v)
             if markedCompleted == false then
-                print("quest required not completed", v)
+                AdventureGuide.CallbackRegistry:TriggerEvent("Debug_AddMessage", string.format("quest %d required not completed", v))
                 return false;
             end
         end
@@ -490,9 +489,9 @@ function Quest:IsQuestAvailableForPlayer(questID, class, race, level, ignoreComp
 
 
     if questData.class then
-        print("quest data has class value")
+        AdventureGuide.CallbackRegistry:TriggerEvent("Debug_AddMessage", "quest data has class value")
         if questData.class ~= class then
-            print("class not a match")
+            AdventureGuide.CallbackRegistry:TriggerEvent("Debug_AddMessage", "class not a match")
             return false
         end
     end
@@ -514,11 +513,11 @@ function Quest:IsQuestAvailableForPlayer(questID, class, race, level, ignoreComp
     end
 
     if level then
-        print("got level check")
+        AdventureGuide.CallbackRegistry:TriggerEvent("Debug_AddMessage", "got level check")
         if questData.minLevel then
-            print("quest has minLevel")
+            AdventureGuide.CallbackRegistry:TriggerEvent("Debug_AddMessage", "quest has minLevel")
             if level < questData.minLevel then
-                print("level provided to low")
+                AdventureGuide.CallbackRegistry:TriggerEvent("Debug_AddMessage", "level provided to low")
                 return false;
             end
         end

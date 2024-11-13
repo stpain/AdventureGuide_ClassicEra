@@ -108,10 +108,21 @@ end
 
 function AdventureGuideQuestLogTreeviewItemMixin:OnEnter()
     if self.questID and not self.isParent then
+
+        local data = QuestAPI:GetQuestData(self.questID)
+
         GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
         GameTooltip:SetHyperlink(string.format("|Hquest:%d", self.questID))
         GameTooltip:AddLine(" ")
-        GameTooltip:AddLine(self.questID)
+
+        if UnitLevel("player") < data.minLevel then
+            GameTooltip:AddLine(RED_FONT_COLOR:WrapTextInColorCode(string.format("Requires level %d", data.minLevel)))
+            GameTooltip:AddLine(" ")
+        else
+
+        end
+
+        GameTooltip:AddLine(BIND_TRADE_TOOLTIP_COLOR:WrapTextInColorCode(string.format("QuestID: %d", self.questID)))
         GameTooltip:Show()
 
         AdventureGuide.CallbackRegistry:TriggerEvent("Quest_OnQuestLogQuestEntered", self.questID)

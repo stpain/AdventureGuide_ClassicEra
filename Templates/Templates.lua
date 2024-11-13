@@ -329,6 +329,15 @@ function AdventureGuideZoneQuestListviewMixin:OnLeave()
 end
 
 
+AdventureGuideDebugListviewMixin = {}
+function AdventureGuideDebugListviewMixin:SetDataBinding(binding, height)
+    self:SetHeight(height)
+    self.label:SetText(binding.text)
+end
+function AdventureGuideDebugListviewMixin:ResetDataBinding()
+    self.label:SetText(nil)
+end
+
 
 AdventureGuideSimpleIconLabelMixin = {}
 function AdventureGuideSimpleIconLabelMixin:OnLoad()

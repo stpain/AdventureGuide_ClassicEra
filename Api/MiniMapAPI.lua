@@ -103,7 +103,7 @@ end
 
 function MiniMap:RemoveQuestObjectivePins(questID)
     if self.questObjectivePins[questID] then
-        print("got questObjectives table for", questID)
+        --print("got questObjectives table for", questID)
         for _, pin in ipairs(self.questObjectivePins[questID]) do
             self:RemovePin(pin)
         end
@@ -120,7 +120,7 @@ end
 
 function MiniMap:AddAllQuestGiversForMapID(mapID)
     
-    print("Minimap requesting quests for map")
+    --print("Minimap requesting quests for map")
     local questsForMap = QuestAPI:GetQuestsForMapID(mapID, true)
 
     local index = 1;

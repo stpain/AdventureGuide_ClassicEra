@@ -46,6 +46,8 @@ EventFrame:RegisterEvent("PLAYER_LEVEL_CHANGED")
 
 EventFrame:RegisterEvent("NAME_PLATE_UNIT_ADDED")
 
+EventFrame:RegisterEvent('CVAR_UPDATE')
+
 -- EventFrame:RegisterEvent('BANKFRAME_OPENED')
 -- EventFrame:RegisterEvent('BANKFRAME_CLOSED')
 -- EventFrame:RegisterEvent('BAG_UPDATE_DELAYED')
@@ -59,14 +61,13 @@ EventFrame:SetScript("OnEvent", function(self, event, ...)
     end
 end)
 
-function EventFrame:PLAYER_ENTERING_WORLD(isInitial, isReload)
-
-    if isInitial then
-
+function EventFrame:CVAR_UPDATE(cvar, val)
+    if cvar == "uiScale" then
+        AdventureGuide.CallbackRegistry:TriggerEvent("CVarInfo_UiScaleChanged", val)
     end
+end
 
-    SavedVariables:Init()
-    SavedVariables:UpdateDefaults()
+function EventFrame:PLAYER_ENTERING_WORLD(isInitial, isReload)
 
     local name, realm = UnitName("player")
     if not realm then
@@ -77,7 +78,13 @@ function EventFrame:PLAYER_ENTERING_WORLD(isInitial, isReload)
     local _, _, raceID = UnitRace("player")
     local level = UnitLevel("player")
 
-    SavedVariables:NewProfile(nameRealm, classID, level, raceID)
+    --if isInitial then
+        SavedVariables:Init()
+        SavedVariables:UpdateDefaults()
+
+        SavedVariables:NewProfile(nameRealm, classID, level, raceID)
+    --end
+
     local currentProfile = SavedVariables:GetProfile(nameRealm)
     AdventureGuide.ActiveProfile = AdventureGuide.CharacterProfile:CreateFromData(currentProfile)
     if ViragDevTool_AddData then

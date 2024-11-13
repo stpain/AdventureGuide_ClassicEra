@@ -281,7 +281,7 @@ end
 
 function WorldMap:AddAllQuestGiversForMapID(mapID)
     
-    print("Worldmap requesting quests for map")
+    --print("Worldmap requesting quests for map")
     local questsForMap = QuestAPI:GetQuestsForMapID(mapID, true)
 
     for _, questID in ipairs(questsForMap) do

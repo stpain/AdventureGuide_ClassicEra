@@ -5,6 +5,10 @@ AdventureGuide.CallbackRegistry:OnLoad()
 AdventureGuide.CallbackRegistry:GenerateCallbackEvents({
     "SavedVariables_OnInitialized",
 
+    "CVarInfo_UiScaleChanged",
+
+    "Debug_AddMessage",
+
     "Player_OnLevelChanged",
 
     "InternalMap_OnZoneChanged",

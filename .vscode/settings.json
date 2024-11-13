@@ -277,7 +277,15 @@
         "GetKeysArray",
         "nop",
         "DK",
-        "MenuUtil"
+        "MenuUtil",
+        "GAME",
+        "VignetteDataProviderMixin",
+        "QuestDataProviderMixin",
+        "FlightPointDataProviderMixin",
+        "GossipDataProviderMixin",
+        "QuestBlobDataProviderMixin",
+        "EncounterJournalDataProviderMixin",
+        "MapLinkDataProviderMixin"
     ],
     "Lua.runtime.version": "Lua 5.1",
     "Lua.runtime.builtin": {

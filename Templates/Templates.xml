@@ -17,6 +17,29 @@
         <FontHeight val="13"/>
 	</Font>
 
+    <!-- <Frame name="WorldMapFrameTemplate" inherits="MapCanvasFrameTemplate" mixin="WorldMapMixin" virtual="true">
+		<Frames>
+			<Frame parentKey="TitleCanvasSpacerFrame">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="2" y="0"/>
+				</Anchors>
+			</Frame>
+			<ScrollFrame parentKey="ScrollContainer" inherits="MapCanvasFrameScrollContainerTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeKey="$parent.TitleCanvasSpacerFrame" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+					<Anchor point="BOTTOMLEFT" x="0" y="2"/>
+					<Anchor point="RIGHT" relativeKey="$parent.TitleCanvasSpacerFrame"/>
+				</Anchors>
+			</ScrollFrame>
+		</Frames>
+		<Scripts>
+			<OnLoad method="OnLoad"/>
+			<OnShow method="OnShow"/>
+			<OnEvent method="OnEvent"/>
+			<OnHide method="OnHide"/>
+		</Scripts>
+	</Frame> -->
+
     <Frame name="AdventureSmallHighlightButton" mixin="AdventureButtonMixin" virtual="true" enableMouse="true">
         <Size x="25" y="25"/>
         <Layers>
@@ -170,6 +193,19 @@
             <OnLoad method="OnLoad"/>
             <OnLeave method="OnLeave"/>
         </Scripts>
+    </Frame>
+
+    <Frame name="AdventureGuideDebugListviewTemplate" mixin="AdventureGuideDebugListviewMixin" virtual="true">
+        <Layers>
+            <Layer level="OVERLAY">
+                <FontString parentKey="label" inherits="GameFontWhite" justifyH="LEFT">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" x="0" y="0"/>
+                        <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
     </Frame>
 
     <Frame name="AdventureGuideSimpleIconLabelFrame" mixin="AdventureGuideSimpleIconLabelMixin" virtual="true">

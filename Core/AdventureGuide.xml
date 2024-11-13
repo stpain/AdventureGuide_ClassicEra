@@ -24,7 +24,7 @@
     <Frame name="AdventureGuide" mixin="AdventureGuideMixin" ignoreParentScale="false" parent="UIParent" 
         inherits="PortraitFrameTemplate" frameStrata="HIGH" enableMouse="true" movable="true">
         
-        <Size x="1040" y="570"/>
+        <Size x="1040" y="575"/>
         <Anchors>
             <Anchor point="CENTER" x="0" y="0"/>
         </Anchors>
@@ -93,7 +93,7 @@
                 </Anchors>
             </EditBox>
 
-            <Button parentKey="profileButton">
+            <Button parentKey="profileButton" registerForClicks="anyDown">
                 <Size x="24" y="24"/>
                 <Anchors>
                     <Anchor point="LEFT" relativeKey="$parent.searchInputBox" relativePoint="RIGHT" x="40" y="0"/>
@@ -301,44 +301,31 @@
                 frameStrata="HIGH" ignoreParentScale="true" inherits="MapCanvasFrameTemplate">
 
                 <HitRectInsets left="0" right="0" top="-20" bottom="0"/>
-                <Size x="1" y="1"/>
+                <!-- <Size>
+                    <AbsDimension x="835" y="553" />
+                </Size> -->
                 <Anchors>
-                    <Anchor point="TOPLEFT" x="1" y="-24"/>
+                    <Anchor point="TOPLEFT" x="1" y="-25"/>
                     <Anchor point="BOTTOMRIGHT" x="-204" y="2"/>
                 </Anchors>
-                <!-- <Layers>
-                    <Layer level="BACKGROUND">
-                        <Texture setAllPoints="true">
-                            <Color r="0.5" g="0.5" b="0.5" a="0.1"/>
-                        </Texture>
-                    </Layer>
-                </Layers> -->
                 <Frames>
                     <Frame parentKey="BorderFrame"/>
                     <ScrollFrame inherits="MapCanvasFrameScrollContainerTemplate">
 
                     </ScrollFrame>
-                    <!-- <Button parentKey="showHerbs" frameStrata="DIALOG" frameLevel="6" inherits="AdventurePortraitButton">
+                    <!-- 
+                    <Button parentKey="showHerbs" frameStrata="DIALOG" frameLevel="6" inherits="AdventurePortraitButton">
                         <Anchors>
                             <Anchor point="TOPRIGHT" relativeKey="$parent.mapContainer" relativePoint="TOPRIGHT" x="-1" y="-26"/>
                         </Anchors>
                     </Button>
-                    <Button parentKey="showOres" frameStrata="DIALOG" frameLevel="6" inherits="AdventurePortraitButton">
-                        <Anchors>
-                            <Anchor point="RIGHT" relativeKey="$parent.showHerbs" relativePoint="LEFT" x="-6" y="0"/>
-                        </Anchors>
-                    </Button>
-                    <Button parentKey="showQuests" frameStrata="DIALOG" frameLevel="6" inherits="AdventurePortraitButton">
-                        <Anchors>
-                            <Anchor point="RIGHT" relativeKey="$parent.showOres" relativePoint="LEFT" x="-6" y="0"/>
-                        </Anchors>
-                    </Button> -->
+                    -->
                 </Frames>
             </Frame>
 
             <Frame parentKey="questLog" hidden="true">
                 <Anchors>
-                    <Anchor point="TOPLEFT" relativeKey="$parent.worldMap" relativePoint="TOPRIGHT" x="0" y="-28"/>
+                    <Anchor point="TOPLEFT" relativeKey="$parent.worldMap" relativePoint="TOPRIGHT" x="0" y="-24"/>
                     <Anchor point="BOTTOMRIGHT" x="-4" y="2"/>
                 </Anchors>
 
@@ -595,6 +582,34 @@
                     <Anchor point="TOPLEFT" x="3" y="-58"/>
                     <Anchor point="BOTTOMRIGHT" x="-3" y="3"/>
                 </Anchors>
+            </Frame>
+
+            <Frame parentKey="debug" parentArray="views" hidden="true">
+                <Anchors>
+                    <Anchor point="TOPLEFT" x="3" y="-58"/>
+                    <Anchor point="BOTTOMRIGHT" x="-3" y="3"/>
+                </Anchors>
+
+                <Layers>
+                    <Layer>
+                        <Texture parentKey="background" setAllPoints="true" alpha="0.8">
+
+                        </Texture>
+                    </Layer>
+                </Layers>
+
+                <Frames>
+                    <Frame parentKey="listview" inherits="TBDListviewTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" x="10" y="-10"/>
+                            <Anchor point="BOTTOMRIGHT" x="-10" y="-10"/>
+                        </Anchors>
+                        <KeyValues>
+                            <KeyValue key="itemTemplate" value="AdventureGuideDebugListviewTemplate" type="string"/>
+                            <KeyValue key="elementHeight" value="26" type="number"/>
+                        </KeyValues>
+                    </Frame>
+                </Frames>
             </Frame>
 
             <Frame parentKey="profile" parentArray="views" hidden="true">

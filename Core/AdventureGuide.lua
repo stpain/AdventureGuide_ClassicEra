@@ -94,10 +94,14 @@ function AdventureGuideMixin:OnLoad()
         self.tabs[k]:SetScript("OnClick", func)
     end
 
-    self.profileButton:SetScript("OnClick", function()
-        self:OpenTo("profile")
-        self:CreateBaseNavMenu()
-        self:AddNavButtonForProfile()
+    self.profileButton:SetScript("OnClick", function(f, button)
+        if button == "RightButton" then
+            self:OpenTo("debug")
+        else
+            self:OpenTo("profile")
+            self:CreateBaseNavMenu()
+            self:AddNavButtonForProfile()
+        end
     end)
     self.profile.background:SetAtlas(string.format("legionmission-complete-background-%s", select(2, UnitClass("player")):lower()))
 
@@ -111,6 +115,9 @@ function AdventureGuideMixin:OnLoad()
     AdventureGuide.CallbackRegistry:RegisterCallback("Quest_OnQuestRemoved", self.Quest_OnQuestRemoved, self)
     AdventureGuide.CallbackRegistry:RegisterCallback("Quest_OnQuestLogUpdated", self.OnQuestsChanged, self)
     AdventureGuide.CallbackRegistry:RegisterCallback("Quest_OnQuestCriteriaCompleted", self.Quest_OnQuestCriteriaCompleted, self)
+
+    AdventureGuide.CallbackRegistry:RegisterCallback("Debug_AddMessage", self.Debug_AddMessage, self)
+    AdventureGuide.CallbackRegistry:RegisterCallback("CVarInfo_UiScaleChanged", self.CVarInfo_UiScaleChanged, self)
 
     --highlight the specific quest pins
     AdventureGuide.CallbackRegistry:RegisterCallback("Quest_OnQuestLogQuestEntered", self.Quest_OnQuestLogQuestEntered, self)
@@ -127,6 +134,7 @@ function AdventureGuideMixin:OnLoad()
     self.questsForCurrentMap = {}
 
     self.worldMap:SetScript("OnShow", function()
+        DoEmote("READ", nil, true);
         self.questLog:Show()
         local mapID = self.worldMap:GetMapID()
         if mapID then
@@ -136,6 +144,12 @@ function AdventureGuideMixin:OnLoad()
     self.worldMap:SetScript("OnHide", function()
         self.questLog:Hide()
     end)
+
+    C_VignetteInfo = {
+        GetVignettes = function()
+            return {}
+        end,
+    }
 
     self.suggestedZones = {}
     self.suggestedZonesIndex = 1;
@@ -169,6 +183,28 @@ function AdventureGuideMixin:OnLoad()
         end
         self:UpdateSuggestedZone()
     end)
+end
+
+function AdventureGuideMixin:CVarInfo_UiScaleChanged(val)
+    print(string.format("[%s] UI Scale change detected, your world map will look wonky. Reload the UI to make life happy.", addonName))
+
+    local currentScale = GetCurrentScaledResolution()
+    local width, height = GetScreenWidth(), GetScreenHeight()
+    local x, y = self:GetSize()
+    local mx, my = self.worldMap:GetSize()
+
+    --self.worldMap:SetScale(val)
+
+    --print(string.format("current scale %f\nwidth %d height %d\nsize x %s y %s\nmap size x %s y %s", currentScale, width, height, x, y, mx, my))
+end
+
+local debug = false
+function AdventureGuideMixin:Debug_AddMessage(msg)
+    if debug then
+        self.debug.listview.DataProvider:Insert({
+            text = msg
+        })
+    end
 end
 
 local function createMenuEntry(label, func)
@@ -257,13 +293,12 @@ function AdventureGuideMixin:SavedVariables_OnInitialized()
     self.MinimapIcon:Register('AdventureMinimapIcon', self.MinimapButton, SavedVariables.db.minimapButton)
     
 
-    C_Timer.After(5, function()
+    C_Timer.After(3, function()
 
         local mapID = C_Map.GetBestMapForUnit("player")
 
         self:LoadMiniMapQuestDataForMapID(mapID)
 
-        MiniMapAPI:AddGatheringNodePinsForMapID(mapID, "herbs")
     end)
 
 
@@ -281,6 +316,12 @@ function AdventureGuideMixin:InitializeWorldMapFrame()
     self.worldMap:SetShouldNavigateOnClick(true);
     self.worldMap:AddDataProvider(CreateFromMixins(MapHighlightDataProviderMixin))
     self.worldMap:AddDataProvider(CreateFromMixins(MapExplorationDataProviderMixin));
+        --self.worldMap:AddDataProvider(CreateFromMixins(VignetteDataProviderMixin));
+        --self.worldMap:AddDataProvider(CreateFromMixins(FlightPointDataProviderMixin));
+        --self.worldMap:AddDataProvider(CreateFromMixins(GossipDataProviderMixin));
+        --self.worldMap:AddDataProvider(CreateFromMixins(QuestBlobDataProviderMixin));
+        --self.worldMap:AddDataProvider(CreateFromMixins(MapLinkDataProviderMixin));
+        --self.worldMap:AddDataProvider(CreateFromMixins(QuestDataProviderMixin));
     self.worldMap:SetMapID(947)
 
     hooksecurefunc(self.worldMap, "SetMapID", function(f, id)
@@ -322,7 +363,7 @@ function AdventureGuideMixin:InitializeDungeonTab()
     local r, g, b, a = CreateColor(0.002, 0.002, 0.001):GetRGBA()
     self.dungeons.lore.history:GetFontString():SetTextColor(r, g, b, a)
 
-    local xOffset, yOffset = 15, -15
+    local xOffset, yOffset = 10, -20
     local rowLimit, rowCount, numRows = 5, 1, 1;
     local width, height = 200, 120;
     for k, dungeonInfo in ipairs(AdventureGuide.Dungeons) do
@@ -351,6 +392,19 @@ function AdventureGuideMixin:InitializeDungeonTab()
 
 end
 
+function AdventureGuideMixin:GetInstancesForZone(mapID)
+    local t = {}
+    for k, v in ipairs(AdventureGuide.Instances) do
+        if v.zoneID == mapID then
+            local dungeonInfo = C_LFGInfo.GetDungeonInfo(v.instanceID)
+            table.insert(t, {
+                id = v.instanceID,
+                name = dungeonInfo.name,
+            })
+        end
+    end
+    return t;
+end
 
 function AdventureGuideMixin:ToggleDungeonLoreMap(shown)
     self.dungeons.lore:Hide()
@@ -882,16 +936,15 @@ end
 ]]
 function AdventureGuideMixin:Quest_OnQuestAccepted(questID)
 
-    --print("quest accepted", questID)
-
-    -- WorldMapAPI:RemoveQuestGiverPins(questID)
-    -- MiniMapAPI:RemoveQuestGiverPins(questID)
+    local mapID = C_Map.GetBestMapForUnit("player")
+    self:GetNpcDataForZone(mapID)
 
     WorldMapAPI:AddQuestObjectivesForMapID(self.worldMap:GetMapID(), questID, true)
-    MiniMapAPI:AddQuestObjectivesForMapID(C_Map.GetBestMapForUnit("player"), questID, true)
+    MiniMapAPI:AddQuestObjectivesForMapID(mapID, questID, true)
 
     WorldMapAPI:AddQuestTurnInsForQuestID(questID, self.worldMap:GetMapID())
-    MiniMapAPI:AddQuestTurnInsForQuestID(questID, C_Map.GetBestMapForUnit("player"))
+    MiniMapAPI:AddQuestTurnInsForQuestID(questID, mapID)
+
 end
 
 
@@ -901,15 +954,15 @@ end
 ]]
 function AdventureGuideMixin:Quest_OnQuestCriteriaCompleted(questID)
 
-    --print("quest objectives fulfilled")
+    C_Timer.After(0.05, function()
+        local mapID = C_Map.GetBestMapForUnit("player")
+        self:GetNpcDataForZone(mapID)
 
-    -- WorldMapAPI:RemoveQuestObjectivePins(questID)
-    -- MiniMapAPI:RemoveQuestObjectivePins(questID)
+        self:IterAllNameplates()
 
-    WorldMapAPI:AddQuestTurnInsForQuestID(questID, self.worldMap:GetMapID())
-    MiniMapAPI:AddQuestTurnInsForQuestID(questID, C_Map.GetBestMapForUnit("player"))
-
-    self:IterNameplates()
+        WorldMapAPI:AddQuestTurnInsForQuestID(questID, self.worldMap:GetMapID())
+        MiniMapAPI:AddQuestTurnInsForQuestID(questID, mapID)
+    end)
 
 end
 
@@ -920,16 +973,12 @@ end
 ]]
 function AdventureGuideMixin:Quest_OnQuestTurnIn(questID)
 
-    --print("quest turned in")
-
-    -- WorldMapAPI:RemoveQuestTurnInPins(questID)
-    -- MiniMapAPI:RemoveQuestTurnInPins(questID)
-
     --the turn in might then expose the next quest, however the requirements might not be in sync so delay
     C_Timer.After(0.1, function()
         local mapID = C_Map.GetBestMapForUnit("player")
         WorldMapAPI:AddNextQuestsForMapID(mapID, questID)
         MiniMapAPI:AddNextQuestsForMapID(mapID, questID)
+        self:GetNpcDataForZone(mapID)
     end)
 
 end
@@ -940,20 +989,13 @@ end
 ]]
 function AdventureGuideMixin:Quest_OnQuestRemoved(questID)
 
-    print("quest removed", questID)
-
-    -- WorldMapAPI:RemoveQuestObjectivePins(questID)
-    -- MiniMapAPI:RemoveQuestObjectivePins(questID)
-
-    -- WorldMapAPI:RemoveQuestTurnInPins(questID)
-    -- MiniMapAPI:RemoveQuestTurnInPins(questID)
-
     --add back the quest giver icons, only for this quest
-
     C_Timer.After(0.1, function()
+        local mapID = C_Map.GetBestMapForUnit("player")
         if C_QuestLog.IsQuestFlaggedCompleted(questID) == false then
             WorldMapAPI:AddQuestGiversForMapID(self.worldMap:GetMapID(), questID)
-            MiniMapAPI:AddQuestGiversForMapID(C_Map.GetBestMapForUnit("player"), questID)
+            MiniMapAPI:AddQuestGiversForMapID(mapID, questID)
+            self:GetNpcDataForZone(mapID)
         end
     end)
 
@@ -970,46 +1012,50 @@ function AdventureGuideMixin:Zone_OnChangedNewArea()
         self:LoadQuestDataForMapID(mapID)
         self:LoadMiniMapQuestDataForMapID(mapID)
 
-        --WorldMapAPI:AddGatheringNodePinsForMapID(mapID)
-        --MiniMapAPI:AddGatheringNodePinsForMapID(mapID, "herbs")
-
-        self.questsForCurrentMap = QuestAPI:GetQuestsForMapID(mapID)
+        self:GetNpcDataForZone(mapID)
     end
 end
 
+--[[
+    This function creates a table of npc names which are required for the quests in the given map
+    this is used by the nameplate functions to decide if the kill icon should be shown
+]]
+function AdventureGuideMixin:GetNpcDataForZone(mapID)
 
-function AdventureGuideMixin:GetInstancesForZone(mapID)
-    local t = {}
-    for k, v in ipairs(AdventureGuide.Instances) do
-        if v.zoneID == mapID then
-            local dungeonInfo = C_LFGInfo.GetDungeonInfo(v.instanceID)
-            table.insert(t, {
-                id = v.instanceID,
-                name = dungeonInfo.name,
-            })
+    self.npcDataForMapID = {}
+    
+    local questsForMapID = QuestAPI:GetQuestsForMapID(mapID)
+
+    for _, questID in ipairs(questsForMapID) do
+
+        if IsQuestComplete(questID) == false then
+            
+            local npcIDs = QuestAPI:GetQuestNpcObjectiveData(questID)
+            
+            for _, npcID in ipairs(npcIDs) do
+                if AdventureGuide.NpcData[npcID] and AdventureGuide.NpcData[npcID].name then
+                    local localeName = L[AdventureGuide.NpcData[npcID].name] or AdventureGuide.NpcData[npcID].name
+                    self.npcDataForMapID[localeName] = npcID
+                end
+            end
         end
     end
-    return t;
 end
+
+
 
 function AdventureGuideMixin:LoadQuestLogForMapID(mapID)
     self.questLog.treeview.scrollView:SetDataProvider(AdventureGuide.QuestAPI:GenerateQuestTreeDataProviderForMapID(mapID))
 end
 
 
---move icon management here and just tack on questIDs when nameplates are added
-function AdventureGuideMixin:IterNameplates()
+--not great as it uses npc nameplate name text strings
+function AdventureGuideMixin:IterAllNameplates()
     local nameplates = C_NamePlate.GetNamePlates()
     if nameplates and #nameplates > 0 then
         for _, nameplate in ipairs(nameplates) do
-            if nameplate.AdventureGuideIconQuestIDs then
-                local allQuestsCompleted = true
-                for _, qid in ipairs(nameplate.AdventureGuideIconQuestIDs) do
-                    if not IsQuestComplete(qid) then
-                        allQuestsCompleted = false
-                    end
-                end
-                if allQuestsCompleted then
+            if nameplate.UnitFrame and nameplate.UnitFrame.name then
+                if not self.npcDataForMapID[nameplate.UnitFrame.name:GetText()] then
                     nameplate.AdventureGuideIcon:Hide()
                 end
             end
@@ -1019,52 +1065,37 @@ end
 
 
 function AdventureGuideMixin:NamePlate_OnUnitRemoved(unitToken)
-    local unitName = UnitName(unitToken)
     local nameplate = C_NamePlate.GetNamePlateForUnit(unitToken);
     if nameplate.AdventureGuideIcon then
         nameplate.AdventureGuideIcon:Hide()
-        nameplate.AdventureGuideIconQuestIDs = {}
+    end
+end
+
+local function AddNamePlateIcon(nameplate)
+    if not nameplate.AdventureGuideIcon then
+        local icon = nameplate:CreateTexture(nil, "OVERLAY")
+        icon:SetPoint("RIGHT", nameplate, "LEFT", -10, 0)
+        icon:SetSize(26, 26)
+        icon:SetAtlas("UI-LFG-RoleIcon-DPS")
+        icon:Hide()
+        nameplate.AdventureGuideIcon = icon;
     end
 end
 
 function AdventureGuideMixin:NamePlate_OnUnitAdded(unitToken)
 
+    local mapID = C_Map.GetBestMapForUnit("player")
+    self:GetNpcDataForZone(mapID)
+
     local unitName = UnitName(unitToken)
     local nameplate = C_NamePlate.GetNamePlateForUnit(unitToken);
-    if not nameplate.AdventureGuideIcon then
-        local icon = nameplate:CreateTexture(nil, "OVERLAY")
-        icon:SetPoint("RIGHT", nameplate, "LEFT", -10, 0)
-        icon:SetSize(30, 30)
-        icon:SetAtlas("UI-LFG-RoleIcon-DPS")
-        icon:Hide()
-        nameplate.AdventureGuideIcon = icon;
+
+    AddNamePlateIcon(nameplate)
+
+    if self.npcDataForMapID and self.npcDataForMapID[unitName] then
+        nameplate.AdventureGuideIcon:Show()
     end
 
-    nameplate.AdventureGuideIcon:Hide()
-    nameplate.AdventureGuideIconQuestIDs = {}
-
-    if not self.questsForCurrentMap or (#self.questsForCurrentMap == 0) then
-        local mapID = C_Map.GetBestMapForUnit("player")
-        self.questsForCurrentMap = QuestAPI:GetQuestsForMapID(mapID)
-    end
-
-    for _, questID in ipairs(self.questsForCurrentMap) do
-
-        if not IsQuestComplete(questID) then
-            local npcIDs = QuestAPI:GetQuestNpcObjectiveData(questID)
-            if npcIDs and (#npcIDs > 0) then
-                for _, npcID in ipairs(npcIDs) do
-    
-                    --this is a sucky way to do this but this will need language locales setup to do name checking
-                    if AdventureGuide.NpcData[npcID] and AdventureGuide.NpcData[npcID].name == unitName then
-                        nameplate.AdventureGuideIcon:Show()
-                        table.insert(nameplate.AdventureGuideIconQuestIDs, questID)
-                    else
-                        nameplate.AdventureGuideIcon:Hide()
-                    end
-                end
-            end 
-        end
-    end
+    self:IterAllNameplates()
 
 end
