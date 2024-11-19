@@ -56,6 +56,25 @@ function AdventureGuideQuestLogTreeviewItemMixin:SetDataBinding(binding, height)
     self:OnQuestsChanged()
 end
 
+StaticPopupDialogs.wowheadQuestDialog = {
+    text = "wowhead quest link",
+    button1 = "OK",
+    --button2 = 'Cancel',
+    OnAccept = function(self)
+
+    end,
+    OnShow = function(self, data)
+        self.editBox:SetText(string.format("https://www.wowhead.com/classic/quest=%d", data.questID))
+        self.editBox:HighlightText()
+    end,
+    hasEditBox = true,
+    timeout = 0,
+    whileDead = true,
+    hideOnEscape = false,
+    preferredIndex = 3,
+    showAlert = 1,
+}
+
 function AdventureGuideQuestLogTreeviewItemMixin:OnQuestsChanged()
     if self.questID then
 
@@ -88,6 +107,12 @@ function AdventureGuideQuestLogTreeviewItemMixin:OnQuestsChanged()
                 self.label:SetText(string.format("%s %s", CreateAtlasMarkup("QuestNormal", 20, 20), title))
                 return
             end
+
+            self:HookScript("OnMouseDown", function(_, button)
+                if button == "RightButton" then
+                    StaticPopup_Show("wowheadQuestDialog", nil, nil, { questID = self.questID})
+                end
+            end)
         end
 
         self.label:SetText(C_QuestLog.GetQuestInfo(self.questID))

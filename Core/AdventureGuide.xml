@@ -31,11 +31,20 @@
 
         <Layers>
             <Layer level="BACKGROUND">
-                <Texture atlas="_Options_ListExpand_Middle">
-                    <Size y="36"/>
+                <Texture atlas="_Options_ListExpand_Middle" horizTile="true">
+                    <Size y="40"/>
                     <Anchors>
                         <Anchor point="TOPLEFT" x="3" y="-22"/>
                         <Anchor point="TOPRIGHT" x="-2" y="-22"/>
+                    </Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="OVERLAY" textureSubLevel="7">
+                <Texture atlas="_GeneralFrame-HorizontalBar" horizTile="true">
+                    <Size y="8"/>
+                    <Anchors>
+                        <Anchor point="TOPLEFT" x="3" y="-60"/>
+                        <Anchor point="TOPRIGHT" x="-2" y="-60"/>
                     </Anchors>
                 </Texture>
             </Layer>
@@ -305,8 +314,19 @@
                     <AbsDimension x="835" y="553" />
                 </Size> -->
                 <Anchors>
-                    <Anchor point="TOPLEFT" x="1" y="-25"/>
-                    <Anchor point="BOTTOMRIGHT" x="-204" y="2"/>
+
+                    <!-- UI scale at 80% -->
+                    <!-- <Anchor point="TOPLEFT" x="1" y="-27"/>
+                    <Anchor point="BOTTOMRIGHT" x="-216" y="2"/> -->
+
+                    <!-- UI scale at 65% -->
+                    <!-- <Anchor point="TOPLEFT" x="1" y="-22"/>
+                    <Anchor point="BOTTOMRIGHT" x="-180" y="2"/> -->
+
+
+                    <!-- UI scale at 100% -->
+                    <Anchor point="TOPLEFT" x="1" y="-48"/>
+                    <Anchor point="BOTTOMRIGHT" x="-280" y="2"/>
                 </Anchors>
                 <Frames>
                     <Frame parentKey="BorderFrame"/>
@@ -325,7 +345,7 @@
 
             <Frame parentKey="questLog" hidden="true">
                 <Anchors>
-                    <Anchor point="TOPLEFT" relativeKey="$parent.worldMap" relativePoint="TOPRIGHT" x="0" y="-24"/>
+                    <Anchor point="TOPLEFT" relativeKey="$parent.worldMap" relativePoint="TOPRIGHT" x="0" y="-20"/>
                     <Anchor point="BOTTOMRIGHT" x="-4" y="2"/>
                 </Anchors>
 
@@ -342,8 +362,8 @@
                     <Layer level="BACKGROUND">
                         <Texture parentKey="headerBackground" atlas="StoryHeader-BG">
                             <Anchors>
-                                <Anchor point="TOPLEFT" x="-3" y="0"/>
-                                <Anchor point="TOPRIGHT" x="5" y="0"/>
+                                <Anchor point="TOPLEFT" x="-8" y="0"/>
+                                <Anchor point="TOPRIGHT" x="8" y="0"/>
                             </Anchors>
                             <Size y="68"/>
                         </Texture>
@@ -351,8 +371,8 @@
                     <Layer level="BACKGROUND" textureSubLevel="-1">
                         <Texture parentKey="background" atlas="QuestLogBackground"> <!-- NoQuestsBackground -->
                             <Anchors>
-                                <Anchor point="TOPLEFT" x="0" y="-40"/>
-                                <Anchor point="TOPRIGHT" x="0" y="-40"/>
+                                <Anchor point="TOPLEFT" x="0" y="-48"/>
+                                <Anchor point="TOPRIGHT" x="0" y="-48"/>
                                 <Anchor point="BOTTOM" x="0" y="0"/>
                             </Anchors>
                         </Texture>
@@ -361,7 +381,7 @@
                     <Layer level="OVERLAY">
                         <FontString parentKey="mapNameLabel" inherits="GameFontNormalLarge">
                             <Anchors>
-                                <Anchor point="TOPLEFT" x="0" y="0"/>
+                                <Anchor point="TOPLEFT" x="0" y="-6"/>
                                 <Anchor point="TOPRIGHT" x="0" y="0"/>
                             </Anchors>
                             <Size y="22"/>
@@ -379,7 +399,7 @@
                 <Frames>
                     <Frame parentKey="treeview" inherits="TBDTreeviewTemplate">
                         <Anchors>
-                            <Anchor point="TOPLEFT" x="2" y="-48"/>
+                            <Anchor point="TOPLEFT" x="2" y="-56"/>
                             <Anchor point="BOTTOMRIGHT" x="0" y="1"/>
                         </Anchors>
                         <KeyValues>

@@ -185,13 +185,61 @@ function AdventureGuideMixin:OnLoad()
     end)
 end
 
+local mapDefaultPositions = {
+    [100] = {
+        TOPLEFT = {1, -48},
+        BOTTOMRIGHT = {-280, 2},
+    },
+    [65] = {
+        TOPLEFT = {1, -22},
+        BOTTOMRIGHT = {-180, 2},
+    },
+}
 function AdventureGuideMixin:CVarInfo_UiScaleChanged(val)
-    print(string.format("[%s] UI Scale change detected, your world map will look wonky. Reload the UI to make life happy.", addonName))
+    --print(string.format("[%s] UI Scale change detected, your world map will look wonky. Reload the UI to make life happy.", addonName))
 
-    local currentScale = GetCurrentScaledResolution()
-    local width, height = GetScreenWidth(), GetScreenHeight()
-    local x, y = self:GetSize()
-    local mx, my = self.worldMap:GetSize()
+
+    --[[
+    
+        massive PITA
+    
+    ]]
+
+    val = tonumber(val)
+
+    if val ~= 1 then
+
+        local newX = (-280 * val)
+        local newY = (-48 * val)
+
+        -- if val > 1 then
+        
+        --     newX = (-280 * val) - ((1-val) * 10)
+        --     newY = (-48 * val) - ((1-val) * 10)
+        -- else
+
+        --     newX = (-280 * val) - ((1-val) * 10)
+        --     newY = (-48 * val) - ((1-val) * 10)
+        -- end
+        
+
+        self.worldMap:ClearAllPoints()
+        self.worldMap:SetPoint("TOPLEFT", mapDefaultPositions[100].TOPLEFT[1], newY)
+        self.worldMap:SetPoint("BOTTOMRIGHT", newX, mapDefaultPositions[100].BOTTOMRIGHT[2])
+
+    else
+        self.worldMap:ClearAllPoints()
+        self.worldMap:SetPoint("TOPLEFT", mapDefaultPositions[100].TOPLEFT[1], mapDefaultPositions[100].TOPLEFT[2])
+        self.worldMap:SetPoint("BOTTOMRIGHT", mapDefaultPositions[100].BOTTOMRIGHT[1], mapDefaultPositions[100].BOTTOMRIGHT[2])
+    end
+
+
+
+    -- local currentScale = GetCurrentScaledResolution()
+    -- local width, height = GetScreenWidth(), GetScreenHeight()
+    -- local x, y = self:GetSize()
+    -- local mx, my = self.worldMap:GetSize()
+
 
     --self.worldMap:SetScale(val)
 
@@ -329,6 +377,9 @@ function AdventureGuideMixin:InitializeWorldMapFrame()
     end)
 
     WorldMapAPI:Init(self.worldMap)
+
+    local uiScale = C_CVar.GetCVar("uiScale")
+    self:CVarInfo_UiScaleChanged(uiScale)
 end
 
 
