@@ -2,683 +2,743 @@
 
 local _, AdventureGuide = ...;
 
-local Quest = CreateFromMixins(DataProviderMixin)
+local json = LibStub('JsonLua-1.0');
 
 
---[[
+local QuestDataProvider = {}
 
 
-    classID|raceID|level
+local Quest = {}
 
-
-
-]]
-
-
-local classBitMasks = {
-    [1]     = tonumber(0000000001, 2),
-    [2]     = tonumber(0000000010, 2),
-    [3]     = tonumber(0000000100, 2),
-    [4]     = tonumber(0000001000, 2),
-    [5]     = tonumber(0000010000, 2),
-    [6]     = tonumber(0000100000, 2),
-    [7]     = tonumber(0001000000, 2),
-    [8]     = tonumber(0010000000, 2),
-    [9]     = tonumber(0100000000, 2),
-    [11]    = tonumber(1000000000, 2),
-}
-
-local raceBitMasks = {
-    [1]     = tonumber(0000000001, 2),
-    [2]     = tonumber(0000000010, 2),
-    [3]     = tonumber(0000000100, 2),
-    [4]     = tonumber(0000001000, 2),
-    [5]     = tonumber(0000010000, 2),
-    [6]     = tonumber(0000100000, 2),
-    [7]     = tonumber(0001000000, 2),
-    [8]     = tonumber(0010000000, 2),
-
-
-    ["allianceQuest"] = tonumber(0001001101, 2),
-    ["hordeQuest"] = tonumber(0010110010, 2),
-}
-
-
-function Quest:GenerateQuestBitMasks()
-
-    --ADVENTURE_GUIDE_GLOBAL
-
-    self.bitChecks = {}
-    
-    for kqid, questInfo in pairs(AdventureGuide.RawQuestData) do
-
-        --if this quest has a classID requirement then grab the bit string for it
-        --otherwise it must be for all classes so return full 1's
-        local classBits = questInfo.class and classBitMasks[questInfo.class] or tonumber(1111111111, 2);
-
-        --same for raceIDs
-        local raceBits = questInfo.race and raceBitMasks[questInfo.race] or tonumber(1111111111, 2);
-    
-        self.bitChecks[questInfo.questID] = {
-            classBits = classBits,
-            raceBits = raceBits,
-        }
-
-        --add for faction quests
-        -- if questInfo.race == "allianceQuest" then
-        --     raceBits = raceID.allianceQuest
-        -- elseif questInfo.race == "hordeQuest" then
-        --     raceBits = raceID.hordeQuest
+function Quest:Init()
+    local decodedQuestJson = json.decode(AdventureGuide.QuestData)
+    --local count = 0
+    --local maxRewwards, maxChoicerewards = 0, 0
+    for k, v in ipairs(decodedQuestJson) do
+        QuestDataProvider[v.QuestID] = v;
+        --count = count + 1
+        -- if #v.ChoiceRewards > maxChoicerewards then
+        --     maxRewwards = #v.Rewards
+        --     maxChoicerewards = #v.ChoiceRewards
         -- end
-
-
-
     end
+    --print(count)
+    --print(maxRewwards, maxChoicerewards)
+end
+
+
+local questInvalidatingData = {
+    [163] = {5,}, --raven hill - jitters growling gut
+}
+local function HasQuestBeenMadeUnavailable(questID)
+    local blockingQuests = questInvalidatingData[questID]
+    if blockingQuests then
+        local ret = false
+        for _, id in ipairs(blockingQuests) do
+            if C_QuestLog.IsQuestFlaggedCompleted(id) == true then
+                ret = true
+            end
+        end
+        return ret
+    else
+        local questData = QuestDataProvider[questID]
+        if questData and (#questData.Series > 0) then
+            local thisQuestSeriesKey;
+            for k, id in ipairs(questData.Series) do
+                if id == questID then
+                    thisQuestSeriesKey = k
+                end
+            end
+            if thisQuestSeriesKey > 1 then
+                local preQuestID = questData.Series[thisQuestSeriesKey - 1]
+                if preQuestID and (C_QuestLog.IsQuestFlaggedCompleted(preQuestID) == true) then
+                    return true
+                end
+            end
+        end
+    end
+    return false
 end
 
 
 
+local function IsRequiredQuestComplete(questID)
+    local questData = QuestDataProvider[questID]
+    if questData then
+        --local requiredQuests = LuaStringToTable(questData.RequiredQuests)
+        local requiredQuests = questData.RequiredQuests
+        if #requiredQuests == 0 then
+            --local series = LuaStringToTable(questData.Series)
+            local series = questData.Series
+            if #series == 0 then
+              return true
+            else
+              local allCompleted = true
+              for k, _questID in ipairs(series) do
+                if _questID == questID then
+                    return allCompleted
+                else
+                    local isQuestCompleted = C_QuestLog.IsQuestFlaggedCompleted(_questID)
+                    if isQuestCompleted == false then
+                        allCompleted = false
+                    end
+                end
+              end
+            end
+        else
+            local allCompleted = true
+            for _, _questID in ipairs(requiredQuests) do
+                local isQuestCompleted = C_QuestLog.IsQuestFlaggedCompleted(_questID)
+                if isQuestCompleted == false then
+                    allCompleted = false
+                end
+            end
+            return allCompleted;
+        end
+    end
+end
 
-function Quest:CreateDataTable()
+
+local function CanClassDoQuest(classID, questID)
+    --print("class check: "..classID.. " "..(questID or questClassInfo))
+    local questData = QuestDataProvider[questID]
+    if questData then
+
+        if #questData.Classes == 0 then
+            return true
+        end
+        for k, v in ipairs(questData.Classes) do
+            if v == classID then
+                return true
+            end
+        end
+
+        local _, className = GetClassInfo(classID)
+        if questData.SubCategory == className:lower() then
+            return true
+        end
+    end
+end
+
+local function CanRaceDoQuest(raceID, questID)
+    --print("race check: "..raceID.. " "..(questID or questRaceInfo))
+    local questData = QuestDataProvider[questID]
+    if questData then
+        if #questData.Races == 0 then
+            return true
+        end
+        for k, v in ipairs(questData.Races) do
+            if v == raceID then
+                return true
+            end
+        end
+    end
+end
+
+local function CanFactionDoQuest(faction, questID)
+    --print("faction check: "..faction.." "..questID)
+    local questData = QuestDataProvider[questID]
+    if questData.Faction == "Both" then
+        return true
+    else
+        if questData.Faction == faction then
+            return true
+        end
+    end
+    return false
+end
+
+local function DoesNpcExistForMapID(npcID, mapID)
+    local npcData = AdventureGuide.NpcData[npcID]
+    if npcData and npcData.spawnLocations and npcData.spawnLocations[mapID] then
+        return true, npcData.spawnLocations[mapID]
+    end
+    return false
+end
+
+local function DoesObjectExistForMapID(objectID, mapID)
+    local objectData = AdventureGuide.ObjectData[objectID]
+    if objectData and objectData.spawnLocations and objectData.spawnLocations[mapID] then
+        return true, objectData.spawnLocations[mapID]
+    end
+    return false
+end
+
+local function IsQuestAvailableForType(questID, questTypes)
+    local questData = QuestDataProvider[questID]
+    if questData then
+        if questTypes and (questTypes[questData.Type]) then
+            return true
+        end
+    end
+end
+
+local xpReductions = {
+    [6] = function(xp)
+        return xp * 0.8
+    end,
+    [7] = function(xp)
+        return xp * 0.6
+    end,
+    [8] = function(xp)
+        return xp * 0.4
+    end,
+    [9] = function(xp)
+        return xp * 0.2
+    end,
+}
+
+function Quest:GetQuestXPForLevel(questID, unitLevel)
+
+    local questData = QuestDataProvider[questID]
+    if questData then
+        
+        if unitLevel <= (questData.Level + 5) then
+            return questData.XP
+
+        elseif unitLevel >= (questData.Level + 10) then
+            return questData.XP * 0.1
+
+        else
+            if xpReductions[unitLevel - questData.Level] then
+                return xpReductions[unitLevel - questData.Level](questData.XP)
+            end
+        end
+    end
+
+    return 0
+
+end
+
+function Quest:IsQuestRepeatable(questID)
+    local questData = QuestDataProvider[questID]
+    if questData then
+        return questData.Repeatable
+    end
+    return false
+end
+
+function Quest:IsQuestEnabled(questID, profile)
+    local questData = QuestDataProvider[questID]
+    if questData then
+        local unitLevel, unitClass, unitRace, unitFaction = profile:GetQuestEligibilityData()
+
+        if CanFactionDoQuest(unitFaction, questID) and CanClassDoQuest(unitClass, questData.QuestID) and CanRaceDoQuest(unitRace, questData.QuestID) then
+
+            if IsRequiredQuestComplete(questID) then
+                return true
+            end
+
+        end
+    end
+    return false
+end
+
+local importantQuestCategories = {
+    classes = true,
+}
+-- local importantQuestCategoriesMetatable = {
+--     __index = function(t, k)
+--         if not t[k] then
+--             return false
+--         end
+--     end,
+-- }
+function Quest:IsQuestImportant(questID)
+    local questData = QuestDataProvider[questID]
+    if questData then
+        if importantQuestCategories[questData.Category] then
+            return true
+        end
+    end
+    return false
+end
+
+--find any quests that become available after this quest has been completed and turned in, if passed a profile will check eligibility against that profile
+function Quest:DoesQuestExposeNewQuests(questID, profile)
+    local questData = QuestDataProvider[questID]
     local t = {}
-    for questID, questData in pairs(AdventureGuide.RawQuestData) do
-        table.insert(t, questData)
+    if questData then
+        --local unlocks = LuaStringToTable(questData.UnlocksQuests)
+        local unlocks = questData.UnlocksQuests
+        if #unlocks > 0 then
+            for k, v in ipairs(unlocks) do
+                table.insert(t, v)
+            end
+        end
+        --local series = LuaStringToTable(questData.Series)
+        local series = questData.Series
+        if #series > 0 then
+            for k, v in ipairs(series) do
+                if v == questID then
+                    if k < #series then
+                        table.insert(t, series[k+1])
+                    end
+                end
+            end
+        end
+    end
+    if profile then
+        local ret = {}
+        local l, c, r, f = profile:GetQuestEligibilityData()
+        for _, qid in ipairs(t) do
+            local qd = QuestDataProvider[qid]
+            if qd then
+                if (qd.RequiresLevel <= l) and CanClassDoQuest(c, qid) and CanRaceDoQuest(r, qid) and CanFactionDoQuest(f, qid) then
+                    table.insert(ret, qid)
+                end
+            end
+        end
+        return ret
+    end
+    return t
+end
+
+function Quest:IterAllQuests()
+    return pairs(QuestDataProvider)
+end
+
+function Quest:GetAllQuests()
+    local t = {}
+    for _, d in pairs(QuestDataProvider) do
+        table.insert(t, d)
     end
     return t;
 end
 
-function Quest:GetQuestChainsForMapID(mapID)
-    return AdventureGuide.QuestChainsForMapID[mapID] or {}
-end
-
-function Quest:GetQuestChainForQuestID(questID)
-    for mapID, chains in pairs(AdventureGuide.QuestChainsForMapID) do
-        for _, chain in ipairs(chains) do
-            if tContains(chain, questID) then
-                return chain, mapID
-            end
-        end
+function Quest:GetQuestData(questID)
+    local questData = QuestDataProvider[questID]
+    if questData then
+        return questData;
     end
 end
 
-function Quest:GetNextQuests(questID)
-
-    --print("getting next quests for", questID)
-
-    local ret = {}
-
-    local questChain = self:GetQuestChainForQuestID(questID)
-    if questChain then
-        for k, qid in ipairs(questChain) do
-            if qid == questID then
-                if questChain[k+1] then
-                    table.insert(ret, questChain[k+1])
+function Quest:GetQuestsForMapID(mapID, questTypes)
+    local t = {}
+    local mapName = AdventureGuide.Constants.MapZoneIdToName[mapID]
+    if mapName then
+        for k, questData in pairs(QuestDataProvider) do
+            if questData.SubCategory == mapName then
+                if questTypes and (questTypes[questData.Type]) then
+                    table.insert(t, questData)
+                else
+                    table.insert(t, questData)
                 end
             end
         end
     end
-
-    local questInfo = self:GetQuestData(questID)
-    --DevTools_Dump(questInfo)
-    if questInfo and questInfo.nextQuest then
-        table.insert(ret, questInfo.nextQuest)
-    end
-
-    for kqid, questData in pairs(AdventureGuide.RawQuestData) do
-        if questData.requiredQuest and tContains(questData.requiredQuest, questID) then
-            table.insert(ret, questData.questID)
-        end
-    end
-
-    local temp = {}
-    for k, v in ipairs(ret) do
-        temp[v] = true
-    end
-
-    ret = GetKeysArray(temp)
-
-    --DevTools_Dump(ret)
-
-    return ret;
+    return t;
 end
 
-function Quest:GetAllQuestsForMapID(mapID)
-    
-    local questIDs = {}
-
-    --for _, questData in self:EnumerateEntireRange() do
-    for _, questData in pairs(AdventureGuide.RawQuestData) do
-        if not questIDs[questData.questID] then
-            if (questData.startMapID == mapID) or (questData.finishMapID == mapID) then
-                questIDs[questData.questID] = true
+function Quest:GetQuestsByKeyValue(key, val, partial)
+    local t = {}
+    for questID, questData in pairs(QuestDataProvider) do
+        if partial then
+            if questData[key]:find(val, nil, true) then
+                table.insert(t, questData)
             end
+        else
+            if questData[key] == val then
+                table.insert(t, questData)
+            end
+        end
+    end
+    return t;
+end
 
-            --[[
-                quest objectives could contain the following keys
-                npc, a table of npcIDs [AdventureGuide.NpcData]
-                area, a table of [mapID] = { x, y}
-                item, a table of itemIDs [AdventureGuide.ItemData]
-            ]]--
-            
-            if questData.objectives then
-                if questData.objectives.npc then
-                    for k, npcID in ipairs(questData.objectives.npc) do
-                        if self:IsNpcLocatedInMapID(npcID, mapID) then
-                            questIDs[questData.questID] = true
+function Quest:GetAllQuestsByCategory(category)
+    local t = {}
+    for questID, questData in pairs(QuestDataProvider) do
+        if (questData.Category == category) then
+            table.insert(t, questData)
+        end
+    end
+    return t;
+end
+
+function Quest:GetAllQuestsBySubCategory(category, subCategory)
+    local t = {}
+    for questID, questData in pairs(QuestDataProvider) do
+        if (questData.Category == category) and (questData.SubCategory == subCategory) then
+            table.insert(t, questData)
+        end
+    end
+    return t;
+end
+
+function Quest:GetQuestObjectiveDataForMapID(mapID, questTable)
+    
+    local t = {
+        npc = {},
+        items = {
+            npc = {},
+            object = {},
+        },
+        object = {},
+    }
+
+    for k, questID in ipairs(questTable) do
+
+        if (IsQuestComplete(questID) == false) and (C_QuestLog.IsQuestFlaggedCompleted(questID) == false) then
+
+            local questData = QuestDataProvider[questID]
+            if questData then
+
+                --check npcs
+                if questData.Objectives and questData.Objectives.npc then
+                    for npcID, count in pairs(questData.Objectives.npc) do
+                        local npcExist, locationData = DoesNpcExistForMapID(tonumber(npcID), mapID)
+                        if npcExist then
+                            table.insert(t.npc, {
+                                npcID = npcID,
+                                locationData = locationData,
+                                questID = questID,
+                            })
                         end
                     end
                 end
 
-                --[[
-                    might need to check area and item/object?
-                ]]
-            end
+                --check items
+                if questData.Objectives and questData.Objectives.item then
+                    for itemID, count in pairs(questData.Objectives.item) do
+                        local itemData = AdventureGuide.ItemData[tonumber(itemID)]
+                        if itemData and itemData.dropsFrom[1] then
+                            --drops fom an npc
+                            for _, npcID in ipairs(itemData.dropsFrom[1]) do
+                                local npcExist, locationData = DoesNpcExistForMapID(npcID, mapID)
+                                if npcExist then
+                                    table.insert(t.items.npc, {
+                                        npcID = npcID,
+                                        locationData = locationData,
+                                        questID = questID,
+                                    })
+                                end
+                            end
+                        end
+                        if itemData and itemData.dropsFrom[2] then
+                            --drops from an object
+                            for _, objectID in ipairs(itemData.dropsFrom[2]) do
+                                local objectExists, locationData = DoesObjectExistForMapID(objectID, mapID)
+                                if objectExists then
+                                    table.insert(t.items.object, {
+                                        objectID = objectID,
+                                        locationData = locationData,
+                                        questID = questID,
+                                    })
+                                end
+                            end
+                        end
+                    end
+                end
 
+                --check objects
+                if questData.Objectives and questData.Objectives.object then
+                    for objectID, count in pairs(questData.Objectives.object) do
+                        local objectExists, locationData = DoesObjectExistForMapID(tonumber(objectID), mapID)
+                        if objectExists then
+                            table.insert(t.object, {
+                                objectID = objectID,
+                                locationData = locationData,
+                                questID = questID,
+                            })
+                        end
+                    end
+                end
+
+            end
 
         end
     end
 
-    return GetKeysArray(questIDs)
+    return t
 end
 
-function Quest:GetQuestCompletedInfoForMapID(mapID)
-
-    local _, _, classID = UnitClass("player")
-    local _, _, race = UnitRace("player")
-    --local level = UnitLevel("player")
-
-    local questIDs = self:GetAllQuestsForMapID(mapID)
-
+function Quest:GetQuestCountsForMapID(mapID, unitLevel, unitClass, unitRace, unitFaction)
     local numQuests, numQuestsCompleted = 0, 0;
 
-    for k, questID in ipairs(questIDs) do
-        if self:IsQuestAvailableForPlayer(questID, classID, race, nil, true) then
-            numQuests = numQuests + 1
-            if C_QuestLog.IsQuestFlaggedCompleted(questID) then
-                numQuestsCompleted = numQuestsCompleted + 1;
+    local questsForMap = self:GetQuestsForMapID(mapID)
+
+    for _, questData in ipairs(questsForMap) do
+
+        --local questData = QuestDataProvider[questID]
+
+        --this will need a profile quest complete system but for now just use per current player
+        --local questIsCompleted = C_QuestLog.IsQuestFlaggedCompleted(questID)
+
+        --some odd quests can be filtered out
+        if (questData.Repeatable == false) and (questData.Category ~= "world-events") and (questData.SubCategory ~= "uncategorized") and CanFactionDoQuest(unitFaction, questData.QuestID) and CanClassDoQuest(unitClass, questData.QuestID) and CanRaceDoQuest(unitRace, questData.QuestID) then
+            
+            numQuests = numQuests + 1;
+
+            local completed = C_QuestLog.IsQuestFlaggedCompleted(questData.QuestID)
+            local isOnQuest = C_QuestLog.IsOnQuest(questData.QuestID)
+
+            if completed then
+                numQuestsCompleted = numQuestsCompleted + 1
             end
+            if isOnQuest and (IsQuestComplete(questData.QuestID) == true) then
+                numQuestsCompleted = numQuestsCompleted + 1
+            end
+
         end
     end
 
-    return numQuests, numQuestsCompleted;
+    return numQuests, numQuestsCompleted
 end
 
-function Quest:GetQuestNpcObjectiveData(questID)
+function Quest:GetQuestGiverForQuestAndMapID(questID, mapID, profile)
+    local questData = QuestDataProvider[questID]
+    if questData then
 
-    if C_QuestLog.IsOnQuest(questID) ~= true then
-        return {}
-    end
-    
-    local questData = self:GetQuestData(questID)
-
-    local ret = {}
-
-    if questData.objectives then
-
-        if questData.objectives.npc then
-
-            for k, npcID in ipairs(questData.objectives.npc) do
-                table.insert(ret, npcID)
+        if profile then
+            if profile:IsQuestTurnedIn(questID) == true then
+                return {}
             end
         end
+
+        if questData.StartType == "npc" then
+            local npcExistsForMapID, npcLocationData = DoesNpcExistForMapID(questData.Start, mapID)
+            if npcExistsForMapID then
+                return {{
+                    giver = "npc",
+                    questID = questID,
+                    locationData = npcLocationData,
+                }}
+            end
+
+        elseif questData.StartType == "object" then
+            local objectExistsForMapID, objectLocationData = DoesObjectExistForMapID(questData.Start, mapID)
+            if objectExistsForMapID then
+                return {{
+                    giver = "object",
+                    questID = questID,
+                    locationData = objectLocationData,
+                }}
+            end
+        else
+
+        end
     end
+end
 
-    if questData.objectives.items then
-            
-        for k, itemID in ipairs(questData.objectives.items) do
-            
-            local itemDroppers = self:GetQuestItemDroppers(itemID)
 
-            if itemDroppers then
+--[[
+    get quest givers for the mapID using the provider profile data to determine if a quest can be available and accepted
+]]
+function Quest:GetQuestGiversForMapID(mapID, profile, questTypes)
 
-                if itemDroppers.dropperType == "npc" then
+    local t = {}
 
-                    for _, npcID in ipairs(itemDroppers.droppers) do
-                        table.insert(ret, npcID)
+    --local quests = self:GetQuestsForMapID(mapID, questTypes)
+
+    --print("getting quest givers for mapID: "..mapID)
+    --print(unitLevel, unitClass, unitRace, unitFaction)
+
+    local unitLevel, unitClass, unitRace, unitFaction = profile:GetQuestEligibilityData()
+    --local questLog = profile:GetQuestLog()
+
+    for questID, questData in pairs(QuestDataProvider) do
+
+        --some odd quests can be filtered out
+        if (questData.Category ~= "") and (questData.Category ~= "professions") and (questData.Category ~= "world-events") and (questData.SubCategory ~= "uncategorized") and CanFactionDoQuest(unitFaction, questID) and (questData.RequiresLevel <= unitLevel) and IsRequiredQuestComplete(questID) and CanClassDoQuest(unitClass, questData.QuestID) and CanRaceDoQuest(unitRace, questData.QuestID) then
+
+            --if (C_QuestLog.IsQuestFlaggedCompleted(questID) == false) and (C_QuestLog.IsOnQuest(questID) == false) then
+            if (profile:IsQuestTurnedIn(questID) == false) and (profile.data.questLog[questID] == nil) then
+                
+
+                if questData.StartType == "npc" then
+                    local npcExistsForMapID, npcLocationData = DoesNpcExistForMapID(questData.Start, mapID)
+                    if npcExistsForMapID then
+                        table.insert(t, {
+                            giver = "npc",
+                            questID = questID,
+                            locationData = npcLocationData,
+                        })
+                        --print(questData.Title)
                     end
+
+                elseif questData.StartType == "object" then
+                    local objectExistsForMapID, objectLocationData = DoesObjectExistForMapID(questData.Start, mapID)
+                    if objectExistsForMapID then
+                        table.insert(t, {
+                            giver = "object",
+                            questID = questID,
+                            locationData = objectLocationData,
+                        })
+                        --print(questData.Title)
+                    end
+                else
+
                 end
             end
         end
+
     end
 
-    return ret;
+    return t;
 end
 
-function Quest:GetQuestObjectiveDataForMapID(questID, mapID)
 
-    local questData = self:GetQuestData(questID)
+function Quest:GetQuestTurnInsForMapID(mapID, questTable)
 
-    local ret = {}
+    local t = {
+        npc = {},
+        objects = {},
+    }
 
-    if questData.objectives then
+    for _, questID in ipairs(questTable) do
 
-        --ViragDevTool_AddData(questData.objectives, questID)
+        local readyForTurnIn = IsQuestComplete(questID)
+        readyForTurnIn = IsQuestComplete(questID)
 
-        if questData.objectives.npc then
+        if readyForTurnIn then
 
-            --print("got npc table")
+            --print(questID, "ready for turn in")
 
-            for k, npcID in ipairs(questData.objectives.npc) do
+            local questData = QuestDataProvider[questID]
+            if questData.EndsType == "npc" then
+                local npcExists, locationData = DoesNpcExistForMapID(questData.Ends, mapID)
+                if npcExists then
+                    table.insert(t.npc, {
+                        turnIn = "npc",
+                        questID = questID,
+                        locationData = locationData,
+                    })
+                end
+            end
 
-                --print(npcID)
-
-                local npcIsInMap, locationData = self:IsNpcLocatedInMapID(npcID, mapID)
-                if npcIsInMap then
-
-                    --print("added location data")
-
-                    table.insert(ret, {
-                        objectiveType = "npc",
+            if questData.EndsType == "object" then
+                local objectExists, locationData = DoesObjectExistForMapID(questData.Ends, mapID)
+                if objectExists then
+                    table.insert(t.objects, {
+                        turnIn = "object",
+                        questID = questID,
                         locationData = locationData,
                     })
                 end
             end
         end
 
-        if questData.objectives.area and questData.objectives.area[mapID] then
-            table.insert(ret, {
-                objectiveType = "area",
-                locationData = questData.objectives.area[mapID],
-            })
-        end
-
-
-        --AdventureGuide.ItemData
-        if questData.objectives.items then
-            
-            for k, itemID in ipairs(questData.objectives.items) do
-                
-                local itemDroppers = self:GetQuestItemDroppers(itemID)
-
-                if itemDroppers then
-
-                    if itemDroppers.dropperType == "npc" then
-
-                        for _, npcID in ipairs(itemDroppers.droppers) do
-                            
-                            local npcIsInMap, locationData = self:IsNpcLocatedInMapID(npcID, mapID)
-                            if npcIsInMap then
-                                table.insert(ret, {
-                                    objectiveType = "npc",
-                                    locationData = locationData,
-                                })
-                            end
-                        end
-
-                    end
-
-                    if itemDroppers.dropperType == "object" then
-
-                        for _, objectID in ipairs(itemDroppers.droppers) do
-
-                            local objectIsInMap, locationData = self:IsObjectLocatedInMapID(objectID, mapID)
-                            if objectIsInMap then
-                                table.insert(ret, {
-                                    objectiveType = "object",
-                                    locationData = locationData,
-                                })
-                            end
-                        end
-                    end
-
-                end
-            end
-
-        end
-
-    end
-
-    return ret;
-
-end
-
---[[
-    The drop data is a bit "something"
-
-    dropsFrom[1] = npc
-    dropsFrom[2] = object
-    dropsFrom[3] = 
-]]
-function Quest:GetQuestItemDroppers(itemID)
-    if AdventureGuide.ItemData[itemID] and AdventureGuide.ItemData[itemID].dropsFrom then
-        if AdventureGuide.ItemData[itemID].dropsFrom[1] then
-            return {
-                dropperType = "npc",
-                droppers = AdventureGuide.ItemData[itemID].dropsFrom[1]
-            }
-        end
-        if AdventureGuide.ItemData[itemID].dropsFrom[2] then
-            return {
-                dropperType = "object",
-                droppers = AdventureGuide.ItemData[itemID].dropsFrom[2]
-            }
-        end
-    end
-    return {}
-end
-
-function Quest:IsObjectLocatedInMapID(objectID, mapID)
-    if AdventureGuide.ObjectData[objectID] and AdventureGuide.ObjectData[objectID].spawnLocations and AdventureGuide.ObjectData[objectID].spawnLocations[mapID] then
-        return true, AdventureGuide.ObjectData[objectID].spawnLocations[mapID]
-    end
-    return false;
-end
-
-function Quest:IsNpcLocatedInMapID(npcID, mapID)
-    if AdventureGuide.NpcData[npcID] and AdventureGuide.NpcData[npcID].spawnLocations and AdventureGuide.NpcData[npcID].spawnLocations[mapID] then
-        return true, AdventureGuide.NpcData[npcID].spawnLocations[mapID]
-    end
-    return false;
-end
-
-function Quest:GetNpcLocationData(npcID, mapID)
-    if AdventureGuide.NpcData[npcID] and AdventureGuide.NpcData[npcID].spawnLocations then
-        if mapID and AdventureGuide.NpcData[npcID].spawnLocations[mapID] then
-            return AdventureGuide.NpcData[npcID].spawnLocations[mapID]
-        else
-            return AdventureGuide.NpcData[npcID].spawnLocations
-        end
-    end
-end
-
-function Quest:GetQuestsForMapID(mapID, isAvailable)
-
-    local questChainStarterQuestIDs = {}
-    local _, _, classID = UnitClass("player")
-    local _, _, race = UnitRace("player")
-    local level = UnitLevel("player")
-
-    for k, chain in ipairs(self:GetQuestChainsForMapID(mapID)) do
-        if not isAvailable then
-            for k, v in ipairs(chain) do
-                table.insert(questChainStarterQuestIDs, v) 
-            end
-
-        else
-            for k, v in ipairs(chain) do
-                if self:IsQuestAvailableForPlayer(v, classID, race, level) then
-                    table.insert(questChainStarterQuestIDs, v)
-                end
-            end
-        end
-    end
-
-    return questChainStarterQuestIDs;
-end
-
-function Quest:GetQuestData(questID)
-    -- local data = self:FindElementDataByPredicate(function(questData)
-    --     return questData.questID == questID;
-    -- end)
-    -- return data or {}
-    local key = string.format("QuestID:%d", questID)
-    return AdventureGuide.RawQuestData[key] or {}
-end
-
-
---[[
-    This function will primarily check if a player can accept a quest
-    
-    Note:
-        The important part to consider is this is checking if the quest is *still* available rather
-        than was the character eligible based on race/class etc
-
-        The final arg can be used to flip this, passing true will ignore any completion data and return
-        true if the character was eligible and has or hasnt completed it, just were they able to accept it
-
-    TODO:
-        Eventually a lot of this will be replaced with a bit system to flag quests and remove the 
-        race/class checks involved here
-]]
-function Quest:IsQuestAvailableForPlayer(questID, class, race, level, ignoreCompleted)
-
-    AdventureGuide.CallbackRegistry:TriggerEvent("Debug_AddMessage", string.format("Checking for quest:%d for class %d race %d level %d", questID, class, race, level))
-
-    --print(questID)
-    if not ignoreCompleted and (C_QuestLog.IsQuestFlaggedCompleted(questID) == true) then
-        --print("return false for", questID)
-        return false
-    end
-    if not ignoreCompleted and (C_QuestLog.IsOnQuest(questID) == true) then
-    --if C_QuestLog.IsOnQuest(questID) then
-        --print("return false for", questID)
-        return false
-    end
-
-    local questData = self:GetQuestData(questID)
-
-    -- if questID > 3110 and questID < 3130 then
-    -- print("-----------")
-    -- DevTools_Dump(questData)
-    -- print(questID, class, race, level, ignoreCompleted)
-    -- end
-
-    if type(questData.requiredQuest) == "table" then
-        -- if questID == 3903 then
-        --     print("---", questID, "---")
-        --     for k, v in ipairs(questData.requiredQuest) do
-        --         local markedCompleted =C_QuestLog.IsQuestFlaggedCompleted(v)
-        --         print(k, v, markedCompleted)
-        --     end
-        -- end
-        for k, v in ipairs(questData.requiredQuest) do
-            local markedCompleted = C_QuestLog.IsQuestFlaggedCompleted(v)
-            markedCompleted = C_QuestLog.IsQuestFlaggedCompleted(v)
-            if markedCompleted == false then
-                AdventureGuide.CallbackRegistry:TriggerEvent("Debug_AddMessage", string.format("quest %d required not completed", v))
-                return false;
-            end
-        end
-    end
-
-    -- local classBitMask = classBitMasks[class]
-    -- local raceBitMask = raceBitMasks[race]
-
-    -- if questData.class then
-    --     if self.bitChecks and self.bitChecks[questID] then
-            
-    --         local classMatch = bit.band(self.bitChecks[questID].classBits, classBitMask)
-
-    --         --local raceMatch = bit.band(self.bitChecks[questID].raceBits, raceBitMask)
-
-    --         print(questID, self.bitChecks[questID].classBits, classBitMask, classMatch)
-    --     else
-
-    --     end
-    -- end
-
-
-    if questData.class then
-        AdventureGuide.CallbackRegistry:TriggerEvent("Debug_AddMessage", "quest data has class value")
-        if questData.class ~= class then
-            AdventureGuide.CallbackRegistry:TriggerEvent("Debug_AddMessage", "class not a match")
-            return false
-        end
-    end
-
-    if questData.race then
-        if questData.race == "allianceQuest" then
-            if race ~= 1 and race ~= 3 and race ~= 4 and race ~= 7 then
-                return false
-            end
-        elseif questData.race == "hordeQuest" then
-            if race ~= 2 and race ~= 5 and race ~= 6 and race ~= 8 then
-                return false
-            end
-        else
-            if questData.race ~= race then
-                return false;
-            end
-        end
-    end
-
-    if level then
-        AdventureGuide.CallbackRegistry:TriggerEvent("Debug_AddMessage", "got level check")
-        if questData.minLevel then
-            AdventureGuide.CallbackRegistry:TriggerEvent("Debug_AddMessage", "quest has minLevel")
-            if level < questData.minLevel then
-                AdventureGuide.CallbackRegistry:TriggerEvent("Debug_AddMessage", "level provided to low")
-                return false;
-            end
-        end
-    end
-
-    return true;
-end
-
-function Quest:GetQuestRace(questID)
-    local data = self:GetQuestData(questID)
-    if data then
-        return data.race
-    end
-    return false;
-end
-
-function Quest:GetQuestClass(questID)
-    local data = self:GetQuestData(questID)
-    if data then
-        return data.class;
-    end
-    return false;
-end
-
-function Quest:GetQuestLevel(questID)
-    local data = self:GetQuestData(questID)
-    if data then
-        return data.minLevel, data.level;
-    end
-    return 0;
-end
-
-function Quest:GetQuestTurnInLocation(questID)
-    local data = self:GetQuestData(questID)
-    if data then
-        return data.finishMapID, data.finishPoint
-    end
-    return false;
-end
-
-function Quest:GenerateQuestTreeDataProviderForMapID(mapID)
-
-    local function QuestSortFunc(questA, questB)
-        if questA:GetData().minLevel and questB:GetData().minLevel then
-            return questA:GetData().minLevel < questB:GetData().minLevel
-        end
-    end
-
-    local _, _, classID = UnitClass("player")
-    local _, _, race = UnitRace("player")
-    --local level = UnitLevel("player")
-
-    local starterQuestNodes = {}
-    
-    local mapZoneQuestTree = CreateTreeDataProvider()
-    mapZoneQuestTree:Init({})
-
-    local minLevel, level;
-    for k, chain in ipairs(self:GetQuestChainsForMapID(mapID)) do
-        minLevel, level = self:GetQuestLevel(chain[1])
-        if self:IsQuestAvailableForPlayer(chain[1], classID, race, nil, true) then
-            starterQuestNodes[chain[1]] = mapZoneQuestTree:Insert({
-                questID = chain[1],
-                isParent = true,
-                minLevel = minLevel,
-                level = level,
-            })
-
-            for i = 1, #chain do
-                -- minLevel, level = self:GetQuestLevel(chain[i])
-                starterQuestNodes[chain[1]]:Insert({
-                    questID = chain[i],
-                    -- minLevel = minLevel,
-                    -- level = level,
-                })
-            end
-            if C_QuestLog.IsQuestFlaggedCompleted(chain[#chain]) then
-                starterQuestNodes[chain[1]]:ToggleCollapsed()
-            end
-        end
-    end
-
-    mapZoneQuestTree:SetSortComparator(QuestSortFunc)
-    mapZoneQuestTree:Sort()
-
-    return mapZoneQuestTree
-
-end
-
-function Quest:GetCurrentQuestLogQuestData()
-
-    ExpandQuestHeader(0)
-    
-    local t = {}
-
-    local numQuests = 0
-    
-    for i = 1, GetNumQuestLogEntries() do
-
-        local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID = GetQuestLogTitle(i)
-
-        if not isHeader then
-            local questLink = GetQuestLink(questID)
-            local readyForTurnIn = IsQuestComplete(questID)
-            readyForTurnIn = IsQuestComplete(questID)
-
-            table.insert(t, {
-                questID = questID,
-                link = questLink,
-                readyForTurnIn = readyForTurnIn,
-            })
-        end
     end
 
     return t;
+
 end
 
-function Quest:GetQuestTurnInsForMapID(mapID)
+function Quest:GetTurnInForQuestID(questID)
     
-    --local currentQuestLog = self:GetCurrentQuestLogQuestData()
+end
 
-    local readyToTurnIn = {}
 
-    for k, chain in ipairs(self:GetQuestChainsForMapID(mapID)) do
+function Quest:GetAllQuestDataForMapID(mapID)
 
-        -- local finishMapID, finishData = self:GetQuestTurnInLocation(quest.questID)
-        -- if (finishMapID == mapID) and quest.readyForTurnIn then
-        --     table.insert(readyToTurnIn, quest.questID)
-        -- end
+end
 
-        for _, questID in ipairs(chain) do
-            if C_QuestLog.IsOnQuest(questID) then
-                table.insert(readyToTurnIn, questID)
+--get a table of class quests
+function Quest:GetClassQuests(classID)
+    local _, className = GetClassInfo(classID)
+    className = className:lower()
+
+    local quests = self:GetAllQuestsBySubCategory("classes", className)
+    return quests, className;
+end
+
+--[[
+    this should return a treeview data provider with the quests and series organised for the mapID
+
+    included class quests at top?
+
+    script a sort function to organise quests appropriately
+]]
+function Quest:BuildQuestSeriesTreeDataProvider(mapID, category, subCategory, profile)
+
+    local quests;
+    if mapID then
+        quests = self:GetQuestsForMapID(mapID, {[""] = true, })
+    else
+        if category and subCategory then
+            quests = self:GetAllQuestsBySubCategory(category, subCategory)
+        end
+    end
+
+    local function SortQuests(a, b)
+        return a.RequiresLevel < b.RequiresLevel;
+    end
+
+
+    local unitLevel, unitClass, unitRace, unitFaction = profile:GetQuestEligibilityData()
+
+    local questTreeDataProvider = CreateTreeDataProvider()
+    questTreeDataProvider:Init({})
+
+    local questsAdded = {}
+
+    local classNameLocale, className = GetClassInfo(unitClass)
+    local classQuests = self:GetAllQuestsBySubCategory("classes", className:lower())
+    if classQuests and (#classQuests > 0) then
+        local classNode;
+        table.sort(classQuests, SortQuests)
+
+
+        for k, v in ipairs(classQuests) do
+
+            if (questsAdded[v.QuestID] == nil) and (v.StartType == "npc" and DoesNpcExistForMapID(v.Start, mapID)) or (v.EndsType == "npc" and DoesNpcExistForMapID(v.Ends, mapID)) or (v.StartType == "object" and DoesObjectExistForMapID(v.Start, mapID)) or (v.EndsType == "object" and DoesObjectExistForMapID(v.Ends, mapID)) then
+                
+                if not classNode then
+                    classNode = questTreeDataProvider:Insert({
+                        isParent = true,
+                        label = RAID_CLASS_COLORS[className]:WrapTextInColorCode(classNameLocale),
+                    })
+                end
+                
+                classNode:Insert({
+                    questID = v.QuestID
+                })
+                questsAdded[v.QuestID] = true
             end
         end
     end
 
-    return readyToTurnIn;
-end
+    table.sort(quests, SortQuests)
 
-function Quest:CheckForMultiStartQuestCompletion(questID)
-    
-    for _, questGroup in ipairs(AdventureGuide.MultiStartQuests) do
-        local isInGroup, groupCompleted = false, false;
-        for _, qid in ipairs(questGroup) do
-            if C_QuestLog.IsQuestFlaggedCompleted(qid) then
-                groupCompleted = true
+    if quests then
+
+        for _, questData in ipairs(quests) do
+
+            if (questsAdded[questData.QuestID] == nil) and CanClassDoQuest(unitClass, questData.QuestID) and CanRaceDoQuest(unitRace, questData.QuestID) and CanFactionDoQuest(unitFaction, questData.QuestID) then
+
+
+                if (#questData.Series > 0) then
+                    local node = questTreeDataProvider:Insert({
+                        questID = questData.Series[1],
+                        isParent = true,
+                    })
+                    questsAdded[questData.Series[1]] = true
+
+                    if #questData.Series > 1 then
+                        for i = 1, #questData.Series do
+                            node:Insert({
+                                questID = questData.Series[i],
+                            })
+                            questsAdded[questData.Series[i]] = true
+                        end
+                    end
+
+
+                else
+                    questTreeDataProvider:Insert({
+                        questID = questData.QuestID,
+                        isSingleQuest = true
+                    })
+                    questsAdded[questData.QuestID] = true
+                end
             end
-            if qid == questID then
-                isInGroup = true
-            end
-        end
-        if isInGroup and groupCompleted then
-            return true;
         end
     end
+
+    return questTreeDataProvider;
 end
 
--- local data = Quest:CreateDataTable()
--- Quest:Init(data)
 
---Quest:GenerateQuestBitMasks()
 
-AdventureGuide.QuestAPI = Quest;
+AdventureGuide.Api.Quest = Quest;

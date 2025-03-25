@@ -1,6 +1,6 @@
 local name, AdventureGuide = ...;
 
-local L = AdventureGuide.Locales;
+local BOSS_NAME = AdventureGuide.Locales.DungeonBossNames
 
 
 ---@class InstanceInformation
@@ -14,8 +14,6 @@ local L = AdventureGuide.Locales;
 ---@field quests table
 ---@field bosses table
 ---@field history string
-
-
 ---@type table<string, InstanceInformation>
 AdventureGuide.Dungeons = {
     {
@@ -47,10 +45,8 @@ AdventureGuide.Dungeons = {
         },
         bosses = {
             {
-                name = L.DUNGEON_BOSS_TARAGAMAN,
+                name = BOSS_NAME.DUNGEON_BOSS_TARAGAMAN,
                 npcID = 11520,
-                info = L.DUNGEON_BOSS_TARAGAMAN_INFO,
-                strategy = L.DUNGEON_BOSS_TARAGAMAN_STRATEGY,
                 abilities = {
                     11970,
                     18072,
@@ -63,10 +59,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_OGGLEFLINT,
+                name = BOSS_NAME.DUNGEON_BOSS_OGGLEFLINT,
                 npcID = 11517,
-                info = L.DUNGEON_BOSS_OGGLEFLINT_INFO,
-                strategy = L.DUNGEON_BOSS_OGGLEFLINT_STRATEGY,
                 abilities = {
                     15496,
                 },
@@ -75,10 +69,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_BAZZALAN,
+                name = BOSS_NAME.DUNGEON_BOSS_BAZZALAN,
                 npcID = 11519,
-                info = L.DUNGEON_BOSS_BAZZALAN_INFO,
-                strategy = L.DUNGEON_BOSS_BAZZALAN_STRATEGY,
                 abilities = {
                     14873,
                     2818,
@@ -88,10 +80,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_JERGOSH,
+                name = BOSS_NAME.DUNGEON_BOSS_JERGOSH,
                 npcID = 11518,
-                info = L.DUNGEON_BOSS_JERGOSH_INFO,
-                strategy = L.DUNGEON_BOSS_JERGOSH_STARTEGY,
                 abilities = {
                     18267,
                     20800,
@@ -103,7 +93,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_TRASH,
+                name = BOSS_NAME.DUNGEON_TRASH,
                 npcID = false,
                 info = "",
                 strategy = "",
@@ -113,7 +103,7 @@ AdventureGuide.Dungeons = {
                 loot = {},
             },
         },
-        history = L.DUNGEON_HISTORY_RAGEFIRE_CHASM,
+        history = BOSS_NAME.DUNGEON_HISTORY_RAGEFIRE_CHASM,
     },
     {
         name = DUNGEON_FLOOR_THEDEADMINES1,
@@ -153,9 +143,7 @@ AdventureGuide.Dungeons = {
         },
         bosses = {
             {
-                name = L.DUNGEON_BOSS_RHAHKZOR,
-                info = L.DUNGEON_BOSS_RHAHKZOR_INFO,
-                strategy = L.DUNGEON_BOSS_RHAHKZOR_STRATEGY,
+                name = BOSS_NAME.DUNGEON_BOSS_RHAHKZOR,
                 abilities = {
                     6304,
                 },
@@ -165,9 +153,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_MINER_JOHNSON,
-                info = L.DUNGEON_BOSS_MINER_JOHNSON_INFO,
-                strategy = L.DUNGEON_BOSS_MINER_JOHNSON_STRATEGY,
+                name = BOSS_NAME.DUNGEON_BOSS_MINER_JOHNSON,
                 abilities = {
                     12097,
                 },
@@ -177,9 +163,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_SNEEDS_SHREDDER,
-                info = L.DUNGEON_BOSS_SNEEDS_SHREDDER_INFO,
-                strategy = L.DUNGEON_BOSS_SNEEDS_SHREDDER_STRATEGY,
+                name = BOSS_NAME.DUNGEON_BOSS_SNEEDS_SHREDDER,
                 abilities = {
                     3603,
                     7399,
@@ -192,9 +176,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_GILNID,
-                info = L.DUNGEON_BOSS_GILNID_INFO,
-                strategy = L.DUNGEON_BOSS_GILNID_STRATEGY,
+                name = BOSS_NAME.DUNGEON_BOSS_GILNID,
                 abilities = {
                     5213,
                 },
@@ -204,9 +186,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_MR_SMITE,
-                info = L.DUNGEON_BOSS_MR_SMITE_INFO,
-                strategy = L.DUNGEON_BOSS_MR_SMITE_STRATEGY,
+                name = BOSS_NAME.DUNGEON_BOSS_MR_SMITE,
                 abilities = {
                     674,
                     6264,
@@ -221,9 +201,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_CAPTAIN_GREENSKIN,
-                info = L.DUNGEON_BOSS_CAPTAIN_GREENSKIN_INFO,
-                strategy = L.DUNGEON_BOSS_CAPTAIN_GREENSKIN_STRATEGY,
+                name = BOSS_NAME.DUNGEON_BOSS_CAPTAIN_GREENSKIN,
                 abilities = {
                     15496,
                     5208,
@@ -235,9 +213,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_EDWIN_VANCLEEF,
-                info = L.DUNGEON_BOSS_EDWIN_VANCLEEF_INFO,
-                strategy = L.DUNGEON_BOSS_EDWIN_VANCLEEF_STRATEGY,
+                name = BOSS_NAME.DUNGEON_BOSS_EDWIN_VANCLEEF,
                 abilities = {
                     674,
                     3391,
@@ -252,9 +228,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_COOKIE,
-                info = L.DUNGEON_BOSS_COOKIE_INFO,
-                strategy = L.DUNGEON_BOSS_COOKIE_STRATEGY,
+                name = BOSS_NAME.DUNGEON_BOSS_COOKIE,
                 abilities = {
                     6306,
                     5174,
@@ -266,7 +240,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_TRASH,
+                name = BOSS_NAME.DUNGEON_TRASH,
                 info = "",
                 strategy = "",
                 abilities = {
@@ -280,7 +254,7 @@ AdventureGuide.Dungeons = {
                 }
             }
         },
-        history = L.DUNGEON_HISTORY_DEADMINES,
+        history = BOSS_NAME.DUNGEON_HISTORY_DEADMINES,
     },
     {
         name = DUNGEON_FLOOR_WAILINGCAVERNS1,
@@ -315,9 +289,7 @@ AdventureGuide.Dungeons = {
         },
         bosses = {
             {
-                name = L.DUNGEON_BOSS_KRESH,
-                info = L.DUNGEON_BOSS_KRESH_INFO,
-                strategy = L.DUNGEON_BOSS_KRESH_STRATEGY,
+                name = BOSS_NAME.DUNGEON_BOSS_KRESH,
                 abilities = {
 
                 },
@@ -327,9 +299,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_LADY_ANACONDRA,
-                info = L.DUNGEON_BOSS_LADY_ANACONDRA_INFO,
-                strategy = L.DUNGEON_BOSS_LADY_ANACONDRA_STRATEGY,
+                name = BOSS_NAME.DUNGEON_BOSS_LADY_ANACONDRA,
                 abilities = {
                     5187,
                     9532,
@@ -343,9 +313,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_LORD_COBRAHN,
-                info = L.DUNGEON_BOSS_LORD_COBRAHN_INFO,
-                strategy = L.DUNGEON_BOSS_LORD_COBRAHN_STRATEGY,
+                name = BOSS_NAME.DUNGEON_BOSS_LORD_COBRAHN,
                 abilities = {
                     5187,
                     9532,
@@ -359,9 +327,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_DEVIATE_FAERIE_DRAGON,
-                info = L.DUNGEON_BOSS_DEVIATE_FAERIE_DRAGON_INFO,
-                strategy = L.DUNGEON_BOSS_DEVIATE_FAERIE_DRAGON_STRATEGY,
+                name = BOSS_NAME.DUNGEON_BOSS_DEVIATE_FAERIE_DRAGON,
                 abilities = {
 
                 },
@@ -371,9 +337,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_LORD_PYTHAS,
-                info = L.DUNGEON_BOSS_LORD_PYTHAS_INFO,
-                strategy = L.DUNGEON_BOSS_LORD_PYTHAS_STRATEGY,
+                name = BOSS_NAME.DUNGEON_BOSS_LORD_PYTHAS,
                 abilities = {
                     5187,
                     9532,
@@ -386,9 +350,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_SKUM,
-                info = L.DUNGEON_BOSS_SKUM_INFO,
-                strategy = L.DUNGEON_BOSS_SKUM_STRATEGY,
+                name = BOSS_NAME.DUNGEON_BOSS_SKUM,
                 abilities = {
                     6254,
                 },
@@ -398,9 +360,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_LORD_SERPENTIS,
-                info = L.DUNGEON_BOSS_LORD_SERPENTIS_INFO,
-                strategy = L.DUNGEON_BOSS_LORD_SERPENTIS_STRATEGY,
+                name = BOSS_NAME.DUNGEON_BOSS_LORD_SERPENTIS,
                 abilities = {
                     6778,
                     9532,
@@ -414,9 +374,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_VERDAN_THE_EVERLIVING,
-                info = L.DUNGEON_BOSS_VERDAN_THE_EVERLIVING_INFO,
-                strategy = L.DUNGEON_BOSS_VERDAN_THE_EVERLIVING_STRATEGY,
+                name = BOSS_NAME.DUNGEON_BOSS_VERDAN_THE_EVERLIVING,
                 abilities = {
                     8142,
                 },
@@ -427,9 +385,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_MUTANUS_THE_DEVOURER,
-                info = L.DUNGEON_BOSS_MUTANUS_THE_DEVOURER_INFO,
-                strategy = L.DUNGEON_BOSS_MUTANUS_THE_DEVOURER_STRATEGY,
+                name = BOSS_NAME.DUNGEON_BOSS_MUTANUS_THE_DEVOURER,
                 abilities = {
                     8150,
                     7399,
@@ -443,7 +399,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_TRASH,
+                name = BOSS_NAME.DUNGEON_TRASH,
                 info = "",
                 strategy = "",
                 abilities = {
@@ -454,7 +410,7 @@ AdventureGuide.Dungeons = {
                 }
             }
         },
-        history = L.DUNGEON_HISTORY_WAILING_CAVERNS,
+        history = BOSS_NAME.DUNGEON_HISTORY_WAILING_CAVERNS,
     },
     {
         name = "Shadowfang Keep",
@@ -521,10 +477,8 @@ AdventureGuide.Dungeons = {
         },
         bosses = {
             {
-                name = L.DUNGEON_BOSS_RETHILGORE,
+                name = BOSS_NAME.DUNGEON_BOSS_RETHILGORE,
                 npcID = 3914,
-                info = L.DUNGEON_BOSS_RETHILGORE_INFO,
-                strategy = L.DUNGEON_BOSS_RETHILGORE_STRATEGY,
                 abilities = {
                     7295,
                 },
@@ -533,10 +487,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_FEL_STEED_SHADOW_CHARGER,
+                name = BOSS_NAME.DUNGEON_BOSS_FEL_STEED_SHADOW_CHARGER,
                 npcID = 3864,
-                info = L.DUNGEON_BOSS_FEL_STEED_SHADOW_CHARGER_INFO,
-                strategy = L.DUNGEON_BOSS_FEL_STEED_SHADOW_CHARGER_STRATEGY,
                 abilities = {
                     7139,
                 },
@@ -546,10 +498,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_RAZORCLAW_THE_BUTCHER,
+                name = BOSS_NAME.DUNGEON_BOSS_RAZORCLAW_THE_BUTCHER,
                 npcID = 3886,
-                info = L.DUNGEON_BOSS_RAZORCLAW_THE_BUTCHER_INFO,
-                strategy = L.DUNGEON_BOSS_RAZORCLAW_THE_BUTCHER_STRATEGY,
                 abilities = {
                     7485,
                 },
@@ -560,10 +510,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_BARON_SILVERLAINE,
+                name = BOSS_NAME.DUNGEON_BOSS_BARON_SILVERLAINE,
                 npcID = 3887,
-                info = L.DUNGEON_BOSS_BARON_SILVERLAINE_INFO,
-                strategy = L.DUNGEON_BOSS_BARON_SILVERLAINE_STRATEGY,
                 abilities = {
                     7068,
                 },
@@ -573,10 +521,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_COMMANDER_SPRINGVALE,
+                name = BOSS_NAME.DUNGEON_BOSS_COMMANDER_SPRINGVALE,
                 npcID = 4278,
-                info = L.DUNGEON_BOSS_COMMANDER_SPRINGVALE_INFO,
-                strategy = L.DUNGEON_BOSS_COMMANDER_SPRINGVALE_STRATEGY,
                 abilities = {
                     5588,
                     1026,
@@ -587,10 +533,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_ODO_THE_BLINDWATCHER,
+                name = BOSS_NAME.DUNGEON_BOSS_ODO_THE_BLINDWATCHER,
                 npcID = 4279,
-                info = L.DUNGEON_BOSS_ODO_THE_BLINDWATCHER_INFO,
-                strategy = L.DUNGEON_BOSS_ODO_THE_BLINDWATCHER_STRATEGY,
                 abilities = {
                     7481,
                 },
@@ -600,10 +544,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_DEATHSWORN_CAPTAIN,
+                name = BOSS_NAME.DUNGEON_BOSS_DEATHSWORN_CAPTAIN,
                 npcID = 3872,
-                info = L.DUNGEON_BOSS_DEATHSWORN_CAPTAIN_INFO,
-                strategy = L.DUNGEON_BOSS_DEATHSWORN_CAPTAIN_STRATEGY,
                 abilities = {
                     15496,
                     9080,
@@ -615,8 +557,8 @@ AdventureGuide.Dungeons = {
             },
             -- {
             --     name = "Arugal's Voidwalker",
-            --     info = L.DUNGEON_BOSS_KRESH_INFO,
-            --     strategy = L.DUNGEON_BOSS_KRESH_STRATEGY,
+            --     info = BOSS_NAME.DUNGEON_BOSS_KRESH_INFO,
+            --     strategy = BOSS_NAME.DUNGEON_BOSS_KRESH_STRATEGY,
             --     abilities = {
 
             --     },
@@ -625,10 +567,8 @@ AdventureGuide.Dungeons = {
             --     },
             -- },
             {
-                name = L.DUNGEON_BOSS_FENRUS_THE_DEVOURER,
+                name = BOSS_NAME.DUNGEON_BOSS_FENRUS_THE_DEVOURER,
                 npcID = 4274,
-                info = L.DUNGEON_BOSS_FENRUS_THE_DEVOURER_INFO,
-                strategy = L.DUNGEON_BOSS_FENRUS_THE_DEVOURER_STRATEGY,
                 abilities = {
                     7125
                 },
@@ -638,10 +578,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_WOLF_MASTER_NANDOS,
+                name = BOSS_NAME.DUNGEON_BOSS_WOLF_MASTER_NANDOS,
                 npcID = 3927,
-                info = L.DUNGEON_BOSS_WOLF_MASTER_NANDOS_INFO,
-                strategy = L.DUNGEON_BOSS_WOLF_MASTER_NANDOS_STRATEGY,
                 abilities = {
                     7487,
                     7489,
@@ -653,10 +591,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_ARCHMAGE_ARUGAL,
+                name = BOSS_NAME.DUNGEON_BOSS_ARCHMAGE_ARUGAL,
                 npcID = 4275,
-                info = L.DUNGEON_BOSS_ARCHMAGE_ARUGAL_INFO,
-                strategy = L.DUNGEON_BOSS_ARCHMAGE_ARUGAL_STRATEGY,
                 abilities = {
                     7621,
                     7587,
@@ -670,7 +606,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_TRASH,
+                name = BOSS_NAME.DUNGEON_TRASH,
                 info = "",
                 strategy = "",
                 abilities = {
@@ -694,7 +630,7 @@ AdventureGuide.Dungeons = {
                 }
             }
         },
-        history = L.DUNGEON_HISTORY_SHADOWFANG_KEEP,
+        history = BOSS_NAME.DUNGEON_HISTORY_SHADOWFANG_KEEP,
     },
     {
         name = DUNGEON_FLOOR_THESTOCKADE1,
@@ -728,10 +664,8 @@ AdventureGuide.Dungeons = {
         },
         bosses = {
             {
-                name = L.DUNGEON_BOSS_TARGORR_THE_DREAD,
+                name = BOSS_NAME.DUNGEON_BOSS_TARGORR_THE_DREAD,
                 npcID = 1696,
-                info = L.DUNGEON_BOSS_TARGORR_THE_DREAD_INFO,
-                strategy = L.DUNGEON_BOSS_TARGORR_THE_DREAD_STRATEGY,
                 abilities = {
                     674,
                     8599,
@@ -742,10 +676,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_KAM_DEEPFURY,
+                name = BOSS_NAME.DUNGEON_BOSS_KAM_DEEPFURY,
                 npcID = 1666,
-                info = L.DUNGEON_BOSS_KAM_DEEPFURY_INFO,
-                strategy = L.DUNGEON_BOSS_KAM_DEEPFURY_STRATEGY,
                 abilities = {
                     7164,
                     3419,
@@ -756,10 +688,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_HAMHOCK,
+                name = BOSS_NAME.DUNGEON_BOSS_HAMHOCK,
                 npcID = 1663,
-                info = L.DUNGEON_BOSS_HAMHOCK_INFO,
-                strategy = L.DUNGEON_BOSS_HAMHOCK_STRATEGY,
                 abilities = {
                     6742,
                     421,
@@ -769,10 +699,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_DEXTREN_WARD,
+                name = BOSS_NAME.DUNGEON_BOSS_DEXTREN_WARD,
                 npcID = 1663,
-                info = L.DUNGEON_BOSS_DEXTREN_WARD_INFO,
-                strategy = L.DUNGEON_BOSS_DEXTREN_WARD_STRATEGY,
                 abilities = {
                     7165,
                     5246,
@@ -783,10 +711,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_BAZIL_THREDD,
+                name = BOSS_NAME.DUNGEON_BOSS_BAZIL_THREDD,
                 npcID = 1716,
-                info = L.DUNGEON_BOSS_BAZIL_THREDD_INFO,
-                strategy = L.DUNGEON_BOSS_BAZIL_THREDD_STRATEGY,
                 abilities = {
                     9128,
                     674,
@@ -797,10 +723,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_BRUEGAL_IRONKNUCKLE,
+                name = BOSS_NAME.DUNGEON_BOSS_BRUEGAL_IRONKNUCKLE,
                 npcID = 1720,
-                info = L.DUNGEON_BOSS_BRUEGAL_IRONKNUCKLE_INFO,
-                strategy = L.DUNGEON_BOSS_BRUEGAL_IRONKNUCKLE_STRATEGY,
                 abilities = {
                     
                 },
@@ -823,7 +747,7 @@ AdventureGuide.Dungeons = {
                 },
             }
         },
-        history = L.DUNGEON_HISTORY_STOCKADES,
+        history = BOSS_NAME.DUNGEON_HISTORY_STOCKADES,
     },
     {
         name = "Blackfathom Deeps",
@@ -873,10 +797,8 @@ AdventureGuide.Dungeons = {
         },
         bosses = {
             {
-                name = L.DUNGEON_BOSS_GHAMOO_RA,
+                name = BOSS_NAME.DUNGEON_BOSS_GHAMOO_RA,
                 npcID = 4887,
-                info = L.DUNGEON_BOSS_GHAMOO_RA_INFO,
-                strategy = L.DUNGEON_BOSS_GHAMOO_RA_STRATEGY,
                 abilities = {
                     5568,
                 },
@@ -886,10 +808,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_LADY_SAREVESS,
+                name = BOSS_NAME.DUNGEON_BOSS_LADY_SAREVESS,
                 npcID = 4831,
-                info = L.DUNGEON_BOSS_LADY_SAREVESS_INFO,
-                strategy = L.DUNGEON_BOSS_LADY_SAREVESS_STRATEGY,
                 abilities = {
                     8435,
                     865,
@@ -903,10 +823,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_GELIHAST,
+                name = BOSS_NAME.DUNGEON_BOSS_GELIHAST,
                 npcID = 6243,
-                info = L.DUNGEON_BOSS_GELIHAST_INFO,
-                strategy = L.DUNGEON_BOSS_GELIHAST_STRATEGY,
                 abilities = {
                     6533,
                 },
@@ -917,10 +835,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_LORGUS_JETT,
+                name = BOSS_NAME.DUNGEON_BOSS_LORGUS_JETT,
                 npcID = 12902,
-                info = L.DUNGEON_BOSS_LORGUS_JETT_INFO,
-                strategy = L.DUNGEON_BOSS_LORGUS_JETT_STRATEGY,
                 abilities = {
 
                 },
@@ -929,10 +845,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_BARON_AQUANIS,
+                name = BOSS_NAME.DUNGEON_BOSS_BARON_AQUANIS,
                 npcID = 12876,
-                info = L.DUNGEON_BOSS_BARON_AQUANIS_INFO,
-                strategy = L.DUNGEON_BOSS_BARON_AQUANIS_STRATEGY,
                 abilities = {
 
                 },
@@ -941,10 +855,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_TWILIGHT_LORD_KELRIS,
+                name = BOSS_NAME.DUNGEON_BOSS_TWILIGHT_LORD_KELRIS,
                 npcID = 4832,
-                info = L.DUNGEON_BOSS_TWILIGHT_LORD_KELRIS_INFO,
-                strategy = L.DUNGEON_BOSS_TWILIGHT_LORD_KELRIS_STRATEGY,
                 abilities = {
                     15587,
                     8399,
@@ -955,10 +867,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_OLD_SERRAKIS,
+                name = BOSS_NAME.DUNGEON_BOSS_OLD_SERRAKIS,
                 npcID = 4830,
-                info = L.DUNGEON_BOSS_OLD_SERRAKIS_INFO,
-                strategy = L.DUNGEON_BOSS_OLD_SERRAKIS_STRATEGY,
                 abilities = {
 
                 },
@@ -969,10 +879,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_AKUMAI,
+                name = BOSS_NAME.DUNGEON_BOSS_AKUMAI,
                 npcID = 4829,
-                info = L.DUNGEON_BOSS_AKUMAI_INFO,
-                strategy = L.DUNGEON_BOSS_AKUMAI_STRATEGY,
                 abilities = {
                     3815,
                     3490,
@@ -984,7 +892,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_TRASH,
+                name = BOSS_NAME.DUNGEON_TRASH,
                 npcID = false,
                 info = "",
                 strategy = "",
@@ -1006,7 +914,7 @@ AdventureGuide.Dungeons = {
                 },
             }
         },
-        history = L.DUNGEON_HISTORY_BLACKFATHOM_DEEPS,
+        history = BOSS_NAME.DUNGEON_HISTORY_BLACKFATHOM_DEEPS,
     },
     {
         name = "Gnomeregan",
@@ -1076,10 +984,8 @@ AdventureGuide.Dungeons = {
         },
         bosses = {
             {
-                name = L.DUNGEON_BOSS_GRUBBIS,
+                name = BOSS_NAME.DUNGEON_BOSS_GRUBBIS,
                 npcID = 7361,
-                info = L.DUNGEON_BOSS_GRUBBIS_INFO,
-                strategy = L.DUNGEON_BOSS_GRUBBIS_STRATEGY,
                 abilities = {
 
                 },
@@ -1088,10 +994,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_VISCOUS_FALLOUT,
+                name = BOSS_NAME.DUNGEON_BOSS_VISCOUS_FALLOUT,
                 npcID = 7079,
-                info = L.DUNGEON_BOSS_VISCOUS_FALLOUT_INFO,
-                strategy = L.DUNGEON_BOSS_VISCOUS_FALLOUT_STRATEGY,
                 abilities = {
 
                 },
@@ -1102,10 +1006,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_ELECTROCUTIONER_6000,
+                name = BOSS_NAME.DUNGEON_BOSS_ELECTROCUTIONER_6000,
                 npcID = 6235,
-                info = L.DUNGEON_BOSS_ELECTROCUTIONER_6000_INFO,
-                strategy = L.DUNGEON_BOSS_ELECTROCUTIONER_6000_STRATEGY,
                 abilities = {
                     11085,
                     11082,
@@ -1119,10 +1021,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_CROWD_PUMMELER_9_60,
+                name = BOSS_NAME.DUNGEON_BOSS_CROWD_PUMMELER_9_60,
                 npcID = 6229,
-                info = L.DUNGEON_BOSS_CROWD_PUMMELER_9_60_INFO,
-                strategy = L.DUNGEON_BOSS_CROWD_PUMMELER_9_60_STRATEGY,
                 abilities = {
                     8374,
                     10887,
@@ -1134,10 +1034,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_DARK_IRON_AMBASSADOR,
+                name = BOSS_NAME.DUNGEON_BOSS_DARK_IRON_AMBASSADOR,
                 npcID = 6228,
-                info = L.DUNGEON_BOSS_DARK_IRON_AMBASSADOR_INFO,
-                strategy = L.DUNGEON_BOSS_DARK_IRON_AMBASSADOR_STRATEGY,
                 abilities = {
                     184 ,
                     9053    ,
@@ -1150,10 +1048,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_MEKGINEER_THERMAPLUGG,
+                name = BOSS_NAME.DUNGEON_BOSS_MEKGINEER_THERMAPLUGG,
                 npcID = 7800,
-                info = L.DUNGEON_BOSS_MEKGINEER_THERMAPLUGG_INFO,
-                strategy = L.DUNGEON_BOSS_MEKGINEER_THERMAPLUGG_STRATEGY,
                 abilities = {
                     11130,
                 },
@@ -1172,7 +1068,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_TRASH,
+                name = BOSS_NAME.DUNGEON_TRASH,
                 npcID = false,
                 info = "",
                 strategy = "",
@@ -1203,7 +1099,7 @@ AdventureGuide.Dungeons = {
                 },
             },
         },
-        history = L.DUNGEON_HISTORY_GNOMEREGAN,
+        history = BOSS_NAME.DUNGEON_HISTORY_GNOMEREGAN,
     },
     {
         name = "Razorfen Kraul",
@@ -1238,10 +1134,8 @@ AdventureGuide.Dungeons = {
         },
         bosses = {
             {
-                name = L.DUNGEON_BOSS_ROOGUG,
+                name = BOSS_NAME.DUNGEON_BOSS_ROOGUG,
                 npcID = 6168,
-                info = L.DUNGEON_BOSS_ROOGUG_INFO,
-                strategy = L.DUNGEON_BOSS_ROOGUG_STRATEGY,
                 abilities = {
                     9532,
                     8270,
@@ -1251,10 +1145,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_AGGEM_THORNCURSE,
+                name = BOSS_NAME.DUNGEON_BOSS_AGGEM_THORNCURSE,
                 npcID = 4424,
-                info = L.DUNGEON_BOSS_AGGEM_THORNCURSE_INFO,
-                strategy = L.DUNGEON_BOSS_AGGEM_THORNCURSE_STRATEGY,
                 abilities = {
 
                 },
@@ -1263,10 +1155,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_DEATH_SPEAKER_JARGBA,
+                name = BOSS_NAME.DUNGEON_BOSS_DEATH_SPEAKER_JARGBA,
                 npcID = 4428,
-                info = L.DUNGEON_BOSS_DEATH_SPEAKER_JARGBA_INFO,
-                strategy = L.DUNGEON_BOSS_DEATH_SPEAKER_JARGBA_STRATEGY,
                 abilities = {
                     14515,
                     9613,
@@ -1278,10 +1168,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_OVERLORD_RAMTUSK,
+                name = BOSS_NAME.DUNGEON_BOSS_OVERLORD_RAMTUSK,
                 npcID = 4420,
-                info = L.DUNGEON_BOSS_OVERLORD_RAMTUSK_INFO,
-                strategy = L.DUNGEON_BOSS_OVERLORD_RAMTUSK_STRATEGY,
                 abilities = {
                     
                 },
@@ -1291,10 +1179,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_AGATHELOS_THE_RAGING,
+                name = BOSS_NAME.DUNGEON_BOSS_AGATHELOS_THE_RAGING,
                 npcID = 4422,
-                info = L.DUNGEON_BOSS_AGATHELOS_THE_RAGING_INFO,
-                strategy = L.DUNGEON_BOSS_AGATHELOS_THE_RAGING_STRATEGY,
                 abilities = {
                     
                 },
@@ -1304,10 +1190,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_BLIND_HUNTER,
+                name = BOSS_NAME.DUNGEON_BOSS_BLIND_HUNTER,
                 npcID = 4425,
-                info = L.DUNGEON_BOSS_BLIND_HUNTER_INFO,
-                strategy = L.DUNGEON_BOSS_BLIND_HUNTER_STRATEGY,
                 abilities = {
                     8281,
                     3242
@@ -1319,10 +1203,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_EARTHCALLER_HALMGAR,
+                name = BOSS_NAME.DUNGEON_BOSS_EARTHCALLER_HALMGAR,
                 npcID = 4842,
-                info = L.DUNGEON_BOSS_EARTHCALLER_HALMGAR_INFO,
-                strategy = L.DUNGEON_BOSS_EARTHCALLER_HALMGAR_STRATEGY,
                 abilities = {
                     2484,
                     9532,
@@ -1334,10 +1216,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_CHARLGA_RAZORFLANK,
+                name = BOSS_NAME.DUNGEON_BOSS_CHARLGA_RAZORFLANK,
                 npcID = 4421,
-                info = L.DUNGEON_BOSS_CHARLGA_RAZORFLANK_INFO,
-                strategy = L.DUNGEON_BOSS_CHARLGA_RAZORFLANK_STRATEGY,
                 abilities = {
                     8292,
                     8361,
@@ -1351,7 +1231,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_TRASH,
+                name = BOSS_NAME.DUNGEON_TRASH,
                 npcID = false,
                 info = "",
                 strategy = "",
@@ -1372,7 +1252,7 @@ AdventureGuide.Dungeons = {
                 },
             },
         },
-        history = L.DUNGEON_HISTORY_RAZORFEN_KRAUL,
+        history = BOSS_NAME.DUNGEON_HISTORY_RAZORFEN_KRAUL,
     },
     {
         name = "Scarlet Monastery",
@@ -1426,10 +1306,8 @@ AdventureGuide.Dungeons = {
         },
         bosses = {
             {
-                name = L.DUNGEON_BOSS_INTERROGATOR_VISHAS,
+                name = BOSS_NAME.DUNGEON_BOSS_INTERROGATOR_VISHAS,
                 npcID = 3983,
-                info = L.DUNGEON_BOSS_INTERROGATOR_VISHAS_INFO,
-                strategy = L.DUNGEON_BOSS_INTERROGATOR_VISHAS_STRATEGY,
                 abilities = {
                     9034,
                 },
@@ -1439,10 +1317,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_BLOODMAGE_THALNOS,
+                name = BOSS_NAME.DUNGEON_BOSS_BLOODMAGE_THALNOS,
                 npcID = 4543,
-                info = L.DUNGEON_BOSS_BLOODMAGE_THALNOS_INFO,
-                strategy = L.DUNGEON_BOSS_BLOODMAGE_THALNOS_STRATEGY,
                 abilities = {
                     9613,
                     8814,
@@ -1454,10 +1330,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_AZSHIR_THE_SLEEPLESS,
+                name = BOSS_NAME.DUNGEON_BOSS_AZSHIR_THE_SLEEPLESS,
                 npcID = 6490,
-                info = L.DUNGEON_BOSS_AZSHIR_THE_SLEEPLESS_INFO,
-                strategy = L.DUNGEON_BOSS_AZSHIR_THE_SLEEPLESS_STRATEGY,
                 abilities = {
                     5137,
                     9373,
@@ -1470,10 +1344,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_FALLEN_CHAMPION,
+                name = BOSS_NAME.DUNGEON_BOSS_FALLEN_CHAMPION,
                 npcID = 6488,
-                info = L.DUNGEON_BOSS_FALLEN_CHAMPION_INFO,
-                strategy = L.DUNGEON_BOSS_FALLEN_CHAMPION_STRATEGY,
                 abilities = {
                     7366,
                     15496,
@@ -1485,10 +1357,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_IRONSPINE,
+                name = BOSS_NAME.DUNGEON_BOSS_IRONSPINE,
                 npcID = 6489,
-                info = L.DUNGEON_BOSS_IRONSPINE_INFO,
-                strategy = L.DUNGEON_BOSS_IRONSPINE_STRATEGY,
                 abilities = {
                     21007,
                     3815,
@@ -1500,10 +1370,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_HOUNDMASTER_LOKSEY,
+                name = BOSS_NAME.DUNGEON_BOSS_HOUNDMASTER_LOKSEY,
                 npcID = 3974,
-                info = L.DUNGEON_BOSS_HOUNDMASTER_LOKSEY_INFO,
-                strategy = L.DUNGEON_BOSS_HOUNDMASTER_LOKSEY_STRATEGY,
                 abilities = {
                     11549,
                     6742,
@@ -1515,10 +1383,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_ARCANIST_DOAN,
+                name = BOSS_NAME.DUNGEON_BOSS_ARCANIST_DOAN,
                 npcID = 6487,
-                info = L.DUNGEON_BOSS_ARCANIST_DOAN_INFO,
-                strategy = L.DUNGEON_BOSS_ARCANIST_DOAN_STRATEGY,
                 abilities = {
                     9438,
                     9433,
@@ -1534,10 +1400,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_HEROD,
+                name = BOSS_NAME.DUNGEON_BOSS_HEROD,
                 npcID = 3975,
-                info = L.DUNGEON_BOSS_HEROD_INFO,
-                strategy = L.DUNGEON_BOSS_HEROD_STRATEGY,
                 abilities = {
                     22540,
                     8269,
@@ -1552,10 +1416,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_SCARLET_COMMANDER_MOGRAINE,
+                name = BOSS_NAME.DUNGEON_BOSS_SCARLET_COMMANDER_MOGRAINE,
                 npcID = 3976,
-                info = L.DUNGEON_BOSS_SCARLET_COMMANDER_MOGRAINE_INFO,
-                strategy = L.DUNGEON_BOSS_SCARLET_COMMANDER_MOGRAINE_STRATEGY,
                 abilities = {
                     14518,
                     9257,
@@ -1571,10 +1433,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_HIGH_INQUISITOR_WHITEMANE,
+                name = BOSS_NAME.DUNGEON_BOSS_HIGH_INQUISITOR_WHITEMANE,
                 npcID = 3977,
-                info = L.DUNGEON_BOSS_HIGH_INQUISITOR_WHITEMANE_INFO,
-                strategy = L.DUNGEON_BOSS_HIGH_INQUISITOR_WHITEMANE_STRATEGY,
                 abilities = {
                     9256,
                     12039,
@@ -1589,10 +1449,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_HIGH_INQUISITOR_FAIRBANKS,
+                name = BOSS_NAME.DUNGEON_BOSS_HIGH_INQUISITOR_FAIRBANKS,
                 npcID = 4542,
-                info = L.DUNGEON_BOSS_HIGH_INQUISITOR_FAIRBANKS_INFO,
-                strategy = L.DUNGEON_BOSS_HIGH_INQUISITOR_FAIRBANKS_STRATEGY,
                 abilities = {
                     9532,
                     8270,
@@ -1604,10 +1462,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_TRASH,
+                name = BOSS_NAME.DUNGEON_TRASH,
                 npcID = 6168,
-                info = L.DUNGEON_BOSS_ROOGUG_INFO,
-                strategy = L.DUNGEON_BOSS_ROOGUG_STRATEGY,
                 abilities = {
                     9532,
                     8270,
@@ -1657,7 +1513,7 @@ AdventureGuide.Dungeons = {
                 }
             }
         },
-        history = L.DUNGEON_HISTORY_SCARLET_MONASTERY,
+        history = BOSS_NAME.DUNGEON_HISTORY_SCARLET_MONASTERY,
     },
     {
         name = "Razorfen Downs",
@@ -1690,10 +1546,8 @@ AdventureGuide.Dungeons = {
         },
         bosses = {
             {
-                name = L.DUNGEON_BOSS_TUTENKASH,
+                name = BOSS_NAME.DUNGEON_BOSS_TUTENKASH,
                 npcID = 7355,
-                info = L.DUNGEON_BOSS_TUTENKASH_INFO,
-                strategy = L.DUNGEON_BOSS_TUTENKASH_STRATEGY,
                 abilities = {
                     12255,
                     12254,
@@ -1706,10 +1560,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_PLAGUEMAW_THE_ROTTING,
+                name = BOSS_NAME.DUNGEON_BOSS_PLAGUEMAW_THE_ROTTING,
                 npcID = 7356,
-                info = L.DUNGEON_BOSS_PLAGUEMAW_THE_ROTTING_INFO,
-                strategy = L.DUNGEON_BOSS_PLAGUEMAW_THE_ROTTING_STRATEGY,
                 abilities = {
                     12946,
                     12947
@@ -1720,10 +1572,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_MORDRESH_FIRE_EYE,
+                name = BOSS_NAME.DUNGEON_BOSS_MORDRESH_FIRE_EYE,
                 npcID = 7357,
-                info = L.DUNGEON_BOSS_MORDRESH_FIRE_EYE_INFO,
-                strategy = L.DUNGEON_BOSS_MORDRESH_FIRE_EYE_STRATEGY,
                 abilities = {
                     12470,
                     12466,
@@ -1735,10 +1585,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_RAGGLESNOUT,
+                name = BOSS_NAME.DUNGEON_BOSS_RAGGLESNOUT,
                 npcID = 7354,
-                info = L.DUNGEON_BOSS_RAGGLESNOUT_INFO,
-                strategy = L.DUNGEON_BOSS_RAGGLESNOUT_STRATEGY,
                 abilities = {
                     10892,
                     11659,
@@ -1752,10 +1600,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_GLUTTON,
+                name = BOSS_NAME.DUNGEON_BOSS_GLUTTON,
                 npcID = 8567,
-                info = L.DUNGEON_BOSS_GLUTTON_INFO,
-                strategy = L.DUNGEON_BOSS_GLUTTON_STRATEGY,
                 abilities = {
                     12627,
                     12795,
@@ -1766,10 +1612,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_AMNENNAR_THE_COLDBRINGER,
+                name = BOSS_NAME.DUNGEON_BOSS_AMNENNAR_THE_COLDBRINGER,
                 npcID = 7358,
-                info = L.DUNGEON_BOSS_AMNENNAR_THE_COLDBRINGER_INFO,
-                strategy = L.DUNGEON_BOSS_AMNENNAR_THE_COLDBRINGER_STRATEGY,
                 abilities = {
                     13009,
                     15531,
@@ -1785,7 +1629,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_TRASH,
+                name = BOSS_NAME.DUNGEON_TRASH,
                 npcID = false,
                 info = "",
                 strategy = "",
@@ -1807,7 +1651,7 @@ AdventureGuide.Dungeons = {
                 },
             },
         },
-        history = L.DUNGEON_HISTORY_RAZORFEN_DOWNS,
+        history = BOSS_NAME.DUNGEON_HISTORY_RAZORFEN_DOWNS,
     },
     {
         name = "Uldaman",
@@ -1855,10 +1699,8 @@ AdventureGuide.Dungeons = {
         },
         bosses = {
             {
-                name = L.DUNGEON_BOSS_THE_LOST_DWARVES,
+                name = BOSS_NAME.DUNGEON_BOSS_THE_LOST_DWARVES,
                 npcID = {6906,6907,6908}, --THE_LOST_DWARVES, eric, olaf
-                info = L.DUNGEON_BOSS_THE_LOST_DWARVES_INFO,
-                strategy = L.DUNGEON_BOSS_THE_LOST_DWARVES_STRATEGY,
                 abilities = {
                     20252,
                     8242,
@@ -1875,10 +1717,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_REVELOSH,
+                name = BOSS_NAME.DUNGEON_BOSS_REVELOSH,
                 npcID = 6910,
-                info = L.DUNGEON_BOSS_REVELOSH_INFO,
-                strategy = L.DUNGEON_BOSS_REVELOSH_STRATEGY,
                 abilities = {
                     16033,
                     9532,
@@ -1892,10 +1732,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_IRONAYA,
+                name = BOSS_NAME.DUNGEON_BOSS_IRONAYA,
                 npcID = 7228,
-                info = L.DUNGEON_BOSS_IRONAYA_INFO,
-                strategy = L.DUNGEON_BOSS_IRONAYA_STRATEGY,
                 abilities = {
                     8374,
                     45,
@@ -1908,10 +1746,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_OBSIDIAN_SENTINEL,
+                name = BOSS_NAME.DUNGEON_BOSS_OBSIDIAN_SENTINEL,
                 npcID = 7023,
-                info = L.DUNGEON_BOSS_OBSIDIAN_SENTINEL_INFO,
-                strategy = L.DUNGEON_BOSS_OBSIDIAN_SENTINEL_STRATEGY,
                 abilities = {
                     10072,
                     10061,
@@ -1921,10 +1757,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_ANCIENT_STONE_KEEPER,
+                name = BOSS_NAME.DUNGEON_BOSS_ANCIENT_STONE_KEEPER,
                 npcID = 7206,
-                info = L.DUNGEON_BOSS_ANCIENT_STONE_KEEPER_INFO,
-                strategy = L.DUNGEON_BOSS_ANCIENT_STONE_KEEPER_STRATEGY,
                 abilities = {
                     10094,
                 },
@@ -1934,10 +1768,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_GALGANN_FIREHAMMER,
+                name = BOSS_NAME.DUNGEON_BOSS_GALGANN_FIREHAMMER,
                 npcID = 7291,
-                info = L.DUNGEON_BOSS_GALGANN_FIREHAMMER_INFO,
-                strategy = L.DUNGEON_BOSS_GALGANN_FIREHAMMER_STRATEGY,
                 abilities = {
                     15039,
                     9482,
@@ -1952,10 +1784,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_GRIMLOK,
+                name = BOSS_NAME.DUNGEON_BOSS_GRIMLOK,
                 npcID = 4854,
-                info = L.DUNGEON_BOSS_GRIMLOK_INFO,
-                strategy = L.DUNGEON_BOSS_GRIMLOK_STRATEGY,
                 abilities = {
                     7289,
                     9532,
@@ -1970,10 +1800,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_ARCHAEDAS,
+                name = BOSS_NAME.DUNGEON_BOSS_ARCHAEDAS,
                 npcID = 2748,
-                info = L.DUNGEON_BOSS_ARCHAEDAS_INFO,
-                strategy = L.DUNGEON_BOSS_ARCHAEDAS_STRATEGY,
                 abilities = {
                     6524,10252,
                     10258,
@@ -1985,7 +1813,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_TRASH,
+                name = BOSS_NAME.DUNGEON_TRASH,
                 npcID = false,
                 info = "",
                 strategy = "",
@@ -2024,7 +1852,7 @@ AdventureGuide.Dungeons = {
                 },
             },
         },
-        history = L.DUNGEON_HISTORY_ULDAMAN,
+        history = BOSS_NAME.DUNGEON_HISTORY_ULDAMAN,
     },
     {
         name = "Maraudon",
@@ -2082,10 +1910,8 @@ AdventureGuide.Dungeons = {
         bosses = {
             --Orange
             {
-                name = L.DUNGEON_BOSS_NOXXION,
+                name = BOSS_NAME.DUNGEON_BOSS_NOXXION,
                 npcID = 13282,
-                info = L.DUNGEON_BOSS_NOXXION_INFO,
-                strategy = L.DUNGEON_BOSS_NOXXION_STRATEGY,
                 abilities = {
                     21687,
                     18072,
@@ -2097,10 +1923,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_RAZORLASH,
+                name = BOSS_NAME.DUNGEON_BOSS_RAZORLASH,
                 npcID = 12258,
-                info = L.DUNGEON_BOSS_RAZORLASH_INFO,
-                strategy = L.DUNGEON_BOSS_RAZORLASH_STRATEGY,
                 abilities = {
                     15284,
                     15976,
@@ -2115,10 +1939,8 @@ AdventureGuide.Dungeons = {
 
             --Purple
             {
-                name = L.DUNGEON_BOSS_LORD_VYLETONGUE,
+                name = BOSS_NAME.DUNGEON_BOSS_LORD_VYLETONGUE,
                 npcID = 12236,
-                info = L.DUNGEON_BOSS_LORD_VYLETONGUE_INFO,
-                strategy = L.DUNGEON_BOSS_LORD_VYLETONGUE_STRATEGY,
                 abilities = {
                     14443,
                     7964,
@@ -2133,10 +1955,8 @@ AdventureGuide.Dungeons = {
 
             --Poison Falls
             {
-                name = L.DUNGEON_BOSS_MESHLOK_THE_HARVESTER,
+                name = BOSS_NAME.DUNGEON_BOSS_MESHLOK_THE_HARVESTER,
                 npcID = 12225,
-                info = L.DUNGEON_BOSS_MESHLOK_THE_HARVESTER_INFO,
-                strategy = L.DUNGEON_BOSS_MESHLOK_THE_HARVESTER_STRATEGY,
                 abilities = {
                     11876,
                     15501,
@@ -2149,10 +1969,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_CELEBRAS_THE_CURSED,
+                name = BOSS_NAME.DUNGEON_BOSS_CELEBRAS_THE_CURSED,
                 npcID = 12225,
-                info = L.DUNGEON_BOSS_CELEBRAS_THE_CURSED_INFO,
-                strategy = L.DUNGEON_BOSS_CELEBRAS_THE_CURSED_STRATEGY,
                 abilities = {
                     9739,
                     6913,
@@ -2168,10 +1986,8 @@ AdventureGuide.Dungeons = {
 
             --Inner
             {
-                name = L.DUNGEON_BOSS_LANDSLIDE,
+                name = BOSS_NAME.DUNGEON_BOSS_LANDSLIDE,
                 npcID = 12203,
-                info = L.DUNGEON_BOSS_LANDSLIDE_INFO,
-                strategy = L.DUNGEON_BOSS_LANDSLIDE_STRATEGY,
                 abilities = {
                     5568,
                     10101,
@@ -2184,10 +2000,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_TINKERER_GIZLOCK,
+                name = BOSS_NAME.DUNGEON_BOSS_TINKERER_GIZLOCK,
                 npcID = 13601,
-                info = L.DUNGEON_BOSS_TINKERER_GIZLOCK_INFO,
-                strategy = L.DUNGEON_BOSS_TINKERER_GIZLOCK_STRATEGY,
                 abilities = {
                     13183,
                     6660,
@@ -2200,10 +2014,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_ROTGRIP,
+                name = BOSS_NAME.DUNGEON_BOSS_ROTGRIP,
                 npcID = 13596,
-                info = L.DUNGEON_BOSS_ROTGRIP_INFO,
-                strategy = L.DUNGEON_BOSS_ROTGRIP_STRATEGY,
                 abilities = {
                     15976,
                     16495,
@@ -2215,10 +2027,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_PRINCESS_THERADRAS,
+                name = BOSS_NAME.DUNGEON_BOSS_PRINCESS_THERADRAS,
                 npcID = 12201,
-                info = L.DUNGEON_BOSS_PRINCESS_THERADRAS_INFO,
-                strategy = L.DUNGEON_BOSS_PRINCESS_THERADRAS_STRATEGY,
                 abilities = {
                     21868,
                     21869,
@@ -2238,8 +2048,8 @@ AdventureGuide.Dungeons = {
             --[[ this quest info will get moved to the quest section
             {
                 name = "Veng",
-                info = L.DUNGEON_BOSS_NOXXION_INFO,
-                strategy = L.DUNGEON_BOSS_NOXXION_STRATEGY,
+                info = BOSS_NAME.DUNGEON_BOSS_NOXXION_INFO,
+                strategy = BOSS_NAME.DUNGEON_BOSS_NOXXION_STRATEGY,
                 abilities = {
 
                 },
@@ -2249,8 +2059,8 @@ AdventureGuide.Dungeons = {
             },
             {
                 name = "Maraudos",
-                info = L.DUNGEON_BOSS_NOXXION_INFO,
-                strategy = L.DUNGEON_BOSS_NOXXION_STRATEGY,
+                info = BOSS_NAME.DUNGEON_BOSS_NOXXION_INFO,
+                strategy = BOSS_NAME.DUNGEON_BOSS_NOXXION_STRATEGY,
                 abilities = {
 
                 },
@@ -2260,8 +2070,8 @@ AdventureGuide.Dungeons = {
             },
             {
                 name = "Kolk",
-                info = L.DUNGEON_BOSS_NOXXION_INFO,
-                strategy = L.DUNGEON_BOSS_NOXXION_STRATEGY,
+                info = BOSS_NAME.DUNGEON_BOSS_NOXXION_INFO,
+                strategy = BOSS_NAME.DUNGEON_BOSS_NOXXION_STRATEGY,
                 abilities = {
 
                 },
@@ -2271,8 +2081,8 @@ AdventureGuide.Dungeons = {
             },
             {
                 name = "Gelk",
-                info = L.DUNGEON_BOSS_NOXXION_INFO,
-                strategy = L.DUNGEON_BOSS_NOXXION_STRATEGY,
+                info = BOSS_NAME.DUNGEON_BOSS_NOXXION_INFO,
+                strategy = BOSS_NAME.DUNGEON_BOSS_NOXXION_STRATEGY,
                 abilities = {
 
                 },
@@ -2282,8 +2092,8 @@ AdventureGuide.Dungeons = {
             },
             {
                 name = "Magra",
-                info = L.DUNGEON_BOSS_NOXXION_INFO,
-                strategy = L.DUNGEON_BOSS_NOXXION_STRATEGY,
+                info = BOSS_NAME.DUNGEON_BOSS_NOXXION_INFO,
+                strategy = BOSS_NAME.DUNGEON_BOSS_NOXXION_STRATEGY,
                 abilities = {
 
                 },
@@ -2293,8 +2103,8 @@ AdventureGuide.Dungeons = {
             },
             {
                 name = "The Nameless Prophet",
-                info = L.DUNGEON_BOSS_NOXXION_INFO,
-                strategy = L.DUNGEON_BOSS_NOXXION_STRATEGY,
+                info = BOSS_NAME.DUNGEON_BOSS_NOXXION_INFO,
+                strategy = BOSS_NAME.DUNGEON_BOSS_NOXXION_STRATEGY,
                 abilities = {
 
                 },
@@ -2304,7 +2114,7 @@ AdventureGuide.Dungeons = {
             },
             ]]
         },
-        history = L.DUNGEON_HISTORY_MARAUDON,
+        history = BOSS_NAME.DUNGEON_HISTORY_MARAUDON,
     },
     {
         name = "Zul'Farrak",
@@ -2340,10 +2150,8 @@ AdventureGuide.Dungeons = {
         },
         bosses = {
             {
-                name = L.DUNGEON_BOSS_ANTUSUL,
+                name = BOSS_NAME.DUNGEON_BOSS_ANTUSUL,
                 npcID = 8127,
-                info = L.DUNGEON_BOSS_ANTUSUL_INFO,
-                strategy = L.DUNGEON_BOSS_ANTUSUL_STRATEGY,
                 abilities = {
                     8376,
                     11899,
@@ -2358,10 +2166,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_THEKA_THE_MARTYR,
+                name = BOSS_NAME.DUNGEON_BOSS_THEKA_THE_MARTYR,
                 npcID = 7272,
-                info = L.DUNGEON_BOSS_THEKA_THE_MARTYR_INFO,
-                strategy = L.DUNGEON_BOSS_THEKA_THE_MARTYR_STRATEGY,
                 abilities = {
                     8600,
                     11089,
@@ -2372,10 +2178,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_SANDARR_DUNEREAVER,
+                name = BOSS_NAME.DUNGEON_BOSS_SANDARR_DUNEREAVER,
                 npcID = 10080,
-                info = L.DUNGEON_BOSS_SANDARR_DUNEREAVER_INFO,
-                strategy = L.DUNGEON_BOSS_SANDARR_DUNEREAVER_STRATEGY,
                 abilities = {
 
                 },
@@ -2384,10 +2188,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_WITCH_DOCTOR_ZUMRAH,
+                name = BOSS_NAME.DUNGEON_BOSS_WITCH_DOCTOR_ZUMRAH,
                 npcID = 7271,
-                info = L.DUNGEON_BOSS_WITCH_DOCTOR_ZUMRAH_INFO,
-                strategy = L.DUNGEON_BOSS_WITCH_DOCTOR_ZUMRAH_STRATEGY,
                 abilities = {
                     12491,
                     12739,
@@ -2400,10 +2202,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_ZF_STAIRS_EVENT,
+                name = BOSS_NAME.DUNGEON_BOSS_ZF_STAIRS_EVENT,
                 npcID = {7796, 7275,},
-                info = L.DUNGEON_BOSS_ZF_STAIRS_EVENT_INFO,
-                strategy = L.DUNGEON_BOSS_ZF_STAIRS_EVENT_STRATEGY,
                 abilities = {
                     12039,
                     13704,
@@ -2419,10 +2219,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_DUSTWRAITH,
+                name = BOSS_NAME.DUNGEON_BOSS_DUSTWRAITH,
                 npcID = 10081,
-                info = L.DUNGEON_BOSS_DUSTWRAITH_INFO,
-                strategy = L.DUNGEON_BOSS_DUSTWRAITH_STRATEGY,
                 abilities = {
 
                 },
@@ -2431,10 +2229,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_SERGEANT_BLY,
+                name = BOSS_NAME.DUNGEON_BOSS_SERGEANT_BLY,
                 npcID = 7604,
-                info = L.DUNGEON_BOSS_SERGEANT_BLY_INFO,
-                strategy = L.DUNGEON_BOSS_SERGEANT_BLY_STRATEGY,
                 abilities = {
                     12170,
                     11972,
@@ -2444,10 +2240,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_HYDROMANCER_VELRATHA,
+                name = BOSS_NAME.DUNGEON_BOSS_HYDROMANCER_VELRATHA,
                 npcID = 7795,
-                info = L.DUNGEON_BOSS_HYDROMANCER_VELRATHA_INFO,
-                strategy = L.DUNGEON_BOSS_HYDROMANCER_VELRATHA_STRATEGY,
                 abilities = {
                     12491,
                     12739,
@@ -2460,10 +2254,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_GAHZRILLA,
+                name = BOSS_NAME.DUNGEON_BOSS_GAHZRILLA,
                 npcID = 7273,
-                info = L.DUNGEON_BOSS_GAHZRILLA_INFO,
-                strategy = L.DUNGEON_BOSS_GAHZRILLA_STRATEGY,
                 abilities = {
                     11836,
                     11902,
@@ -2475,10 +2267,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_CHIEF_UKORZ_SANDSCALP,
+                name = BOSS_NAME.DUNGEON_BOSS_CHIEF_UKORZ_SANDSCALP,
                 npcID = 7267,
-                info = L.DUNGEON_BOSS_CHIEF_UKORZ_SANDSCALP_INFO,
-                strategy = L.DUNGEON_BOSS_CHIEF_UKORZ_SANDSCALP_STRATEGY,
                 abilities = {
                     11837,
                     15496,
@@ -2493,10 +2283,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_ZERILLIS,
+                name = BOSS_NAME.DUNGEON_BOSS_ZERILLIS,
                 npcID = 10082,
-                info = L.DUNGEON_BOSS_ZERILLIS_INFO,
-                strategy = L.DUNGEON_BOSS_ZERILLIS_STRATEGY,
                 abilities = {
                     12551,
                     6533,
@@ -2507,7 +2295,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_TRASH,
+                name = BOSS_NAME.DUNGEON_TRASH,
                 npcID = false,
                 info = "",
                 strategy = "",
@@ -2530,7 +2318,7 @@ AdventureGuide.Dungeons = {
                 },
             },
         },
-        history = L.DUNGEON_HISTORY_ZULFARRACK,
+        history = BOSS_NAME.DUNGEON_HISTORY_ZULFARRACK,
     },
     {
         name = "Sunken Temple",
@@ -2571,10 +2359,8 @@ AdventureGuide.Dungeons = {
         ]]
         bosses = {
             {
-                name = L.DUNGEON_BOSS_ATALAI_DEFENDERS, --balcony bosses
+                name = BOSS_NAME.DUNGEON_BOSS_ATALAI_DEFENDERS, --balcony bosses
                 npcID = {8127},
-                info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
-                strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
                 abilities = {
                     12782,
                     118,
@@ -2599,10 +2385,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_ATALALARION,
+                name = BOSS_NAME.DUNGEON_BOSS_ATALALARION,
                 npcID = 8580,
-                info = L.DUNGEON_BOSS_ATALALARION_INFO,
-                strategy = L.DUNGEON_BOSS_ATALALARION_STRATEGY,
                 abilities = {
                     12887,
                 },
@@ -2613,10 +2397,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_DREAMSCYTHE,
+                name = BOSS_NAME.DUNGEON_BOSS_DREAMSCYTHE,
                 npcID = 5721,
-                info = L.DUNGEON_BOSS_DREAMSCYTHE_INFO,
-                strategy = L.DUNGEON_BOSS_DREAMSCYTHE_STRATEGY,
                 abilities = {
                     12533,
                     12882,
@@ -2633,10 +2415,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_WEAVER,
+                name = BOSS_NAME.DUNGEON_BOSS_WEAVER,
                 npcID = 5720,
-                info = L.DUNGEON_BOSS_WEAVER_INFO,
-                strategy = L.DUNGEON_BOSS_WEAVER_STRATEGY,
                 abilities = {
                     12533,
                     12882,
@@ -2653,10 +2433,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_JAMMALAN_THE_PROPHET,
+                name = BOSS_NAME.DUNGEON_BOSS_JAMMALAN_THE_PROPHET,
                 npcID = 5710,
-                info = L.DUNGEON_BOSS_JAMMALAN_THE_PROPHET_INFO,
-                strategy = L.DUNGEON_BOSS_JAMMALAN_THE_PROPHET_STRATEGY,
                 abilities = {
                     8505,
                     10395,
@@ -2669,10 +2447,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_OGOM_THE_WRETCHED,
+                name = BOSS_NAME.DUNGEON_BOSS_OGOM_THE_WRETCHED,
                 npcID = 5711,
-                info = L.DUNGEON_BOSS_OGOM_THE_WRETCHED_INFO,
-                strategy = L.DUNGEON_BOSS_OGOM_THE_WRETCHED_STRATEGY,
                 abilities = {
                     11660,
                     13952,
@@ -2685,10 +2461,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_MORPHAZ,
+                name = BOSS_NAME.DUNGEON_BOSS_MORPHAZ,
                 npcID = 5719,
-                info = L.DUNGEON_BOSS_MORPHAZ_INFO,
-                strategy = L.DUNGEON_BOSS_MORPHAZ_STRATEGY,
                 abilities = {
                     12533,
                     12882,
@@ -2705,10 +2479,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_HAZZAS,
+                name = BOSS_NAME.DUNGEON_BOSS_HAZZAS,
                 npcID = 5722,
-                info = L.DUNGEON_BOSS_HAZZAS_INFO,
-                strategy = L.DUNGEON_BOSS_HAZZAS_STRATEGY,
                 abilities = {
                     12533,
                     12882,
@@ -2725,10 +2497,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_AVATAR_OF_HAKKAR,
+                name = BOSS_NAME.DUNGEON_BOSS_AVATAR_OF_HAKKAR,
                 npcID = 8443,
-                info = L.DUNGEON_BOSS_AVATAR_OF_HAKKAR_INFO,
-                strategy = L.DUNGEON_BOSS_AVATAR_OF_HAKKAR_STRATEGY,
                 abilities = {
                     12888,
                     12889,
@@ -2746,10 +2516,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_SHADE_OF_ERANIKUS,
+                name = BOSS_NAME.DUNGEON_BOSS_SHADE_OF_ERANIKUS,
                 npcID = 5709,
-                info = L.DUNGEON_BOSS_SHADE_OF_ERANIKUS_INFO,
-                strategy = L.DUNGEON_BOSS_SHADE_OF_ERANIKUS_STRATEGY,
                 abilities = {
                     16740,
                     12890,
@@ -2768,7 +2536,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_TRASH,
+                name = BOSS_NAME.DUNGEON_TRASH,
                 npcID = false,
                 info = "",
                 strategy = "",
@@ -2796,7 +2564,7 @@ AdventureGuide.Dungeons = {
                 },
             },
         },
-        history = L.DUNGEON_HISTORY_SUNKEN_TEMPLE,
+        history = BOSS_NAME.DUNGEON_HISTORY_SUNKEN_TEMPLE,
     },
     {
         name = "Blackrock Depths",
@@ -2846,10 +2614,8 @@ AdventureGuide.Dungeons = {
         },
         bosses = {
             {
-                name = L.DUNGEON_BOSS_LORD_ROCCOR,
+                name = BOSS_NAME.DUNGEON_BOSS_LORD_ROCCOR,
                 npcID = 9025,
-                info = L.DUNGEON_BOSS_LORD_ROCCOR_INFO,
-                strategy = L.DUNGEON_BOSS_LORD_ROCCOR_STRATEGY,
                 abilities = {
                     13728,
                     13729,
@@ -2864,10 +2630,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_BAELGAR,
+                name = BOSS_NAME.DUNGEON_BOSS_BAELGAR,
                 npcID = 9016,
-                info = L.DUNGEON_BOSS_BAELGAR_INFO,
-                strategy = L.DUNGEON_BOSS_BAELGAR_STRATEGY,
                 abilities = {
                     13895,
                     13880,
@@ -2880,10 +2644,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_HOUNDMASTER_GREBMAR,
+                name = BOSS_NAME.DUNGEON_BOSS_HOUNDMASTER_GREBMAR,
                 npcID = 9319,
-                info = L.DUNGEON_BOSS_HOUNDMASTER_GREBMAR_INFO,
-                strategy = L.DUNGEON_BOSS_HOUNDMASTER_GREBMAR_STRATEGY,
                 abilities = {
                     21049,
                     13730,
@@ -2897,10 +2659,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_HIGH_INTERROGATOR_GERSTAHN,
+                name = BOSS_NAME.DUNGEON_BOSS_HIGH_INTERROGATOR_GERSTAHN,
                 npcID = 9018,
-                info = L.DUNGEON_BOSS_HIGH_INTERROGATOR_GERSTAHN_INFO,
-                strategy = L.DUNGEON_BOSS_HIGH_INTERROGATOR_GERSTAHN_STRATEGY,
                 abilities = {
                     14032,
                     14033,
@@ -2920,10 +2680,8 @@ AdventureGuide.Dungeons = {
                 ring of law event
             ]]
             {
-                name = L.DUNGEON_BOSS_ROL_GOROSH,
+                name = BOSS_NAME.DUNGEON_BOSS_ROL_GOROSH,
                 npcID = 9027,
-                info = L.DUNGEON_BOSS_ROL_GOROSH_INFO,
-                strategy = L.DUNGEON_BOSS_ROL_GOROSH_STRATEGY,
                 abilities = {
                     15589,
                     15708,
@@ -2937,10 +2695,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_ROL_GRIZZLE,
+                name = BOSS_NAME.DUNGEON_BOSS_ROL_GRIZZLE,
                 npcID = 9028,
-                info = L.DUNGEON_BOSS_ROL_GRIZZLE_INFO,
-                strategy = L.DUNGEON_BOSS_ROL_GRIZZLE_STRATEGY,
                 abilities = {
                     6524,
                     8269,
@@ -2954,10 +2710,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_ROL_EVISCERATOR,
+                name = BOSS_NAME.DUNGEON_BOSS_ROL_EVISCERATOR,
                 npcID = 9029,
-                info = L.DUNGEON_BOSS_ROL_EVISCERATOR_INFO,
-                strategy = L.DUNGEON_BOSS_ROL_EVISCERATOR_STRATEGY,
                 abilities = {
                     7121,
                     28599,
@@ -2971,10 +2725,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_ROL_OKTHOR,
+                name = BOSS_NAME.DUNGEON_BOSS_ROL_OKTHOR,
                 npcID = 9030,
-                info = L.DUNGEON_BOSS_ROL_OKTHOR_INFO,
-                strategy = L.DUNGEON_BOSS_ROL_OKTHOR_STRATEGY,
                 abilities = {
                     14621,
                     26192,
@@ -2989,10 +2741,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_ROL_ANUBSHIAH,
+                name = BOSS_NAME.DUNGEON_BOSS_ROL_ANUBSHIAH,
                 npcID = 9031,
-                info = L.DUNGEON_BOSS_ROL_ANUBSHIAH_INFO,
-                strategy = L.DUNGEON_BOSS_ROL_ANUBSHIAH_STRATEGY,
                 abilities = {
                     15472,
                     15470,
@@ -3008,10 +2758,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_ROL_HEDRUM,
+                name = BOSS_NAME.DUNGEON_BOSS_ROL_HEDRUM,
                 npcID = 9032,
-                info = L.DUNGEON_BOSS_ROL_HEDRUM_INFO,
-                strategy = L.DUNGEON_BOSS_ROL_HEDRUM_STRATEGY,
                 abilities = {
                     15475,
                     3609,
@@ -3025,10 +2773,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_ROL_THELDREN,
+                name = BOSS_NAME.DUNGEON_BOSS_ROL_THELDREN,
                 npcID = 16059,
-                info = L.DUNGEON_BOSS_ROL_THELDREN_INFO,
-                strategy = L.DUNGEON_BOSS_ROL_THELDREN_STRATEGY,
                 abilities = {
 
                 },
@@ -3046,8 +2792,8 @@ AdventureGuide.Dungeons = {
             -- {
             --     name = "High Justice Grimstone",
             --     npcID = 10096,
-            --     info = L.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
-            --     strategy = L.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
+            --     info = BOSS_NAME.DUNGEON_BOSS_ATALAI_DEFENDERS_INFO,
+            --     strategy = BOSS_NAME.DUNGEON_BOSS_ATALAI_DEFENDERS_STRATEGY,
             --     abilities = {
 
             --     },
@@ -3057,10 +2803,8 @@ AdventureGuide.Dungeons = {
             -- },
 
             {
-                name = L.DUNGEON_BOSS_PYROMANCER_LOREGRAIN,
+                name = BOSS_NAME.DUNGEON_BOSS_PYROMANCER_LOREGRAIN,
                 npcID = 9024,
-                info = L.DUNGEON_BOSS_PYROMANCER_LOREGRAIN_INFO,
-                strategy = L.DUNGEON_BOSS_PYROMANCER_LOREGRAIN_STRATEGY,
                 abilities = {
                     15038,
                     15095,
@@ -3076,10 +2820,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_GENERAL_ANGERFORGE,
+                name = BOSS_NAME.DUNGEON_BOSS_GENERAL_ANGERFORGE,
                 npcID = 9033,
-                info = L.DUNGEON_BOSS_GENERAL_ANGERFORGE_INFO,
-                strategy = L.DUNGEON_BOSS_GENERAL_ANGERFORGE_STRATEGY,
                 abilities = {
                     15572,
                 },
@@ -3092,10 +2834,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_GOLEM_LORD_ARGELMACH,
+                name = BOSS_NAME.DUNGEON_BOSS_GOLEM_LORD_ARGELMACH,
                 npcID = 8983,
-                info = L.DUNGEON_BOSS_GOLEM_LORD_ARGELMACH_INFO,
-                strategy = L.DUNGEON_BOSS_GOLEM_LORD_ARGELMACH_STRATEGY,
                 abilities = {
                     15305,
                     15507,
@@ -3109,10 +2849,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_RIBBLY_SCREWSPIGOT,
+                name = BOSS_NAME.DUNGEON_BOSS_RIBBLY_SCREWSPIGOT,
                 npcID = 9543,
-                info = L.DUNGEON_BOSS_RIBBLY_SCREWSPIGOT_INFO,
-                strategy = L.DUNGEON_BOSS_RIBBLY_SCREWSPIGOT_STRATEGY,
                 abilities = {
 
                 },
@@ -3124,10 +2862,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_HURLEY_BLACKBREATH,
+                name = BOSS_NAME.DUNGEON_BOSS_HURLEY_BLACKBREATH,
                 npcID = 9537,
-                info = L.DUNGEON_BOSS_HURLEY_BLACKBREATH_INFO,
-                strategy = L.DUNGEON_BOSS_HURLEY_BLACKBREATH_STRATEGY,
                 abilities = {
 
                 },
@@ -3138,10 +2874,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_PLUGGER_SPAZZRING,
+                name = BOSS_NAME.DUNGEON_BOSS_PLUGGER_SPAZZRING,
                 npcID = 9499,
-                info = L.DUNGEON_BOSS_PLUGGER_SPAZZRING_INFO,
-                strategy = L.DUNGEON_BOSS_PLUGGER_SPAZZRING_STRATEGY,
                 abilities = {
 
                 },
@@ -3152,10 +2886,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_PHALANX,
+                name = BOSS_NAME.DUNGEON_BOSS_PHALANX,
                 npcID = 9502,
-                info = L.DUNGEON_BOSS_PHALANX_INFO,
-                strategy = L.DUNGEON_BOSS_PHALANX_STRATEGY,
                 abilities = {
                     15588,
                     14099,
@@ -3169,10 +2901,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_LORD_INCENDIUS,
+                name = BOSS_NAME.DUNGEON_BOSS_LORD_INCENDIUS,
                 npcID = 9017,
-                info = L.DUNGEON_BOSS_LORD_INCENDIUS_INFO,
-                strategy = L.DUNGEON_BOSS_LORD_INCENDIUS_STRATEGY,
                 abilities = {
                     26977,
                     13900,
@@ -3187,10 +2917,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_FINEOUS_DARKVIRE,
+                name = BOSS_NAME.DUNGEON_BOSS_FINEOUS_DARKVIRE,
                 npcID = 9056,
-                info = L.DUNGEON_BOSS_FINEOUS_DARKVIRE_INFO,
-                strategy = L.DUNGEON_BOSS_FINEOUS_DARKVIRE_STRATEGY,
                 abilities = {
                     8258,
                     15493,
@@ -3207,10 +2935,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_WARDER_STILGISS_VEREK,
+                name = BOSS_NAME.DUNGEON_BOSS_WARDER_STILGISS_VEREK,
                 npcID = {9041,9042},
-                info = L.DUNGEON_BOSS_WARDER_STILGISS_VEREK_INFO,
-                strategy = L.DUNGEON_BOSS_WARDER_STILGISS_VEREK_STRATEGY,
                 abilities = {
                     12675,
                     15044,
@@ -3228,10 +2954,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_DARK_COFFER,
+                name = BOSS_NAME.DUNGEON_BOSS_DARK_COFFER,
                 npcID = 160845, --object id not npc
-                info = L.DUNGEON_BOSS_DARK_COFFER_INFO,
-                strategy = L.DUNGEON_BOSS_DARK_COFFER_STRATEGY,
                 abilities = {
 
                 },
@@ -3240,10 +2964,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_AMBASSADOR_FLAMELASH,
+                name = BOSS_NAME.DUNGEON_BOSS_AMBASSADOR_FLAMELASH,
                 npcID = 9156,
-                info = L.DUNGEON_BOSS_AMBASSADOR_FLAMELASH_INFO,
-                strategy = L.DUNGEON_BOSS_AMBASSADOR_FLAMELASH_STRATEGY,
                 abilities = {
                     13489,
                     14744,
@@ -3257,10 +2979,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_PANZOR_THE_INVINCIBLE,
+                name = BOSS_NAME.DUNGEON_BOSS_PANZOR_THE_INVINCIBLE,
                 npcID = 8923,
-                info = L.DUNGEON_BOSS_PANZOR_THE_INVINCIBLE_INFO,
-                strategy = L.DUNGEON_BOSS_PANZOR_THE_INVINCIBLE_STRATEGY,
                 abilities = {
                     9941,
                 },
@@ -3272,10 +2992,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_CHEST_OF_THE_SEVEN,
+                name = BOSS_NAME.DUNGEON_BOSS_CHEST_OF_THE_SEVEN,
                 npcID = 169243, --object ID not npc
-                info = L.DUNGEON_BOSS_CHEST_OF_THE_SEVEN_INFO,
-                strategy = L.DUNGEON_BOSS_CHEST_OF_THE_SEVEN_STRATEGY,
                 abilities = {
 
                 },
@@ -3291,10 +3009,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_MAGMUS,
+                name = BOSS_NAME.DUNGEON_BOSS_MAGMUS,
                 npcID = 9938,
-                info = L.DUNGEON_BOSS_MAGMUS_INFO,
-                strategy = L.DUNGEON_BOSS_MAGMUS_STRATEGY,
                 abilities = {
                     13900,
                     24375,
@@ -3308,10 +3024,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_PRINCESS_MOIRA_BRONZEBEARD,
+                name = BOSS_NAME.DUNGEON_BOSS_PRINCESS_MOIRA_BRONZEBEARD,
                 npcID = 8929,
-                info = L.DUNGEON_BOSS_PRINCESS_MOIRA_BRONZEBEARD_INFO,
-                strategy = L.DUNGEON_BOSS_PRINCESS_MOIRA_BRONZEBEARD_STRATEGY,
                 abilities = {
                     15586,
                     10929,
@@ -3330,10 +3044,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_EMPEROR_DAGRAN_THAURISSAN,
+                name = BOSS_NAME.DUNGEON_BOSS_EMPEROR_DAGRAN_THAURISSAN,
                 npcID = 9019,
-                info = L.DUNGEON_BOSS_EMPEROR_DAGRAN_THAURISSAN_INFO,
-                strategy = L.DUNGEON_BOSS_EMPEROR_DAGRAN_THAURISSAN_STRATEGY,
                 abilities = {
                     17492,
                     15636,
@@ -3354,7 +3066,7 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_TRASH,
+                name = BOSS_NAME.DUNGEON_TRASH,
                 npcID = false,
                 info = "",
                 strategy = "",
@@ -3366,7 +3078,7 @@ AdventureGuide.Dungeons = {
                 },
             },
         },
-        history = L.DUNGEON_HISTORY_BLACKROCK_DEPTHS,
+        history = BOSS_NAME.DUNGEON_HISTORY_BLACKROCK_DEPTHS,
     },
     {
         name = "Lower Blackrock Spire",
@@ -3432,10 +3144,8 @@ AdventureGuide.Dungeons = {
         },
         bosses = {
             {
-                name = L.DUNGEON_BOSS_SPIRESTONE_BUTCHER,
+                name = BOSS_NAME.DUNGEON_BOSS_SPIRESTONE_BUTCHER,
                 npcID = 9219,
-                info = L.DUNGEON_BOSS_SPIRESTONE_BUTCHER_INFO,
-                strategy = L.DUNGEON_BOSS_SPIRESTONE_BUTCHER_STRATEGY,
                 abilities = {
 
                 },
@@ -3445,10 +3155,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_SPIRESTONE_BATTLE_LORD,
+                name = BOSS_NAME.DUNGEON_BOSS_SPIRESTONE_BATTLE_LORD,
                 npcID = 9218,
-                info = L.DUNGEON_BOSS_SPIRESTONE_BATTLE_LORD_INFO,
-                strategy = L.DUNGEON_BOSS_SPIRESTONE_BATTLE_LORD_STRATEGY,
                 abilities = {
 
                 },
@@ -3458,10 +3166,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_HIGHLORD_OMOKK,
+                name = BOSS_NAME.DUNGEON_BOSS_HIGHLORD_OMOKK,
                 npcID = 9196,
-                info = L.DUNGEON_BOSS_HIGHLORD_OMOKK_INFO,
-                strategy = L.DUNGEON_BOSS_HIGHLORD_OMOKK_STRATEGY,
                 abilities = {
                     5532,
                     8269,
@@ -3477,10 +3183,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_SHADOW_HUNTER_VOSHGAJIN,
+                name = BOSS_NAME.DUNGEON_BOSS_SHADOW_HUNTER_VOSHGAJIN,
                 npcID = 9236,
-                info = L.DUNGEON_BOSS_SHADOW_HUNTER_VOSHGAJIN_INFO,
-                strategy = L.DUNGEON_BOSS_SHADOW_HUNTER_VOSHGAJIN_STRATEGY,
                 abilities = {
                     8282,
                     22566,
@@ -3496,10 +3200,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_WAR_MASTER_VOONE,
+                name = BOSS_NAME.DUNGEON_BOSS_WAR_MASTER_VOONE,
                 npcID = 9237,
-                info = L.DUNGEON_BOSS_WAR_MASTER_VOONE_INFO,
-                strategy = L.DUNGEON_BOSS_WAR_MASTER_VOONE_STRATEGY,
                 abilities = {
                     5532,
                 },
@@ -3513,10 +3215,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_MOR_GRAYHOOF,
+                name = BOSS_NAME.DUNGEON_BOSS_MOR_GRAYHOOF,
                 npcID = 16080,
-                info = L.DUNGEON_BOSS_MOR_GRAYHOOF_INFO,
-                strategy = L.DUNGEON_BOSS_MOR_GRAYHOOF_STRATEGY,
                 abilities = {
                     
                 },
@@ -3529,10 +3229,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_BANNOCK_GRIMAXE,
+                name = BOSS_NAME.DUNGEON_BOSS_BANNOCK_GRIMAXE,
                 npcID = 9596,
-                info = L.DUNGEON_BOSS_BANNOCK_GRIMAXE_INFO,
-                strategy = L.DUNGEON_BOSS_BANNOCK_GRIMAXE_STRATEGY,
                 abilities = {
 
                 },
@@ -3544,10 +3242,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_MOTHER_SMOLDERWEB,
+                name = BOSS_NAME.DUNGEON_BOSS_MOTHER_SMOLDERWEB,
                 npcID = 10596,
-                info = L.DUNGEON_BOSS_MOTHER_SMOLDERWEB_INFO,
-                strategy = L.DUNGEON_BOSS_MOTHER_SMOLDERWEB_STRATEGY,
                 abilities = {
                     16104,
                     16468,
@@ -3560,10 +3256,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_CRYSTAL_FANG,
+                name = BOSS_NAME.DUNGEON_BOSS_CRYSTAL_FANG,
                 npcID = 10376,
-                info = L.DUNGEON_BOSS_CRYSTAL_FANG_INFO,
-                strategy = L.DUNGEON_BOSS_CRYSTAL_FANG_STRATEGY,
                 abilities = {
 
                 },
@@ -3574,10 +3268,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_UROK_DOOMHOWL,
+                name = BOSS_NAME.DUNGEON_BOSS_UROK_DOOMHOWL,
                 npcID = 10584,
-                info = L.DUNGEON_BOSS_UROK_DOOMHOWL_INFO,
-                strategy = L.DUNGEON_BOSS_UROK_DOOMHOWL_STRATEGY,
                 abilities = {
                     16508,
                     13443,
@@ -3592,10 +3284,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_QUARTERMASTER_ZIGRIS,
+                name = BOSS_NAME.DUNGEON_BOSS_QUARTERMASTER_ZIGRIS,
                 npcID = 9736,
-                info = L.DUNGEON_BOSS_QUARTERMASTER_ZIGRIS_INFO,
-                strategy = L.DUNGEON_BOSS_QUARTERMASTER_ZIGRIS_STRATEGY,
                 abilities = {
 
                 },
@@ -3618,10 +3308,8 @@ AdventureGuide.Dungeons = {
 
             },
             {
-                name = L.DUNGEON_BOSS_GIZRUL_THE_SLAVENER,
+                name = BOSS_NAME.DUNGEON_BOSS_GIZRUL_THE_SLAVENER,
                 npcID = 10268,
-                info = L.DUNGEON_BOSS_GIZRUL_THE_SLAVENER_INFO,
-                strategy = L.DUNGEON_BOSS_GIZRUL_THE_SLAVENER_STRATEGY,
                 abilities = {
                     8269,
                     20539,
@@ -3636,10 +3324,8 @@ AdventureGuide.Dungeons = {
 
             },
             {
-                name = L.DUNGEON_BOSS_HALYCON,
+                name = BOSS_NAME.DUNGEON_BOSS_HALYCON,
                 npcID = 10220,
-                info = L.DUNGEON_BOSS_HALYCON_INFO,
-                strategy = L.DUNGEON_BOSS_HALYCON_STRATEGY,
                 abilities = {
                     13443,
                     3391,
@@ -3652,10 +3338,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_OVERLORD_WYRMTHALAK,
+                name = BOSS_NAME.DUNGEON_BOSS_OVERLORD_WYRMTHALAK,
                 npcID = 9568,
-                info = L.DUNGEON_BOSS_OVERLORD_WYRMTHALAK_INFO,
-                strategy = L.DUNGEON_BOSS_OVERLORD_WYRMTHALAK_STRATEGY,
                 abilities = {
                     19983,
                     23511,
@@ -3674,7 +3358,7 @@ AdventureGuide.Dungeons = {
 
             },
             {
-                name = L.DUNGEON_TRASH,
+                name = BOSS_NAME.DUNGEON_TRASH,
                 npcID = false,
                 info = "",
                 strategy = "",
@@ -3687,7 +3371,7 @@ AdventureGuide.Dungeons = {
 
             },
         },
-        history = L.DUNGEON_HISTORY_LOWER_BLACKROCK_SPIRE,
+        history = BOSS_NAME.DUNGEON_HISTORY_LOWER_BLACKROCK_SPIRE,
     },
     {
         name = "Upper Blackrock Spire",
@@ -3727,10 +3411,8 @@ AdventureGuide.Dungeons = {
         },
         bosses = {
             {
-                name = L.DUNGEON_BOSS_PYROGUARD_EMBERSEER,
+                name = BOSS_NAME.DUNGEON_BOSS_PYROGUARD_EMBERSEER,
                 npcID = 9219,
-                info = L.DUNGEON_BOSS_PYROGUARD_EMBERSEER_INFO,
-                strategy = L.DUNGEON_BOSS_PYROGUARD_EMBERSEER_STRATEGY,
                 abilities = {
 
                 },
@@ -3740,10 +3422,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_GORALUK,
+                name = BOSS_NAME.DUNGEON_BOSS_GORALUK,
                 npcID = 10899,
-                info = L.DUNGEON_BOSS_GORALUK_INFO,
-                strategy = L.DUNGEON_BOSS_GORALUK_STRATEGY,
                 abilities = {
                     6253,
                     3148,
@@ -3760,10 +3440,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_JED_RUNEWATCHER,
+                name = BOSS_NAME.DUNGEON_BOSS_JED_RUNEWATCHER,
                 npcID = 10509,
-                info = L.DUNGEON_BOSS_JED_RUNEWATCHER_INFO,
-                strategy = L.DUNGEON_BOSS_JED_RUNEWATCHER_STRATEGY,
                 abilities = {
                     100,
                     11972,
@@ -3776,10 +3454,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_WARCHIEF_REND_BLACKHAND,
+                name = BOSS_NAME.DUNGEON_BOSS_WARCHIEF_REND_BLACKHAND,
                 npcID = 9219,
-                info = L.DUNGEON_BOSS_WARCHIEF_REND_BLACKHAND_INFO,
-                strategy = L.DUNGEON_BOSS_WARCHIEF_REND_BLACKHAND_STRATEGY,
                 abilities = {
                     13736,
                     15588,
@@ -3801,10 +3477,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_GYTH,
+                name = BOSS_NAME.DUNGEON_BOSS_GYTH,
                 npcID = 9219,
-                info = L.DUNGEON_BOSS_GYTH_INFO,
-                strategy = L.DUNGEON_BOSS_GYTH_STRATEGY,
                 abilities = {
                     18798,
                     20667,
@@ -3821,10 +3495,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_THE_BEAST,
+                name = BOSS_NAME.DUNGEON_BOSS_THE_BEAST,
                 npcID = 9219,
-                info = L.DUNGEON_BOSS_THE_BEAST_INFO,
-                strategy = L.DUNGEON_BOSS_THE_BEAST_STRATEGY,
                 abilities = {
                     19471,
                     1094,
@@ -3846,10 +3518,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_LORD_VALTHALAK,
+                name = BOSS_NAME.DUNGEON_BOSS_LORD_VALTHALAK,
                 npcID = 16042,
-                info = L.DUNGEON_BOSS_LORD_VALTHALAK_INFO,
-                strategy = L.DUNGEON_BOSS_LORD_VALTHALAK_STRATEGY,
                 abilities = {
 
                 },
@@ -3865,10 +3535,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_GENERAL_DRAKKISATH,
+                name = BOSS_NAME.DUNGEON_BOSS_GENERAL_DRAKKISATH,
                 npcID = 9219,
-                info = L.DUNGEON_BOSS_GENERAL_DRAKKISATH_INFO,
-                strategy = L.DUNGEON_BOSS_GENERAL_DRAKKISATH_STRATEGY,
                 abilities = {
                     20569,
                     16805,
@@ -3899,7 +3567,7 @@ AdventureGuide.Dungeons = {
                 },
             },
         },
-        history = L.DUNGEON_HISTORY_UPPER_BLACKROCK_SPIRE,
+        history = BOSS_NAME.DUNGEON_HISTORY_UPPER_BLACKROCK_SPIRE,
     },
     {
         name = "Scholomance",
@@ -3956,10 +3624,8 @@ AdventureGuide.Dungeons = {
         },
         bosses = {
             {
-                name = L.DUNGEON_BOSS_KIRTONOS_BLOOD_STEWARD,
+                name = BOSS_NAME.DUNGEON_BOSS_KIRTONOS_BLOOD_STEWARD,
                 npcID = 14861,
-                info = L.DUNGEON_BOSS_KIRTONOS_BLOOD_STEWARD_INFO,
-                strategy = L.DUNGEON_BOSS_KIRTONOS_BLOOD_STEWARD_STRATEGY,
                 abilities = {
                     22371,
                     11708,
@@ -3970,10 +3636,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_KIRTONOS_THE_HERALD,
+                name = BOSS_NAME.DUNGEON_BOSS_KIRTONOS_THE_HERALD,
                 npcID = 10506,
-                info = L.DUNGEON_BOSS_KIRTONOS_THE_HERALD_INFO,
-                strategy = L.DUNGEON_BOSS_KIRTONOS_THE_HERALD_STRATEGY,
                 abilities = {
                     22371,
                     11708,
@@ -3993,10 +3657,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_JANDICE_BAROV,
+                name = BOSS_NAME.DUNGEON_BOSS_JANDICE_BAROV,
                 npcID = 10503,
-                info = L.DUNGEON_BOSS_JANDICE_BAROV_INFO,
-                strategy = L.DUNGEON_BOSS_JANDICE_BAROV_STRATEGY,
                 abilities = {
                     8282,
                     18647,
@@ -4015,10 +3677,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_RATTLEGORE,
+                name = BOSS_NAME.DUNGEON_BOSS_RATTLEGORE,
                 npcID = 11622,
-                info = L.DUNGEON_BOSS_RATTLEGORE_INFO,
-                strategy = L.DUNGEON_BOSS_RATTLEGORE_STRATEGY,
                 abilities = {
                     18945,
                     15580,
@@ -4038,10 +3698,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_MARDUK_BLACKPOOL,
+                name = BOSS_NAME.DUNGEON_BOSS_MARDUK_BLACKPOOL,
                 npcID = 10433,
-                info = L.DUNGEON_BOSS_MARDUK_BLACKPOOL_INFO,
-                strategy = L.DUNGEON_BOSS_MARDUK_BLACKPOOL_STRATEGY,
                 abilities = {
                     11609,
                     17695,
@@ -4054,10 +3712,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_VECTUS,
+                name = BOSS_NAME.DUNGEON_BOSS_VECTUS,
                 npcID = 10432,
-                info = L.DUNGEON_BOSS_VECTUS_INFO,
-                strategy = L.DUNGEON_BOSS_VECTUS_STRATEGY,
                 abilities = {
                     13021,
                     10216,
@@ -4069,10 +3725,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_RAS_FROSTWHISPER,
+                name = BOSS_NAME.DUNGEON_BOSS_RAS_FROSTWHISPER,
                 npcID = 10508,
-                info = L.DUNGEON_BOSS_RAS_FROSTWHISPER_INFO,
-                strategy = L.DUNGEON_BOSS_RAS_FROSTWHISPER_STRATEGY,
                 abilities = {
                     18099,
                     18100,
@@ -4099,10 +3753,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_KORMOK,
+                name = BOSS_NAME.DUNGEON_BOSS_KORMOK,
                 npcID = 16118,
-                info = L.DUNGEON_BOSS_KORMOK_INFO,
-                strategy = L.DUNGEON_BOSS_KORMOK_STRATEGY,
                 abilities = {
 
                 },
@@ -4114,10 +3766,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_INSTRUCTOR_MALICIA,
+                name = BOSS_NAME.DUNGEON_BOSS_INSTRUCTOR_MALICIA,
                 npcID = 10505,
-                info = L.DUNGEON_BOSS_INSTRUCTOR_MALICIA_INFO,
-                strategy = L.DUNGEON_BOSS_INSTRUCTOR_MALICIA_STRATEGY,
                 abilities = {
                     5137,
                     25311,
@@ -4170,10 +3820,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_DOCTOR_THEOLEN_KRASTINOV,
+                name = BOSS_NAME.DUNGEON_BOSS_DOCTOR_THEOLEN_KRASTINOV,
                 npcID = 11261,
-                info = L.DUNGEON_BOSS_DOCTOR_THEOLEN_KRASTINOV_INFO,
-                strategy = L.DUNGEON_BOSS_DOCTOR_THEOLEN_KRASTINOV_STRATEGY,
                 abilities = {
                     11130,
                     11574,
@@ -4223,10 +3871,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_LOREKEEPER_POLKELT,
+                name = BOSS_NAME.DUNGEON_BOSS_LOREKEEPER_POLKELT,
                 npcID = 10901,
-                info = L.DUNGEON_BOSS_LOREKEEPER_POLKELT_INFO,
-                strategy = L.DUNGEON_BOSS_LOREKEEPER_POLKELT_STRATEGY,
                 abilities = {
                     8245,
                     5413,
@@ -4276,10 +3922,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_THE_RAVENIAN,
+                name = BOSS_NAME.DUNGEON_BOSS_THE_RAVENIAN,
                 npcID = 10507,
-                info = L.DUNGEON_BOSS_THE_RAVENIAN_INFO,
-                strategy = L.DUNGEON_BOSS_THE_RAVENIAN_STRATEGY,
                 abilities = {
                     20569,
                     11130,
@@ -4330,10 +3974,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_LORD_ALEXEI_BAROV,
+                name = BOSS_NAME.DUNGEON_BOSS_LORD_ALEXEI_BAROV,
                 npcID = 10504,
-                info = L.DUNGEON_BOSS_LORD_ALEXEI_BAROV_INFO,
-                strategy = L.DUNGEON_BOSS_LORD_ALEXEI_BAROV_STRATEGY,
                 abilities = {
                     25309,
                     28340,
@@ -4382,10 +4024,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_LADY_ILLUCIA_BAROV,
+                name = BOSS_NAME.DUNGEON_BOSS_LADY_ILLUCIA_BAROV,
                 npcID = 10502,
-                info = L.DUNGEON_BOSS_LADY_ILLUCIA_BAROV_INFO,
-                strategy = L.DUNGEON_BOSS_LADY_ILLUCIA_BAROV_STRATEGY,
                 abilities = {
                     11713,
                     14515,
@@ -4436,10 +4076,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_DARKMASTER_GANDLING,
+                name = BOSS_NAME.DUNGEON_BOSS_DARKMASTER_GANDLING,
                 npcID = 1853,
-                info = L.DUNGEON_BOSS_DARKMASTER_GANDLING_INFO,
-                strategy = L.DUNGEON_BOSS_DARKMASTER_GANDLING_STRATEGY,
                 abilities = {
                     25346,
                     18702,
@@ -4469,7 +4107,7 @@ AdventureGuide.Dungeons = {
                 },
             },
         },
-        history = L.DUNGEON_HISTORY_SCHOLOMANCE,
+        history = BOSS_NAME.DUNGEON_HISTORY_SCHOLOMANCE,
     },
     {
         name = "Stratholme",
@@ -4521,10 +4159,8 @@ AdventureGuide.Dungeons = {
         },
         bosses = {
             {
-                name = L.DUNGEON_BOSS_FRAS_SIABI,
+                name = BOSS_NAME.DUNGEON_BOSS_FRAS_SIABI,
                 npcID = 11058,
-                info = L.DUNGEON_BOSS_FRAS_SIABI_INFO,
-                strategy = L.DUNGEON_BOSS_FRAS_SIABI_STRATEGY,
                 abilities = {
                     17294,
                     7964,
@@ -4534,10 +4170,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_SKUL,
+                name = BOSS_NAME.DUNGEON_BOSS_SKUL,
                 npcID = 10393,
-                info = L.DUNGEON_BOSS_SKUL_INFO,
-                strategy = L.DUNGEON_BOSS_SKUL_STRATEGY,
                 abilities = {
                     15230,
                     15499,
@@ -4548,10 +4182,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_HEARTHSINGER_FORRESTEN,
+                name = BOSS_NAME.DUNGEON_BOSS_HEARTHSINGER_FORRESTEN,
                 npcID = 10558,
-                info = L.DUNGEON_BOSS_HEARTHSINGER_FORRESTEN_INFO,
-                strategy = L.DUNGEON_BOSS_HEARTHSINGER_FORRESTEN_STRATEGY,
                 abilities = {
                     16798,
                     14443,
@@ -4566,10 +4198,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_THE_UNFORGIVEN,
+                name = BOSS_NAME.DUNGEON_BOSS_THE_UNFORGIVEN,
                 npcID = 10516,
-                info = L.DUNGEON_BOSS_THE_UNFORGIVEN_INFO,
-                strategy = L.DUNGEON_BOSS_THE_UNFORGIVEN_STRATEGY,
                 abilities = {
                     
                 },
@@ -4583,10 +4213,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_POSTMASTER_MALOWN,
+                name = BOSS_NAME.DUNGEON_BOSS_POSTMASTER_MALOWN,
                 npcID = 11143,
-                info = L.DUNGEON_BOSS_POSTMASTER_MALOWN_INFO,
-                strategy = L.DUNGEON_BOSS_POSTMASTER_MALOWN_STRATEGY,
                 abilities = {
                     6253,
                     13338,
@@ -4604,10 +4232,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_TIMMY_THE_CRUEL,
+                name = BOSS_NAME.DUNGEON_BOSS_TIMMY_THE_CRUEL,
                 npcID = 10808,
-                info = L.DUNGEON_BOSS_TIMMY_THE_CRUEL_INFO,
-                strategy = L.DUNGEON_BOSS_TIMMY_THE_CRUEL_STRATEGY,
                 abilities = {
                     17470,
                     8599,
@@ -4622,10 +4248,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_MALOR_THE_ZEALOUS,
+                name = BOSS_NAME.DUNGEON_BOSS_MALOR_THE_ZEALOUS,
                 npcID = 11032,
-                info = L.DUNGEON_BOSS_MALOR_THE_ZEALOUS_INFO,
-                strategy = L.DUNGEON_BOSS_MALOR_THE_ZEALOUS_STRATEGY,
                 abilities = {
                     17233,
                 },
@@ -4634,10 +4258,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_CANNON_MASTER_WILLEY,
+                name = BOSS_NAME.DUNGEON_BOSS_CANNON_MASTER_WILLEY,
                 npcID = 10997,
-                info = L.DUNGEON_BOSS_CANNON_MASTER_WILLEY_INFO,
-                strategy = L.DUNGEON_BOSS_CANNON_MASTER_WILLEY_STRATEGY,
                 abilities = {
                     
                 },
@@ -4657,10 +4279,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_CRIMSON_HAMMERSMITH,
+                name = BOSS_NAME.DUNGEON_BOSS_CRIMSON_HAMMERSMITH,
                 npcID = 11120,
-                info = L.DUNGEON_BOSS_CRIMSON_HAMMERSMITH_INFO,
-                strategy = L.DUNGEON_BOSS_CRIMSON_HAMMERSMITH_STRATEGY,
                 abilities = {
                     
                 },
@@ -4670,10 +4290,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_ARCHIVIST_GALFORD,
+                name = BOSS_NAME.DUNGEON_BOSS_ARCHIVIST_GALFORD,
                 npcID = 10811,
-                info = L.DUNGEON_BOSS_ARCHIVIST_GALFORD_INFO,
-                strategy = L.DUNGEON_BOSS_ARCHIVIST_GALFORD_STRATEGY,
                 abilities = {
                     17293,
                     17366,
@@ -4688,10 +4306,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_BALNAZZAR,
+                name = BOSS_NAME.DUNGEON_BOSS_BALNAZZAR,
                 npcID = 10813,
-                info = L.DUNGEON_BOSS_BALNAZZAR_INFO,
-                strategy = L.DUNGEON_BOSS_BALNAZZAR_STRATEGY,
                 abilities = {
                     17405,
                     13704,
@@ -4718,10 +4334,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_JARIEN_SOTHOS,
+                name = BOSS_NAME.DUNGEON_BOSS_JARIEN_SOTHOS,
                 npcID = {16101,16102},
-                info = L.DUNGEON_BOSS_JARIEN_SOTHOS_INFO,
-                strategy = L.DUNGEON_BOSS_JARIEN_SOTHOS_STRATEGY,
                 abilities = {
 
                 },
@@ -4736,10 +4350,8 @@ AdventureGuide.Dungeons = {
 
             --service gate
             {
-                name = L.DUNGEON_BOSS_MAGISTRATE_BARTHILAS,
+                name = BOSS_NAME.DUNGEON_BOSS_MAGISTRATE_BARTHILAS,
                 npcID = 10435,
-                info = L.DUNGEON_BOSS_MAGISTRATE_BARTHILAS_INFO,
-                strategy = L.DUNGEON_BOSS_MAGISTRATE_BARTHILAS_STRATEGY,
                 abilities = {
                     16793,
                     10887,
@@ -4758,10 +4370,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_STONESPINE,
+                name = BOSS_NAME.DUNGEON_BOSS_STONESPINE,
                 npcID = 10809,
-                info = L.DUNGEON_BOSS_STONESPINE_INFO,
-                strategy = L.DUNGEON_BOSS_STONESPINE_STRATEGY,
                 abilities = {
                     14331,
                 },
@@ -4773,10 +4383,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_NERUBENKAN,
+                name = BOSS_NAME.DUNGEON_BOSS_NERUBENKAN,
                 npcID = 10437,
-                info = L.DUNGEON_BOSS_NERUBENKAN_INFO,
-                strategy = L.DUNGEON_BOSS_NERUBENKAN_STRATEGY,
                 abilities = {
                     16418,
                     4962,
@@ -4798,10 +4406,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_BLACK_GUARD_SWORDSMITH,
+                name = BOSS_NAME.DUNGEON_BOSS_BLACK_GUARD_SWORDSMITH,
                 npcID = 11121,
-                info = L.DUNGEON_BOSS_BLACK_GUARD_SWORDSMITH_INFO,
-                strategy = L.DUNGEON_BOSS_BLACK_GUARD_SWORDSMITH_STRATEGY,
                 abilities = {
                     
                 },
@@ -4810,10 +4416,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_MALEKI_THE_PALLID,
+                name = BOSS_NAME.DUNGEON_BOSS_MALEKI_THE_PALLID,
                 npcID = 10438,
-                info = L.DUNGEON_BOSS_MALEKI_THE_PALLID_INFO,
-                strategy = L.DUNGEON_BOSS_MALEKI_THE_PALLID_STRATEGY,
                 abilities = {
                     17620,
                     13322,
@@ -4835,10 +4439,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_BARONESS_ANASTARI,
+                name = BOSS_NAME.DUNGEON_BOSS_BARONESS_ANASTARI,
                 npcID = 10436,
-                info = L.DUNGEON_BOSS_BARONESS_ANASTARI_INFO,
-                strategy = L.DUNGEON_BOSS_BARONESS_ANASTARI_STRATEGY,
                 abilities = {
                     16867,
                     16868,
@@ -4860,10 +4462,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_RAMSTEIN_THE_GORGER,
+                name = BOSS_NAME.DUNGEON_BOSS_RAMSTEIN_THE_GORGER,
                 npcID = 10439,
-                info = L.DUNGEON_BOSS_RAMSTEIN_THE_GORGER_INFO,
-                strategy = L.DUNGEON_BOSS_RAMSTEIN_THE_GORGER_STRATEGY,
                 abilities = {
                     17687,
                     17307,
@@ -4882,10 +4482,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_BARON_RIVENDARE,
+                name = BOSS_NAME.DUNGEON_BOSS_BARON_RIVENDARE,
                 npcID = 10440,
-                info = L.DUNGEON_BOSS_BARON_RIVENDARE_INFO,
-                strategy = L.DUNGEON_BOSS_BARON_RIVENDARE_STRATEGY,
                 abilities = {
                     15496,
                     16856,
@@ -4920,7 +4518,7 @@ AdventureGuide.Dungeons = {
                 },
             },
         },
-        history = L.DUNGEON_HISTORY_STRATHOLME,
+        history = BOSS_NAME.DUNGEON_HISTORY_STRATHOLME,
     },
     {
         name = "Dire Maul",
@@ -5002,9 +4600,8 @@ AdventureGuide.Dungeons = {
         bosses = {
             --arena
             {
-                name = L.DUNGEON_BOSS_DIRE_MAUL_ARENA_RAZZA,
+                name = BOSS_NAME.DUNGEON_BOSS_DIRE_MAUL_ARENA_RAZZA,
                 npcID = 11497,
-                info = L.DUNGEON_BOSS_DIRE_MAUL_ARENA_INFO,
                 strategy = "",
                 abilities = {
                     22937,
@@ -5014,9 +4611,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_DIRE_MAUL_ARENA_SKAAR,
+                name = BOSS_NAME.DUNGEON_BOSS_DIRE_MAUL_ARENA_SKAAR,
                 npcID = 11498,
-                info = L.DUNGEON_BOSS_DIRE_MAUL_ARENA_INFO,
                 strategy = "",
                 abilities = {
                     15708,
@@ -5027,9 +4623,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_DIRE_MAUL_ARENA_MUSHGOG,
+                name = BOSS_NAME.DUNGEON_BOSS_DIRE_MAUL_ARENA_MUSHGOG,
                 npcID = 11447,
-                info = L.DUNGEON_BOSS_DIRE_MAUL_ARENA_INFO,
                 strategy = "",
                 abilities = {
                     22948,
@@ -5041,10 +4636,8 @@ AdventureGuide.Dungeons = {
 
             --east
             {
-                name = L.DUNGEON_BOSS_PUSILLIN,
+                name = BOSS_NAME.DUNGEON_BOSS_PUSILLIN,
                 npcID = 14354,
-                info = L.DUNGEON_BOSS_PUSILLIN_INFO,
-                strategy = L.DUNGEON_BOSS_PUSILLIN_STRATEGY,
                 abilities = {
                     17145,
                     14145,
@@ -5058,10 +4651,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_LETHTENDRIS,
+                name = BOSS_NAME.DUNGEON_BOSS_LETHTENDRIS,
                 npcID = 14327,
-                info = L.DUNGEON_BOSS_LETHTENDRIS_INFO,
-                strategy = L.DUNGEON_BOSS_LETHTENDRIS_STRATEGY,
                 abilities = {
                     22709,
                     14887,
@@ -5079,10 +4670,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_HYDROSPAWN,
+                name = BOSS_NAME.DUNGEON_BOSS_HYDROSPAWN,
                 npcID = 13280,
-                info = L.DUNGEON_BOSS_HYDROSPAWN_INFO,
-                strategy = L.DUNGEON_BOSS_HYDROSPAWN_STRATEGY,
                 abilities = {
                     22419,
                     22420,
@@ -5102,10 +4691,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_ZEVRIM_THORNHOOF,
+                name = BOSS_NAME.DUNGEON_BOSS_ZEVRIM_THORNHOOF,
                 npcID = 11490,
-                info = L.DUNGEON_BOSS_ZEVRIM_THORNHOOF_INFO,
-                strategy = L.DUNGEON_BOSS_ZEVRIM_THORNHOOF_STRATEGY,
                 abilities = {
                     22478,
                     22651,
@@ -5119,10 +4706,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_ALZZIN_THE_WILDSHAPER,
+                name = BOSS_NAME.DUNGEON_BOSS_ALZZIN_THE_WILDSHAPER,
                 npcID = 11492,
-                info = L.DUNGEON_BOSS_ALZZIN_THE_WILDSHAPER_INFO,
-                strategy = L.DUNGEON_BOSS_ALZZIN_THE_WILDSHAPER_STRATEGY,
                 abilities = {
                     22661,
                     22662,
@@ -5148,10 +4733,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_ISALIEN,
+                name = BOSS_NAME.DUNGEON_BOSS_ISALIEN,
                 npcID = 16097,
-                info = L.DUNGEON_BOSS_ISALIEN_INFO,
-                strategy = L.DUNGEON_BOSS_ISALIEN_STRATEGY,
                 abilities = {
 
                 },
@@ -5167,10 +4750,8 @@ AdventureGuide.Dungeons = {
 
             --north
             {
-                name = L.DUNGEON_BOSS_GUARD_MOLDAR,
+                name = BOSS_NAME.DUNGEON_BOSS_GUARD_MOLDAR,
                 npcID = 14326,
-                info = L.DUNGEON_BOSS_GUARD_MOLDAR_INFO,
-                strategy = L.DUNGEON_BOSS_GUARD_MOLDAR_STRATEGY,
                 abilities = {
                     8269,
                     10101,
@@ -5196,10 +4777,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_STOMPER_KREEG,
+                name = BOSS_NAME.DUNGEON_BOSS_STOMPER_KREEG,
                 npcID = 11058,
-                info = L.DUNGEON_BOSS_STOMPER_KREEG_INFO,
-                strategy = L.DUNGEON_BOSS_STOMPER_KREEG_STRATEGY,
                 abilities = {
                     22833,
                     22835,
@@ -5214,10 +4793,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_GUARD_FENGUS,
+                name = BOSS_NAME.DUNGEON_BOSS_GUARD_FENGUS,
                 npcID = 14321,
-                info = L.DUNGEON_BOSS_GUARD_FENGUS_INFO,
-                strategy = L.DUNGEON_BOSS_GUARD_FENGUS_STRATEGY,
                 abilities = {
                     8269,
                     10101,
@@ -5237,10 +4814,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_GUARD_SLIPKIK,
+                name = BOSS_NAME.DUNGEON_BOSS_GUARD_SLIPKIK,
                 npcID = 14323,
-                info = L.DUNGEON_BOSS_GUARD_SLIPKIK_INFO,
-                strategy = L.DUNGEON_BOSS_GUARD_SLIPKIK_STRATEGY,
                 abilities = {
                     8269,
                     10101,
@@ -5249,7 +4824,7 @@ AdventureGuide.Dungeons = {
                     15580,
                 },
                 loot = {
-                    118493,
+                    18493,
                     18494,
                     18498,
                     18496,
@@ -5260,10 +4835,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_CAPTAIN_KROMCRUSH,
+                name = BOSS_NAME.DUNGEON_BOSS_CAPTAIN_KROMCRUSH,
                 npcID = 14325,
-                info = L.DUNGEON_BOSS_CAPTAIN_KROMCRUSH_INFO,
-                strategy = L.DUNGEON_BOSS_CAPTAIN_KROMCRUSH_STRATEGY,
                 abilities = {
                     22860,
                     8599,
@@ -5279,10 +4852,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_CHORUSH_THE_OBSERVER,
+                name = BOSS_NAME.DUNGEON_BOSS_CHORUSH_THE_OBSERVER,
                 npcID = 14324,
-                info = L.DUNGEON_BOSS_CHORUSH_THE_OBSERVER_INFO,
-                strategy = L.DUNGEON_BOSS_CHORUSH_THE_OBSERVER_STRATEGY,
                 abilities = {
                     17194,
                     22884,
@@ -5297,10 +4868,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_KING_GORDOK,
+                name = BOSS_NAME.DUNGEON_BOSS_KING_GORDOK,
                 npcID = 11501,
-                info = L.DUNGEON_BOSS_KING_GORDOK_INFO,
-                strategy = L.DUNGEON_BOSS_KING_GORDOK_STRATEGY,
                 abilities = {
                     22886,
                     15708,
@@ -5321,10 +4890,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_TRIBUTE,
+                name = BOSS_NAME.DUNGEON_BOSS_TRIBUTE,
                 npcID = 179564, --object id
-                info = L.DUNGEON_BOSS_TRIBUTE_INFO,
-                strategy = L.DUNGEON_BOSS_TRIBUTE_STRATEGY,
                 abilities = {
 
                 },
@@ -5355,10 +4922,8 @@ AdventureGuide.Dungeons = {
 
             --west
             {
-                name = L.DUNGEON_BOSS_TENDRIS_WARPWOOD,
+                name = BOSS_NAME.DUNGEON_BOSS_TENDRIS_WARPWOOD,
                 npcID = 11489,
-                info = L.DUNGEON_BOSS_TENDRIS_WARPWOOD_INFO,
-                strategy = L.DUNGEON_BOSS_TENDRIS_WARPWOOD_STRATEGY,
                 abilities = {
                     22994,
                     22924,
@@ -5373,10 +4938,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_MAGISTER_KALENDRIS,
+                name = BOSS_NAME.DUNGEON_BOSS_MAGISTER_KALENDRIS,
                 npcID = 11487,
-                info = L.DUNGEON_BOSS_MAGISTER_KALENDRIS_INFO,
-                strategy = L.DUNGEON_BOSS_MAGISTER_KALENDRIS_STRATEGY,
                 abilities = {
                     7645,
                     15587,
@@ -5394,10 +4957,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_TSUZEE,
+                name = BOSS_NAME.DUNGEON_BOSS_TSUZEE,
                 npcID = 11467,
-                info = L.DUNGEON_BOSS_TSUZEE_INFO,
-                strategy = L.DUNGEON_BOSS_TSUZEE_STRATEGY,
                 abilities = {
                     15657,
                     21060,
@@ -5411,10 +4972,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_ILLYANNA_RAVENOAK,
+                name = BOSS_NAME.DUNGEON_BOSS_ILLYANNA_RAVENOAK,
                 npcID = 11488,
-                info = L.DUNGEON_BOSS_ILLYANNA_RAVENOAK_INFO,
-                strategy = L.DUNGEON_BOSS_ILLYANNA_RAVENOAK_STRATEGY,
                 abilities = {
                     20904,
                     22914,
@@ -5429,10 +4988,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_IMMOLTHAR,
+                name = BOSS_NAME.DUNGEON_BOSS_IMMOLTHAR,
                 npcID = 11496,
-                info = L.DUNGEON_BOSS_IMMOLTHAR_INFO,
-                strategy = L.DUNGEON_BOSS_IMMOLTHAR_STRATEGY,
                 abilities = {
                     8269,
                     22899,
@@ -5455,10 +5012,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_PRINCE_TORTHELDRIN,
+                name = BOSS_NAME.DUNGEON_BOSS_PRINCE_TORTHELDRIN,
                 npcID = 11486,
-                info = L.DUNGEON_BOSS_PRINCE_TORTHELDRIN_INFO,
-                strategy = L.DUNGEON_BOSS_PRINCE_TORTHELDRIN_STRATEGY,
                 abilities = {
                     22920,
                     20537,
@@ -5479,10 +5034,8 @@ AdventureGuide.Dungeons = {
                 },
             },
             {
-                name = L.DUNGEON_BOSS_LORD_HELNURATH,
+                name = BOSS_NAME.DUNGEON_BOSS_LORD_HELNURATH,
                 npcID = 14506,
-                info = L.DUNGEON_BOSS_LORD_HELNURATH_INFO,
-                strategy = L.DUNGEON_BOSS_LORD_HELNURATH_STRATEGY,
                 abilities = {
                     20812,
                     22665,
@@ -5495,6 +5048,6 @@ AdventureGuide.Dungeons = {
                 },
             },
         },
-        history = L.DUNGEON_HISTORY_DIRE_MAUL,
+        history = BOSS_NAME.DUNGEON_HISTORY_DIRE_MAUL,
     },
 }

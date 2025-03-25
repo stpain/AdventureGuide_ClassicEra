@@ -583,5 +583,177 @@
         </Scripts>
     </Frame>
 
+    <Frame name="AdventureGuideDatabaseQuestListviewItemTemplate" mixin="AdventureGuideDatabaseQuestListviewItemMixin" virtual="true">
+        <Layers>
+            <Layer level="ARTWORK">
+                <Texture atlas="Options_HorizontalDivider">
+                    <Size y="2"/>
+                    <Anchors>
+                        <Anchor point="BOTTOMLEFT"/>
+                        <Anchor point="BOTTOMRIGHT"/>
+                    </Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="OVERLAY">
+                <FontString parentKey="QuestID" parentArray="fontStrings" inherits="GameFontNormalSmall" justifyH="LEFT">
+                    <Size x="50"/>
+                    <Color r="1" g="1" b="1"/>
+                    <Anchors>
+                        <Anchor point="LEFT" x="0" y="0"/>
+                    </Anchors>
+                </FontString>
+                <FontString parentKey="Title" parentArray="fontStrings" inherits="GameFontNormalSmall" justifyH="LEFT">
+                    <Size x="150"/>
+                    <Color r="1" g="1" b="1"/>
+                    <Anchors>
+                        <Anchor point="LEFT" relativePoint="RIGHT" relativeKey="$parent.QuestID" x="0" y="0"/>
+                    </Anchors>
+                </FontString>
+                <FontString parentKey="Category" parentArray="fontStrings" inherits="GameFontNormalSmall" justifyH="LEFT">
+                    <Size x="150"/>
+                    <Color r="1" g="1" b="1"/>
+                    <Anchors>
+                        <Anchor point="LEFT" relativePoint="RIGHT" relativeKey="$parent.Title" x="0" y="0"/>
+                    </Anchors>
+                </FontString>
+                <FontString parentKey="SubCategory" parentArray="fontStrings" inherits="GameFontNormalSmall" justifyH="LEFT">
+                    <Size x="150"/>
+                    <Color r="1" g="1" b="1"/>
+                    <Anchors>
+                        <Anchor point="LEFT" relativePoint="RIGHT" relativeKey="$parent.Category" x="0" y="0"/>
+                    </Anchors>
+                </FontString>
+                <FontString parentKey="Start" parentArray="fontStrings" inherits="GameFontNormalSmall" justifyH="LEFT">
+                    <Size x="150"/>
+                    <Color r="1" g="1" b="1"/>
+                    <Anchors>
+                        <Anchor point="LEFT" relativePoint="RIGHT" relativeKey="$parent.SubCategory" x="0" y="0"/>
+                    </Anchors>
+                </FontString>
+                <FontString parentKey="Ends" parentArray="fontStrings" inherits="GameFontNormalSmall" justifyH="LEFT">
+                    <Size x="150"/>
+                    <Color r="1" g="1" b="1"/>
+                    <Anchors>
+                        <Anchor point="LEFT" relativePoint="RIGHT" relativeKey="$parent.Start" x="0" y="0"/>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+    </Frame>
+
+    <Frame name="AdventureGuideObjectiveTrackerTemplate" mixin="AdventureGuideObjectiveTrackerMixin" virtual="true">
+        <Layers>
+            <!-- <Layer level="HIGHLIGHT">
+                <Texture parentKey="highlight" atlas="search-highlight" setAllPoints="true">
+
+                </Texture>
+            </Layer> -->
+            <Layer level="BACKGROUND">
+                <Texture parentKey="selected" atlas="search-select" hidden="true" setAllPoints="true">
+
+                </Texture>
+				<Texture parentKey="background" alpha="0.8" hidden="true">	
+                    <Color r="0" g="0" b="0"/>			
+					<Anchors>
+						<Anchor point="TOPLEFT" x="10" y="0"/>
+						<Anchor point="BOTTOMRIGHT" x="-10" y="0"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="backgroundArtwork" alpha="0.0">	
+                    <Color r="0" g="0" b="0"/>			
+					<Anchors>
+						<Anchor point="TOPLEFT" x="1" y="0"/>
+						<Anchor point="BOTTOMRIGHT" x="0" y="1"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="icon">
+					<Size x="32" y="32"/>				
+					<Anchors>
+						<Anchor point="LEFT" x="-25" y="0"/>
+					</Anchors>
+				</Texture>
+                <MaskTexture parentKey="mask" file="Interface/CHARACTERFRAME/TempPortraitAlphaMask" hWrapMode="CLAMPTOBLACKADDITIVE" vWrapMode="CLAMPTOBLACKADDITIVE" hidden="true">
+                    <Size x="30" y="30"/>	
+                    <Anchors>
+                        <Anchor point="LEFT" x="-25" y="0"/>
+                    </Anchors>
+                    <MaskedTextures>
+                        <MaskedTexture childKey="icon"/>
+                    </MaskedTextures>
+                </MaskTexture>
+                <FontString parentKey="label" inherits="GameFontWhite" justifyH="LEFT">
+                    <Anchors>
+                        <Anchor point="LEFT" relativePoint="RIGHT" relativeKey="$parent.icon" x="6" y="0"/>
+                    </Anchors>
+                </FontString>
+                <FontString parentKey="labelRight" inherits="GameFontWhite" justifyH="RIGHT">
+                    <Anchors>
+                        <Anchor point="RIGHT" x="-1" y="0"/>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Frames>
+            <Button parentKey="rightButton">
+                <Anchors>
+                    <Anchor point="RIGHT" x="-4" y="0"/>
+                </Anchors>
+                <Size x="16" y="16"/>
+                <!-- <Layers>
+                    <Layer level="BACKGROUND">
+                        <Texture parentKey="icon" setAllPoints="true"/>
+                    </Layer>
+                </Layers> -->
+            </Button>
+        </Frames>
+        <Animations>
+            <AnimationGroup parentKey="anim" setToFinalAlpha="true">
+                <Alpha parentKey="fadeIn" duration="0.3" fromAlpha="0" toAlpha="1"/>
+            </AnimationGroup>
+        </Animations>
+        <Scripts>
+            <OnLoad method="OnLoad"/>
+        </Scripts>
+    </Frame>
+
+
+
+
+	<Button name="AdventureGuideSmallItemButtonTemplate" mixin="AdventureGuideSmallItemButtonMixin" registerForClicks="LeftButtonUp, RightButtonUp" virtual="true">
+		<Size x="132" y="30"/>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture parentKey="Icon">
+					<Size x="30" y="30"/>
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="NameFrame" atlas="QuestItemBorder">
+                    <Size x="102" y="30"/>
+					<Anchors>
+						<Anchor point="LEFT" relativeKey="$parent.Icon" relativePoint="RIGHT" x="0" y="0"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString parentKey="Name" inherits="GameFontHighlightSmall" justifyH="LEFT">
+					<Size x="92" y="36"/>
+					<Anchors>
+						<Anchor point="LEFT" relativeKey="$parent.NameFrame" x="4" y="0"/>
+					</Anchors>
+				</FontString>
+				<FontString parentKey="Count" inherits="NumberFontNormalSmall" justifyH="RIGHT">
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.Icon" y="1"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+        <Scripts>
+            <OnLeave method="OnLeave"/>
+            <OnLoad method="OnLoad"/>
+        </Scripts>
+	</Button>
 
 </Ui>

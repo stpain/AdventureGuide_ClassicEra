@@ -1,3 +1,5 @@
+local addonName, AdventureGuide = ...;
+
 GameTooltip:HookScript('OnTooltipSetUnit', function(tooltip)
     local unitName, unit = tooltip:GetUnit()
 
@@ -8,43 +10,74 @@ GameTooltip:HookScript('OnTooltipSetUnit', function(tooltip)
         local link = unitLink:format(guid, name) -- clickable link
         local unit_type = strsplit("-", guid)
         if unit_type == "Creature" or unit_type == "Vehicle" then
-            local _, _, _, _, _, npc_id = strsplit("-", guid)
-            npc_id = tonumber(npc_id)
-            --print(npc_id, type(npc_id))
-            if addon.npcData[npc_id] then
-                --print("got npc ID")
-                for k, v in ipairs(addon.currentQuestLogIDs) do
-                    if addon.rawQuestDataKeyed["qid-"..v.questID] then
-                        local questConfig = addon.rawQuestDataKeyed["qid-"..v.questID]
-                        if questConfig.objectives and type(questConfig.objectives.npc) == "table" then
-                            --print("got npc ID table for quest config")
-                            for k, npcID in ipairs(questConfig.objectives.npc) do
-                                --print(npcID, npc_id)
-                                if npcID == npc_id then
-                                    if v.readyForTurnIn then
-                                        tooltip:AddDoubleLine(GetQuestLink(v.questID), CreateAtlasMarkup("orderhalltalents-done-checkmark", 20, 20))
-                                    else
-                                        tooltip:AddLine(GetQuestLink(v.questID))
-                                    end
+            local _, _, _, _, _, npcID = strsplit("-", guid)
+
+            local questLog = AdventureGuide.ActiveProfile:GetQuestLog()
+            if type(questLog) == "table" then
+                local tooltipHeaderAdded = false
+                for questID, info in pairs(questLog) do
+                    --if isRequired then
+                        local questData = AdventureGuide.Api.Quest:GetQuestData(questID)
+
+
+                        --[[
+                            check if we need this npc for the quest objectives
+                        ]]
+
+                        if questData and questData.Objectives and questData.Objectives.npc and questData.Objectives.npc[npcID] then
+                            local isRequired = false
+                            for k, obj in ipairs(info.objectives) do
+                                if obj.text:find(name, nil, true) and (obj.numFulfilled < obj.numRequired) then
+                                    isRequired = true
+                                end
+                            end
+                            if isRequired then
+                                if tooltipHeaderAdded == false then
+                                    tooltip:AddLine(" ")
+                                    tooltipHeaderAdded = true
+                                end
+                                if IsQuestComplete(questID) then
+                                    tooltip:AddLine(CreateAtlasMarkup("QuestNormal", 14, 14).." "..C_QuestLog.GetQuestInfo(questID).." "..CreateAtlasMarkup("orderhalltalents-done-checkmark", 14, 14))
+                                else
+                                    tooltip:AddLine(CreateAtlasMarkup("QuestNormal", 14, 14).." "..C_QuestLog.GetQuestInfo(questID))
                                 end
                             end
                         end
-                        if questConfig.objectives and type(questConfig.objectives.items) == "table" then
-                            for k, itemID in ipairs(questConfig.objectives.items) do
-                                if addon.itemData[itemID] and addon.itemData[itemID].dropsFrom[1] then
-                                    for k, npcID in ipairs(addon.itemData[itemID].dropsFrom[1]) do
-                                        if npcID == npc_id then
-                                            if v.readyForTurnIn then
-                                                tooltip:AddDoubleLine(GetQuestLink(v.questID), CreateAtlasMarkup("orderhalltalents-done-checkmark", 20, 20))
-                                            else
-                                                tooltip:AddLine(GetQuestLink(v.questID))
+
+                        if questData and questData.Objectives and questData.Objectives.item and questData.Objectives.item then
+                            for itemID, count in pairs(questData.Objectives.item) do
+                                if AdventureGuide.ItemData[tonumber(itemID)] then
+
+                                    local isRequired = false
+                                    for k, obj in ipairs(info.objectives) do
+
+                                        --this will need a better lookup for non english clients
+                                        if obj.text:find(AdventureGuide.ItemData[tonumber(itemID)].name) and (obj.numFulfilled < obj.numRequired) then
+                                            isRequired = true
+                                        end
+                                    end
+                                    if isRequired then
+                                        local itemDroppers = AdventureGuide.ItemData[tonumber(itemID)].dropsFrom
+                                        if itemDroppers and itemDroppers[1] then
+                                            for k, v in ipairs(itemDroppers[1]) do
+                                                if v == tonumber(npcID) then
+                                                    if tooltipHeaderAdded == false then
+                                                        tooltip:AddLine(" ")
+                                                        tooltipHeaderAdded = true
+                                                    end
+                                                    if IsQuestComplete(questID) then
+                                                        tooltip:AddLine(CreateAtlasMarkup("QuestNormal", 14, 14).." "..C_QuestLog.GetQuestInfo(questID).." "..CreateAtlasMarkup("orderhalltalents-done-checkmark", 14, 14))
+                                                    else
+                                                        tooltip:AddLine(CreateAtlasMarkup("QuestNormal", 14, 14).." "..C_QuestLog.GetQuestInfo(questID))
+                                                    end
+                                                end
                                             end
                                         end
                                     end
                                 end
                             end
                         end
-                    end
+                    --end
                 end
             end
         end
@@ -54,38 +87,56 @@ end)
 
 GameTooltip:HookScript('OnTooltipSetItem', function(tooltip)
     local name, link = tooltip:GetItem()
-    if link then
-        local item = Item:CreateFromItemLink(link)
-        if not item:IsItemEmpty() then
-            item:ContinueOnItemLoad(function()
-                local itemID = item:GetItemID()
-                local info = Database:SearchContainersForItem(itemID)
-                if info then
-                    for nameRealm, counts in pairs(info) do
-                        tooltip:AddDoubleLine(
-                            addon.api.colourizeTextForCharacter(nameRealm, nameRealm), 
-                            addon.api.colourizeTextForCharacter(nameRealm, string.format("Bags: %d, Bank: %d", counts.bags, counts.bank))
-                        )
-                    end
-                end
+    if name or link then
+        --print(name, link)
+    end
+end)
 
 
-                if addon.itemIDToQuestID[itemID] then
-                    for k, v in ipairs(addon.itemIDToQuestID[itemID]) do
-                        local title = C_QuestLog.GetQuestInfo(v)
-                        tooltip:AddDoubleLine(title, v)
-                    end
-                end
+--very likely a better way to handle objects
+GameTooltip:HookScript('OnShow', function(tooltip)
+    local text = AdventureGuide.Api.GetTooltipText(tooltip)
+    if text then
+        local questLog = AdventureGuide.ActiveProfile:GetQuestLog()
+        if type(questLog) == "table" then
+            local questAdded = {}
+            for questID, info in pairs(questLog) do
+                local questData = AdventureGuide.Api.Quest:GetQuestData(questID)
+                if questData and questData.Objectives and questData.Objectives.item then
+                    for itemID, count in pairs(questData.Objectives.item) do
+                        if AdventureGuide.ItemData[tonumber(itemID)] then
 
-                local lists = addon.api.searchListsForItem(itemID)
-                if #lists > 0 then
-                    tooltip:AddLine(" ")
-                    tooltip:AddLine("Lists")
-                    for k, v in ipairs(lists) do
-                        tooltip:AddLine(v.list)
+                            local isRequired = false
+                            for k, obj in ipairs(info.objectives) do
+
+                                --this will need a better lookup for non english clients
+                                if obj.text:find(AdventureGuide.ItemData[tonumber(itemID)].name) and (obj.numFulfilled < obj.numRequired) then
+                                    isRequired = true
+                                end
+                            end
+
+                            if isRequired then
+
+                                local itemDroppers = AdventureGuide.ItemData[tonumber(itemID)].dropsFrom
+                                if itemDroppers and itemDroppers[2] then
+                                    for k, v in ipairs(itemDroppers[2]) do
+
+                                        if (AdventureGuide.Locales.ObjectIDToName[v] == text[1]) and (questAdded[questID] == nil) then
+                                            questAdded[questID] = true
+                                            if IsQuestComplete(questID) then
+                                                tooltip:AppendText(string.format("\n|cffffffff%s %s %s", CreateAtlasMarkup("QuestNormal", 14, 14), C_QuestLog.GetQuestInfo(questID), CreateAtlasMarkup("orderhalltalents-done-checkmark", 14, 14)))
+                                            else
+                                                tooltip:AppendText(string.format("\n|cffffffff%s %s", CreateAtlasMarkup("QuestNormal", 14, 14), C_QuestLog.GetQuestInfo(questID)))
+                                            end
+                                        end
+                                    end
+                                end
+
+                            end
+                        end
                     end
                 end
-            end)
+            end
         end
     end
 end)

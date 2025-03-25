@@ -10,9 +10,10 @@ local GatheringNodeAPI = AdventureGuide.GatheringNodeAPI;
 local function PinResetterFunc(pool, pin)
     pin.pinData = nil
     pin.background:SetTexture(nil)
-    pin.mask:Hide()
-    pin.ring:Hide()
+    -- pin.mask:Hide()
+    -- pin.ring:Hide()
     pin:ClearTooltipFunc()
+    pin:Hide()
 end
 
 ---@class (exact) MiniMap
@@ -53,22 +54,21 @@ function MiniMap:SetupVirage()
     ViragDevTool_AddData(self.questGiverPins, "[AddPin] self.questGiverPins")
 end
 
-function MiniMap:AddPin(mapID, pinData, tooltipUpdateFunc, floatOnEdge)
+function MiniMap:AddPin(pinData, tooltipUpdateFunc, floatOnEdge)
 
-    --print("adding pin")
+    local mapID = C_Map.GetBestMapForUnit("player")
+    if mapID then
 
-    local pin = self.iconFramePool:Acquire()
-    pin:SetIcon(pinData.icon, pinData.showMask)
-    pin:SetSize(pinData.width * 0.6, pinData.height * 0.6)
-    pin:Show()
+        local pin = self.iconFramePool:Acquire()
+        pin.pinData = pinData
+        pin:SetIcon(pinData.icon)
+        pin:Show()
+        pin:SetTooltipFunc(tooltipUpdateFunc)
 
-    pin.pinData = pinData
+        Pins:AddMinimapIconMap(addonName, pin, mapID, (pinData.x / 100), (pinData.y / 100), false, floatOnEdge)
 
-    pin:SetTooltipFunc(tooltipUpdateFunc)
-
-    Pins:AddMinimapIconMap(addonName, pin, mapID, (pinData.x / 100), (pinData.y / 100), false, floatOnEdge)
-
-    return pin;
+        return pin;
+    end
 end
 
 function MiniMap:ClearAllPins()
@@ -76,6 +76,8 @@ function MiniMap:ClearAllPins()
 end
 
 function MiniMap:RemovePin(pin)
+    -- print("removing pin")
+    -- DevTools_Dump(pin.pinData)
     Pins:RemoveMinimapIcon(addonName, pin)
     self.iconFramePool:Release(pin)
     pin:Hide()
@@ -110,7 +112,7 @@ function MiniMap:RemoveQuestObjectivePins(questID)
     end
 end
 
-local function pinTooltipFunc(questID)
+local function QuestPinTooltipFunc(questID)
     return function()
         GameTooltip:SetHyperlink(string.format("|Hquest:%d", questID))
         GameTooltip:AddLine(" ")
@@ -118,195 +120,161 @@ local function pinTooltipFunc(questID)
     end
 end
 
-function MiniMap:AddAllQuestGiversForMapID(mapID)
-    
-    --print("Minimap requesting quests for map")
-    local questsForMap = QuestAPI:GetQuestsForMapID(mapID, true)
 
-    local index = 1;
-    C_Timer.NewTicker(0.1, function()
-        self:AddQuestGiversForMapID(mapID, questsForMap[index])
-        index = index + 1;
-    end, #questsForMap)
 
-end
 
-function MiniMap:AddNextQuestsForMapID(mapID, currentQuestID)
 
-    --print("adding next quests")
-    
-    local nextQuests = QuestAPI:GetNextQuests(currentQuestID)
 
-    --DevTools_Dump(nextQuests)
 
-    if nextQuests and (#nextQuests > 0) then
-        local index = 1;
-        C_Timer.NewTicker(0.1, function()
-            self:AddQuestGiversForMapID(mapID, nextQuests[index])
-            index = index + 1;
-        end, #nextQuests)
+
+
+
+
+
+
+
+
+
+
+
+
+
+function MiniMap:AddQuestGivers(questGivers)
+
+    if type(questGivers) ~= "table" then
+        return
+    end
+
+    for _, questGiver in ipairs(questGivers) do
+
+        for _, location in ipairs(questGiver.locationData) do
+
+            local isRepatable = AdventureGuide.Api.Quest:IsQuestRepeatable(questGiver.questID)
+            local isImportant = AdventureGuide.Api.Quest:IsQuestImportant(questGiver.questID)
+
+            local icon = "QuestNormal"
+            if isRepatable then
+                icon = "RepeatableQuestGiver"
+            end
+            if isImportant then
+                icon = "ImportantQuestGiver"
+            end
+
+            local pinData = {
+                icon = icon,
+                x = location[1],
+                y = location[2],
+                questID = questGiver.questID,
+                parent = "minimap",
+                pinType = "questGiver"
+            }
+            self:AddPin(pinData, QuestPinTooltipFunc(questGiver.questID))
+        end
     end
 end
 
-function MiniMap:AddQuestGiversForMapID(mapID, questID)
+function MiniMap:AddQuestTurnIns(questTurnIns)
 
-    if not questID then
-        return;
-    end
-    if not mapID then
-        return;
+    if type(questTurnIns) ~= "table" then
+        return
     end
 
-    if self.questGiverPins[questID] then
-        self:RemoveQuestGiverPins(questID)
-    end
-    self.questGiverPins[questID] = {}
+    for turnInType, turnInData in pairs(questTurnIns) do
+        for _, turnIn in ipairs(turnInData) do
+            for _, location in ipairs(turnIn.locationData) do
 
-    local questData = QuestAPI:GetQuestData(questID)
+                local isRepatable = AdventureGuide.Api.Quest:IsQuestRepeatable(turnIn.questID)
+                local isImportant = AdventureGuide.Api.Quest:IsQuestImportant(turnIn.questID)
     
-    if questData.startPoint and (questData.startPoint.npc or questData.startPoint.object) then
-
-        local location = questData.startPoint.spawnLocations[mapID]
-        if type(location) == "table" then
-            for _, v in ipairs(location) do
-        
+                local icon = "QuestTurnin"
+                if isRepatable then
+                    icon = "RepeatableQuestTurnIn"
+                end
+                if isImportant then
+                    icon = "ImportantQuestTurnIn"
+                end
                 local pinData = {
-                    icon = "QuestNormal",
-                    width = 24,
-                    height = 24,
-                    x = v[1],
-                    y = v[2],
-                    questID = questID,
+                    icon = icon,
+                    x = location[1],
+                    y = location[2],
+                    questID = turnIn.questID,
                     parent = "minimap",
-                    pinType = "questGiver"
+                    pinType = "questTurnIn"
                 }
-
-                local pin = self:AddPin(mapID, pinData, pinTooltipFunc(questID))
-                if pin then
-                    table.insert(self.questGiverPins[questID], pin)
-                end
+                self:AddPin(pinData, QuestPinTooltipFunc(turnIn.questID))
             end
         end
     end
 end
 
-function MiniMap:AddQuestTurnInsForQuestID(questID, mapID)
-    
-    local readyForTurnIn = IsQuestComplete(questID)
-    if readyForTurnIn then
+function MiniMap:AddQuestObjectives(objectives)
 
-        if self.questTurninPins[questID] then
-            self:RemoveQuestTurnInPins(questID)
+    if type(objectives) ~= "table" then
+        return
+    end
+
+    --DevTools_Dump(objectives)
+
+    for _, npc in ipairs(objectives.npc) do
+        for _, location in ipairs(npc.locationData) do
+            local pinData = {
+                icon = "Monster",
+                x = location[1],
+                y = location[2],
+                questID = npc.questID,
+                parent = "minimap",
+                pinType = "questObjective"
+            }
+            self:AddPin(pinData, QuestPinTooltipFunc(npc.questID))
         end
-        self.questTurninPins[questID] = {}
+    end
 
-        local questData = QuestAPI:GetQuestData(questID)
-        
-        if questData.finishPoint and (questData.finishPoint.npc or questData.finishPoint.object) then
-
-            local location = questData.finishPoint.spawnLocations[mapID]
-            if type(location) == "table" then
-                for _, locationData in ipairs(location) do
-            
-                    local pinData = {
-                        icon = "QuestTurnin",
-                        width = 24,
-                        height = 24,
-                        x = locationData[1],
-                        y = locationData[2],
-                        questID = questID,
-                        parent = "minimap",
-                        pinType = "questTurnin"
-                    }
-
-                    --print("adding pin for quest", questID)
-
-                    local pin = self:AddPin(mapID, pinData, pinTooltipFunc(questID))
-                    if pin then
-                        table.insert(self.questTurninPins[questID], pin)
-                    end
-
-                end
-            end
+    for _, object in ipairs(objectives.object) do
+        for _, location in ipairs(object.locationData) do
+            local pinData = {
+                icon = "Object",
+                x = location[1],
+                y = location[2],
+                questID = object.questID,
+                parent = "minimap",
+                pinType = "questObjective"
+            }
+            self:AddPin(pinData, QuestPinTooltipFunc(object.questID))
         end
-
-    end
-end
-
-function MiniMap:AddAllQuestTurnInsForMapID(mapID)
-    
-    local turnIns = QuestAPI:GetQuestTurnInsForMapID(mapID)
-
-    if #turnIns > 0 then
-        local index = 1;
-        C_Timer.NewTicker(0.1, function()
-            self:AddQuestTurnInsForQuestID(turnIns[index], mapID)
-            index = index + 1;
-        end, #turnIns)
     end
 
-end
-
-
-local objectiveIcons = {
-    ["npc"] = "Object",
-    ["object"] = "VignetteLoot",
-    ["area"] = "QuestBlob",
-}
-
-function MiniMap:AddQuestObjectivesForMapID(mapID, questID, forceShow)
-
-    if (C_QuestLog.IsOnQuest(questID) and not IsQuestComplete(questID)) or forceShow then
-
-        --print("gettign minimap objective data")
-
-        local objectiveData = QuestAPI:GetQuestObjectiveDataForMapID(questID, mapID)
-
-        self.questObjectivePins[questID] = {}
-
-        for _, objectives in ipairs(objectiveData) do
-
-            for _, locationData in ipairs(objectives.locationData) do
-
-                local pinData = {
-                    icon = objectiveIcons[objectives.objectiveType],
-                    width = 32,
-                    height = 32,
-                    x = locationData[1],
-                    y = locationData[2],
-                    questID = questID,
-                    parent = "minimap",
-                    pinType = "questObjective"
-                }
-
-                local pin = self:AddPin(mapID, pinData, pinTooltipFunc(questID))
-                if pin then
-                    table.insert(self.questObjectivePins[questID], pin)
-                end
-
-            end
-
+    for _, npc in ipairs(objectives.items.npc) do
+        for _, location in ipairs(npc.locationData) do
+            local pinData = {
+                icon = "Monster",
+                width = 16,
+                height = 16,
+                x = location[1],
+                y = location[2],
+                questID = npc.questID,
+                parent = "minimap",
+                pinType = "questObjective"
+            }
+            self:AddPin(pinData, QuestPinTooltipFunc(npc.questID))
         end
-
-    end
-end
-
-function MiniMap:AddAllQuestObjectivesForMapID(mapID)
-    
-    local questsForMap = QuestAPI:GetQuestsForMapID(mapID)
-
-    for _, questID in ipairs(questsForMap) do
-        self:AddQuestObjectivesForMapID(mapID, questID)
     end
 
-    -- local index = 1;
-    -- C_Timer.NewTicker(0.1, function()
-    --     self:AddQuestObjectivesForMapID(mapID, questsForMap[index])
-    --     index = index + 1
-    -- end, #questsForMap)
+    for _, object in ipairs(objectives.items.object) do
+        for _, location in ipairs(object.locationData) do
+            local pinData = {
+                icon = "Object",
+                width = 16,
+                height = 16,
+                x = location[1],
+                y = location[2],
+                questID = object.questID,
+                parent = "minimap",
+                pinType = "questObjective"
+            }
+            self:AddPin(pinData, QuestPinTooltipFunc(object.questID))
+        end
+    end
 end
-
-
 
 
 
@@ -358,13 +326,29 @@ function MiniMap:AddGatheringNodePinsForMapID(mapID, nodeType)
     local nodeData = GatheringNodeAPI:GetAllNodesForMapID(nodeType, mapID)
     if nodeData then
         for itemID, locationData in pairs(nodeData) do
-            local icon = select(5, C_Item.GetItemInfoInstant(itemID))
+
+            local icon;
+            if nodeType == "herbs" then
+                icon = function(pin)
+                    AdventureGuide.Api.SetAtlasToTexture("Professions_Tracking_Herb", pin.background)
+                    pin.mask:Hide()
+                    pin.ring:Hide()
+                end
+
+            elseif nodeType == "mining" then
+                icon = function(pin)
+                    AdventureGuide.Api.SetAtlasToTexture("Professions_Tracking_Ore", pin.background)
+                    pin.mask:Hide()
+                    pin.ring:Hide()
+                end
+            end
+            --local icon = select(5, C_Item.GetItemInfoInstant(itemID))
 
             for k, v in ipairs(locationData) do
 
-                local pin = self:AddPin(mapID, {
+                local pin = self:AddPin({
                     icon = icon,
-                    showMask = true,
+                    showMask = false,
                     width = 16,
                     height = 16,
                     x = v.x,
@@ -397,4 +381,4 @@ end
 
 
 
-AdventureGuide.MiniMapAPI = MiniMap;
+AdventureGuide.Api.MiniMap = MiniMap;

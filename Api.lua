@@ -1,4 +1,113 @@
-local name, addon = ...;
+local name, AdventureGuide = ...;
+
+
+function AdventureGuide.Api.SetAtlasToTexture(atlas, texture)
+    if AdventureGuide.Constants.AtlasInfo[atlas] then
+        texture:SetTexture([[Interface\AddOns\AdventureGuide_ClassicEra\Media\Icons\ObjectIconsAtlas.png]])
+        local atlasInfo = AdventureGuide.Constants.AtlasInfo[atlas]
+        local width, height, left, right, top, bottom, vtile, htile = atlasInfo[1], atlasInfo[2], atlasInfo[3], atlasInfo[4], atlasInfo[5], atlasInfo[6], atlasInfo[7], atlasInfo[8]
+        texture:SetTexCoord(left, right, top, bottom)
+    end
+end
+
+function AdventureGuide.Api.GetQuestIconAtlasCoords(icon)
+    if AdventureGuide.Constants.IconAtlas[icon] then
+        local left = 38 * (AdventureGuide.Constants.IconAtlas[icon][1] - 1)
+        local right = 38 * AdventureGuide.Constants.IconAtlas[icon][1]
+
+        local top = (38 * (AdventureGuide.Constants.IconAtlas[icon][2] - 1)) + 46
+        local bottom = (38 * AdventureGuide.Constants.IconAtlas[icon][2]) + 46
+
+        left = (left / 256)
+        right = (right / 256)
+        top = (top / 256)
+        bottom = (bottom / 256)
+
+        return [[Interface\AddOns\AdventureGuide_ClassicEra\Media\Icons\QuestLogQuestTypeIcons2x.png]], left, right, top, bottom;
+    end
+end
+
+function AdventureGuide.Api.GetTooltipText(tooltip)
+    local textLines = {}
+    local regions = {tooltip:GetRegions()}
+    for _, r in ipairs(regions) do
+      if r:IsObjectType("FontString") then
+        table.insert(textLines, r:GetText())
+      end
+    end
+    return textLines
+end
+
+function AdventureGuide.Api.ScanTooltipbyLink(link)
+    --print(link)
+    AdventureGuideScanningTooltip:ClearLines()
+    AdventureGuideScanningTooltip:SetHyperlink(link)
+    --AdventureGuideScanningTooltip:Show()
+    local textLines = {}
+    local regions = {AdventureGuideScanningTooltip:GetRegions()}
+    for _, r in ipairs(regions) do
+      if r:IsObjectType("FontString") then
+        table.insert(textLines, r:GetText())
+      end
+    end
+    return textLines
+  end
+
+
+function AdventureGuide.Api.ScanQuestLog()
+    local t = {}
+	local numEntries, numQuests = GetNumQuestLogEntries();
+	local index = 1
+    local lastHeader;
+	while (index <= numEntries) do
+	--for index = 1, numEntries do
+        --print(index, numEntries, "api")
+		local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID, _, _, isOnMap = GetQuestLogTitle(index)
+		if isHeader then
+            lastHeader = title;
+			ExpandQuestHeader(index, true);
+            numEntries = GetNumQuestLogEntries();
+        else
+            if questID then
+
+                local objectives = C_QuestLog.GetQuestObjectives(questID)
+                objectives = C_QuestLog.GetQuestObjectives(questID)
+
+                local readyForTurnIn = IsQuestComplete(questID)
+                objectives = C_QuestLog.GetQuestObjectives(questID)
+
+                readyForTurnIn = IsQuestComplete(questID)
+
+                table.insert(t, {
+                    link = GetQuestLink(questID),
+                    readyForTurnIn = readyForTurnIn,
+                    objectives = objectives,
+                    questID = questID,
+                    header = lastHeader,
+                    level = level,
+                    title = title,
+                })
+            end
+		end
+        index = index + 1
+	end
+    return t
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--[[
 
 local Database = addon.Database;
 
@@ -551,9 +660,8 @@ local statIDs = {
 }
 function addon.api.getPaperDollStats()
 
-    --[[
-        the sub table keys (melee[this key]) should be capitalised as they are used in a locale lookup
-    ]]
+    -- the sub table keys (melee[this key]) should be capitalised as they are used in a locale lookup
+    
     local stats = {
         attributes = {},
         defence = {},
@@ -776,3 +884,4 @@ function addon.api.searchListsForItem(itemID)
 end
 
 
+]]

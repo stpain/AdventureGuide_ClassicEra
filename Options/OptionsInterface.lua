@@ -1,4 +1,4 @@
-local name, addon = ...;
+local name, AdventureGuide = ...;
 
 local atlasIcons = {
     {
@@ -88,8 +88,6 @@ local function setupSlider(slider)
     end)
 end
 
-local Database = addon.Database;
-
 local mapIcons = {
     {
         label = "Quest Givers",
@@ -173,124 +171,126 @@ end
 function AdventureGuideOptionsInterface_OnLoad(self)
     self.header.defaultsButton:SetText("Defaults")
 
-    local interfaceHeader = {
-        template = "AdventureGuideSettingsSectionHeader",
-        height = 60,
-        initializer = function(f)
-            f.title:SetText("Interface")
-        end,
-    }
-    self.listview.DataProvider:Insert(interfaceHeader)
+    AdventureGuide.SettingsPanel = self
 
-    local autoVendorJunk = {
-        template = "AdventureGuideSettingsCheckBoxTemplate",
-        height = 35,
-        initializer = function(f)
-            f:Init(settings.interface.autoVendorJunk)
-        end,
-    }
-    self.listview.DataProvider:Insert(autoVendorJunk)
+    -- local interfaceHeader = {
+    --     template = "AdventureGuideSettingsSectionHeader",
+    --     height = 60,
+    --     initializer = function(f)
+    --         f.title:SetText("Interface")
+    --     end,
+    -- }
+    -- self.listview.DataProvider:Insert(interfaceHeader)
 
-    local highlightBagSlots = {
-        template = "AdventureGuideSettingsCheckBoxTemplate",
-        height = 35,
-        initializer = function(f)
-            f:Init(settings.interface.highlightBagSlots)
-        end,
-    }
-    self.listview.DataProvider:Insert(highlightBagSlots)
+    -- local autoVendorJunk = {
+    --     template = "AdventureGuideSettingsCheckBoxTemplate",
+    --     height = 35,
+    --     initializer = function(f)
+    --         f:Init(settings.interface.autoVendorJunk)
+    --     end,
+    -- }
+    -- self.listview.DataProvider:Insert(autoVendorJunk)
 
-    local combineBags = {
-        template = "AdventureGuideSettingsCheckBoxTemplate",
-        height = 35,
-        initializer = function(f)
-            f:Init(settings.interface.combineBags)
-        end,
-    }
-    self.listview.DataProvider:Insert(combineBags)
+    -- local highlightBagSlots = {
+    --     template = "AdventureGuideSettingsCheckBoxTemplate",
+    --     height = 35,
+    --     initializer = function(f)
+    --         f:Init(settings.interface.highlightBagSlots)
+    --     end,
+    -- }
+    -- self.listview.DataProvider:Insert(highlightBagSlots)
 
-
-
-
-
-    local mapHeader = {
-        template = "AdventureGuideSettingsSectionHeader",
-        height = 60,
-        initializer = function(f)
-            f.title:SetText("Map")
-        end,
-    }
-    self.listview.DataProvider:Insert(mapHeader)
-
-    --loop over the icon options
-    for k, v in ipairs(mapIcons) do
-        local init = {
-            label = v.label,
-            onLoad = function(f)
-                local menu = {}
-                for k1, v1 in ipairs(atlasIcons) do
-                    table.insert(menu, {
-                        --icon = v.atlas,
-                        text = string.format("%s %s", CreateAtlasMarkup(v1.atlas, 20, 20), string.sub(v1.atlas, 1, 20)),
-                        func = function()
-                            local currentSetting = Database:GetConfig(v.config) or atlasIcons[1]
-                            currentSetting.atlas = v1.atlas
-                            Database:SetConfig(v.config, currentSetting)
-                        end
-                    })
-                end
-                f.dropdown:SetMenu(menu)
-
-                local currentSetting = Database:GetConfig(v.config) or atlasIcons[1]
-                local text = string.format("%s %s", CreateAtlasMarkup(currentSetting.atlas, 20, 20), string.sub(currentSetting.atlas, 1, 20))
-                f.dropdown:SetText(text)
-                f.slider.value:SetText(string.format("%.0f", currentSetting.x))
-                f.slider:SetValue(currentSetting.x)
-                setupSlider(f.slider)
-                f.slider:SetScript("OnValueChanged", function(s)
-                    s.value:SetText(string.format("%.0f", s:GetValue()))
-                    local currentSetting = Database:GetConfig(v.config) or atlasIcons[1]
-                    currentSetting.x = s:GetValue()
-                    currentSetting.y = s:GetValue()
-
-                    --some of the atlas sizes not equal/square so set the height and then adjust the width
-                    if v.config == "map.questStarterObject" then
-                        currentSetting.x = (s:GetValue() * 0.641025)
-                    end
+    -- local combineBags = {
+    --     template = "AdventureGuideSettingsCheckBoxTemplate",
+    --     height = 35,
+    --     initializer = function(f)
+    --         f:Init(settings.interface.combineBags)
+    --     end,
+    -- }
+    -- self.listview.DataProvider:Insert(combineBags)
 
 
-                    Database:SetConfig(v.config, currentSetting)
-                end)
-            end,
-        }
-        self.listview.DataProvider:Insert({
-            template = "AdventureGuideSettingsMapIconTemplate",
-            height = 35,
-            initializer = function(f)
-                f:Init(init)
-            end,
-        })
-    end
 
 
-    local tooltipHeader = {
-        template = "AdventureGuideSettingsSectionHeader",
-        height = 60,
-        initializer = function(f)
-            f.title:SetText("Tooltips")
-        end,
-    }
-    self.listview.DataProvider:Insert(tooltipHeader)
 
-    local foobar = {
-        template = "AdventureGuideSettingsCheckBoxTemplate",
-        height = 35,
-        initializer = function(f)
+    -- local mapHeader = {
+    --     template = "AdventureGuideSettingsSectionHeader",
+    --     height = 60,
+    --     initializer = function(f)
+    --         f.title:SetText("Map")
+    --     end,
+    -- }
+    -- self.listview.DataProvider:Insert(mapHeader)
 
-        end,
-    }
-    self.listview.DataProvider:Insert(foobar)
-    self.listview.DataProvider:Insert(foobar)
+    -- --loop over the icon options
+    -- for k, v in ipairs(mapIcons) do
+    --     local init = {
+    --         label = v.label,
+    --         onLoad = function(f)
+    --             local menu = {}
+    --             for k1, v1 in ipairs(atlasIcons) do
+    --                 table.insert(menu, {
+    --                     --icon = v.atlas,
+    --                     text = string.format("%s %s", CreateAtlasMarkup(v1.atlas, 20, 20), string.sub(v1.atlas, 1, 20)),
+    --                     func = function()
+    --                         local currentSetting = Database:GetConfig(v.config) or atlasIcons[1]
+    --                         currentSetting.atlas = v1.atlas
+    --                         Database:SetConfig(v.config, currentSetting)
+    --                     end
+    --                 })
+    --             end
+    --             f.dropdown:SetMenu(menu)
+
+    --             local currentSetting = Database:GetConfig(v.config) or atlasIcons[1]
+    --             local text = string.format("%s %s", CreateAtlasMarkup(currentSetting.atlas, 20, 20), string.sub(currentSetting.atlas, 1, 20))
+    --             f.dropdown:SetText(text)
+    --             f.slider.value:SetText(string.format("%.0f", currentSetting.x))
+    --             f.slider:SetValue(currentSetting.x)
+    --             setupSlider(f.slider)
+    --             f.slider:SetScript("OnValueChanged", function(s)
+    --                 s.value:SetText(string.format("%.0f", s:GetValue()))
+    --                 local currentSetting = Database:GetConfig(v.config) or atlasIcons[1]
+    --                 currentSetting.x = s:GetValue()
+    --                 currentSetting.y = s:GetValue()
+
+    --                 --some of the atlas sizes not equal/square so set the height and then adjust the width
+    --                 if v.config == "map.questStarterObject" then
+    --                     currentSetting.x = (s:GetValue() * 0.641025)
+    --                 end
+
+
+    --                 Database:SetConfig(v.config, currentSetting)
+    --             end)
+    --         end,
+    --     }
+    --     self.listview.DataProvider:Insert({
+    --         template = "AdventureGuideSettingsMapIconTemplate",
+    --         height = 35,
+    --         initializer = function(f)
+    --             f:Init(init)
+    --         end,
+    --     })
+    -- end
+
+
+    -- local tooltipHeader = {
+    --     template = "AdventureGuideSettingsSectionHeader",
+    --     height = 60,
+    --     initializer = function(f)
+    --         f.title:SetText("Tooltips")
+    --     end,
+    -- }
+    -- self.listview.DataProvider:Insert(tooltipHeader)
+
+    -- local foobar = {
+    --     template = "AdventureGuideSettingsCheckBoxTemplate",
+    --     height = 35,
+    --     initializer = function(f)
+
+    --     end,
+    -- }
+    -- self.listview.DataProvider:Insert(foobar)
+    -- self.listview.DataProvider:Insert(foobar)
 
 
 end

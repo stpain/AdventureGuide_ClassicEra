@@ -20,6 +20,7 @@ AdventureGuide.CallbackRegistry:GenerateCallbackEvents({
     "Quest_OnQuestTurnIn",
     "Quest_OnQuestLogUpdated",
     "Quest_OnQuestCriteriaCompleted",
+    "Quest_OnQuestCriteriaUpdated",
     "Quest_OnQuestRemoved",
 
     "Quest_OnQuestLogQuestEntered",
@@ -27,5 +28,9 @@ AdventureGuide.CallbackRegistry:GenerateCallbackEvents({
 
     "NamePlate_OnUnitAdded",
     "NamePlate_OnUnitRemoved",
+
+    "QuestLog_ScanCompleted",
+
+    "QuestLog_OnQuestSelected",
 
 })

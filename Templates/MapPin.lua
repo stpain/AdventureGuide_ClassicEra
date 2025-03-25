@@ -3,27 +3,84 @@ local addonName, AdventureGuide = ...;
 local Pins = LibStub("HereBeDragons-Pins-2.0");
 local QuestAPI = AdventureGuide.QuestAPI
 
-local function PinResetterFunc(pin)
-    pin.pinData = nil
-    pin.background:SetTexture(nil)
-    pin.mask:Hide()
-    pin.ring:Hide()
-    pin:ClearTooltipFunc()
-end
+
+
+local pinIcons = {
+    ImportantQuestGiver = {
+        file = [[Interface\AddOns\AdventureGuide_ClassicEra\Media\Icons\QuestLogQuestTypeIcons2x.png]],
+        left = (38 / 256),
+        right = (76/ 256),
+        top = (84/ 256),
+        bottom = (122 / 256),
+        width = 32,
+        height = 32,
+        raise = true,
+    },
+    ImportantQuestTurnIn = {
+        file = [[Interface\AddOns\AdventureGuide_ClassicEra\Media\Icons\QuestLogQuestTypeIcons2x.png]],
+        left = (38 / 256),
+        right = (76/ 256),
+        top = (122/ 256),
+        bottom = (160 / 256),
+        width = 32,
+        height = 32,
+        raise = true,
+    },
+    RepeatableQuestGiver = {
+        file = [[Interface\AddOns\AdventureGuide_ClassicEra\Media\Icons\QuestLogQuestTypeIcons2x.png]],
+        left = (76 / 256),
+        right = (114/ 256),
+        top = (160/ 256),
+        bottom = (198 / 256),
+        width = 28,
+        height = 28,
+    },
+    RepeatableQuestTurnIn = {
+        file = [[Interface\AddOns\AdventureGuide_ClassicEra\Media\Icons\QuestLogQuestTypeIcons2x.png]],
+        left = (76 / 256),
+        right = (114/ 256),
+        top = (198/ 256),
+        bottom = (236 / 256),
+        width = 28,
+        height = 28,
+    },
+
+    Object = {
+        file = [[Interface\AddOns\AdventureGuide_ClassicEra\Media\Icons\ObjectIconsAtlas.png]],
+        left = (683 / 1024),
+        right = (713/ 1024),
+        top = (582/ 1024),
+        bottom = (612 / 1024),
+        width = 22,
+        height = 22,
+    },
+
+    Monster = {
+        file = [[Interface\AddOns\AdventureGuide_ClassicEra\Media\Icons\ObjectIconsAtlas.png]],
+        left = (621 / 1024),
+        right = (639/ 1024),
+        top = (792/ 1024),
+        bottom = (810 / 1024),
+        width = 16,
+        height = 16,
+    },
+}
+
+
 
 AdventureGuideMapPoiMixin = {}
 function AdventureGuideMapPoiMixin:OnLoad()
     self.background:SetTexelSnappingBias(0)
     self.background:SetSnapToPixelGrid(false)
-    self.ring:SetTexelSnappingBias(0)
-    self.ring:SetSnapToPixelGrid(false)
-    self.mask:SetTexelSnappingBias(0)
-    self.mask:SetSnapToPixelGrid(false)
+    -- self.ring:SetTexelSnappingBias(0)
+    -- self.ring:SetSnapToPixelGrid(false)
+    -- self.mask:SetTexelSnappingBias(0)
+    -- self.mask:SetSnapToPixelGrid(false)
 
     AdventureGuide.CallbackRegistry:RegisterCallback("Quest_OnQuestAccepted", self.Quest_OnQuestAccepted, self) --AddQuestObjectivesForMapID(mapID, questID)
     AdventureGuide.CallbackRegistry:RegisterCallback("Quest_OnQuestTurnIn", self.Quest_OnQuestTurnIn, self)
     AdventureGuide.CallbackRegistry:RegisterCallback("Quest_OnQuestRemoved", self.Quest_OnQuestRemoved, self)
-    AdventureGuide.CallbackRegistry:RegisterCallback("Quest_OnQuestLogUpdated", self.OnQuestsChanged, self)
+    --AdventureGuide.CallbackRegistry:RegisterCallback("Quest_OnQuestLogUpdated", self.OnQuestsChanged, self)
     AdventureGuide.CallbackRegistry:RegisterCallback("Quest_OnQuestCriteriaCompleted", self.Quest_OnQuestCriteriaCompleted, self) --WorldMap:RemoveQuestObjectivePins(questID)
     
     AdventureGuide.CallbackRegistry:RegisterCallback("Quest_OnQuestLogQuestEntered", self.Quest_OnQuestLogQuestEntered, self)
@@ -39,7 +96,7 @@ function AdventureGuideMapPoiMixin:OnEnter()
         self.tooltipFunc()
         GameTooltip:Show()
     end
-    --DevTools_Dump(self)
+    --DevTools_Dump(self.pinData)
 end
 function AdventureGuideMapPoiMixin:SetTooltipFunc(tooltipFunc)
     self.tooltipFunc = tooltipFunc
@@ -47,42 +104,40 @@ end
 function AdventureGuideMapPoiMixin:ClearTooltipFunc()
     self.tooltipFunc = nil
 end
-function AdventureGuideMapPoiMixin:SetIcon(icon, showMask)
-    if type(icon) == "number" then
-        self.background:SetTexture(icon)
-    elseif type(icon) == "string" then
-        self.background:SetAtlas(icon)
+
+function AdventureGuideMapPoiMixin:SetIcon(icon)
+
+    self.background:SetTexCoord(0,1,0,1)
+
+    if icon == "QuestNormal" then
+        self.background:SetAtlas("QuestNormal")
     end
-    self.mask:SetShown(showMask)
-    self.ring:SetShown(showMask)
-end
+    if icon == "QuestTurnin" then
+        self.background:SetAtlas("QuestTurnin")
+    end
 
-function AdventureGuideMapPoiMixin:SetPinType()
-    
-end
-
-
-function AdventureGuideMapPoiMixin:OnUpdate()
-    if self.pinData and self.pinData.questID then
-        local _, _, classID = UnitClass("player")
-        local _, _, race = UnitRace("player")
-        local level = UnitLevel("player")
-
-        if self.pinData.pinType == "questGiver" then
-            if QuestAPI:IsQuestAvailableForPlayer(self.pinData.questID, classID, race, level) then
-                print(self.pinData.questID, "true")
-            else
-                print(self.pinData.questID, "false")
-            end
-        end
+    if self.pinData.parent == "minimap" then
+        self:SetSize(14, 14)
     else
-        Pins:RemoveMinimapIcon(addonName, self)
-        PinResetterFunc(self)
+        self:SetSize(20, 20)
     end
-end
 
-function AdventureGuideMapPoiMixin:OnHide()
-    
+    if pinIcons[icon] then
+        self.background:SetTexture(pinIcons[icon].file)
+        self.background:SetTexCoord(pinIcons[icon].left, pinIcons[icon].right, pinIcons[icon].top, pinIcons[icon].bottom)
+
+        if self.pinData.parent == "minimap" then
+            self:SetSize(pinIcons[icon].width * 0.8, pinIcons[icon].height * 0.8)
+        else
+            self:SetSize(pinIcons[icon].width, pinIcons[icon].height)
+        end
+
+        if pinIcons[icon].raise then
+            self:Raise()
+        else
+            self:Lower()
+        end
+    end
 end
 
 function AdventureGuideMapPoiMixin:Quest_OnQuestLogQuestEntered(questID)
@@ -105,11 +160,20 @@ function AdventureGuideMapPoiMixin:Quest_OnQuestLogQuestLeave()
 end
 
 function AdventureGuideMapPoiMixin:CheckDisplayStatus(questID, pinType)
+    --print(questID, pinType)
     if self.pinData then
-        if (self.pinData.questID == questID) and (self.pinData.pinType == pinType) and (self.pinData.parent == "minimap") then
-            Pins:RemoveMinimapIcon(addonName, self)
-            PinResetterFunc(self)
+        --print(type(questID), type(self.pinData.questID))
+        if (self.pinData.questID == questID) and (self.pinData.pinType == pinType) then
+            if (self.pinData.parent == "minimap") then
+                --Pins:RemoveMinimapIcon(addonName, self)
+                AdventureGuide.Api.MiniMap:RemovePin(self)
+
+            elseif (self.pinData.parent == "worldmap") then
+                AdventureGuide.Api.WorldMap:RemovePin(self)
+            end
         end
+    else
+        --print("no pin data", questID)
     end
 end
 
@@ -118,12 +182,12 @@ function AdventureGuideMapPoiMixin:Quest_OnQuestAccepted(questID)
 end
 
 function AdventureGuideMapPoiMixin:Quest_OnQuestTurnIn(questID)
-    self:CheckDisplayStatus(questID, "questTurnin")
+    self:CheckDisplayStatus(questID, "questTurnIn")
 end
 
 function AdventureGuideMapPoiMixin:Quest_OnQuestRemoved(questID)
     self:CheckDisplayStatus(questID, "questObjective")
-    self:CheckDisplayStatus(questID, "questTurnin")
+    self:CheckDisplayStatus(questID, "questTurnIn")
 end
 
 function AdventureGuideMapPoiMixin:OnQuestsChanged(questID)

@@ -9,7 +9,7 @@ AdventureGuideQuestLogTreeviewItemMixin = {}
 function AdventureGuideQuestLogTreeviewItemMixin:OnLoad()
     AdventureGuide.CallbackRegistry:RegisterCallback("Quest_OnQuestAccepted", self.OnQuestsChanged, self)
     AdventureGuide.CallbackRegistry:RegisterCallback("Quest_OnQuestTurnIn", self.OnQuestsChanged, self)
-    AdventureGuide.CallbackRegistry:RegisterCallback("Quest_OnQuestLogUpdated", self.OnQuestsChanged, self)
+    --AdventureGuide.CallbackRegistry:RegisterCallback("Quest_OnQuestLogUpdated", self.OnQuestsChanged, self)
     AdventureGuide.CallbackRegistry:RegisterCallback("Quest_OnQuestCriteriaUpdated", self.OnQuestsChanged, self)
 end
 
@@ -20,6 +20,18 @@ function AdventureGuideQuestLogTreeviewItemMixin:UpdateToggledState()
         self.parentRight:SetAtlas("Options_ListExpand_Right_Expanded")
     end
 end
+
+function AdventureGuideQuestLogTreeviewItemMixin:OnClick(button)
+    if not self.isParent then
+        if button == "RightButton" then
+            StaticPopup_Show("wowheadQuestDialog", nil, nil, { questID = self.questID})
+
+        else
+            AdventureGuide.CallbackRegistry:TriggerEvent("QuestLog_OnQuestSelected", self.questID)
+        end
+    end
+end
+
 
 function AdventureGuideQuestLogTreeviewItemMixin:SetDataBinding(binding, height)
 
@@ -35,6 +47,10 @@ function AdventureGuideQuestLogTreeviewItemMixin:SetDataBinding(binding, height)
 
         self.label:SetFontObject(GameFontNormal)
 
+        if binding.label then
+            self.label:SetText(binding.label)
+        end
+
         self.highlight:SetTexture(nil)
     
     else
@@ -44,14 +60,18 @@ function AdventureGuideQuestLogTreeviewItemMixin:SetDataBinding(binding, height)
 
         self.highlight:SetAtlas("search-highlight")
 
-        self.label:SetFontObject(GameFontWhite)
+        if binding.isSingleQuest then
+            self.label:SetFontObject(GameFontNormal)
+        else
+            self.label:SetFontObject(GameFontWhite)
+        end
 
     end
 
     self:UpdateToggledState()
-    self:HookScript("OnMouseDown", function()
-        self:UpdateToggledState()
-    end)
+    -- self:HookScript("OnMouseDown", function()
+    --     self:UpdateToggledState()
+    -- end)
     
     self:OnQuestsChanged()
 end
@@ -107,12 +127,6 @@ function AdventureGuideQuestLogTreeviewItemMixin:OnQuestsChanged()
                 self.label:SetText(string.format("%s %s", CreateAtlasMarkup("QuestNormal", 20, 20), title))
                 return
             end
-
-            self:HookScript("OnMouseDown", function(_, button)
-                if button == "RightButton" then
-                    StaticPopup_Show("wowheadQuestDialog", nil, nil, { questID = self.questID})
-                end
-            end)
         end
 
         self.label:SetText(C_QuestLog.GetQuestInfo(self.questID))
@@ -134,23 +148,50 @@ end
 function AdventureGuideQuestLogTreeviewItemMixin:OnEnter()
     if self.questID and not self.isParent then
 
-        local data = QuestAPI:GetQuestData(self.questID)
+        local data = AdventureGuide.Api.Quest:GetQuestData(self.questID)
+        if data then
 
-        GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-        GameTooltip:SetHyperlink(string.format("|Hquest:%d", self.questID))
-        GameTooltip:AddLine(" ")
-
-        if UnitLevel("player") < data.minLevel then
-            GameTooltip:AddLine(RED_FONT_COLOR:WrapTextInColorCode(string.format("Requires level %d", data.minLevel)))
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+            GameTooltip:SetHyperlink(string.format("|Hquest:%d", self.questID))
             GameTooltip:AddLine(" ")
-        else
 
+            if UnitLevel("player") < data.RequiresLevel then
+                GameTooltip:AddLine(RED_FONT_COLOR:WrapTextInColorCode(string.format("Requires level %d", data.RequiresLevel)))
+                GameTooltip:AddLine(" ")
+            else
+
+            end
+
+            if data.RequiredQuests and (#data.RequiredQuests > 0) then
+                GameTooltip:AddLine(" ")
+                GameTooltip:AddLine("Requires")
+                for _, qid in ipairs(data.RequiredQuests) do
+                    GameTooltip:AddLine(C_QuestLog.GetQuestInfo(qid))
+                end
+            end
+
+            if data.Copper > 0 then
+                GameTooltip:AddLine(" ")
+                GameTooltip:AddLine(MONEY)
+                GameTooltip:AddLine(C_CurrencyInfo.GetCoinTextureString(data.Copper, 11), 1,1,1)
+            end
+
+            -- if data.Rewards and (#data.Rewards > 0) then
+            --     for _, itemID in ipairs(data.Rewards) do
+            --         local item = Item:CreateFromItemID(itemID)
+            --         item:ContinueOnItemLoad(function()
+            --             GameTooltip:AddLine(item:GetItemName())
+            --         end)
+            --     end
+            -- end
+
+
+            GameTooltip:AddLine(" ")
+            GameTooltip:AddLine(BIND_TRADE_TOOLTIP_COLOR:WrapTextInColorCode(string.format("QuestID: %d", self.questID)))
+            GameTooltip:Show()
+
+            AdventureGuide.CallbackRegistry:TriggerEvent("Quest_OnQuestLogQuestEntered", self.questID)
         end
-
-        GameTooltip:AddLine(BIND_TRADE_TOOLTIP_COLOR:WrapTextInColorCode(string.format("QuestID: %d", self.questID)))
-        GameTooltip:Show()
-
-        AdventureGuide.CallbackRegistry:TriggerEvent("Quest_OnQuestLogQuestEntered", self.questID)
     end
 end
 

@@ -27,5 +27,9 @@ AdventureGuideDungeonEncounterListviewButtonMixin = {}
 function AdventureGuideDungeonEncounterListviewButtonMixin:SetDataBinding(binding, height)
     self.label:SetText(binding.name)
 
+    -- GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+    -- GameTooltip:SetHyperlink(string.format("|cffffff00|Hunit:Creature-0-0-0-0-%s", binding.npcID))
+    -- GameTooltip:Show()
+
     self:SetScript("OnClick", binding.onClick)
 end

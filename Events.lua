@@ -1,4 +1,4 @@
-local name, AdventureGuide = ...;
+local addonName, AdventureGuide = ...;
 
 
 
@@ -36,13 +36,13 @@ EventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 
 EventFrame:RegisterEvent("QUEST_ACCEPTED")
 EventFrame:RegisterEvent("QUEST_TURNED_IN")
-EventFrame:RegisterEvent("QUEST_LOG_UPDATE")
---EventFrame:RegisterEvent("QUEST_LOG_CRITERIA_UPDATE")
+--EventFrame:RegisterEvent("QUEST_LOG_UPDATE")
+EventFrame:RegisterEvent("QUEST_LOG_CRITERIA_UPDATE")
 EventFrame:RegisterEvent("QUEST_WATCH_UPDATE")
 EventFrame:RegisterEvent("QUEST_REMOVED")
 
 EventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-EventFrame:RegisterEvent("PLAYER_LEVEL_CHANGED")
+EventFrame:RegisterEvent("PLAYER_LEVEL_UP")
 
 EventFrame:RegisterEvent("NAME_PLATE_UNIT_ADDED")
 
@@ -69,28 +69,61 @@ end
 
 function EventFrame:PLAYER_ENTERING_WORLD(isInitial, isReload)
 
-    local name, realm = UnitName("player")
+    local _name, realm = UnitName("player")
     if not realm then
         realm = GetNormalizedRealmName()
     end
-    local nameRealm = string.format("%s-%s", name, realm)
-    local _, _, classID = UnitClass("player")
-    local _, _, raceID = UnitRace("player")
-    local level = UnitLevel("player")
+    local nameRealm = string.format("%s-%s", _name, realm)
 
-    --if isInitial then
+    if isInitial then
+       
+        local _, _, classID = UnitClass("player")
+        local _, _, raceID = UnitRace("player")
+        local level = UnitLevel("player")
+        local unitFaction = UnitFactionGroup("player")
+    
         SavedVariables:Init()
-        SavedVariables:UpdateDefaults()
+        SavedVariables:NewCharacter(nameRealm, classID, level, raceID, unitFaction)
+        
+        local currentProfile = SavedVariables:GetProfile(nameRealm)
+        AdventureGuide.ActiveProfile = AdventureGuide.CharacterProfile:CreateFromData(currentProfile)
+    
+        AdventureGuide.ActiveProfile:SetPlayerLevel(level)
+        AdventureGuide.ActiveProfile:UpdateCompletedQuests()
+        AdventureGuide.ActiveProfile:ScanQuestLog()
 
-        SavedVariables:NewProfile(nameRealm, classID, level, raceID)
-    --end
+    else
 
-    local currentProfile = SavedVariables:GetProfile(nameRealm)
-    AdventureGuide.ActiveProfile = AdventureGuide.CharacterProfile:CreateFromData(currentProfile)
+        SavedVariables:Connect()
+
+        if not AdventureGuide.Profiles[nameRealm] then
+            local currentProfile = SavedVariables:GetProfile(nameRealm)
+            local profile = AdventureGuide.CharacterProfile:CreateFromData(currentProfile)
+            AdventureGuide.Profiles[nameRealm] = profile
+            AdventureGuide.ActiveProfile = AdventureGuide.Profiles[nameRealm]
+        end
+
+        AdventureGuide.ActiveProfile:UpdateCompletedQuests()
+        AdventureGuide.ActiveProfile:ScanQuestLog()
+    end
+
     if ViragDevTool_AddData then
         ViragDevTool_AddData(AdventureGuide.ActiveProfile, "AdventureGuide_ActiveProfile")
+        ViragDevTool_AddData(SavedVariables, "SavedVariables")
+        ViragDevTool_AddData(AdventureGuide.Profiles, "AdventureGuide.Profiles")
     end
-    AdventureGuide.ActiveProfile:UpdateCompletedQuests()
+
+    -- ADVENTURE_GUIDE_CHARACTER = {}
+
+    -- for _, info in ipairs(AdventureGuide.Dungeons) do
+    --     for k, v in ipairs(info.bosses) do
+    --         ADVENTURE_GUIDE_CHARACTER[v.npcID] = v.name
+    --     end
+    -- end
+
+    local category, layout = Settings.RegisterCanvasLayoutCategory(AdventureGuide.SettingsPanel, addonName, addonName);
+    category.ID = addonName;
+    Settings.RegisterAddOnCategory(category)
 
 end
 
@@ -107,18 +140,18 @@ function EventFrame:UNIT_STATS(...)
     end
 end
 
-function EventFrame:PLAYER_LEVEL_UP()
-    print("leveled up", UnitLevel("player"))
-    C_Timer.After(1, function()
-        print("leveled up", UnitLevel("player"))
-        local newLevel = UnitLevel("player")
-        AdventureGuide.CallbackRegistry:TriggerEvent("Player_OnLevelChanged")
-        AdventureGuide.ActiveProfile:SetPlayerLevel(newLevel)
-    end)
+function EventFrame:PLAYER_LEVEL_UP(...)
+    local newLevel = ...;
+    AdventureGuide.ActiveProfile:SetPlayerLevel(newLevel)
+    AdventureGuide.CallbackRegistry:TriggerEvent("Player_OnLevelChanged")
 end
 
 function EventFrame:QUEST_WATCH_UPDATE(questID)
     C_Timer.After(1, function()
+
+        AdventureGuide.CallbackRegistry:TriggerEvent("Quest_OnQuestCriteriaUpdated", questID)
+        AdventureGuide.ActiveProfile:ScanQuestLog()
+
         if IsQuestComplete(questID) then
             AdventureGuide.CallbackRegistry:TriggerEvent("Quest_OnQuestCriteriaCompleted", questID)
         end
@@ -158,7 +191,6 @@ function EventFrame:BANKFRAME_OPENED()
 
 end
 
---this means you can view your alts items
 function EventFrame:BAG_UPDATE_DELAYED()
 
 end

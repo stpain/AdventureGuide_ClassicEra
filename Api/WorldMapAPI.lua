@@ -11,14 +11,19 @@ local playerPinSize = 22;
 local groupPinSize = 48;
 local nodePinSize = 11;
 
+local objectiveIcons = {
+    ["npc"] = "Object",
+    ["object"] = "VignetteLoot",
+    ["area"] = "QuestBlob",
+}
+
 --local WorldMap = CreateFromMixins(DataProviderMixin)
 
 local function PinResetterFunc(pool, pin)
     pin.pinData = nil
     pin.background:SetTexture(nil)
-    pin.mask:Hide()
-    pin.ring:Hide()
     pin:ClearTooltipFunc()
+    pin:Hide()
 end
 
 local WorldMap = {}
@@ -31,12 +36,12 @@ function WorldMap:Init(worldMap)
     self.mapOverlay:SetFrameStrata("FULLSCREEN_DIALOG")
     self.mapOverlay:Raise()
 
-    self.playerPin = CreateFrame("FRAME", nil, self.mapOverlay, "AdventureGuideMapPoiTemplate")
-    self.playerPin:SetSize(playerPinSize, playerPinSize)
-    self.playerPin:SetFrameStrata("TOOLTIP")
-    self.playerPin:SetFrameLevel(9000)
-    self.playerPin:Raise()
-    self.playerPin.background:SetAtlas("MinimapArrow")
+    -- self.playerPin = CreateFrame("FRAME", nil, self.mapOverlay, "AdventureGuideMapPoiTemplate")
+    -- self.playerPin:SetSize(playerPinSize, playerPinSize)
+    -- self.playerPin:SetFrameStrata("TOOLTIP")
+    -- self.playerPin:SetFrameLevel(9000)
+    -- self.playerPin:Raise()
+    -- self.playerPin.background:SetAtlas("MinimapArrow")
 
     self.worldMapPOI = CreateFramePool("FRAME", self.mapOverlay, "AdventureGuideMapPoiTemplate", PinResetterFunc)
 
@@ -50,7 +55,7 @@ function WorldMap:Init(worldMap)
     }
 
     self.map:HookScript("OnUpdate", function(f)
-        self:UpdateUnitPins()
+        --self:UpdateUnitPins()
         self:UpdateMapPinSizes()
     end)
     hooksecurefunc(self.map.ScrollContainer, "ZoomIn", function()
@@ -61,30 +66,30 @@ function WorldMap:Init(worldMap)
     end)
 end
 
-function WorldMap:UpdateUnitPins()
-    if self.map:IsVisible() then
-        local width, height = self.mapOverlay:GetSize()
+-- function WorldMap:UpdateUnitPins()
+--     if self.map:IsVisible() then
+--         local width, height = self.mapOverlay:GetSize()
 
-        local mapID = C_Map.GetBestMapForUnit("player")
-        if mapID == self.map:GetMapID() then
-            self.playerPin:Show()
-            local position = C_Map.GetPlayerMapPosition(mapID, "player")
-            local facing = GetPlayerFacing()
+--         local mapID = C_Map.GetBestMapForUnit("player")
+--         if mapID == self.map:GetMapID() then
+--             self.playerPin:Show()
+--             local position = C_Map.GetPlayerMapPosition(mapID, "player")
+--             local facing = GetPlayerFacing()
 
-            if position then
-                local x, y = position:GetXY()
-                local playerX = ((width/100) * (x*100)) - (playerPinSize / 2)
-                local playerY = ((height/100) * (y*100)) - (playerPinSize / 2)
-                self.playerPin:ClearAllPoints()
-                self.playerPin.background:SetRotation(facing)
-                self.playerPin:SetPoint("TOPLEFT", self.mapOverlay, "TOPLEFT", playerX, playerY * -1)
-            end
+--             if position then
+--                 local x, y = position:GetXY()
+--                 local playerX = ((width/100) * (x*100)) - (playerPinSize / 2)
+--                 local playerY = ((height/100) * (y*100)) - (playerPinSize / 2)
+--                 self.playerPin:ClearAllPoints()
+--                 self.playerPin.background:SetRotation(facing)
+--                 self.playerPin:SetPoint("TOPLEFT", self.mapOverlay, "TOPLEFT", playerX, playerY * -1)
+--             end
 
-        else
-            self.playerPin:Hide()
-        end
-    end
-end
+--         else
+--             self.playerPin:Hide()
+--         end
+--     end
+-- end
 
 function WorldMap:ClearAllPins()
     self.worldMapPOI:ReleaseAll()
@@ -93,7 +98,9 @@ end
 function WorldMap:RemoveQuestObjectivePins(questID)
     if self.questObjectivePins[questID] then
         for _, pin in ipairs(self.questObjectivePins[questID]) do
-            self.worldMapPOI:Release(pin)
+            if self.worldMapPOI:IsActive(pin) then
+                self.worldMapPOI:Release(pin)
+            end
         end
     end
 end
@@ -101,30 +108,34 @@ end
 function WorldMap:RemoveQuestTurnInPins(questID)
     if self.questTurninPins[questID] then
         for _, pin in ipairs(self.questTurninPins[questID]) do
-            self.worldMapPOI:Release(pin)
-        end
+            if self.worldMapPOI:IsActive(pin) then
+                self.worldMapPOI:Release(pin)
+            end        end
     end
 end
 
 function WorldMap:RemoveQuestGiverPins(questID)
     if self.questGiverPins[questID] then
         for _, pin in ipairs(self.questGiverPins[questID]) do
-            self.worldMapPOI:Release(pin)
+            if self.worldMapPOI:IsActive(pin) then
+                self.worldMapPOI:Release(pin)
+            end
         end
     end
 end
 
-function WorldMap:GetXY(pinData)
+function WorldMap:GetXY(pin)
     local x1, y1 = self.mapOverlay:GetSize()
     --local scale = self.map.ScrollContainer:GetCanvasScale()
 
     local x, y;
+    local width, height = pin:GetSize()
 
-    x = (pinData.x * (x1/100))
-    y = (pinData.y * (y1/100)) * -1
+    x = (pin.pinData.x * (x1/100))
+    y = (pin.pinData.y * (y1/100)) * -1
 
-    x = x - (pinData.width / 2)
-    y = y + (pinData.height / 2)
+    x = x - (width / 2)
+    y = y + (height / 2)
 
     return x, y;
 end
@@ -138,6 +149,10 @@ function WorldMap:UpdateMapPinSizes()
 
     if time() < lastUpdate + 0.1 then
         return;
+    end
+
+    if 1 == 1 then
+        return
     end
 
     -- basically a PITA 
@@ -164,7 +179,7 @@ function WorldMap:UpdateMapPinSizes()
 
                     local widthDiff, heightDiff = (pin.pinData.width - (pin.pinData.width * scaler)) / 2, (pin.pinData.height - (pin.pinData.height * scaler)) / 2
 
-                    local x, y = self:GetXY(pin.pinData)
+                    local x, y = self:GetXY(pin)
 
                     pin:ClearAllPoints()
                     pin:SetPoint("TOPLEFT", self.mapOverlay, "TOPLEFT", x + widthDiff, y - heightDiff)
@@ -195,12 +210,11 @@ function WorldMap:AddPin(pinData, tooltipUpdateFunc)
 
     pin.pinData = pinData
 
-    pin:SetSize(pinData.width, pinData.height)
-    pin:SetIcon(pinData.icon, pinData.showMask)
+    pin:SetIcon(pinData.icon)
 
     pin:SetTooltipFunc(tooltipUpdateFunc)
 
-    local x, y = self:GetXY(pinData)
+    local x, y = self:GetXY(pin)
 
     pin:ClearAllPoints()
     pin:SetPoint("TOPLEFT", self.mapOverlay, "TOPLEFT", x, y)
@@ -208,20 +222,28 @@ function WorldMap:AddPin(pinData, tooltipUpdateFunc)
 
     pin:SetFrameLevel(self.mapOverlay:GetFrameLevel() + 1)
 
-    return pin;
+    if pinData.pinType == "questGiver" then
+        if not self.questGiverPins[pinData.questID] then
+            self.questGiverPins[pinData.questID] = {}
+        end
+        table.insert(self.questGiverPins[pinData.questID], pin)
+
+    elseif pinData.pinType == "questTurnIn" then
+        if not self.questTurninPins[pinData.questID] then
+            self.questTurninPins[pinData.questID] = {}
+        end
+        table.insert(self.questTurninPins[pinData.questID], pin)
+
+    elseif pinData.pinType == "questObjective" then
+        if not self.questObjectivePins[pinData.questID] then
+            self.questObjectivePins[pinData.questID] = {}
+        end
+        table.insert(self.questObjectivePins[pinData.questID], pin)
+    end
+
+    --return pin;
 end
 
--- function WorldMap:AddMiniMapPin(mapID, pinData, tooltipUpdateFunc)
-
---     local pin = self.miniMapQuestPOI:Acquire()
---     pin.background:SetAtlas(pinData.atlas)
---     pin:SetSize(pinData.width * 0.65, pinData.height * 0.65)
---     pin:Show()
-
---     pin:SetTooltipFunc(tooltipUpdateFunc)
-
---     Pins:AddMinimapIconMap(addonName, pin, mapID, (pinData.x / 100), (pinData.y / 100), false, true)
--- end
 
 local function QuestPinTooltipFunc(questID)
     return function()
@@ -230,252 +252,6 @@ local function QuestPinTooltipFunc(questID)
         GameTooltip:AddLine(questID)
     end
 end
-
-function WorldMap:AddNextQuestsForMapID(mapID, currentQuestID)
-    
-    -- local nextQuests = QuestAPI:GetNextQuests(currentQuestID)
-    -- if nextQuests and (#nextQuests > 0) then
-    --     local index = 1;
-    --     C_Timer.NewTicker(0.1, function()
-    --         self:AddQuestsForMapID(mapID, nextQuests[index])
-    --         index = index + 1;
-    --     end, #nextQuests)
-    -- end
-end
-
-function WorldMap:AddQuestGiversForMapID(mapID, questID)
-
-    if not questID then
-        return
-    end
-
-    self.questGiverPins[questID] = {}
-
-    local questData = QuestAPI:GetQuestData(questID)
-    
-    if questData.startPoint and (questData.startPoint.npc or questData.startPoint.object) and questData.startPoint.spawnLocations then
-
-        local location = questData.startPoint.spawnLocations[mapID]
-        if type(location) == "table" then
-            for _, v in ipairs(location) do
-           
-                local pinData = {
-                    icon = "QuestNormal",
-                    width = 24,
-                    height = 24,
-                    x = v[1],
-                    y = v[2],
-                    questID = questID,
-                }
-
-                local pin = self:AddPin(pinData, QuestPinTooltipFunc(questID))
-                if pin then
-                    pin:SetFrameLevel(self.mapOverlay:GetFrameLevel() + 3)
-                    table.insert(self.questGiverPins[questID], pin)
-                end
-
-            end
-        end
-    end
-end
-
-function WorldMap:AddAllQuestGiversForMapID(mapID)
-    
-    --print("Worldmap requesting quests for map")
-    local questsForMap = QuestAPI:GetQuestsForMapID(mapID, true)
-
-    for _, questID in ipairs(questsForMap) do
-        self:AddQuestGiversForMapID(mapID, questID)
-    end
-
-    -- local index = 1;
-    -- C_Timer.NewTicker(0.1, function()
-    --     self:AddQuestGiversForMapID(mapID, questsForMap[index])
-    --     index = index + 1;
-    -- end, #questsForMap)
-
-end
-
-
-function WorldMap:AddAllQuestTurnInsForMapID(mapID)
-    
-    local turnIns = QuestAPI:GetQuestTurnInsForMapID(mapID)
-
-    for _, questID in ipairs(turnIns) do
-        self:AddQuestTurnInsForQuestID(questID, mapID)
-    end
-
-    -- if #turnIns > 0 then
-    --     local index = 1;
-    --     C_Timer.NewTicker(0.1, function()
-    --         self:AddQuestTurnInsForQuestID(turnIns[index], mapID)
-    --         index = index + 1;
-    --     end, #turnIns)
-    -- end
-
-end
-
-
-function WorldMap:AddQuestTurnInsForQuestID(questID, mapID)
-    self.questTurninPins[questID] = {}
-
-    local readyForTurnIn = IsQuestComplete(questID)
-    if readyForTurnIn then
-
-        local questData = QuestAPI:GetQuestData(questID)
-        
-        if questData.finishPoint and (questData.finishPoint.npc or questData.finishPoint.object) then
-
-            local location = questData.finishPoint.spawnLocations[mapID]
-            if type(location) == "table" then
-                for _, locationData in ipairs(location) do
-            
-                    local pinData = {
-                        icon = "QuestTurnin",
-                        width = 24,
-                        height = 24,
-                        x = locationData[1],
-                        y = locationData[2],
-                        questID = questID,
-                        parent = "worldmap",
-                        pinType = "questTurnin"
-                    }
-
-                    --print("adding turnin pin for quest", questID)
-
-                    local pin = self:AddPin(pinData, QuestPinTooltipFunc(questID))
-                    if pin then
-                        pin:SetFrameLevel(self.mapOverlay:GetFrameLevel() + 5)
-                        table.insert(self.questTurninPins[questID], pin)
-                    end
-
-                    --self:AddMiniMapPin(mapID, pinData, QuestPinTooltipFunc(questID))
-                end
-            end
-        end
-
-    end
-end
-
--- function WorldMap:AddQuestTurnInsForMapID(mapID)
-    
---     local turnIns = QuestAPI:GetQuestTurnInsForMapID(mapID)
-
---     local questData;
-
---     for k, questID in ipairs(turnIns) do
---         self:AddQuestTurnInsForQuestID(questID, mapID)
---     end
--- end
-
-
-local objectiveIcons = {
-    ["npc"] = "Object",
-    ["object"] = "VignetteLoot",
-    ["area"] = "QuestBlob",
-}
-
-function WorldMap:AddQuestObjectivesForMapID(mapID, questID, forceShow)
-    
-    if (C_QuestLog.IsOnQuest(questID) and not IsQuestComplete(questID)) or forceShow then
-
-        --print("getting objective data")
-
-        local objectiveData = QuestAPI:GetQuestObjectiveDataForMapID(questID, mapID)
-
-        --DevTools_Dump(objectiveData)
-
-        self.questObjectivePins[questID] = {}
-
-        for k, objectives in ipairs(objectiveData) do
-
-            for _, locationData in ipairs(objectives.locationData) do
-                local pinData = {
-                    icon = objectiveIcons[objectives.objectiveType],
-                    width = 32,
-                    height = 32,
-                    x = locationData[1],
-                    y = locationData[2],
-                    questID = questID,
-                    parent = "worldmap",
-                    pinType = "questObjective"
-                }
-
-                local pin = self:AddPin(pinData, QuestPinTooltipFunc(questID))
-                if pin then
-                    pin:SetFrameLevel(self.mapOverlay:GetFrameLevel() + 4)
-                    table.insert(self.questObjectivePins[questID], pin)
-                end
-            end
-
-            -- local numLocationData = #objectives.locationData or 0
-            -- local index = 1;
-            -- C_Timer.NewTicker(0.001, function()
-
-            --     local locationData = objectives.locationData[index]
-
-            --     local pinData = {
-            --         icon = objectiveIcons[objectives.objectiveType],
-            --         width = 32,
-            --         height = 32,
-            --         x = locationData[1],
-            --         y = locationData[2],
-            --         questID = questID,
-            --         parent = "worldmap",
-            --     }
-
-            --     local pin = self:AddPin(pinData, QuestPinTooltipFunc(questID))
-            --     if pin then
-            --         pin:SetFrameLevel(self.mapOverlay:GetFrameLevel() + 4)
-            --         table.insert(self.questObjectivePins[questID], pin)
-            --     end
-            
-            --     index = index + 1;
-
-            -- end, numLocationData)
-
-            -- for _, locationData in ipairs(objectives.locationData) do
-
-            --     local pinData = {
-            --         atlas = objectiveIcons[objectives.objectiveType],
-            --         width = 32,
-            --         height = 32,
-            --         x = locationData[1],
-            --         y = locationData[2],
-            --     }
-
-            --     self:AddPin("quest", pinData, QuestPinTooltipFunc(questID))
-
-            --     --self:AddMiniMapPin(mapID, pinData, QuestPinTooltipFunc(questID))
-            -- end
-
-        end
-
-    end
-end
-
-function WorldMap:AddAllQuestObjectivesForMapID(mapID)
-    
-    local questsForMap = QuestAPI:GetQuestsForMapID(mapID)
-
-    for _, questID in ipairs(questsForMap) do
-        self:AddQuestObjectivesForMapID(mapID, questID)
-    end
-
-    -- if questsForMap and (#questsForMap > 0) then
-    --     local index = 1;
-    --     C_Timer.NewTicker(0.1, function()
-    --         self:AddQuestObjectivesForMapID(mapID, questsForMap[index])
-    --         index = index + 1
-    --     end, #questsForMap)
-    -- end
-end
-
-
-
-
-
-
 
 
 
@@ -525,7 +301,7 @@ function WorldMap:AddGatheringNodePinsForMapID(mapID, nodeType)
 
             for k, v in ipairs(locationData) do
 
-                local pin = self:AddPin(mapID, {
+                local pin = self:AddPin({
                     icon = icon,
                     showMask = true,
                     width = 16,
@@ -548,6 +324,171 @@ function WorldMap:AddGatheringNodePinsForMapID(mapID, nodeType)
 end
 
 
+
+
+
+
+
+
+
+function WorldMap:AddQuestGivers(questGivers)
+
+    if type(questGivers) ~= "table" then
+        return
+    end
+
+    for _, questGiver in ipairs(questGivers) do
+
+        for _, location in ipairs(questGiver.locationData) do
+
+            local isRepatable = AdventureGuide.Api.Quest:IsQuestRepeatable(questGiver.questID)
+            local isImportant = AdventureGuide.Api.Quest:IsQuestImportant(questGiver.questID)
+
+            local icon = "QuestNormal"
+            if isRepatable then
+                icon = "RepeatableQuestGiver"
+            end
+            if isImportant then
+                icon = "ImportantQuestGiver"
+            end
+
+            local pinData = {
+                icon = icon,
+                x = location[1],
+                y = location[2],
+                questID = questGiver.questID,
+                parent = "worldmap",
+                pinType = "questGiver"
+            }
+            self:AddPin(pinData, QuestPinTooltipFunc(questGiver.questID))
+        end
+    end
+end
+
+function WorldMap:AddQuestTurnIns(questTurnIns)
+
+    --DevTools_Dump(questTurnIns)
+    if type(questTurnIns) ~= "table" then
+        return
+    end
+
+    for turnInType, turnInData in pairs(questTurnIns) do
+        for _, turnIn in ipairs(turnInData) do
+            for _, location in ipairs(turnIn.locationData) do
+                
+                local isRepatable = AdventureGuide.Api.Quest:IsQuestRepeatable(turnIn.questID)
+                local isImportant = AdventureGuide.Api.Quest:IsQuestImportant(turnIn.questID)
+    
+                local icon = "QuestTurnin"
+                if isRepatable then
+                    icon = "RepeatableQuestTurnIn"
+                end
+                if isImportant then
+                    icon = "ImportantQuestTurnIn"
+                end
+
+                local pinData = {
+                    icon = icon,
+                    x = location[1],
+                    y = location[2],
+                    questID = turnIn.questID,
+                    parent = "worldmap",
+                    pinType = "questTurnIn"
+                }
+                self:AddPin(pinData, QuestPinTooltipFunc(turnIn.questID))
+            end
+        end
+    end
+end
+
+function WorldMap:AddQuestObjectives(objectives)
+
+    if type(objectives) ~= "table" then
+        return
+    end
+
+    --DevTools_Dump(objectives)
+
+    for _, npc in ipairs(objectives.npc) do
+        for _, location in ipairs(npc.locationData) do
+            local pinData = {
+                icon = "Monster",
+                x = location[1],
+                y = location[2],
+                questID = npc.questID,
+                parent = "worldmap",
+                pinType = "questObjective"
+            }
+            self:AddPin(pinData, QuestPinTooltipFunc(npc.questID))
+        end
+    end
+
+    for _, object in ipairs(objectives.object) do
+        for _, location in ipairs(object.locationData) do
+            local pinData = {
+                icon = "Object",
+                x = location[1],
+                y = location[2],
+                questID = object.questID,
+                parent = "worldmap",
+                pinType = "questObjective"
+            }
+            self:AddPin(pinData, QuestPinTooltipFunc(object.questID))
+        end
+    end
+
+    for _, npc in ipairs(objectives.items.npc) do
+        for _, location in ipairs(npc.locationData) do
+            local pinData = {
+                icon = "Monster",
+                x = location[1],
+                y = location[2],
+                questID = npc.questID,
+                parent = "worldmap",
+                pinType = "questObjective"
+            }
+            self:AddPin(pinData, QuestPinTooltipFunc(npc.questID))
+        end
+    end
+
+    for _, object in ipairs(objectives.items.object) do
+        for _, location in ipairs(object.locationData) do
+            local pinData = {
+                icon = "Object",
+                x = location[1],
+                y = location[2],
+                questID = object.questID,
+                parent = "worldmap",
+                pinType = "questObjective"
+            }
+            self:AddPin(pinData, QuestPinTooltipFunc(object.questID))
+        end
+    end
+end
+
+function WorldMap:RemovePin(pin)
+    --DevTools_Dump(pin)
+    if pin.pinData.pinType == "questGiver" then
+        self:RemoveQuestGiverPins(pin.pinData.questID)
+    elseif pin.pinData.pinType == "questTurnIn" then
+        self:RemoveQuestTurnInPins(pin.pinData.questID)
+    elseif pin.pinData.pinType == "questObjective" then
+        self:RemoveQuestObjectivePins(pin.pinData.questID)
+    end
+end
+
+
+
+
 --AddMinimapIconMap
 
-AdventureGuide.WorldMapAPI = WorldMap;
+AdventureGuide.Api.WorldMap = WorldMap;
+
+
+
+
+
+
+
+
+

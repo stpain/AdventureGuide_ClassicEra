@@ -6,25 +6,6 @@
                 <Texture parentKey="background" setAllPoints="true">
 
                 </Texture>
-                <MaskTexture parentKey="mask" file="Interface/CHARACTERFRAME/TempPortraitAlphaMask" hWrapMode="CLAMPTOBLACKADDITIVE" vWrapMode="CLAMPTOBLACKADDITIVE" hidden="true">
-                    <Anchors>
-                        <Anchor point="TOPLEFT" x="0" y="0"/>
-                        <Anchor point="BOTTOMRIGHT" x="0" y="0"/>
-                    </Anchors>
-                    <MaskedTextures>
-                        <MaskedTexture childKey="background"/>
-                    </MaskedTextures>
-                </MaskTexture>
-            </Layer>
-            <Layer level="OVERLAY">
-                <!-- <Texture parentKey="ring" atlas="Portrait-Frame-Nameplate" setAllPoints="true" hidden="true">
-                <Texture parentKey="ring" atlas="ChallengeMode-KeystoneSlotFrameGlow" setAllPoints="true" hidden="true"> -->
-                <Texture parentKey="ring" atlas="Garr_BuildingTimerFill" setAllPoints="true" hidden="true">
-                    <Anchors>
-                        <Anchor point="TOPLEFT" x="-2" y="2"/>
-                        <Anchor point="BOTTOMRIGHT" x="2" y="-2"/>
-                    </Anchors>
-                </Texture>
             </Layer>
         </Layers>
         <Scripts>

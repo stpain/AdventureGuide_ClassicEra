@@ -132,7 +132,7 @@
 				</Frames>
 			</Frame>
 
-			<Frame parentKey="listview" inherits="AdventureWidgetsNoTemplateListviewTemplate">
+			<Frame parentKey="listview" inherits="TBDNoTemplateListviewTemplate">
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeKey="$parent.header" relativePoint="BOTTOMLEFT" x="0" y="0"/>
 					<Anchor point="BOTTOMRIGHT" x="-10" y="0"/>

@@ -21,10 +21,13 @@ Libs\LibCraftInfo-1.0\LibCraftInfo-1.0.xml
 Libs\HereBeDragons\HereBeDragons-2.0.lua
 Libs\HereBeDragons\HereBeDragons-Pins-2.0.lua
 
-Locales.lua
+#Locales.lua
 
-Data\RawQuestData.lua
-Data\QuestChainData.lua
+Constants.lua
+
+Locales\enUS.lua
+
+Data\QuestData.lua
 Data\Data.lua
 Data\InstanceData.lua
 Data\NpcData.lua
@@ -35,13 +38,15 @@ Data\NodeData.lua
 
 Callbacks.lua
 SavedVariables.lua
+Api.lua
+
+Options\OptionsInterface.lua
+Options\OptionsInterface.xml
 
 Events.lua
 
-#Options\OptionsInterface.lua
-#Options\OptionsInterface.xml
-
 Api\GatheringNodeAPI.lua
+Api\QuestAPI_Old.lua
 Api\QuestAPI.lua
 Api\WorldMapAPI.lua
 Api\MiniMapAPI.lua
@@ -63,3 +68,5 @@ Core\AdventureGuide.xml
 
 Core\ObjectiveTracker.lua
 Core\ObjectiveTracker.xml
+
+Core\GameTooltip.lua
