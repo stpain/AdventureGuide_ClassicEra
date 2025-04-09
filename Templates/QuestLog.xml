@@ -67,6 +67,11 @@
                         <Anchor point="LEFT" x="4" y="0"/>
                     </Anchors>
                 </FontString>
+                <FontString parentKey="labelRight" inherits="GameFontWhite">
+                    <Anchors>
+                        <Anchor point="RIGHT" x="-4" y="0"/>
+                    </Anchors>
+                </FontString>
             </Layer>
 
         </Layers>

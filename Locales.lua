@@ -7531,6 +7531,29 @@ locales.enUS = {
 	["COMMANDER_STRONGHAMMER"] = "Commander Stronghammer",
 
 
+    --instance names
+    ["RAGEFIRE_CHASM"] = "Ragefire Chasm",
+    ["DEADMINES"] = "The Deadmines",
+    ["WAILING_CAVERNS"] = "Wailing Caverns",
+    ["SHADOWFANG_KEEP"] = "Shadowfang Keep",
+    ["STOCKADES"] = "Stormwind Stockades",
+    ["BLACKFATHOM_DEEPS"] = "Blackfathom Deeps",
+    ["GNOMEREGAN"] = "Gnomeregan",
+    ["RAZORFEN_KRAUL"] = "Razorfen Kraul",
+    ["SCARLET_MONASTERY"] = "Scarlet Monastery",
+    ["RAZORFEN_DOWNS"] = "Razorfen Downs",
+    ["ULDAMAN"] = "Uldaman",
+    ["MARAUDON"] = "Maraudon",
+    ["ZULFURRAK"] = "Zul'Farrak",
+    ["SUNKEN_TEMPLE"] = "Sunken Temple",
+    ["BLACKROCK_DEPTHS"] = "Blackrock Depths",
+    ["LOWER_BLACKROCK_SPIRE"] = "Lower Blackrock Spire",
+    ["UPPER_BLACKROCK_SPIRE"] = "Upper Blackrock Spire",
+    ["BLACKROCK_SPIRE"] = "Blackrock Spire",
+    ["SCHOLOMANCE"] = "Scholomance",
+    ["STRATHOLME"] = "Stratholme",
+    ["DIRE_MAUL"] = "Dire Maul",
+    --[""] = "",
 
 }
 

@@ -3,32 +3,32 @@
 local _, AdventureGuide = ...;
 
 ---@class (exact) GatheringNode
----@field nodes table {herbs: table, mining: table}
+---@field nodes table {Herb: table, Ore: table}
 local GatheringNode = {}
 
 ---load the raw data into the class
 function GatheringNode:LoadData()
 
     --create the tables to store node location data
-    --example format herbs[mapID][itemID] = {{x=0.1, y=0.1}, {...}}
+    --example format Herb[mapID][itemID] = {{x=0.1, y=0.1}, {...}}
     self.nodes = {
-        herbs = {},
-        mining = {},
+        Herb = {},
+        Ore = {},
     }
     
     for mapID, nodeData in pairs(AdventureGuide.GatheringsNodeData.Herbs) do
         
-        if not self.nodes.herbs[mapID] then
-            self.nodes.herbs[mapID] = {}
+        if not self.nodes.Herb[mapID] then
+            self.nodes.Herb[mapID] = {}
         end
 
         for k, v in ipairs(nodeData) do
             
-            if not self.nodes.herbs[mapID][v.itemID] then
-                self.nodes.herbs[mapID][v.itemID] = {}
+            if not self.nodes.Herb[mapID][v.itemID] then
+                self.nodes.Herb[mapID][v.itemID] = {}
             end
 
-            table.insert(self.nodes.herbs[mapID][v.itemID], {
+            table.insert(self.nodes.Herb[mapID][v.itemID], {
                 x = v.x,
                 y = v.y,
             })
@@ -37,17 +37,17 @@ function GatheringNode:LoadData()
     
     for mapID, nodeData in pairs(AdventureGuide.GatheringsNodeData.Mining) do
         
-        if not self.nodes.mining[mapID] then
-            self.nodes.mining[mapID] = {}
+        if not self.nodes.Ore[mapID] then
+            self.nodes.Ore[mapID] = {}
         end
 
         for k, v in ipairs(nodeData) do
             
-            if not self.nodes.mining[mapID][v.itemID] then
-                self.nodes.mining[mapID][v.itemID] = {}
+            if not self.nodes.Ore[mapID][v.itemID] then
+                self.nodes.Ore[mapID][v.itemID] = {}
             end
 
-            table.insert(self.nodes.mining[mapID][v.itemID], {
+            table.insert(self.nodes.Ore[mapID][v.itemID], {
                 x = v.x,
                 y = v.y,
             })
@@ -56,7 +56,7 @@ function GatheringNode:LoadData()
 end
 
 ---Gets nodes for a given map and type
----@param nodeType string the node type, either herbs or mining
+---@param nodeType string the node type, either Herb or Ore
 ---@param mapID integer mapID to fetch data for
 ---@return table t an iterable table of location data with x,y keys
 function GatheringNode:GetAllNodesForMapID(nodeType, mapID)
@@ -64,7 +64,7 @@ function GatheringNode:GetAllNodesForMapID(nodeType, mapID)
 end
 
 ---Gets nodes for a given map and type and specific itemID
----@param nodeType string the node type, either herbs or mining
+---@param nodeType string the node type, either Herb or Ore
 ---@param mapID integer mapID to fetch data for
 ---@param itemID integer the itemID to fetch data for
 ---@return table t an iterable table of location data with x,y keys

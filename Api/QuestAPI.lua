@@ -2,88 +2,126 @@
 
 local _, AdventureGuide = ...;
 
+
+--[[
+
+    Breadcrumb quests, (the joy)
+
+    This table should list any quest that acts as a breadcrumb, a situation where multiple quests exist to send the player to a specific target.
+    
+    At the moment the format will be [QuestID] = { breadcrumb1, breadcrumb2, }
+    If the questID exists and is flagged complete the breadcrumbs can be flagged completed with the auth=addon
+
+]]
+local BreadcrumbQuests = {
+    [1688] = {1685, 1715}, --Galkin summons
+    [1599] = {1598}, --summon imp
+    [1598] = {1599}, --summon imp
+}
+
+
+local ExclusiveQuests = {
+    {1599, 1598}, --summon imp
+    {1685, 1715}, --Galkin summons
+}
+
+
+
 local json = LibStub('JsonLua-1.0');
-
-
 local QuestDataProvider = {}
-
-
 local Quest = {}
 
 function Quest:Init()
     local decodedQuestJson = json.decode(AdventureGuide.QuestData)
-    --local count = 0
-    --local maxRewwards, maxChoicerewards = 0, 0
     for k, v in ipairs(decodedQuestJson) do
         QuestDataProvider[v.QuestID] = v;
-        --count = count + 1
-        -- if #v.ChoiceRewards > maxChoicerewards then
-        --     maxRewwards = #v.Rewards
-        --     maxChoicerewards = #v.ChoiceRewards
-        -- end
     end
-    --print(count)
-    --print(maxRewwards, maxChoicerewards)
 end
 
-
-local questInvalidatingData = {
-    [163] = {5,}, --raven hill - jitters growling gut
-}
-local function HasQuestBeenMadeUnavailable(questID)
-    local blockingQuests = questInvalidatingData[questID]
-    if blockingQuests then
-        local ret = false
-        for _, id in ipairs(blockingQuests) do
-            if C_QuestLog.IsQuestFlaggedCompleted(id) == true then
-                ret = true
-            end
-        end
-        return ret
-    else
-        local questData = QuestDataProvider[questID]
-        if questData and (#questData.Series > 0) then
-            local thisQuestSeriesKey;
-            for k, id in ipairs(questData.Series) do
-                if id == questID then
-                    thisQuestSeriesKey = k
-                end
-            end
-            if thisQuestSeriesKey > 1 then
-                local preQuestID = questData.Series[thisQuestSeriesKey - 1]
-                if preQuestID and (C_QuestLog.IsQuestFlaggedCompleted(preQuestID) == true) then
-                    return true
-                end
-            end
-        end
+function Quest:CheckBreadcrumbQuests(questID)
+    if BreadcrumbQuests[questID] then
+       return BreadcrumbQuests[questID]
     end
-    return false
 end
 
+function Quest:CheckExclusiveQuests(questID)
+    for _, quests in ipairs(ExclusiveQuests) do
+        if tContains(quests, questID) then
+            return quests
+        end
+    end
+end
+
+--[[
+    This function attempts to determine if quests prior in a quest series can be flagged completed (where breadcrumbs etc for example)
+    
+    If a quest is part of a series and is 3rd of 5 quests, and is flagged completed by blizzard then we can flag all quests before it 
+    in the series as completed BUT with the flag addon in case we need to filter in the future
+]]
+function Quest:GetQuestSeriesCompletionData(questID)
+    local questData = QuestDataProvider[questID]
+    if questData then
+        if #questData.Series > 1 then
+            local ret = {}
+            local firstQuestFlaggedCompleted
+            for k, qid in ipairs(questData.Series) do
+                if C_QuestLog.IsQuestFlaggedCompleted(qid) then
+                    if firstQuestFlaggedCompleted == nil then 
+                        firstQuestFlaggedCompleted = k
+                    end
+                    ret[qid] = {
+                        completed = true,
+                        authentication = "blizzard-api",
+                    }
+                else
+                    ret[qid] = {
+                        completed = false,
+                        authentication = "none",
+                    }
+                end
+            end
+            if firstQuestFlaggedCompleted and (firstQuestFlaggedCompleted > 1) then
+                for i = 1, (firstQuestFlaggedCompleted - 1) do
+                    ret[questData.Series[i]] = {
+                        completed = true,
+                        authentication = "addon"
+                    }
+                end
+            end
+            return ret
+        end
+    end
+end
 
 
 local function IsRequiredQuestComplete(questID)
     local questData = QuestDataProvider[questID]
     if questData then
-        --local requiredQuests = LuaStringToTable(questData.RequiredQuests)
         local requiredQuests = questData.RequiredQuests
         if #requiredQuests == 0 then
-            --local series = LuaStringToTable(questData.Series)
             local series = questData.Series
             if #series == 0 then
-              return true
+
+                --the quest has no series or required quests to check so return true
+                return true
             else
-              local allCompleted = true
-              for k, _questID in ipairs(series) do
-                if _questID == questID then
-                    return allCompleted
-                else
-                    local isQuestCompleted = C_QuestLog.IsQuestFlaggedCompleted(_questID)
-                    if isQuestCompleted == false then
-                        allCompleted = false
+
+                --check if the series quests are completed
+                local allCompleted = true
+                for k, _questID in ipairs(series) do
+
+                    --if this was the first quest we can return true
+                    if _questID == questID then
+                        return allCompleted
+                    else
+
+                        --check if the quest is completed and adjust the flag as required
+                        local isQuestCompleted = C_QuestLog.IsQuestFlaggedCompleted(_questID)
+                        if isQuestCompleted == false then
+                            allCompleted = false
+                        end
                     end
                 end
-              end
             end
         else
             local allCompleted = true
@@ -99,7 +137,7 @@ local function IsRequiredQuestComplete(questID)
 end
 
 
-local function CanClassDoQuest(classID, questID)
+function Quest:CanClassDoQuest(classID, questID)
     --print("class check: "..classID.. " "..(questID or questClassInfo))
     local questData = QuestDataProvider[questID]
     if questData then
@@ -120,7 +158,7 @@ local function CanClassDoQuest(classID, questID)
     end
 end
 
-local function CanRaceDoQuest(raceID, questID)
+function Quest:CanRaceDoQuest(raceID, questID)
     --print("race check: "..raceID.. " "..(questID or questRaceInfo))
     local questData = QuestDataProvider[questID]
     if questData then
@@ -135,7 +173,7 @@ local function CanRaceDoQuest(raceID, questID)
     end
 end
 
-local function CanFactionDoQuest(faction, questID)
+function Quest:CanFactionDoQuest(faction, questID)
     --print("faction check: "..faction.." "..questID)
     local questData = QuestDataProvider[questID]
     if questData.Faction == "Both" then
@@ -218,12 +256,32 @@ function Quest:IsQuestRepeatable(questID)
     return false
 end
 
+function Quest:CanUnitDoQuest(questID, profile, ignoreLevel)
+    local questData = QuestDataProvider[questID]
+    if questData then
+        local unitLevel, unitClass, unitRace, unitFaction = profile:GetQuestEligibilityData()
+
+        if self:CanFactionDoQuest(unitFaction, questID) and self:CanClassDoQuest(unitClass, questData.QuestID) and self:CanRaceDoQuest(unitRace, questData.QuestID) then
+
+            if ignoreLevel then
+                return true
+            else
+                if unitLevel >= questData.RequiresLevel then
+                    return true
+                end
+            end
+
+        end
+    end
+    return false
+end
+
 function Quest:IsQuestEnabled(questID, profile)
     local questData = QuestDataProvider[questID]
     if questData then
         local unitLevel, unitClass, unitRace, unitFaction = profile:GetQuestEligibilityData()
 
-        if CanFactionDoQuest(unitFaction, questID) and CanClassDoQuest(unitClass, questData.QuestID) and CanRaceDoQuest(unitRace, questData.QuestID) then
+        if self:CanFactionDoQuest(unitFaction, questID) and self:CanClassDoQuest(unitClass, questID) and self:CanRaceDoQuest(unitRace, questID) then
 
             if IsRequiredQuestComplete(questID) then
                 return true
@@ -250,6 +308,14 @@ function Quest:IsQuestImportant(questID)
         if importantQuestCategories[questData.Category] then
             return true
         end
+    end
+    return false
+end
+
+function Quest:IsQuestElite(questID)
+    local questData = QuestDataProvider[questID]
+    if questData and questData.Type == "Elite" then
+        return true
     end
     return false
 end
@@ -284,7 +350,7 @@ function Quest:DoesQuestExposeNewQuests(questID, profile)
         for _, qid in ipairs(t) do
             local qd = QuestDataProvider[qid]
             if qd then
-                if (qd.RequiresLevel <= l) and CanClassDoQuest(c, qid) and CanRaceDoQuest(r, qid) and CanFactionDoQuest(f, qid) then
+                if (qd.RequiresLevel <= l) and self:CanClassDoQuest(c, qid) and self:CanRaceDoQuest(r, qid) and self:CanFactionDoQuest(f, qid) then
                     table.insert(ret, qid)
                 end
             end
@@ -466,7 +532,7 @@ function Quest:GetQuestCountsForMapID(mapID, unitLevel, unitClass, unitRace, uni
         --local questIsCompleted = C_QuestLog.IsQuestFlaggedCompleted(questID)
 
         --some odd quests can be filtered out
-        if (questData.Repeatable == false) and (questData.Category ~= "world-events") and (questData.SubCategory ~= "uncategorized") and CanFactionDoQuest(unitFaction, questData.QuestID) and CanClassDoQuest(unitClass, questData.QuestID) and CanRaceDoQuest(unitRace, questData.QuestID) then
+        if (questData.Repeatable == false) and (questData.Category ~= "world-events") and (questData.SubCategory ~= "uncategorized") and self:CanFactionDoQuest(unitFaction, questData.QuestID) and self:CanClassDoQuest(unitClass, questData.QuestID) and self:CanRaceDoQuest(unitRace, questData.QuestID) then
             
             numQuests = numQuests + 1;
 
@@ -540,7 +606,7 @@ function Quest:GetQuestGiversForMapID(mapID, profile, questTypes)
     for questID, questData in pairs(QuestDataProvider) do
 
         --some odd quests can be filtered out
-        if (questData.Category ~= "") and (questData.Category ~= "professions") and (questData.Category ~= "world-events") and (questData.SubCategory ~= "uncategorized") and CanFactionDoQuest(unitFaction, questID) and (questData.RequiresLevel <= unitLevel) and IsRequiredQuestComplete(questID) and CanClassDoQuest(unitClass, questData.QuestID) and CanRaceDoQuest(unitRace, questData.QuestID) then
+        if (questData.Category ~= "") and (questData.Category ~= "professions") and (questData.Category ~= "world-events") and (questData.SubCategory ~= "uncategorized") and self:CanFactionDoQuest(unitFaction, questID) and (questData.RequiresLevel <= unitLevel) and IsRequiredQuestComplete(questID) and self:CanClassDoQuest(unitClass, questData.QuestID) and self:CanRaceDoQuest(unitRace, questData.QuestID) then
 
             --if (C_QuestLog.IsQuestFlaggedCompleted(questID) == false) and (C_QuestLog.IsOnQuest(questID) == false) then
             if (profile:IsQuestTurnedIn(questID) == false) and (profile.data.questLog[questID] == nil) then
@@ -673,6 +739,33 @@ function Quest:BuildQuestSeriesTreeDataProvider(mapID, category, subCategory, pr
 
     local questsAdded = {}
 
+    local dungeonCategoriesAdded = {}
+    for k, v in ipairs(AdventureGuide.Instances.Classic) do
+        if v.zoneID == mapID then
+            if not dungeonCategoriesAdded[v.questSubCategoryName] then
+                local dungeonQuests = self:GetAllQuestsBySubCategory("dungeons", v.questSubCategoryName)
+                if dungeonQuests and (#dungeonQuests > 0) then
+                    local dunegonNode = questTreeDataProvider:Insert({
+                        label = string.format("%s %s", CreateAtlasMarkup("Dungeon"), v.name),
+                        isParent = true,
+                    })
+                    for _, info in ipairs(dungeonQuests) do
+                        if self:CanUnitDoQuest(info.QuestID, profile, true) then
+                            dunegonNode:Insert({
+                                questID = info.QuestID
+                            })
+                        end
+                    end
+                end
+                dungeonCategoriesAdded[v.questSubCategoryName] = true
+            end
+        end
+    end
+
+
+
+
+
     local classNameLocale, className = GetClassInfo(unitClass)
     local classQuests = self:GetAllQuestsBySubCategory("classes", className:lower())
     if classQuests and (#classQuests > 0) then
@@ -697,6 +790,7 @@ function Quest:BuildQuestSeriesTreeDataProvider(mapID, category, subCategory, pr
                 questsAdded[v.QuestID] = true
             end
         end
+
     end
 
     table.sort(quests, SortQuests)
@@ -705,7 +799,7 @@ function Quest:BuildQuestSeriesTreeDataProvider(mapID, category, subCategory, pr
 
         for _, questData in ipairs(quests) do
 
-            if (questsAdded[questData.QuestID] == nil) and CanClassDoQuest(unitClass, questData.QuestID) and CanRaceDoQuest(unitRace, questData.QuestID) and CanFactionDoQuest(unitFaction, questData.QuestID) then
+            if (questsAdded[questData.QuestID] == nil) and self:CanClassDoQuest(unitClass, questData.QuestID) and self:CanRaceDoQuest(unitRace, questData.QuestID) and self:CanFactionDoQuest(unitFaction, questData.QuestID) then
 
 
                 if (#questData.Series > 0) then
@@ -719,11 +813,11 @@ function Quest:BuildQuestSeriesTreeDataProvider(mapID, category, subCategory, pr
                         for i = 1, #questData.Series do
                             node:Insert({
                                 questID = questData.Series[i],
+                                isSeries = true,
                             })
                             questsAdded[questData.Series[i]] = true
                         end
                     end
-
 
                 else
                     questTreeDataProvider:Insert({

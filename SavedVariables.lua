@@ -53,20 +53,34 @@ end
 function CharacterProfile:UpdateCompletedQuests()
     local questsCompleted = GetQuestsCompleted()
     for questID, isComplete in pairs(questsCompleted) do
-        if isComplete then
-            self:SetQuestTurnedIn(questID)
+
+        local seriesData = AdventureGuide.Api.Quest:GetQuestSeriesCompletionData(questID)
+        if type(seriesData) == "table" then
+            for qid, info in pairs(seriesData) do
+                if info.completed == true then
+                    self:SetQuestTurnedIn(qid, info.authentication)
+                end
+            end
+        else
+            if isComplete then
+                self:SetQuestTurnedIn(questID, "blizzard-api")
+            end
         end
     end
 end
-function CharacterProfile:SetQuestTurnedIn(questID)
+function CharacterProfile:SetQuestTurnedIn(questID, authentication)
     if self.data then
-        if not self.data.questsCompleted[questID] then
+        if self.data.questsCompleted[questID] == nil then
             self.data.questsCompleted[questID] = {
                 accepted = time(),
                 turnedIn = time(),
+                authentication = authentication,
             }
         else
-            self.data.questsCompleted[questID].turnedIn = time()
+            if self.data.questsCompleted[questID].turnedIn == nil then
+                self.data.questsCompleted[questID].turnedIn = time()
+                self.data.questsCompleted[questID].authentication = authentication
+            end
         end
     end
 end
@@ -104,6 +118,10 @@ end
 
 function CharacterProfile:GetQuestLog()
     return self.data.questLog
+end
+
+function CharacterProfile:GetQuestHistory()
+    return self.data.questsCompleted
 end
 
 
@@ -291,7 +309,13 @@ function CharacterProfile:ScanQuestLog()
                 local link = GetQuestLink(questID)
                 local readyForTurnIn = IsQuestComplete(questID)
                 readyForTurnIn = IsQuestComplete(questID)
-                local objectives = C_QuestLog.GetQuestObjectives(questID) or {}
+
+                local objectives = {}
+                local objIter = 3;
+                while objIter > 0 do
+                    objectives = C_QuestLog.GetQuestObjectives(questID)
+                    objIter = objIter - 1
+                end
 
 
                 self:SetQuestLogData(questID, title, link, level, readyForTurnIn, objectives, lastHeader)
@@ -308,6 +332,10 @@ function CharacterProfile:GetQuestEligibilityData()
     return self.data.level, self.data.classID, self.data.raceID, self.data.faction;
 end
 
+function CharacterProfile:GetFaction()
+    return self.data.faction;
+end
+
 AdventureGuide.CharacterProfile = CharacterProfile;
 
 
@@ -316,10 +344,11 @@ local SavedVariables = {}
 
 function SavedVariables:Init()
 
-    if not ADVENTURE_GUIDE_GLOBAL then
+    if ADVENTURE_GUIDE_GLOBAL == nil then
         ADVENTURE_GUIDE_GLOBAL = {
             config = {},
             characters = {},
+            
         }
     end
 
@@ -346,6 +375,7 @@ end
 function SavedVariables:NewCharacter(nameRealm, classID, level, raceID, faction)
     if self.db and self.db.characters then
         if not self.db.characters[nameRealm] then
+            print("new profile added")
             self.db.characters[nameRealm] = {
                 nameRealm = nameRealm,
                 classID = classID,
@@ -355,6 +385,8 @@ function SavedVariables:NewCharacter(nameRealm, classID, level, raceID, faction)
                 questLog = {},
                 questsCompleted = {},
             }
+        else
+            print("profile exists")
         end
     end
 end

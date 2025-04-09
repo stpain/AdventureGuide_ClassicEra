@@ -1,5 +1,25 @@
 local name, AdventureGuide = ...;
 
+function AdventureGuide.Api.CreateContextMenu(parent, menu)
+    MenuUtil.CreateContextMenu(parent, function(parent, rootDescription)
+
+        for _, element in ipairs(menu) do
+            if element.isTitle then
+                rootDescription:CreateTitle(element.text)
+
+            elseif element.isSeparater then
+                rootDescription:CreateSpacer()
+
+            elseif element.isDivider then
+                rootDescription:CreateDivider()
+
+            else
+                rootDescription:CreateButton(element.text, element.func)
+            end
+        end
+    end)
+end
+
 
 function AdventureGuide.Api.SetAtlasToTexture(atlas, texture)
     if AdventureGuide.Constants.AtlasInfo[atlas] then
@@ -70,12 +90,14 @@ function AdventureGuide.Api.ScanQuestLog()
         else
             if questID then
 
-                local objectives = C_QuestLog.GetQuestObjectives(questID)
-                objectives = C_QuestLog.GetQuestObjectives(questID)
+                local objectives = {}
+                local objIter = 3;
+                while objIter > 0 do
+                    objectives = C_QuestLog.GetQuestObjectives(questID)
+                    objIter = objIter - 1
+                end
 
                 local readyForTurnIn = IsQuestComplete(questID)
-                objectives = C_QuestLog.GetQuestObjectives(questID)
-
                 readyForTurnIn = IsQuestComplete(questID)
 
                 table.insert(t, {

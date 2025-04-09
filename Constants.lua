@@ -12,6 +12,57 @@ end
 
 AdventureGuide.Profiles = {}
 
+AdventureGuide.Constants.NineSlice = {}
+AdventureGuide.Constants.NineSlice.PvpPanel =
+{
+    TopLeftCorner =	{ atlas = "UI-Frame-DiamondMetal-CornerTopLeft", x = -10, y = 10 },
+    TopRightCorner =	{ atlas = "UI-Frame-DiamondMetal-CornerTopRight", x = 10, y = 10 },
+    BottomLeftCorner =	{ atlas = "UI-Frame-DiamondMetal-CornerBottomLeft", x = -10, y = -10 },
+    BottomRightCorner =	{ atlas = "UI-Frame-DiamondMetal-CornerBottomRight", x = 10, y = -10 },
+    TopEdge = { atlas = "_UI-Frame-DiamondMetal-EdgeTop", },
+    BottomEdge = { atlas = "_UI-Frame-DiamondMetal-EdgeBottom", },
+    LeftEdge = { atlas = "!UI-Frame-DiamondMetal-EdgeLeft", },
+    RightEdge = { atlas = "!UI-Frame-DiamondMetal-EdgeRight", },
+    --Center = { layer = "BACKGROUND", atlas = "Tooltip-Glues-NineSlice-Center", x = -20, y = 20, x1 = 20, y1 = -20 },
+}
+
+AdventureGuide.Constants.Battlegrounds = {
+    Classic = {
+        {
+            name = "Warsong Gulch",
+            panelArtworkFile = [[Interface\AddOns\AdventureGuide_ClassicEra\Media\PvP\warsong-gulch-%s.blp]],
+            factions = {
+                alliance = {
+                    id = 890,
+                    rewards = {
+                        friendly = {},
+                        honoured = {},
+                        revered = {},
+                        exalted = {},
+                    }
+                },
+                horde = {
+                    id = 889,
+                    rewards = {
+                        friendly = {},
+                        honoured = {},
+                        revered = {},
+                        exalted = {},
+                    }
+                }
+            }
+        },
+        {
+            name = "Arathi Basin",
+            panelArtworkFile = [[Interface\AddOns\AdventureGuide_ClassicEra\Media\PvP\arathi-basin-%s.blp]],
+        },
+        {
+            name = "Alterac Valley",
+            panelArtworkFile = [[Interface\AddOns\AdventureGuide_ClassicEra\Media\PvP\alterac-valley-%s.blp]],
+        },
+    },
+}
+
 AdventureGuide.Constants.RaceInfo = {
     [1] = {"The noble humans of Stormwind stand at the forefront of the Alliance against the enemies of Azeroth.",0},
     [2] = {"The mighty orcs came to Azeroth as conquerors, but now strive to reclaim their ancient honor and traditions.",1},
@@ -39,6 +90,40 @@ AdventureGuide.Constants.QuestCategories = {
     ["classes"] = 1,
     ["world-events"] = 1,
     ["professions"] = 1,
+}
+
+AdventureGuide.Instances = {
+    Classic = {
+        { name = 'Wailing Caverns', zoneID = 1413, instanceID = 1, questSubCategoryName = "wailing-caverns" },
+        { name = 'Scholomance', zoneID = 1422, instanceID = 2, questSubCategoryName = "scholomance" },
+        { name = 'Ragefire Chasm', zoneID = 1454, instanceID = 3, questSubCategoryName = "ragefire-chasm" },
+        { name = 'Deadmines', zoneID = 1436, instanceID = 5, questSubCategoryName = "the-deadmines" },
+        { name = 'Shadowfang Keep', zoneID = 1421, instanceID = 7, questSubCategoryName = "shadowfang-keep" },
+        { name = 'Blackfathom Deeps', zoneID = 1440, instanceID = 9, questSubCategoryName = "blackfathom-deeps" },
+        { name = 'Stormwind Stockades', zoneID = 1453, instanceID = 11, questSubCategoryName = "the-stockade" },
+        { name = 'Gnomeregan', zoneID = 1426, instanceID = 13, questSubCategoryName = "gnomeregan" },
+        { name = 'Razorfen Kraul', zoneID = 1413, instanceID = 15, questSubCategoryName = "razorfen-kraul" },
+        { name = 'Scarlet Monastery', zoneID = 1420, instanceID = 17, questSubCategoryName = "scarlet-monastery" },
+        { name = 'Razorfen Downs', zoneID = 1413, instanceID = 19, questSubCategoryName = "razorfen-downs" },
+        { name = 'Uldaman', zoneID = 1418, instanceID = 21, questSubCategoryName = "uldaman" },
+        { name = 'Zul\'Farrak', zoneID = 1446, instanceID = 23, questSubCategoryName = "zulfarrak" },
+        { name = 'Maraudon', zoneID = 1443, instanceID = 25, questSubCategoryName = "maraudon" },
+        { name = 'Sunken Temple', zoneID = 1435, instanceID = 27, questSubCategoryName = "the-temple-of-atalhakkar" },
+        { name = 'Blackrock Depths', zoneID = 1428, instanceID = 29, questSubCategoryName = "blackrock-depths" },
+        { name = 'Blackrock Spire', zoneID = 1428, instanceID = 31, questSubCategoryName = "blackrock-spire" }, --lower
+        { name = 'Dire Maul - East', zoneID = 1444, instanceID = 33, questSubCategoryName = "dire-maul" },
+        { name = 'Dire Maul - West', zoneID = 1444, instanceID = 35, questSubCategoryName = "dire-maul" },
+        { name = 'Dire Maul - North', zoneID = 1444, instanceID = 37, questSubCategoryName = "dire-maul" },
+        { name = 'Stratholme', zoneID = 1423, instanceID = 39, questSubCategoryName = "stratholme" },
+        { name = 'Zul\'Gurub', zoneID = 1434, instanceID = 41, questSubCategoryName = "zulgurrub" },
+        { name = 'Blackrock Spire', zoneID = 1428, instanceID = 43, questSubCategoryName = "blackrock-spire" }, --upper
+        { name = 'Onyxia', zoneID = 1445, instanceID = 45, questSubCategoryName = "onyxia" },
+        { name = 'Molten Core', zoneID = 1428, instanceID = 47, questSubCategoryName = "molten-core" },
+        { name = 'Blackwing Lair', zoneID = 1428, instanceID = 49, questSubCategoryName = "blackwing-lair" },
+    },
+    TBC = {
+
+    },
 }
 
 AdventureGuide.Constants.MapZoneIdToName = {
@@ -155,6 +240,32 @@ AdventureGuide.Constants.MapZoneNameToId = {
     --["kalimdor"] = 1464,
 }
 
+local contextMenuSeparator = {
+    hasArrow = false;
+    dist = 0;
+    text = "",
+    isTitle = true;
+    isUninteractable = true;
+    notCheckable = true;
+    iconOnly = true;
+    icon = "Interface\\Common\\UI-TooltipDivider-Transparent";
+    tCoordLeft = 0;
+    tCoordRight = 1;
+    tCoordTop = 0;
+    tCoordBottom = 1;
+    tSizeX = 0;
+    tSizeY = 8;
+    tFitDropDownSizeX = true;
+    iconInfo = {
+        tCoordLeft = 0,
+        tCoordRight = 1,
+        tCoordTop = 0,
+        tCoordBottom = 1,
+        tSizeX = 0,
+        tSizeY = 8,
+        tFitDropDownSizeX = true
+    }
+}
 
 AdventureGuide.Constants.IconAtlas = {
     ImportantQuestGiver = {2, 2},

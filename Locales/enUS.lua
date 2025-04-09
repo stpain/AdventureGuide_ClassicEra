@@ -35,7 +35,7 @@ AdventureGuide.Locales.DungeonBossNames = {
     DUNGEON_BOSS_COOKIE = "Cookie (Bonus Boss)",
 
     --wailing caverns
-    DUNGEON_HISTORY_WAILING_CAVERNS = "Recently, a night elf druid named Naralex discovered a network of underground caverns within the heart of the Barrens. Dubbed the 'Wailing Caverns', these natural caves were filled with steam fissures which produced long, mournful wails as they vented. Naralex believed he could use the caverns' underground springs to restore lushness and fertility to the Barrens - but to do so would require siphoning the energies of the fabled Emerald Dream. Once connected to the Dream, however, the druid's vision somehow became a nightmare. Soon the Wailing Caverns began to change - the waters turned foul and the once-docile creatures inside metamorphosed into vicious, deadly predators. It is said that Naralex himself still resides somewhere inside the heart of the labyrinth, trapped beyond the edges of the Emerald Dream. Even his former acolytes have been corrupted by their master's waking nightmare - transformed into the wicked Druids of the Fang.",
+    DUNGEON_HISTORY_WAILING_CAVERNS = "Years ago, the famed druid Naralex and his followers descended into the shadowy Wailing Caverns, named for the mournful cry one hears when steam bursts from the cave system's fissures. Naralex planned to use the underground springs to restore lushness to the arid Barrens. But upon entering the Emerald Dream, he saw his vision of regrowth turn into a waking nightmare, one that has plagued the caverns ever since.",
 
     DUNGEON_BOSS_KRESH = "Kresh",
     DUNGEON_BOSS_LADY_ANACONDRA = "Lady Anacondra",
@@ -5229,5 +5229,4 @@ AdventureGuide.Locales.ObjectIDToName = {
     [136957] = "Bonfire",
     [152046] = "Stone Anvil",
     [153584] = "Campfire",
-    }
-    
+}

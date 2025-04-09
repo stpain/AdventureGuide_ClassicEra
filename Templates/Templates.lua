@@ -1,6 +1,6 @@
-local name, addon = ...;
+local name, AdventureGuide = ...;
 
-local Database = addon.Database;
+local Database = AdventureGuide.Database;
 
 AdventureButtonMixin = {}
 
@@ -111,7 +111,7 @@ function AdventureGuideLootListviewMixin:SetDataBinding(binding, height)
     end)
 
     self.addToList:SetScript("OnClick", function()
-        addon.api.addItemToList({
+        AdventureGuide.api.addItemToList({
             link = binding.link,
             count = 1,
         })
@@ -270,7 +270,7 @@ function AdventureGuideZoneQuestListviewMixin:SetDataBinding(binding, height)
 
 
     self:SetScript("OnEnter", function()
-        local questStarters, droppers = addon.api.getQuestStartInformation(binding)
+        local questStarters, droppers = AdventureGuide.api.getQuestStartInformation(binding)
 
         if questStarters or droppers then
             self.UpdateTooltip = function()
@@ -492,7 +492,7 @@ function AdventureGuideSimpleIconLabelMixin:SetDataBinding(binding, height)
     --                     end
     --                 end)
 
-    --                 addon:TriggerEvent("Profile_OnItemDataLoaded")
+    --                 AdventureGuide:TriggerEvent("Profile_OnItemDataLoaded")
     --             end)
     --         end
     --     end
@@ -666,7 +666,7 @@ end
 --     --                     end
 --     --                 end)
 
---     --                 addon:TriggerEvent("Profile_OnItemDataLoaded")
+--     --                 AdventureGuide:TriggerEvent("Profile_OnItemDataLoaded")
 --     --             end)
 --     --         end
 --     --     end
@@ -736,27 +736,51 @@ end
 AdventureGuideDatabaseQuestListviewItemMixin = {}
 
 function AdventureGuideDatabaseQuestListviewItemMixin:OnLoad()
-    for k, v in ipairs(self.fontStrings) do
-        v:SetHeight(22)
-    end
+
 end
 
 function AdventureGuideDatabaseQuestListviewItemMixin:SetDataBinding(binding, height)
-    
+    self:SetHeight(height)
     for k, v in pairs(binding) do
         if self[k] then
-            self[k]:SetText(v)
-            if k == "Start" then
-                if binding.StartType == "npc" then
-                    self[k]:SetText(addon.NpcData[binding.Start].name)
-                elseif binding.StartType == "object" then
-                    self[k]:SetText(addon.ObjectData[binding.Start].name)
+
+            if binding.Faction == "Alliance" then
+                local r, g, b = RARE_BLUE_COLOR:GetRGB()
+                self[k]:SetTextColor(r,g,b,1)
+            elseif binding.Faction == "Horde" then
+                local r, g, b = DULL_RED_FONT_COLOR:GetRGB()
+                self[k]:SetTextColor(r,g,b,1)
+            else
+                self[k]:SetTextColor(1,1,1,1)
+            end
+
+            if type(v) == "string" or type(v) == "number" then
+                self[k]:SetText(v)
+
+
+                if k == "Start" then
+                    if binding.StartType == "npc" and AdventureGuide.NpcData[binding.Start] then
+                        self[k]:SetText(AdventureGuide.NpcData[binding.Start].name or "-")
+                    elseif binding.StartType == "object" and AdventureGuide.ObjectData[binding.Start] then
+                        self[k]:SetText(AdventureGuide.ObjectData[binding.Start].name or "-")
+                    end
+                elseif k == "Ends" then
+                    if binding.EndsType == "npc" and AdventureGuide.NpcData[binding.Ends] then
+                        self[k]:SetText(AdventureGuide.NpcData[binding.Ends].name or "-")
+                    elseif binding.EndsType == "object" and AdventureGuide.ObjectData[binding.Ends] then
+                        self[k]:SetText(AdventureGuide.ObjectData[binding.Ends].name or "-")
+                    end
                 end
-            elseif k == "Ends" then
-                if binding.EndsType == "npc" then
-                    self[k]:SetText(addon.NpcData[binding.Ends].name)
-                elseif binding.EndsType == "object" then
-                    self[k]:SetText(addon.ObjectData[binding.Ends].name)
+            end
+
+            if type(v) == "table" then
+                if k == "Races" then
+                    local t = ""
+                    for _, raceID in ipairs(v) do
+                        local raceName = C_CreatureInfo.GetRaceInfo(raceID).raceName
+                        t = t..raceName..","
+                    end    
+                    self[k]:SetText(t)
                 end
             end
         end
@@ -868,7 +892,7 @@ function AdventureGuideObjectiveTrackerMixin:SetDataBinding(binding, height)
     --                     end
     --                 end)
 
-    --                 addon:TriggerEvent("Profile_OnItemDataLoaded")
+    --                 AdventureGuide:TriggerEvent("Profile_OnItemDataLoaded")
     --             end)
     --         end
     --     end
@@ -922,15 +946,62 @@ function AdventureGuideSmallItemButtonMixin:SetItemByID(itemID)
     end
     --print("SetItemByID", itemID)
     if type(itemID) == "number" then
-        local item = Item:CreateFromItemID(itemID)
-        if not item:IsItemEmpty() then
-            item:ContinueOnItemLoad(function()
-                self.Icon:SetTexture(item:GetItemIcon())
-                self.Name:SetText(item:GetItemLink())
-                self.itemID = itemID
-                self.link = item:GetItemLink()
-                self:Show()
-            end)
+        local _itemID, itemType, itemSubType, itemEquipLoc, icon, classID, subClassID = C_Item.GetItemInfoInstant(itemID)
+        if icon and classID then
+            local item = Item:CreateFromItemID(itemID)
+            if not item:IsItemEmpty() then
+                item:ContinueOnItemLoad(function()
+                    if item.itemID then
+                        self.icon:SetTexture(item:GetItemIcon())
+                        self.name:SetText(item:GetItemLink())
+                        self.itemID = itemID
+                        self.link = item:GetItemLink()
+                        self:Show()
+                    end
+                end)
+            end
         end
     end
+end
+
+
+
+
+
+
+
+
+
+
+
+AdventureGuideQuestLogTabButtonMixin = {}
+function AdventureGuideQuestLogTabButtonMixin:OnLoad()
+    self.background:SetTexCoord(55/512,102/512,204/512,262/512)
+    self.selected:SetTexCoord(2/512,50/512,204/512,262/512)
+    self.highlight:SetTexCoord(2/512,50/512,297/512,355/512)
+
+    if self.iconAtlas then
+        self.Icon:SetAtlas(self.iconAtlas)
+    end
+
+    if self.tooltipLabel then
+        self:SetScript("OnEnter", function()
+            GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT")
+            GameTooltip:SetText(self.tooltipLabel)
+            GameTooltip:Show()
+        end)
+        self:SetScript("OnLeave", function()
+            GameTooltip_SetDefaultAnchor(GameTooltip, UIParent)
+        end)
+    end
+end
+
+
+
+
+
+--NineSliceUtil.ApplyLayout(self.pvp.panel1, NineSliceLayout)
+AdventureGuidePvpPanelMixin = {}
+function AdventureGuidePvpPanelMixin:OnLoad()
+    NineSliceUtil.ApplyLayout(self, AdventureGuide.Constants.NineSlice.PvpPanel)
 end

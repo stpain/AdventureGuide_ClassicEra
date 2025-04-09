@@ -69,6 +69,8 @@ end
 
 function EventFrame:PLAYER_ENTERING_WORLD(isInitial, isReload)
 
+    --SavedVariables:Reset()
+
     local _name, realm = UnitName("player")
     if not realm then
         realm = GetNormalizedRealmName()

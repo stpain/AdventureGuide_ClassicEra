@@ -37,7 +37,7 @@ function AdventureGuideQuestLogTreeviewItemMixin:SetDataBinding(binding, height)
 
     self.questID = binding.questID
     self.isParent = binding.isParent
-
+    self.isSeries = binding.isSeries
     self.showTurnin:Hide()
 
     if binding.isParent == true then
@@ -95,41 +95,61 @@ StaticPopupDialogs.wowheadQuestDialog = {
     showAlert = 1,
 }
 
+
+function AdventureGuideQuestLogTreeviewItemMixin:UpdateLabels()
+    if self.questID then
+        local title = C_QuestLog.GetQuestInfo(self.questID)
+        if AdventureGuide.Api.Quest:IsQuestElite(self.questID) then
+            title = string.format("%s %s", CreateAtlasMarkup("nameplates-icon-elite-gold", 16, 16), title)
+        end
+
+        if self.isSeries then
+            self.label:SetText(string.format("%s %s", CreateAtlasMarkup("common-icon-rotateright", 12, 12), title))
+        else
+            self.label:SetText(title)
+        end
+
+        local completed = C_QuestLog.IsQuestFlaggedCompleted(self.questID)
+        if completed then
+            self.labelRight:SetText(CreateAtlasMarkup("common-icon-checkmark", 20, 20))
+        end
+
+        local readyForTurnIn = IsQuestComplete(self.questID)
+        if readyForTurnIn then
+
+        end
+
+        local isOnQuest = C_QuestLog.IsOnQuest(self.questID)
+        if isOnQuest then
+            self.labelRight:SetText(CreateAtlasMarkup("QuestNormal", 20, 20))
+            return
+        end
+    end
+end
+
 function AdventureGuideQuestLogTreeviewItemMixin:OnQuestsChanged()
     if self.questID then
 
         if not self.isParent then
             local title = C_QuestLog.GetQuestInfo(self.questID)
-
-            local completed = C_QuestLog.IsQuestFlaggedCompleted(self.questID)
-            if completed then
-                self.label:SetText(string.format("%s %s", CreateAtlasMarkup("common-icon-checkmark", 20, 20), title or "-"))
-                return
-            end
-
-            local readyForTurnIn = IsQuestComplete(self.questID)
-            if readyForTurnIn then
-                --self.label:SetText(string.format("%s %s", CreateAtlasMarkup("QuestTurnin", 20, 20), title))
-                self.label:SetText(title)
-
-                self.showTurnin:SetScript("OnClick", function()
-                    local mapID = QuestAPI:GetQuestTurnInLocation(self.questID)
-                    if mapID then
-                        AdventureGuide.CallbackRegistry:TriggerEvent("InternalMap_SetMapID", mapID, true)
+            if title == nil then
+                local ticker
+                ticker = C_Timer.NewTicker(0.1, function()
+                    if type(self.questID) == "number" then
+                        title = C_QuestLog.GetQuestInfo(self.questID)
+                        if type(title) == "string" then
+                            self:UpdateLabels()
+                            ticker:Cancel()
+                        end
+                    else
+                        ticker:Cancel()
                     end
                 end)
-                self.showTurnin:Show()
-                return
+            else
+                self:UpdateLabels()
             end
 
-            local isOnQuest = C_QuestLog.IsOnQuest(self.questID)
-            if isOnQuest then
-                self.label:SetText(string.format("%s %s", CreateAtlasMarkup("QuestNormal", 20, 20), title))
-                return
-            end
         end
-
-        self.label:SetText(C_QuestLog.GetQuestInfo(self.questID))
 
     end
 end
@@ -139,9 +159,12 @@ function AdventureGuideQuestLogTreeviewItemMixin:ResetDataBinding()
     self.parentRight:Hide()
     self.parentMiddle:Hide()
 
+    self.label:SetText("")
+    self.labelRight:SetText("")
+
     self.questID = nil;
     self.isParent = nil;
-
+    self.isSeries = nil;
     self.showTurnin:SetScript("OnClick", nil)
 end
 
@@ -153,27 +176,38 @@ function AdventureGuideQuestLogTreeviewItemMixin:OnEnter()
 
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
             GameTooltip:SetHyperlink(string.format("|Hquest:%d", self.questID))
-            GameTooltip:AddLine(" ")
 
             if UnitLevel("player") < data.RequiresLevel then
-                GameTooltip:AddLine(RED_FONT_COLOR:WrapTextInColorCode(string.format("Requires level %d", data.RequiresLevel)))
                 GameTooltip:AddLine(" ")
-            else
-
+                GameTooltip:AddLine(RED_FONT_COLOR:WrapTextInColorCode(string.format("Requires level %d", data.RequiresLevel)))
             end
 
             if data.RequiredQuests and (#data.RequiredQuests > 0) then
                 GameTooltip:AddLine(" ")
                 GameTooltip:AddLine("Requires")
                 for _, qid in ipairs(data.RequiredQuests) do
-                    GameTooltip:AddLine(C_QuestLog.GetQuestInfo(qid))
+                    GameTooltip:AddLine(C_QuestLog.GetQuestInfo(qid), 1,1,1)
                 end
             end
 
             if data.Copper > 0 then
-                GameTooltip:AddLine(" ")
-                GameTooltip:AddLine(MONEY)
-                GameTooltip:AddLine(C_CurrencyInfo.GetCoinTextureString(data.Copper, 11), 1,1,1)
+
+                if data.XP > 0 then
+                    GameTooltip:AddLine(" ")
+                    GameTooltip:AddDoubleLine(MONEY, XP)
+                    GameTooltip:AddDoubleLine(C_CurrencyInfo.GetCoinTextureString(data.Copper, 11), data.XP, 1,1,1, 1,1,1)
+                else
+                    GameTooltip:AddLine(" ")
+                    GameTooltip:AddLine(MONEY)
+                    GameTooltip:AddLine(C_CurrencyInfo.GetCoinTextureString(data.Copper, 11), 1,1,1)
+                end
+
+            else
+                if data.XP > 0 then
+                    GameTooltip:AddLine(" ")
+                    GameTooltip:AddLine(XP)
+                    GameTooltip:AddLine(data.XP, 1,1,1)
+                end
             end
 
             -- if data.Rewards and (#data.Rewards > 0) then
@@ -184,6 +218,17 @@ function AdventureGuideQuestLogTreeviewItemMixin:OnEnter()
             --         end)
             --     end
             -- end
+
+            if data.ReputationGains and next(data.ReputationGains) then
+                GameTooltip:AddLine(" ")
+                GameTooltip:AddLine(REPUTATION)
+                for factionID, gain in pairs(data.ReputationGains) do
+                    local factionName = GetFactionInfoByID(tonumber(factionID))
+                    if factionName then
+                        GameTooltip:AddDoubleLine(factionName, gain, 1,1,1)
+                    end
+                end
+            end
 
 
             GameTooltip:AddLine(" ")

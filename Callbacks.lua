@@ -7,8 +7,6 @@ AdventureGuide.CallbackRegistry:GenerateCallbackEvents({
 
     "CVarInfo_UiScaleChanged",
 
-    "Debug_AddMessage",
-
     "Player_OnLevelChanged",
 
     "InternalMap_OnZoneChanged",

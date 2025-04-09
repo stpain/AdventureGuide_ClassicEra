@@ -3,53 +3,31 @@
 local addonName, AdventureGuide = ...;
 
 local L = AdventureGuide.Locales;
-local QuestAPI = AdventureGuide.QuestAPI;
---local WorldMapAPI = AdventureGuide.WorldMapAPI;
---local MiniMapAPI = AdventureGuide.MiniMapAPI;
 local SavedVariables = AdventureGuide.SavedVariables;
-
-local contextMenuSeparator = {
-    hasArrow = false;
-    dist = 0;
-    text = "",
-    isTitle = true;
-    isUninteractable = true;
-    notCheckable = true;
-    iconOnly = true;
-    icon = "Interface\\Common\\UI-TooltipDivider-Transparent";
-    tCoordLeft = 0;
-    tCoordRight = 1;
-    tCoordTop = 0;
-    tCoordBottom = 1;
-    tSizeX = 0;
-    tSizeY = 8;
-    tFitDropDownSizeX = true;
-    iconInfo = {
-        tCoordLeft = 0,
-        tCoordRight = 1,
-        tCoordTop = 0,
-        tCoordBottom = 1,
-        tSizeX = 0,
-        tSizeY = 8,
-        tFitDropDownSizeX = true
-    }
-}
 
 AdventureGuideMixin = {}
 
 function AdventureGuideMixin:OnLoad()
     
+    --enable dragging actions
     self:RegisterForDrag("LeftButton")
 
-    self.portraitMask = self:CreateMaskTexture()
-    self.portraitMask:SetAllPoints(AdventureGuidePortrait)
-    self.portraitMask:SetTexture("Interface/CHARACTERFRAME/TempPortraitAlphaMask", "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
-    AdventureGuidePortrait:AddMaskTexture(self.portraitMask)
-    AdventureGuidePortrait:SetTexture("Interface/Addons/AdventureGuide_ClassicEra/Media/tbd-icon")
+    --setup the frame portrait image
+    -- self.portraitMask = self:CreateMaskTexture()
+    -- self.portraitMask:SetAllPoints(AdventureGuidePortrait)
+    -- self.portraitMask:SetTexture("Interface/CHARACTERFRAME/TempPortraitAlphaMask", "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+    -- AdventureGuidePortrait:AddMaskTexture(self.portraitMask)
+    --AdventureGuidePortrait:SetTexture("Interface/Addons/AdventureGuide_ClassicEra/Media/tbd-icon")
+    AdventureGuidePortrait:SetTexture(133742)
+    AdventureGuidePortrait:SetTexCoord(0.05, 0.95, 0.05, 0.95)
 
+    --load world map data providers and set hooks
     self:InitializeWorldMapFrame()
+
+    --setup dungeon tab
     self:InitializeDungeonTab()
 
+    --create nav bar home button
     local homeData = {
 		name = HOME,
         id = 1,
@@ -59,10 +37,9 @@ function AdventureGuideMixin:OnLoad()
 	}
     NavBar_Initialize(self.navBar, "NavButtonTemplate", homeData, self.navBar.home, self.navBar.overflow);
 
-    self.numTabs = #self.tabs
-    PanelTemplates_SetNumTabs(self, self.numTabs);
+    --setup tab buttons
+    PanelTemplates_SetNumTabs(self, #self.tabs);
     PanelTemplates_SetTab(self, 1);
-
     local tabMenuFuncs = {
         function()
             self:OpenTo("home")
@@ -70,7 +47,7 @@ function AdventureGuideMixin:OnLoad()
             PanelTemplates_SetTab(self, 1);
         end,
         function()
-            local currentMapID = self.worldMap:GetMapID()
+            local currentMapID = self.worldMap:GetMapID() or 947
             self:OpenTo("worldMap")
             self.worldMap:SetMapID(currentMapID)
             PanelTemplates_SetTab(self, 2);
@@ -79,13 +56,14 @@ function AdventureGuideMixin:OnLoad()
             self:CreateBaseNavMenu()
             self:AddNavButtonForDungeons()
             self:OpenTo("dungeons")
-            self.dungeons.lore:Hide()
+            self.dungeons.dungeonInfoPage:Hide()
             self.dungeons.maps:Hide()
             self.dungeons.dungeonSelectPage:Show()
             PanelTemplates_SetTab(self, 3);
         end,
         function()
             self:CreateBaseNavMenu()
+            self:AddNavButtonForPvp()
             self:OpenTo("pvp")
             PanelTemplates_SetTab(self, 4);
         end,
@@ -100,17 +78,7 @@ function AdventureGuideMixin:OnLoad()
         self.tabs[k]:SetScript("OnClick", func)
     end
 
-    -- self.profileButton:SetScript("OnClick", function(f, button)
-    --     if button == "RightButton" then
-    --         self:OpenTo("debug")
-    --     else
-    --         self:OpenTo("profile")
-    --         self:CreateBaseNavMenu()
-    --         self:AddNavButtonForProfile()
-    --     end
-    -- end)
-    self.profile.background:SetAtlas(string.format("legionmission-complete-background-%s", select(2, UnitClass("player")):lower()))
-
+    --setup the callbacks
     AdventureGuide.CallbackRegistry:RegisterCallback("InternalMap_OnZoneChanged", self.InternalMap_OnZoneChanged, self)
     AdventureGuide.CallbackRegistry:RegisterCallback("InternalMap_SetMapID", self.InternalMap_SetMapID, self)
     AdventureGuide.CallbackRegistry:RegisterCallback("Zone_OnChangedNewArea", self.Zone_OnChangedNewArea, self)
@@ -121,28 +89,20 @@ function AdventureGuideMixin:OnLoad()
     AdventureGuide.CallbackRegistry:RegisterCallback("Quest_OnQuestRemoved", self.Quest_OnQuestRemoved, self)
     --AdventureGuide.CallbackRegistry:RegisterCallback("Quest_OnQuestLogUpdated", self.OnQuestsChanged, self)
     AdventureGuide.CallbackRegistry:RegisterCallback("Quest_OnQuestCriteriaCompleted", self.Quest_OnQuestCriteriaCompleted, self)
-
-    AdventureGuide.CallbackRegistry:RegisterCallback("Debug_AddMessage", self.Debug_AddMessage, self)
     AdventureGuide.CallbackRegistry:RegisterCallback("CVarInfo_UiScaleChanged", self.CVarInfo_UiScaleChanged, self)
 
     --highlight the specific quest pins
     AdventureGuide.CallbackRegistry:RegisterCallback("Quest_OnQuestLogQuestEntered", self.Quest_OnQuestLogQuestEntered, self)
-
     AdventureGuide.CallbackRegistry:RegisterCallback("Player_OnLevelChanged", self.Player_OnLevelChanged, self)
-
     AdventureGuide.CallbackRegistry:RegisterCallback("NamePlate_OnUnitAdded", self.NamePlate_OnUnitAdded, self)
     AdventureGuide.CallbackRegistry:RegisterCallback("NamePlate_OnUnitRemoved", self.NamePlate_OnUnitRemoved, self)
-
     AdventureGuide.CallbackRegistry:RegisterCallback("QuestLog_OnQuestSelected", self.QuestLog_OnQuestSelected, self)
 
     self.home:SetScript("OnShow", function()
         PanelTemplates_SetTab(self, 1);
     end)
 
-    self.questsForCurrentMap = {}
-
     self.worldMap:SetScript("OnShow", function()
-        DoEmote("READ", nil, true);
         self.questLog:Show()
         local mapID = self.worldMap:GetMapID()
         if mapID then
@@ -152,12 +112,6 @@ function AdventureGuideMixin:OnLoad()
     self.worldMap:SetScript("OnHide", function()
         self.questLog:Hide()
     end)
-
-    C_VignetteInfo = {
-        GetVignettes = function()
-            return {}
-        end,
-    }
 
     self.suggestedZones = {}
     self.suggestedZonesIndex = 1;
@@ -207,13 +161,190 @@ function AdventureGuideMixin:OnLoad()
     end)
 
     self.questLog.rewardItemButtons = CreateFramePool("Button", self.questLog, "AdventureGuideSmallItemButtonTemplate", function(_, button)
-        button.Icon:SetTexture(nil)
-        button.Name:SetText("")
+        button.icon:SetTexture(nil)
+        button.name:SetText("")
         button.itemID = nil
         button.link = nil
         button:ClearAllPoints()
         button:Hide()
     end)
+end
+
+
+function AdventureGuideMixin:InitializeWorldMapFrame()
+    self.worldMap:SetShouldZoomInOnClick(true);
+    self.worldMap:SetShouldPanOnClick(true);
+    self.worldMap:SetShouldNavigateOnClick(true);
+    self.worldMap:AddDataProvider(CreateFromMixins(MapHighlightDataProviderMixin))
+    self.worldMap:AddDataProvider(CreateFromMixins(MapExplorationDataProviderMixin));
+
+        --self.worldMap:AddDataProvider(CreateFromMixins(VignetteDataProviderMixin));
+        --self.worldMap:AddDataProvider(CreateFromMixins(FlightPointDataProviderMixin));
+        --self.worldMap:AddDataProvider(CreateFromMixins(GossipDataProviderMixin));
+        --self.worldMap:AddDataProvider(CreateFromMixins(QuestBlobDataProviderMixin));
+        --self.worldMap:AddDataProvider(CreateFromMixins(MapLinkDataProviderMixin));
+        --self.worldMap:AddDataProvider(CreateFromMixins(QuestDataProviderMixin));
+
+    local groupMembersDataProvider = CreateFromMixins(GroupMembersDataProviderMixin);
+    self.worldMap:AddDataProvider(groupMembersDataProvider);
+
+
+    self.worldMap:SetMapID(947)
+
+    hooksecurefunc(self.worldMap, "SetMapID", function(f, id)
+        --print("SetMapID hook", id)
+        AdventureGuide.CallbackRegistry:TriggerEvent("InternalMap_OnZoneChanged", id) --kalimdor 1414 ek 1415
+        
+        --this seems to fix an issue with map not shwoing
+        self.worldMap:Raise()
+
+        -- for k, v in pairs(self.worldMap.ScrollContainer.Child) do
+        --     if k == "TiledBackground" then
+        --         DevTools_Dump({v})
+        --     end
+        -- end
+    end)
+
+    AdventureGuide.Api.WorldMap:Init(self.worldMap)
+
+    local uiScale = C_CVar.GetCVar("uiScale")
+    self:CVarInfo_UiScaleChanged(uiScale)
+end
+
+
+function AdventureGuideMixin:InitializeDungeonTab()
+    
+    self.dungeons.maps.previous:SetNormalTexture(130869)
+    self.dungeons.maps.previous:SetPushedTexture(130868)
+    self.dungeons.maps.previous:SetScript("OnClick", function()
+        if self.selectedInstance then
+            self.selectedInstanceMapID = self.selectedInstanceMapID - 1;
+            if self.selectedInstanceMapID < 1 then
+                self.selectedInstanceMapID = 1;
+            end
+            self.dungeons.maps.background:SetTexture(self.selectedInstance.maps[self.selectedInstanceMapID].mapFile)
+        end
+    end)
+    self.dungeons.maps.next:SetNormalTexture(130866)
+    self.dungeons.maps.next:SetPushedTexture(130865)
+    self.dungeons.maps.next:SetScript("OnClick", function()
+        if self.selectedInstance then
+            self.selectedInstanceMapID = self.selectedInstanceMapID + 1;
+            if self.selectedInstanceMapID > #self.selectedInstance.maps then
+                self.selectedInstanceMapID = #self.selectedInstance.maps;
+            end
+            self.dungeons.maps.background:SetTexture(self.selectedInstance.maps[self.selectedInstanceMapID].mapFile)
+        end
+    end)
+
+    --self.dungeons.dungeonInfoPage.background:SetTexture(521750)
+    self.dungeons.dungeonInfoPage.backgroundLeft:SetWidth(self.dungeons:GetWidth() / 2)
+    self.dungeons.dungeonInfoPage.backgroundRight:SetWidth(self.dungeons:GetWidth() / 2)
+    local r, g, b, a = CreateColor(0.002, 0.002, 0.001):GetRGBA()
+    self.dungeons.dungeonInfoPage.lore.history:GetFontString():SetTextColor(r, g, b, a)
+
+    --local top, bottom, left, right, vertGap
+    self.dungeons.dungeonInfoPage.encountersList.scrollView:SetPadding(1,1,1,1,20);
+
+
+    --[[
+    
+        dungeon gridview
+    
+    ]]
+
+    local scrollBox = CreateFrame("Frame", "AdventureGuideDungeonGridScrollBox", self.dungeons.dungeonSelectPage, "WowScrollBoxList")
+    scrollBox:SetPoint("TOPLEFT", self.dungeons.dungeonSelectPage, "TOPLEFT", 0, 0)
+    scrollBox:SetPoint("BOTTOMRIGHT", self.dungeons.dungeonSelectPage, "BOTTOMRIGHT", 0, 0)
+
+    local scrollBar = CreateFrame("EventFrame", "AdventureGuideDungeonGridScrollBar", self.dungeons.dungeonSelectPage, "MinimalScrollBar")
+    scrollBar:SetPoint("TOPRIGHT", -8, -4)
+    scrollBar:SetPoint("BOTTOMRIGHT", -8, 4)
+
+    local dungeonDataProvider = CreateDataProvider();
+    local dungeonScrollView = CreateScrollBoxListGridView(5, 0, 0, 0, 0, 5, 5)
+    dungeonScrollView:SetDataProvider(dungeonDataProvider);
+
+    local function OnElementInitialize(element, elementData, isNew)
+        element:SetDataBinding(elementData)
+        element:SetScript("OnClick", function()
+            self:Dungeon_LoadInstance(elementData)
+            self:AddNavMenuForDungeon(elementData)
+        end)
+    end
+
+    local function OnElementReset(element)
+        element:ResetDataBinding()
+    end
+
+    dungeonScrollView:SetElementInitializer("AdventureGuideDungeonSelectButtonTemplate", GenerateClosure(OnElementInitialize));
+    dungeonScrollView:SetElementResetter(GenerateClosure(OnElementReset));
+
+    dungeonScrollView:SetPadding(1, 1, 1, 1, 1);
+
+    ScrollUtil.InitScrollBoxListWithScrollBar(scrollBox, scrollBar, dungeonScrollView);
+
+    local anchorsWithBar = {
+        CreateAnchor("TOPLEFT", self.dungeons.dungeonSelectPage, "TOPLEFT", 1, -1),
+        CreateAnchor("BOTTOMRIGHT", scrollBar, "BOTTOMLEFT", -3, 1),
+    };
+    local anchorsWithoutBar = {
+        CreateAnchor("TOPLEFT", self.dungeons.dungeonSelectPage, "TOPLEFT", 1, -1),
+        CreateAnchor("BOTTOMRIGHT", self.dungeons.dungeonSelectPage, "BOTTOMRIGHT", -1, 1),
+    };
+    ScrollUtil.AddManagedScrollBarVisibilityBehavior(scrollBox, scrollBar, anchorsWithBar, anchorsWithoutBar);
+
+    dungeonDataProvider:InsertTable(AdventureGuide.Dungeons)
+
+
+    self.dungeons.loreTab:SetScript("OnClick", function(tab)
+        self:ToggleDungeonLoreMap("lore")
+        self:Dungeon_ToggleTabSelected(tab)
+    end)
+    self.dungeons.abilityTab:SetScript("OnClick", function(tab)
+        self:ToggleDungeonLoreMap("ability")
+        self:Dungeon_ToggleTabSelected(tab)
+    end)
+    self.dungeons.lootTab:SetScript("OnClick", function(tab)
+        self:ToggleDungeonLoreMap("loot")
+        self:Dungeon_ToggleTabSelected(tab)
+    end)
+
+    self.dungeons.dungeonInfoPage:HookScript("OnHide", function()
+        self.dungeons.loreTab:Hide()
+        self.dungeons.lootTab:Hide()
+        self.dungeons.abilityTab:Hide()
+    end)
+
+end
+
+function AdventureGuideMixin:Dungeon_ToggleTabSelected(tab)
+    self.dungeons.loreTab.selected:Hide()
+    self.dungeons.lootTab.selected:Hide()
+    self.dungeons.abilityTab.selected:Hide()
+    tab.selected:Show()
+end
+
+
+function AdventureGuideMixin:InitializePvpTab()
+
+    -- self.pvp.background:SetTexture([[Interface\AddOns\AdventureGuide_ClassicEra\Media\dungeonjournaltierbackgrounds1.blp]])
+    -- self.pvp.background:SetTexCoord(0.000097, 0.768555, 0.417969, 0.83308)
+
+    local faction = AdventureGuide.ActiveProfile:GetFaction()
+
+    local width, height = self.pvp:GetSize()
+    local panelWidth = (width - 120) / 3
+    local panelHeight = height - 60
+
+    for i, battleground in ipairs(AdventureGuide.Constants.Battlegrounds.Classic) do
+        self.pvp["panel"..i]:SetSize(panelWidth, panelHeight - 50)
+        self.pvp["panel"..i].artwork:SetSize(panelWidth, panelHeight * 0.7)
+        self.pvp["panel"..i].artwork:SetTexture(battleground.panelArtworkFile:format(faction:lower()))
+        self.pvp["panel"..i]:ClearAllPoints()
+        self.pvp["panel"..i]:SetPoint("LEFT", (i * 30) + ((i - 1) * panelWidth), -30)
+        self.pvp["panel"..i].header:SetText(battleground.name)
+    end
 end
 
 local mapDefaultPositions = {
@@ -277,68 +408,74 @@ function AdventureGuideMixin:CVarInfo_UiScaleChanged(val)
     --print(string.format("current scale %f\nwidth %d height %d\nsize x %s y %s\nmap size x %s y %s", currentScale, width, height, x, y, mx, my))
 end
 
-local debug = false
-function AdventureGuideMixin:Debug_AddMessage(msg)
-    if debug then
-        self.debug.listview.DataProvider:Insert({
-            text = msg
-        })
-    end
-end
 
-local function createMenuEntry(label, func)
-    return {
-        text = label,
-        func = func,
-    }
-end
 
+--[[
+
+    DATABASE TAB
+    ===================================================================
+
+]]
 
 function AdventureGuideMixin:SetupDatabaseInterface()
+    
+    local function loadResults(results)
+        table.sort(results, function(a, b)
+            return tonumber(a.QuestID) < tonumber(b.QuestID)
+        end)
+        self.database.results.scrollView:SetDataProvider(CreateDataProvider(results))
+    end
+
     local quests = AdventureGuide.Api.Quest:GetAllQuests()
-    table.sort(quests, function(a, b)
-        return tonumber(a.QuestID) < tonumber(b.QuestID)
-    end)
-    self.database.results.DataProvider:InsertTable(quests)
-end
+    loadResults(quests)
 
-
-function AdventureGuideMixin:CreateContextMenu(parent, menu)
-    MenuUtil.CreateContextMenu(parent, function(parent, rootDescription)
-
-        for _, element in ipairs(menu) do
-            if element.isTitle then
-                rootDescription:CreateTitle(element.text)
-
-            elseif element.isSeparater then
-                rootDescription:CreateSpacer()
-
-            elseif element.isDivider then
-                rootDescription:CreateDivider()
-
-            else
-                rootDescription:CreateButton(element.text, element.func)
+    self.database.searchInputBox:SetScript("OnEnterPressed", function(eb)
+        local input = eb:GetText()
+        if input:find("=", nil, true) then
+            local col, term = strsplit("=", input)
+            if col == "cat" then
+                local results = AdventureGuide.Api.Quest:GetQuestsByKeyValue("Category", term, true)
+                loadResults(results)
+            end
+            if col == "subcat" then
+                local results = AdventureGuide.Api.Quest:GetQuestsByKeyValue("SubCategory", term, true)
+                loadResults(results)
+            end
+            if col == "id" then
+                if tonumber(term) then
+                    local results = AdventureGuide.Api.Quest:GetQuestsByKeyValue("QuestID", tonumber(term))
+                    loadResults(results)
+                end
             end
         end
     end)
 end
 
+
 function AdventureGuideMixin:OpenMiniMapMenu(parent)
 
     local currentMinimapMapID = C_Map.GetBestMapForUnit("player")
 
+    --kinda meh, add to api?
+    local function createMenuEntry(label, func)
+        return {
+            text = label,
+            func = func,
+        }
+    end
+
     local menu = {}
     table.insert(menu, createMenuEntry("Herbs", function()
-        AdventureGuide.Api.MiniMap:AddGatheringNodePinsForMapID(currentMinimapMapID, "herbs")
-        AdventureGuide.Api.WorldMap:AddGatheringNodePinsForMapID(self.worldMap:GetMapID(), "herbs")
+        AdventureGuide.Api.MiniMap:AddGatheringNodePinsForMapID(currentMinimapMapID, "Herb")
+        AdventureGuide.Api.WorldMap:AddGatheringNodePinsForMapID(self.worldMap:GetMapID(), "Herb")
     end))
     table.insert(menu, createMenuEntry("Mining", function()
-        AdventureGuide.Api.MiniMap:AddGatheringNodePinsForMapID(currentMinimapMapID, "mining")
-        AdventureGuide.Api.WorldMap:AddGatheringNodePinsForMapID(self.worldMap:GetMapID(), "mining")
+        AdventureGuide.Api.MiniMap:AddGatheringNodePinsForMapID(currentMinimapMapID, "Ore")
+        AdventureGuide.Api.WorldMap:AddGatheringNodePinsForMapID(self.worldMap:GetMapID(), "Ore")
     end))
     table.insert(menu, createMenuEntry("Clear Nodes", function()
-        AdventureGuide.Api.MiniMap:ReleaseGatheringNodesForMapID(currentMinimapMapID, "herbs")
-        AdventureGuide.Api.MiniMap:ReleaseGatheringNodesForMapID(currentMinimapMapID, "mining")
+        AdventureGuide.Api.MiniMap:ReleaseGatheringNodesForMapID(currentMinimapMapID, "Herb")
+        AdventureGuide.Api.MiniMap:ReleaseGatheringNodesForMapID(currentMinimapMapID, "Ore")
     end))
     table.insert(menu, createMenuEntry("Load Virag", function()
         AdventureGuide.Api.MiniMap:LoadActivePinsToVirag()
@@ -347,7 +484,7 @@ function AdventureGuideMixin:OpenMiniMapMenu(parent)
         ReloadUI()
     end))
 
-    self:CreateContextMenu(parent, menu)
+    AdventureGuide.Api.CreateContextMenu(parent, menu)
 end
 
 function AdventureGuideMixin:SavedVariables_OnInitialized()
@@ -392,7 +529,9 @@ function AdventureGuideMixin:SavedVariables_OnInitialized()
 
         self:LoadMiniMapQuestDataForMapID(mapID)
 
-        self:PrepareProfilePanel()
+        self:InitializeProfilePanel()
+
+        self:InitializePvpTab()
 
     end)
 
@@ -415,7 +554,15 @@ function AdventureGuideMixin:PrepareProfile(nameRealm, data)
     return AdventureGuide.Profiles[nameRealm]
 end
 
-function AdventureGuideMixin:PrepareProfilePanel()
+
+
+--[[
+
+    PROFILE TAB
+    ===================================================================
+
+]]
+function AdventureGuideMixin:InitializeProfilePanel()
 
     self.profile:SetScript("OnShow", function()
 
@@ -433,6 +580,8 @@ function AdventureGuideMixin:PrepareProfilePanel()
                     local profile = self:PrepareProfile(nameRealm, data)
                     self:Profile_LoadCharacter(profile)
                     self:Profile_LoadQuestLog(profile)
+                    --self:Profile_LoadQuestHistory(profile)
+                    self:Profile_LoadClassQuests(profile)
                 end,
             })
             i = i + 1
@@ -453,9 +602,13 @@ function AdventureGuideMixin:PrepareProfilePanel()
         NavBar_AddButton(self.navBar, navButton);
 
 
+        self:Profile_LoadCharacter(AdventureGuide.ActiveProfile)
         self:Profile_LoadQuestLog(AdventureGuide.ActiveProfile)
+        --self:Profile_LoadQuestHistory(AdventureGuide.ActiveProfile)
+        self:Profile_LoadClassQuests(AdventureGuide.ActiveProfile)
     end)
 
+    SetPortraitTexture(_G["AdventureGuideHomeProfilePortrait"], "player")
     self.home.profile:SetScript("OnEvent", function()
         SetPortraitTexture(_G["AdventureGuideHomeProfilePortrait"], "player")
     end)
@@ -467,7 +620,82 @@ function AdventureGuideMixin:PrepareProfilePanel()
 end
 
 function AdventureGuideMixin:Profile_LoadCharacter(profile)
-    self.profile.background:SetAtlas(string.format("legionmission-complete-background-%s", select(2, GetClassInfo(profile.data.classID)):lower()))
+
+    local classLoc, classEng, classID = GetClassInfo(profile.data.classID)
+    self.profile.background:SetAtlas(string.format("legionmission-complete-background-%s", classEng:lower()))
+
+    --self.profile.classHeaderBar:SetAtlas(string.format("Artifacts-%s-Header", classEng))
+    self.profile.classIcon:SetAtlas(string.format("classicon-%s", classEng:lower()))
+end
+
+function AdventureGuideMixin:Profile_LoadClassQuests(profile)
+
+    local classLoc, classEng, classID = GetClassInfo(profile.data.classID)
+    --local raceName = C_CreatureInfo.GetRaceInfo(profile.data.raceID).raceName
+
+    local classQuests = {}
+    local quests = AdventureGuide.Api.Quest:GetAllQuestsBySubCategory("classes", classEng:lower())
+    for _, info in ipairs(quests) do
+        if AdventureGuide.Api.Quest:CanRaceDoQuest(profile.data.raceID, info.QuestID) and AdventureGuide.Api.Quest:CanFactionDoQuest(profile.data.faction, info.QuestID) then
+            table.insert(classQuests, {
+                RequiresLevel = info.RequiresLevel,
+
+                link = string.format("|Hquest:%s", info.QuestID),
+
+                init = function(f)
+                    f.label:SetText(info.Title)
+                    if profile.data.questsCompleted[info.QuestID] and profile.data.questsCompleted[info.QuestID].turnedIn then
+
+                        if profile.data.questsCompleted[info.QuestID].authentication == "blizzard-api" then
+                            f.labelRight:SetText(CreateAtlasMarkup("common-icon-checkmark", 20, 20))
+
+                        elseif profile.data.questsCompleted[info.QuestID].authentication == "addon" then
+                            f.labelRight:SetText(CreateAtlasMarkup("common-icon-checkmark-yellow", 20, 20))
+                        end
+                    else
+                        f.labelRight:SetText("")
+                    end
+                end,
+            })
+        end
+    end
+
+    table.sort(classQuests, function(a, b)
+        return a.RequiresLevel < b.RequiresLevel
+    end)
+
+    self.profile.questHistory.scrollView:SetDataProvider(CreateDataProvider(classQuests))
+
+end
+
+function AdventureGuideMixin:Profile_LoadQuestHistory(profile)
+    local history = profile:GetQuestHistory()
+
+    local t = {}
+    for questID, info in pairs(history) do
+        if info.turnedIn then
+            table.insert(t, {
+                --accepted = info.accepted,
+                turnedIn = info.turnedIn,
+
+                init = function(f)
+                    f.label:SetText(C_QuestLog.GetQuestInfo(questID))
+
+                    f.labelRight:SetText(date("%Y-%m-%d %H:%M:%S", info.turnedIn))
+                end,
+            })
+        end
+    end
+
+    table.sort(t, function(a, b)
+        if type(a.turnedIn) == "number" and type(b.turnedIn) == "number" then
+            return a.turnedIn < b.turnedIn
+        end
+    end)
+
+    self.profile.questHistory.scrollView:SetDataProvider(CreateDataProvider(t))
+
+
 end
 
 function AdventureGuideMixin:Profile_LoadQuestLog(profile)
@@ -516,100 +744,9 @@ function AdventureGuideMixin:Profile_LoadQuestLog(profile)
 end
 
 
-function AdventureGuideMixin:InitializeWorldMapFrame()
-    self.worldMap:SetShouldZoomInOnClick(true);
-    self.worldMap:SetShouldPanOnClick(true);
-    self.worldMap:SetShouldNavigateOnClick(true);
-    self.worldMap:AddDataProvider(CreateFromMixins(MapHighlightDataProviderMixin))
-    self.worldMap:AddDataProvider(CreateFromMixins(MapExplorationDataProviderMixin));
-        --self.worldMap:AddDataProvider(CreateFromMixins(VignetteDataProviderMixin));
-        --self.worldMap:AddDataProvider(CreateFromMixins(FlightPointDataProviderMixin));
-        --self.worldMap:AddDataProvider(CreateFromMixins(GossipDataProviderMixin));
-        --self.worldMap:AddDataProvider(CreateFromMixins(QuestBlobDataProviderMixin));
-        --self.worldMap:AddDataProvider(CreateFromMixins(MapLinkDataProviderMixin));
-        --self.worldMap:AddDataProvider(CreateFromMixins(QuestDataProviderMixin));
-
-    local groupMembersDataProvider = CreateFromMixins(GroupMembersDataProviderMixin);
-    self.worldMap:AddDataProvider(groupMembersDataProvider);
-
-
-    self.worldMap:SetMapID(947)
-
-    hooksecurefunc(self.worldMap, "SetMapID", function(f, id)
-        --print("SetMapID hook", id)
-        AdventureGuide.CallbackRegistry:TriggerEvent("InternalMap_OnZoneChanged", id) --kalimdor 1414 ek 1415
-    end)
-
-    AdventureGuide.Api.WorldMap:Init(self.worldMap)
-
-    local uiScale = C_CVar.GetCVar("uiScale")
-    self:CVarInfo_UiScaleChanged(uiScale)
-end
-
-
-function AdventureGuideMixin:InitializeDungeonTab()
-    
-    self.dungeons.maps.previous:SetNormalTexture(130869)
-    self.dungeons.maps.previous:SetPushedTexture(130868)
-    self.dungeons.maps.previous:SetScript("OnClick", function()
-        if self.selectedInstance then
-            self.selectedInstanceMapID = self.selectedInstanceMapID - 1;
-            if self.selectedInstanceMapID < 1 then
-                self.selectedInstanceMapID = 1;
-            end
-            self.dungeons.maps.background:SetTexture(self.selectedInstance.maps[self.selectedInstanceMapID].mapFile)
-        end
-    end)
-    self.dungeons.maps.next:SetNormalTexture(130866)
-    self.dungeons.maps.next:SetPushedTexture(130865)
-    self.dungeons.maps.next:SetScript("OnClick", function()
-        if self.selectedInstance then
-            self.selectedInstanceMapID = self.selectedInstanceMapID + 1;
-            if self.selectedInstanceMapID > #self.selectedInstance.maps then
-                self.selectedInstanceMapID = #self.selectedInstance.maps;
-            end
-            self.dungeons.maps.background:SetTexture(self.selectedInstance.maps[self.selectedInstanceMapID].mapFile)
-        end
-    end)
-
-    --self.dungeons.lore.background:SetTexture(521750)
-    self.dungeons.lore.backgroundLeft:SetWidth(self.dungeons:GetWidth() / 2)
-    self.dungeons.lore.backgroundRight:SetWidth(self.dungeons:GetWidth() / 2)
-    local r, g, b, a = CreateColor(0.002, 0.002, 0.001):GetRGBA()
-    self.dungeons.lore.history:GetFontString():SetTextColor(r, g, b, a)
-
-    local xOffset, yOffset = 10, -20
-    local rowLimit, rowCount, numRows = 5, 1, 1;
-    local width, height = 200, 120;
-    for k, dungeonInfo in ipairs(AdventureGuide.Dungeons) do
-        local dungeonButton = CreateFrame("Button", nil, self.dungeons.dungeonSelectPage, "AdventureGuideDungeonSelectButtonTemplate")
-        dungeonButton:SetSize(width, height)
-
-        dungeonButton:SetPoint("TOPLEFT", xOffset + ((rowCount-1) * width), yOffset + ((numRows - 1) * -height))
-
-        dungeonButton:SetScript("OnClick", function()
-            self:LoadInstance(dungeonInfo)
-            self:AddNavMenuForDungeon(dungeonInfo)
-        end)
-
-        if rowCount < rowLimit then
-            rowCount = rowCount + 1;
-        else
-            rowCount = 1;
-            numRows = numRows + 1;
-        end
-
-
-        dungeonButton:SetDungeon(dungeonInfo)
-    end
-
-
-
-end
-
 function AdventureGuideMixin:GetInstancesForZone(mapID)
     local t = {}
-    for k, v in ipairs(AdventureGuide.Instances) do
+    for k, v in ipairs(AdventureGuide.Instances.Classic) do
         if v.zoneID == mapID then
             local dungeonInfo = C_LFGInfo.GetDungeonInfo(v.instanceID)
             table.insert(t, {
@@ -622,126 +759,197 @@ function AdventureGuideMixin:GetInstancesForZone(mapID)
 end
 
 function AdventureGuideMixin:ToggleDungeonLoreMap(shown)
-    self.dungeons.lore:Hide()
+    --self.dungeons.dungeonInfoPage:Hide()
+    self.dungeons.dungeonInfoPage.lore:Hide()
+    self.dungeons.dungeonInfoPage.encounterDetails.artwork:Hide()
+    self.dungeons.dungeonInfoPage.encounterDetails.header:Hide()
+    self.dungeons.dungeonInfoPage.encounterDetails.abilitiesListview:Hide()
+    self.dungeons.dungeonInfoPage.encounterDetails.lootListview:Hide()
     self.dungeons.maps:Hide()
-    self.dungeons[shown]:Show()
+
+    if shown == "maps" then
+        self.dungeons.maps:Show()
+        self.dungeons.dungeonInfoPage.encountersList:Hide()
+    else
+        self.dungeons.dungeonInfoPage.encountersList:Show()
+    end
+
+    if shown == "lore" then
+        self.dungeons.dungeonInfoPage:Show()
+        self.dungeons.dungeonInfoPage.lore:Show()
+    end
+
+    if shown == "ability" then
+        self.dungeons.dungeonInfoPage.encounterDetails.header:Show()
+        self.dungeons.dungeonInfoPage.encounterDetails.artwork:Show()
+        self.dungeons.dungeonInfoPage.encounterDetails:Show()
+        self.dungeons.dungeonInfoPage.encounterDetails.abilitiesListview:Show()
+    end
+
+    if shown == "loot" then
+        self.dungeons.dungeonInfoPage.encounterDetails.header:Show()
+        self.dungeons.dungeonInfoPage.encounterDetails.artwork:Show()
+        self.dungeons.dungeonInfoPage.encounterDetails:Show()
+        self.dungeons.dungeonInfoPage.encounterDetails.lootListview:Show()
+    end
 end
 
-function AdventureGuideMixin:LoadInstance(instance)
+function AdventureGuideMixin:Dungeon_LoadEncounter(encounter)
+
+    self:ToggleDungeonLoreMap("ability")
+    self:Dungeon_ToggleTabSelected(self.dungeons.abilityTab)
+
+    local abilitiesDataProvider = CreateTreeDataProvider({})
+    self.dungeons.dungeonInfoPage.encounterDetails.abilitiesListview.scrollView:SetDataProvider(abilitiesDataProvider)
+    if encounter.abilities and (#encounter.abilities > 0) then
+
+        --self.dungeons.abilityTab:Show()
+        self.dungeons.dungeonInfoPage.encounterDetails.abilitiesListview:Show()
+
+        local nodes = {}
+        for k, spellId in ipairs(encounter.abilities) do
+
+            local spell = Spell:CreateFromSpellID(spellId)
+            if not spell:IsSpellEmpty() then
+                spell:ContinueOnSpellLoad(function()
+
+                    nodes[spellId] = abilitiesDataProvider:Insert({
+                        height = 28,
+                        template = "TBDSimpleIconLabelFrame",
+                        initializer = function(frame)
+                            frame:SetDataBinding({
+                                label = spell:GetSpellName(),
+                                fontObject = GameFontNormal_NoShadow,
+                                icon = C_Spell.GetSpellTexture(spellId),
+
+                                init = function(f)
+                                    f.label:SetTextColor(0.1,0.1,0.1)
+                                    f.highlight:SetTexture(nil)
+                                end,
+                            }, 28)
+                        end,
+                    })
+
+                    nodes[spellId]:Insert({
+                        height = 48,
+                        template = "TBDSimpleIconLabelFrame",
+                        initializer = function(f)
+                            f.label:SetTextColor(0.1,0.1,0.1)
+                            f.label:SetWidth(380)
+                            f:SetDataBinding({
+                                label = spell:GetSpellDescription(),
+                                init = function()
+                                    f.highlight:SetTexture(nil)
+                                end,
+                            }, 48)
+                        end,
+                    })
+                    
+                end)
+            end
+        end
+    end
+
+
+    if encounter.loot and (#encounter.loot > 0) then
+        local dp = CreateDataProvider({})
+        self.dungeons.dungeonInfoPage.encounterDetails.lootListview.scrollView:SetDataProvider(dp)
+        --self.dungeons.lootTab:Show()
+
+        for _, id in ipairs(encounter.loot) do
+            local item = Item:CreateFromItemID(id)
+            local _, classString, subClassString, equipLocation, _, classID = C_Item.GetItemInfoInstant(id)
+            if not item:IsItemEmpty() then
+                item:ContinueOnItemLoad(function()
+                    dp:Insert({
+                        icon = item:GetItemIcon(),
+                        link = item:GetItemLink(),
+                        colour = item:GetItemQualityColor(),
+                        class = (classID == 4) and _G[equipLocation] or classString,
+                        subClass = subClassString,
+                        quality = item:GetItemQuality(),
+
+                        onEnter = function(element)
+                            GameTooltip:SetOwner(element, "ANCHOR_RIGHT")
+                            GameTooltip:SetHyperlink(item:GetItemLink())
+                            GameTooltip:Show()
+                        end
+                    })
+                end)
+            end
+        end
+    end
+
+
+                            -- local spellTooltipLines = AdventureGuide.Api.ScanTooltipbyLink(string.format("|Hspell:%d", spellId))
+                            -- spellTooltipLines = AdventureGuide.Api.ScanTooltipbyLink(string.format("|Hspell:%d", spellId))
+                            -- if #spellTooltipLines > 1 then
+                            --     for i = 2, #spellTooltipLines do
+                            --         nodes[spellId]:Insert({
+                            --             height = (i == #spellTooltipLines) and 48 or 24,
+                            --             template = "TBDSimpleIconLabelFrame",
+                            --             initializer = function(l)
+                            --                 l.label:SetText(spellTooltipLines[i])
+                            --             end,
+                            --         })
+                            --     end
+                            -- end
+
+
+end
+
+function AdventureGuideMixin:Dungeon_LoadInstance(instance)
 
     if not instance then
         return
     end
 
-    --self:CreateBaseNavMenu()
 
+    --disable ability tab button
 
+    self.dungeons.dungeonInfoPage:Show()
+
+    self.dungeons.abilityTab:Show()
+    self.dungeons.lootTab:Show()
+    self.dungeons.loreTab:Show()
+    
 
     self.dungeons.dungeonSelectPage:Hide()
-
-    --self:CreateBaseNavMenu()
-
     self.selectedInstance = instance
     self.selectedInstanceMapID = 1;
 
-    self:ToggleDungeonLoreMap("lore")
-    self.dungeons.lore.artwork:Show()
-    self.dungeons.lore.history:Show()
-    self.dungeons.lore.encounterDetails:Hide()
+    self.dungeons.dungeonInfoPage.lore:Show()
+    self.dungeons.dungeonInfoPage.encounterDetails:Hide()
 
-    self.dungeons.lore.artwork:SetTexture(instance.loreFileID)
-    --self.dungeons.lore.artwork:SetTexture(instance.background)
-    self.dungeons.lore.history:SetText(instance.history)
+    self.dungeons.dungeonInfoPage.lore.artwork:SetTexture(instance.loreFileID)
+    self.dungeons.dungeonInfoPage.lore.history:SetText(instance.history)
     self.dungeons.maps.background:SetTexture(instance.maps[self.selectedInstanceMapID].mapFile)
 
-    local loot = {}
+    self.dungeons.dungeonInfoPage.encounterDetails.abilitiesListview:Hide()
+    self.dungeons.dungeonInfoPage.encounterDetails.lootListview:Hide()
 
-    --this means only using ItemMixin once
-    local updateLoot = function()
-        table.sort(loot, function(a, b)
-            if a.class == b.class then
-                return a.subClass < b.subClass;
-            else
-                return a.class < b.class;
-            end
-        end)
-    end
 
     local encounters = {}
     for k, boss in ipairs(instance.bosses) do
+
+
         table.insert(encounters, {
             name = boss.name,
 
             onClick = function()
 
-                self.dungeons.lore.artwork:Hide()
-                self.dungeons.lore.history:Hide()
-                self.dungeons.lore.encounterDetails:Show()
+                self.dungeons.dungeonInfoPage.lore:Hide()
+                self.dungeons.dungeonInfoPage.encounterDetails:Show()
+                self.dungeons.dungeonInfoPage.encounterDetails.abilitiesListview:Show()
 
-                self.dungeons.lore.encounterDetails.header:SetText(boss.name)
+                self.dungeons.dungeonInfoPage.encounterDetails.header:SetText(boss.name)
 
-                -- local t = {}
-                self.dungeons.lore.encounterDetails.lootListview.DataProvider:Flush()
-                for _, id in ipairs(boss.loot) do
-                    local item = Item:CreateFromItemID(id)
-                    local _, classString, subClassString, equipLocation, _, classID = GetItemInfoInstant(id)
-                    if not item:IsItemEmpty() then
-                        item:ContinueOnItemLoad(function()
-                            self.dungeons.lore.encounterDetails.lootListview.DataProvider:Insert({
-                                icon = item:GetItemIcon(),
-                                link = item:GetItemLink(),
-                                colour = item:GetItemQualityColor(),
-                                class = (classID == 4) and _G[equipLocation] or classString,
-                                subClass = subClassString,
-                                quality = item:GetItemQuality(),
+                self:Dungeon_LoadEncounter(boss)
 
-                                onEnter = function(element)
-                                    GameTooltip:SetOwner(element, "ANCHOR_RIGHT")
-                                    GameTooltip:SetHyperlink(item:GetItemLink())
-                                    GameTooltip:Show()
-                                end
-                            })
-                        end)
-                    end
-                end
-
-                --AdventureGuide.dungeons.lore.encounterDetails.abilitiesListview
-
-                if boss.abilities then
-                    self.dungeons.lore.encounterDetails.abilitiesListview.DataProvider:Flush()
-                    for k, spellId in ipairs(boss.abilities) do
-                        local spell = Spell:CreateFromSpellID(spellId)
-                        if not spell:IsSpellEmpty() then
-                            spell:ContinueOnSpellLoad(function()
-                                local name, _, icon = GetSpellInfo(spellId)
-                                self.dungeons.lore.encounterDetails.abilitiesListview.DataProvider:Insert({
-                                    icon = icon,
-                                    label = name,
-                                    onEnter = function(element)
-                                        GameTooltip:SetOwner(element, "ANCHOR_RIGHT")
-                                        GameTooltip:SetSpellByID(spellId)
-                                        GameTooltip:Show()
-                                    end,
-                                }) 
-                            end)
-                        end
-                    end
-
-                    -- if (#boss.abilities < 2) then
-                    --     self.dungeons.lore.encounterDetails.abilitiesListview:SetHeight(30)
-                    -- elseif (#boss.abilities > 4) then
-                    --     self.dungeons.lore.encounterDetails.abilitiesListview:SetHeight(105)
-                    -- else
-                    --     self.dungeons.lore.encounterDetails.abilitiesListview:SetHeight(#boss.abilities * 27)
-                    -- end
-                end
-
-
-                -- self.dungeons.encounters.guidePanel:SetText(string.format("%s\n\n%s", boss.info, boss.strategy))
             end,
         })
     end
-    self.dungeons.lore.encountersList.scrollView:SetDataProvider(CreateDataProvider(encounters))
+    self.dungeons.dungeonInfoPage.encountersList.scrollView:SetDataProvider(CreateDataProvider(encounters))
 
     -- self.mapQuestLog.questListview.DataProvider:Flush()
     -- self.mapQuestLog.zoneLabel:SetText(instance.name)
@@ -768,52 +976,6 @@ function AdventureGuideMixin:LoadInstance(instance)
     
 end
 
-function AdventureGuideMixin:GetInstanceData(instanceID)
-
-    --[[
-        this is awkward due to dire maul being 3 in 1
-    ]]
-    if type(instanceID) == "table" then
-        for x, y in ipairs(instanceID) do
-            for k, v in ipairs(AdventureGuide.Dungeons) do
-                if type(v.id) == "number" and (v.id == y) then
-                    return v;
-        
-                --dire maul is 3 but 1
-                elseif type(v.id) == "table" then
-                    for x, y in ipairs(v.id) do
-                        if y == y then
-                            return v
-                        end
-                    end
-                end
-            end
-        end
-    else
-        for k, v in ipairs(AdventureGuide.Dungeons) do
-            if type(v.id) == "number" and (v.id == instanceID) then
-                return v;
-    
-            --dire maul is 3 but 1
-            elseif type(v.id) == "table" then
-                for x, y in ipairs(v.id) do
-                    if y == instanceID then
-                        return v
-                    end
-                end
-            end
-        end
-    end
-end
-
-function AdventureGuideMixin:ShowDungeonDetails(instance)
-    
-    self:OpenTo("dungeons")
-
-    local info = self:GetInstanceData(instance.id)
-    self:LoadInstance(info)
-
-end
 
 -- function AdventureGuideMixin:GetSuggestedDungeons(level)
 --     return AdventureGuide.SuggestedDungeonsForLevel[level]
@@ -830,12 +992,24 @@ end
 --     end
 -- end
 
+function AdventureGuideMixin:AddNavButtonForPvp()
+    local navButtonForPvp = {
+        id = 2,
+        name = "PvP",
+        OnClick = function()
+            self:OpenTo("pvp")
+        end,
+    }
+
+    NavBar_AddButton(self.navBar, navButtonForPvp);
+end
+
 function AdventureGuideMixin:AddNavButtonForDungeons()
     local navButtonForDungeon = {
         id = 2,
         name = "Dungeons",
         OnClick = function()
-            self.dungeons.lore:Hide()
+            self.dungeons.dungeonInfoPage:Hide()
             self.dungeons.maps:Hide()
             self.dungeons.dungeonSelectPage:Show()
             self:OpenTo("dungeons")
@@ -933,64 +1107,14 @@ function AdventureGuideMixin:CreateNavButtonForMapZone(mapID)
 
     local info = C_Map.GetMapInfo(mapID)
     if info and info.name then
-
-        local instances = self:GetInstancesForZone(mapID)
-
-        --DevTools_Dump(instances)
-
-        local zoneDropdownMenu = {
-            -- {
-            --     text = "Map Icons",
-            --     func = function() end,
-            -- },
+        local navButtonForZone = {
+            id = 3,
+            name = info.name,
+            OnClick = function()
+                self:OpenTo("worldMap")
+                self:ShowMapZone(mapID)
+            end,
         }
-        -- table.insert(zoneDropdownMenu, createMenuEntry("Herbs", function()
-        
-        -- end))
-        -- table.insert(zoneDropdownMenu, createMenuEntry("Ores", function()
-        
-        -- end))
-
-        local navButtonForZone;
-
-        if #instances > 0 then
-
-            --table.insert(zoneDropdownMenu, contextMenuSeparator)
-
-            for k, instance in ipairs(instances) do
-                local button = {
-                    text = instance.name,
-                    func = function()
-                        self:ShowDungeonDetails(instance)
-                        self:AddNavMenuForDungeon(instance)
-                    end,
-                }
-                table.insert(zoneDropdownMenu, button)
-            end
-            navButtonForZone = {
-                id = 3,
-                name = info.name,
-                listFunc = function()
-                    return zoneDropdownMenu
-                end,
-                OnClick = function()
-                    self:OpenTo("worldMap")
-                    self.worldMap:SetMapID(mapID)
-                end,
-            }
-        else
-            navButtonForZone = {
-                id = 3,
-                name = info.name,
-                -- listFunc = function()
-                --     return zoneDropdownMenu
-                -- end,
-                OnClick = function()
-                    self:OpenTo("worldMap")
-                    self:ShowMapZone(mapID)
-                end,
-            }
-        end
 
         NavBar_AddButton(self.navBar, navButtonForZone);
     end
@@ -1010,6 +1134,7 @@ function AdventureGuideMixin:CreateNavButtonForContinent(mapID)
                 func = function()
                     self:OpenTo("worldMap")
                     self.worldMap:SetMapID(zone.mapID)
+                    DevTools_Dump({zone})
                 end
             })
         end
@@ -1116,10 +1241,10 @@ function AdventureGuideMixin:LoadMiniMapQuestDataForMapID(mapID)
 end
 
 function AdventureGuideMixin:InternalMap_SetMapID(mapID, showMap)
-    self.worldMap:SetMapID(mapID)
     if showMap then
         self:OpenTo("worldMap")
     end
+    self.worldMap:SetMapID(mapID)
 end
 
 function AdventureGuideMixin:InternalMap_OnZoneChanged(mapID)
@@ -1139,6 +1264,9 @@ function AdventureGuideMixin:InternalMap_OnZoneChanged(mapID)
 
     if mapID == 947 then
         self:CreateNavMenuForAzerothMap()
+        self.questLog.background:SetAtlas("NoQuestsBackground")
+        self.questLog.mapNameLabel:SetText(AZEROTH)
+        self.questLog.questProgressLabel:SetText("")
         return;
     end
 
@@ -1146,6 +1274,9 @@ function AdventureGuideMixin:InternalMap_OnZoneChanged(mapID)
     if isContinent then
         self:CreateNavMenuForAzerothMap()
         self:CreateNavButtonForContinent(mapID)
+        self.questLog.background:SetAtlas("NoQuestsBackground")
+        self.questLog.mapNameLabel:SetText(GetRealZoneText(mapID))
+        self.questLog.questProgressLabel:SetText("")
         return;
     end
 
@@ -1328,6 +1459,7 @@ end
 
 
 function AdventureGuideMixin:LoadQuestLogForMapID(mapID)
+    self.questLog.background:SetAtlas("QuestLogBackground")
     self.questLog.treeview.scrollView:SetDataProvider(AdventureGuide.Api.Quest:BuildQuestSeriesTreeDataProvider(mapID, nil, nil, AdventureGuide.ActiveProfile))
 end
 
@@ -1364,8 +1496,8 @@ function AdventureGuideMixin:QuestLog_OnQuestSelected(questID)
     local xpButton;
     if questData.XP > 0 then
         xpButton = self.questLog.rewardItemButtons:Acquire()
-        xpButton.Icon:SetTexture(894556)
-        xpButton.Name:SetText(AdventureGuide.Api.Quest:GetQuestXPForLevel(questID, UnitLevel("player")))
+        xpButton.icon:SetTexture(894556)
+        xpButton.name:SetText(AdventureGuide.Api.Quest:GetQuestXPForLevel(questID, UnitLevel("player")))
         xpButton:SetPoint("TOPLEFT", self.questLog.questDetailsRewards, "TOPLEFT", 3, -46)
         xpButton:Show()
     end
@@ -1373,8 +1505,8 @@ function AdventureGuideMixin:QuestLog_OnQuestSelected(questID)
     local goldRewardButton;
     if questData.Copper > 0 then
         goldRewardButton = self.questLog.rewardItemButtons:Acquire()
-        goldRewardButton.Icon:SetTexture(133784)
-        goldRewardButton.Name:SetText(C_CurrencyInfo.GetCoinTextureString(questData.Copper, 12))
+        goldRewardButton.icon:SetTexture(133784)
+        goldRewardButton.name:SetText(C_CurrencyInfo.GetCoinTextureString(questData.Copper, 12))
         if xpButton then
             goldRewardButton:SetPoint("LEFT", xpButton, "RIGHT", 3, 0)
         else
@@ -1401,7 +1533,7 @@ function AdventureGuideMixin:QuestLog_OnQuestSelected(questID)
                 end
             else
                 if (k == 2) then
-                    itemButton:SetPoint("LEFT", itemButtons[1], "RIGHT", -3, 0)
+                    itemButton:SetPoint("LEFT", itemButtons[1], "RIGHT", 3, 0)
 
                 else
                     itemButton:SetPoint("TOP", itemButtons[k-2], "BOTTOM", 0, -3)
@@ -1450,37 +1582,90 @@ end
 
 
 function AdventureGuideMixin:NamePlate_OnUnitRemoved(unitToken)
-    -- local nameplate = C_NamePlate.GetNamePlateForUnit(unitToken);
-    -- if nameplate.AdventureGuideIcon then
-    --     nameplate.AdventureGuideIcon:Hide()
-    -- end
+    local nameplate = C_NamePlate.GetNamePlateForUnit(unitToken);
+    if nameplate.AdventureGuideIcon then
+        nameplate.AdventureGuideIcon:Hide()
+    end
 end
 
 local function AddNamePlateIcon(nameplate)
-    -- if not nameplate.AdventureGuideIcon then
-    --     local icon = nameplate:CreateTexture(nil, "OVERLAY")
-    --     icon:SetPoint("RIGHT", nameplate, "LEFT", -10, 0)
-    --     icon:SetSize(26, 26)
-    --     icon:SetAtlas("UI-LFG-RoleIcon-DPS")
-    --     icon:Hide()
-    --     nameplate.AdventureGuideIcon = icon;
-    -- end
+    if not nameplate.AdventureGuideIcon then
+        local icon = nameplate:CreateTexture(nil, "OVERLAY")
+        icon:SetPoint("RIGHT", nameplate, "LEFT", -10, 0)
+        icon:SetSize(26, 26)
+        icon:SetAtlas("UI-LFG-RoleIcon-DPS")
+        icon:Hide()
+        nameplate.AdventureGuideIcon = icon;
+    end
 end
 
 function AdventureGuideMixin:NamePlate_OnUnitAdded(unitToken)
 
-    -- local mapID = C_Map.GetBestMapForUnit("player")
-    -- self:GetNpcDataForZone(mapID)
+    local unitName = UnitName(unitToken)
+    local nameplate = C_NamePlate.GetNamePlateForUnit(unitToken);
 
-    -- local unitName = UnitName(unitToken)
-    -- local nameplate = C_NamePlate.GetNamePlateForUnit(unitToken);
-
-    -- AddNamePlateIcon(nameplate)
-
-    -- if self.npcDataForMapID and self.npcDataForMapID[unitName] then
-    --     nameplate.AdventureGuideIcon:Show()
-    -- end
+    AddNamePlateIcon(nameplate)
 
     -- self:IterAllNameplates()
+
+    local questLog = AdventureGuide.ActiveProfile:GetQuestLog()
+    if type(questLog) == "table" then
+        for questID, info in pairs(questLog) do
+            local questData = AdventureGuide.Api.Quest:GetQuestData(questID)
+
+
+            --[[
+                check if we need this npc for the quest objectives
+            ]]
+
+            if questData and questData.Objectives and questData.Objectives.npc then
+                local isRequired = false
+                for k, obj in ipairs(info.objectives) do
+                    if obj.text:find(unitName, nil, true) and (obj.numFulfilled < obj.numRequired) then
+                        isRequired = true
+                    end
+                end
+                if isRequired then
+                    nameplate.AdventureGuideIcon:Show()
+                end
+            end
+
+            --[[
+            if questData and questData.Objectives and questData.Objectives.item and questData.Objectives.item then
+                for itemID, count in pairs(questData.Objectives.item) do
+                    if AdventureGuide.ItemData[tonumber(itemID)] then
+
+                        local isRequired = false
+                        for k, obj in ipairs(info.objectives) do
+
+                            --this will need a better lookup for non english clients
+                            if obj.text:find(AdventureGuide.ItemData[tonumber(itemID)].name) and (obj.numFulfilled < obj.numRequired) then
+                                isRequired = true
+                            end
+                        end
+                        if isRequired then
+                            local itemDroppers = AdventureGuide.ItemData[tonumber(itemID)].dropsFrom
+                            if itemDroppers and itemDroppers[1] then
+                                for k, v in ipairs(itemDroppers[1]) do
+                                    if v == tonumber(npcID) then
+                                        if tooltipHeaderAdded == false then
+                                            tooltip:AddLine(" ")
+                                            tooltipHeaderAdded = true
+                                        end
+                                        if IsQuestComplete(questID) then
+                                            tooltip:AddLine(CreateAtlasMarkup("QuestNormal", 14, 14).." "..C_QuestLog.GetQuestInfo(questID).." "..CreateAtlasMarkup("orderhalltalents-done-checkmark", 14, 14))
+                                        else
+                                            tooltip:AddLine(CreateAtlasMarkup("QuestNormal", 14, 14).." "..C_QuestLog.GetQuestInfo(questID))
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+            ]]
+        end
+    end
 
 end

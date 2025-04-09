@@ -28,8 +28,8 @@ local MiniMap = {
     questObjectivePins = {},
 
     nodePins = {
-        herbs = {},
-        mining = {},
+        Herb = {},
+        Ore = {},
     },
 
     iconFramePool = CreateFramePool("Frame", Minimap, "AdventureGuideMapPoiTemplate", PinResetterFunc)
@@ -327,30 +327,14 @@ function MiniMap:AddGatheringNodePinsForMapID(mapID, nodeType)
     if nodeData then
         for itemID, locationData in pairs(nodeData) do
 
-            local icon;
-            if nodeType == "herbs" then
-                icon = function(pin)
-                    AdventureGuide.Api.SetAtlasToTexture("Professions_Tracking_Herb", pin.background)
-                    pin.mask:Hide()
-                    pin.ring:Hide()
-                end
-
-            elseif nodeType == "mining" then
-                icon = function(pin)
-                    AdventureGuide.Api.SetAtlasToTexture("Professions_Tracking_Ore", pin.background)
-                    pin.mask:Hide()
-                    pin.ring:Hide()
-                end
-            end
             --local icon = select(5, C_Item.GetItemInfoInstant(itemID))
 
             for k, v in ipairs(locationData) do
 
                 local pin = self:AddPin({
-                    icon = icon,
-                    showMask = false,
-                    width = 16,
-                    height = 16,
+                    icon = nodeType,
+                    parent = "minimap",
+                    pinType = string.format("%s-Node", nodeType),
                     x = v.x,
                     y = v.y
                 }, GatherNodeTooltipFunc(itemID))

@@ -36,12 +36,6 @@ function WorldMap:Init(worldMap)
     self.mapOverlay:SetFrameStrata("FULLSCREEN_DIALOG")
     self.mapOverlay:Raise()
 
-    -- self.playerPin = CreateFrame("FRAME", nil, self.mapOverlay, "AdventureGuideMapPoiTemplate")
-    -- self.playerPin:SetSize(playerPinSize, playerPinSize)
-    -- self.playerPin:SetFrameStrata("TOOLTIP")
-    -- self.playerPin:SetFrameLevel(9000)
-    -- self.playerPin:Raise()
-    -- self.playerPin.background:SetAtlas("MinimapArrow")
 
     self.worldMapPOI = CreateFramePool("FRAME", self.mapOverlay, "AdventureGuideMapPoiTemplate", PinResetterFunc)
 
@@ -50,46 +44,20 @@ function WorldMap:Init(worldMap)
     self.questGiverPins = {}
 
     self.nodePins = {
-        herbs = {},
-        mining = {},
+        Herb = {},
+        Ore = {},
     }
 
     self.map:HookScript("OnUpdate", function(f)
-        --self:UpdateUnitPins()
         self:UpdateMapPinSizes()
     end)
-    hooksecurefunc(self.map.ScrollContainer, "ZoomIn", function()
-        self:UpdateMapPinSizes()
-    end)
-    hooksecurefunc(self.map.ScrollContainer, "ZoomOut", function()
-        self:UpdateMapPinSizes()
-    end)
+    -- hooksecurefunc(self.map.ScrollContainer, "ZoomIn", function()
+    --     self:UpdateMapPinSizes()
+    -- end)
+    -- hooksecurefunc(self.map.ScrollContainer, "ZoomOut", function()
+    --     self:UpdateMapPinSizes()
+    -- end)
 end
-
--- function WorldMap:UpdateUnitPins()
---     if self.map:IsVisible() then
---         local width, height = self.mapOverlay:GetSize()
-
---         local mapID = C_Map.GetBestMapForUnit("player")
---         if mapID == self.map:GetMapID() then
---             self.playerPin:Show()
---             local position = C_Map.GetPlayerMapPosition(mapID, "player")
---             local facing = GetPlayerFacing()
-
---             if position then
---                 local x, y = position:GetXY()
---                 local playerX = ((width/100) * (x*100)) - (playerPinSize / 2)
---                 local playerY = ((height/100) * (y*100)) - (playerPinSize / 2)
---                 self.playerPin:ClearAllPoints()
---                 self.playerPin.background:SetRotation(facing)
---                 self.playerPin:SetPoint("TOPLEFT", self.mapOverlay, "TOPLEFT", playerX, playerY * -1)
---             end
-
---         else
---             self.playerPin:Hide()
---         end
---     end
--- end
 
 function WorldMap:ClearAllPins()
     self.worldMapPOI:ReleaseAll()
@@ -125,17 +93,16 @@ function WorldMap:RemoveQuestGiverPins(questID)
 end
 
 function WorldMap:GetXY(pin)
-    local x1, y1 = self.mapOverlay:GetSize()
-    --local scale = self.map.ScrollContainer:GetCanvasScale()
+
+    local mapWidth, mapHeight = self.mapOverlay:GetSize()
+    local pinWidth, pinHeight = pin:GetSize()
 
     local x, y;
-    local width, height = pin:GetSize()
+    x = (pin.pinData.x * (mapWidth/100))
+    y = (pin.pinData.y * (mapHeight/100)) * -1
 
-    x = (pin.pinData.x * (x1/100))
-    y = (pin.pinData.y * (y1/100)) * -1
-
-    x = x - (width / 2)
-    y = y + (height / 2)
+    x = x - (pinWidth / 2)
+    y = y + (pinHeight / 2)
 
     return x, y;
 end
@@ -152,7 +119,7 @@ function WorldMap:UpdateMapPinSizes()
     end
 
     if 1 == 1 then
-        return
+        --return
     end
 
     -- basically a PITA 
@@ -174,15 +141,16 @@ function WorldMap:UpdateMapPinSizes()
             local scaler = 1.65 - target;
 
             for pin in self.worldMapPOI:EnumerateActive() do
-                if pin.pinData then
+                if pin.pinData and pin.pinData.width and pin.pinData.height then
                     pin:SetSize(pin.pinData.width * scaler, pin.pinData.height * scaler)
 
-                    local widthDiff, heightDiff = (pin.pinData.width - (pin.pinData.width * scaler)) / 2, (pin.pinData.height - (pin.pinData.height * scaler)) / 2
+                    --local widthDiff, heightDiff = (pin.pinData.width - (pin.pinData.width * scaler)) / 2, (pin.pinData.height - (pin.pinData.height * scaler)) / 2
 
                     local x, y = self:GetXY(pin)
 
                     pin:ClearAllPoints()
-                    pin:SetPoint("TOPLEFT", self.mapOverlay, "TOPLEFT", x + widthDiff, y - heightDiff)
+                    --pin:SetPoint("TOPLEFT", self.mapOverlay, "TOPLEFT", x + widthDiff, y - heightDiff)
+                    pin:SetPoint("TOPLEFT", self.mapOverlay, "TOPLEFT", x, y)
                 end
             end
         end
@@ -220,7 +188,7 @@ function WorldMap:AddPin(pinData, tooltipUpdateFunc)
     pin:SetPoint("TOPLEFT", self.mapOverlay, "TOPLEFT", x, y)
     pin:Show()
 
-    pin:SetFrameLevel(self.mapOverlay:GetFrameLevel() + 1)
+    --pin:SetFrameLevel(self.mapOverlay:GetFrameLevel() + 1)
 
     if pinData.pinType == "questGiver" then
         if not self.questGiverPins[pinData.questID] then
@@ -277,13 +245,13 @@ function WorldMap:ReleaseGatheringNodesForMapID(mapID, nodeType)
         end
     end
 
-    if self.nodePins.herbs and self.nodePins.herbs[mapID] then
-        for _, pin in ipairs(self.nodePins.herbs[mapID]) do
+    if self.nodePins.Herb and self.nodePins.Herb[mapID] then
+        for _, pin in ipairs(self.nodePins.Herb[mapID]) do
             self.worldMapPOI:Release(pin)
         end
     end
-    if self.nodePins.mining and self.nodePins.mining[mapID] then
-        for _, pin in ipairs(self.nodePins.mining[mapID]) do
+    if self.nodePins.Ore and self.nodePins.Ore[mapID] then
+        for _, pin in ipairs(self.nodePins.Ore[mapID]) do
             self.worldMapPOI:Release(pin)
         end
     end
@@ -297,15 +265,13 @@ function WorldMap:AddGatheringNodePinsForMapID(mapID, nodeType)
     local nodeData = GatheringNodeAPI:GetAllNodesForMapID(nodeType, mapID)
     if nodeData then
         for itemID, locationData in pairs(nodeData) do
-            local icon = select(5, C_Item.GetItemInfoInstant(itemID))
 
             for k, v in ipairs(locationData) do
 
                 local pin = self:AddPin({
-                    icon = icon,
-                    showMask = true,
-                    width = 16,
-                    height = 16,
+                    icon = nodeType,
+                    parent = "worldmap",
+                    pinType = string.format("%s-Node", nodeType),
                     x = v.x,
                     y = v.y
                 }, GatherNodeTooltipFunc(itemID))
@@ -321,6 +287,7 @@ function WorldMap:AddGatheringNodePinsForMapID(mapID, nodeType)
         end
     end
 
+    self.map:Raise()
 end
 
 

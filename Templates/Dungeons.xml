@@ -1,8 +1,26 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ https://raw.githubusercontent.com/Meorawr/wow-ui-schema/main/UI.xsd">
 
+	<Texture name="UI-EJ-BossButton-Down" file="Interface\EncounterJournal\UI-EncounterJournalTextures" virtual="true" >
+		<Size x="325" y="55"/>
+		<TexCoords left="0.00195313" right="0.63671875" top="0.10253906" bottom="0.15625000"/>
+	</Texture>
+
+	<Texture name="UI-EJ-BossButton-Highlight" file="Interface\EncounterJournal\UI-EncounterJournalTextures" virtual="true" >
+		<Size x="325" y="55"/>
+		<TexCoords left="0.00195313" right="0.63671875" top="0.15820313" bottom="0.21191406"/>
+	</Texture>
+
+	<Texture name="UI-EJ-BossButton-Up" file="Interface\EncounterJournal\UI-EncounterJournalTextures" virtual="true" >
+		<Size x="325" y="55"/>
+		<TexCoords left="0.00195313" right="0.63671875" top="0.21386719" bottom="0.26757813"/>
+	</Texture>
+
+
     <Button name="AdventureGuideDungeonSelectButtonTemplate" mixin="AdventureGuideDungeonSelectButtonMixin" virtual="true">
 
         <!-- ShipMission_FollowerListButton-Select -->
+
+        <Size x="200" y="124"/>
 
         <Layers>
             <Layer level="BACKGROUND">
@@ -52,31 +70,28 @@
 
     <Button name="AdventureGuideDungeonEncounterListviewButtonTemplate" mixin="AdventureGuideDungeonEncounterListviewButtonMixin" virtual="true">
         <Layers>
-            <Layer level="BACKGROUND">
-                <Texture parentKey="background">
+            <Layer level="OVERLAY" textureSubLevel="6">
+                <Texture file="Interface\EncounterJournal\UI-EJ-BOSS-Default" parentKey="creature">
+                    <Size x="128" y="64"/>
                     <Anchors>
-                        <Anchor point="TOPLEFT" x="4" y="-4"/>
-                        <Anchor point="BOTTOMRIGHT" x="-4" y="4"/>
+                        <Anchor point="TOPLEFT" x="0" y="0"/>
                     </Anchors>
                 </Texture>
-            </Layer>
-            <Layer level="HIGHLIGHT">
-                <Texture parentKey="highlight" atlas="ShipMission_FollowerListButton-Select">
-                    <Anchors>
-                        <Anchor point="TOPLEFT" x="3" y="-3"/>
-                        <Anchor point="BOTTOMRIGHT" x="-3" y="3"/>
-                    </Anchors>
-                </Texture>
-            </Layer>
-            <Layer level="OVERLAY">
-                <FontString parentKey="label" inherits="QuestFont_Large">
-                    <Color r="0.02" g="0.02" b="0.04"/>
-                    <Anchors>
-                        <Anchor point="CENTER" x="10" y="0"/>
-                    </Anchors>
-                </FontString>
             </Layer>
         </Layers>
+        <ButtonText name="$parentText" parentKey="text" justifyH="LEFT"  justifyV="MIDDLE">
+			<Size x="160" y="40"/>
+			<Anchors>
+				<Anchor point="LEFT" x="105" y="-3"/>
+			</Anchors>
+			<Color r="0.827" g="0.659" b="0.463"/>
+		</ButtonText>
+		<NormalFont style="GameFontNormalMed3"/>
+		<HighlightFont style="GameFontNormalMed3"/>
+		<DisabledFont style="GameFontHighlightMedium"/>
+		<NormalTexture inherits="UI-EJ-BossButton-Up"/>
+		<PushedTexture inherits="UI-EJ-BossButton-Down"/>
+		<HighlightTexture inherits="UI-EJ-BossButton-Highlight"/>
     </Button>
 
 </Ui>

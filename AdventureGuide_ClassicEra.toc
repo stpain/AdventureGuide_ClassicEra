@@ -1,6 +1,6 @@
 ## Interface: 11503
 ## Author: TheBoringDad
-## Version: 0.13
+## Version: 0.14
 ## Title: AdventureGuide_ClassicEra
 ## Notes: An addon for adventures
 ## SavedVariables: ADVENTURE_GUIDE_GLOBAL
@@ -46,7 +46,6 @@ Options\OptionsInterface.xml
 Events.lua
 
 Api\GatheringNodeAPI.lua
-Api\QuestAPI_Old.lua
 Api\QuestAPI.lua
 Api\WorldMapAPI.lua
 Api\MiniMapAPI.lua
