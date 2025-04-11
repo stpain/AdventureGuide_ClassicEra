@@ -16,7 +16,7 @@ end
 function AdventureGuideDungeonSelectButtonMixin:SetDataBinding(binding, height)
     self:SetDungeon(binding)
 
-    DevTools_Dump(height)
+    --DevTools_Dump(height)
 end
 function AdventureGuideDungeonSelectButtonMixin:SetDungeon(dungeonInfo)
     self.background:SetTexture(dungeonInfo.buttonFileID)

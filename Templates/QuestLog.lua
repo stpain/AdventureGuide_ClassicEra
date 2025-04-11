@@ -97,8 +97,9 @@ StaticPopupDialogs.wowheadQuestDialog = {
 
 
 function AdventureGuideQuestLogTreeviewItemMixin:UpdateLabels()
-    if self.questID then
-        local title = C_QuestLog.GetQuestInfo(self.questID)
+    local questData = AdventureGuide.Api.Quest:GetQuestData(self.questID)
+    if questData then
+        local title = questData.Title
         if AdventureGuide.Api.Quest:IsQuestElite(self.questID) then
             title = string.format("%s %s", CreateAtlasMarkup("nameplates-icon-elite-gold", 16, 16), title)
         end
@@ -129,28 +130,14 @@ end
 
 function AdventureGuideQuestLogTreeviewItemMixin:OnQuestsChanged()
     if self.questID then
-
         if not self.isParent then
-            local title = C_QuestLog.GetQuestInfo(self.questID)
-            if title == nil then
-                local ticker
-                ticker = C_Timer.NewTicker(0.1, function()
-                    if type(self.questID) == "number" then
-                        title = C_QuestLog.GetQuestInfo(self.questID)
-                        if type(title) == "string" then
-                            self:UpdateLabels()
-                            ticker:Cancel()
-                        end
-                    else
-                        ticker:Cancel()
-                    end
-                end)
-            else
-                self:UpdateLabels()
+            self:UpdateLabels()
+        else
+            local questData = AdventureGuide.Api.Quest:GetQuestData(self.questID)
+            if questData then
+                self.label:SetText(questData.Title)
             end
-
         end
-
     end
 end
 

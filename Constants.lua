@@ -12,6 +12,26 @@ end
 
 AdventureGuide.Profiles = {}
 
+
+
+
+
+
+AdventureGuide.Constants.DarkmoonFaireTextures = {
+	Elwynn = {
+		['Start'] = 235448,
+		['OnGoing'] = 235447,
+		['End'] = 235446,
+	},
+	Mulgore = {
+		['Start'] = 235451,
+		['OnGoing'] = 235450,
+		['End'] = 235449,
+	},
+}
+
+
+
 AdventureGuide.Constants.NineSlice = {}
 AdventureGuide.Constants.NineSlice.PvpPanel =
 {

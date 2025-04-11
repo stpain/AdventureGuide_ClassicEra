@@ -8,6 +8,7 @@ local SavedVariables = AdventureGuide.SavedVariables;
 AdventureGuideMixin = {}
 
 function AdventureGuideMixin:OnLoad()
+
     
     --enable dragging actions
     self:RegisterForDrag("LeftButton")
@@ -26,6 +27,9 @@ function AdventureGuideMixin:OnLoad()
 
     --setup dungeon tab
     self:InitializeDungeonTab()
+
+
+    self:InitializeWhatsOn()
 
     --create nav bar home button
     local homeData = {
@@ -169,6 +173,32 @@ function AdventureGuideMixin:OnLoad()
         button:Hide()
     end)
 end
+
+--AdventureGuide.Constants.DarkmoonFaireTextures
+function AdventureGuideMixin:InitializeWhatsOn()
+
+    local isDMF, lastSundayofFaireMonth = AdventureGuide.Api.Quest:IsWorldEventActive("darkmoon-faire")
+    if isDMF then
+
+        local infoText = "The darkmoon Faire is in %s, maybe check it out."
+
+        if (lastSundayofFaireMonth % 2) == 0 then --1412 mulgore
+            self.home.whatsOn.info:SetText(infoText:format("Mulgore"))
+            self.home.whatsOn.icon:SetTexture(AdventureGuide.Constants.DarkmoonFaireTextures.Mulgore.Start)
+        else --elwynn
+            self.home.whatsOn.info:SetText(infoText:format("Elwynn"))
+            self.home.whatsOn.icon:SetTexture(AdventureGuide.Constants.DarkmoonFaireTextures.Elwynn.Start)        
+        end
+
+        self.home.whatsOn.icon:SetTexCoord(0.0, 0.71, 0.0, 0.71)
+
+
+        self.home.whatsOn.header:SetText("Darkmoon Faire")
+    end
+
+
+end
+
 
 
 function AdventureGuideMixin:InitializeWorldMapFrame()
@@ -796,15 +826,15 @@ end
 
 function AdventureGuideMixin:Dungeon_LoadEncounter(encounter)
 
-    self:ToggleDungeonLoreMap("ability")
-    self:Dungeon_ToggleTabSelected(self.dungeons.abilityTab)
+    self:ToggleDungeonLoreMap("loot")
+    self:Dungeon_ToggleTabSelected(self.dungeons.lootTab)
 
     local abilitiesDataProvider = CreateTreeDataProvider({})
     self.dungeons.dungeonInfoPage.encounterDetails.abilitiesListview.scrollView:SetDataProvider(abilitiesDataProvider)
     if encounter.abilities and (#encounter.abilities > 0) then
 
         --self.dungeons.abilityTab:Show()
-        self.dungeons.dungeonInfoPage.encounterDetails.abilitiesListview:Show()
+        --self.dungeons.dungeonInfoPage.encounterDetails.abilitiesListview:Show()
 
         local nodes = {}
         for k, spellId in ipairs(encounter.abilities) do
@@ -854,7 +884,7 @@ function AdventureGuideMixin:Dungeon_LoadEncounter(encounter)
     if encounter.loot and (#encounter.loot > 0) then
         local dp = CreateDataProvider({})
         self.dungeons.dungeonInfoPage.encounterDetails.lootListview.scrollView:SetDataProvider(dp)
-        --self.dungeons.lootTab:Show()
+        self.dungeons.dungeonInfoPage.encounterDetails.lootListview:Show()
 
         for _, id in ipairs(encounter.loot) do
             local item = Item:CreateFromItemID(id)

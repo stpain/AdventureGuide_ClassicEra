@@ -823,9 +823,9 @@ function AdventureGuideObjectiveTrackerMixin:GetDepth()
     return 10;
 end
 function AdventureGuideObjectiveTrackerMixin:PrintStatus()
-    if self.isExpanded then
-        DevTools_Dump(self.isExpanded)
-    end
+    -- if self.isExpanded then
+    --     DevTools_Dump(self.isExpanded)
+    -- end
 end
 function AdventureGuideObjectiveTrackerMixin:SetDataBinding(binding, height)
 

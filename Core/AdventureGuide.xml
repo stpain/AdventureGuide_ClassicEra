@@ -296,7 +296,7 @@
                         </Frames>
                     </Frame>
 
-                    <Frame parentKey="suggestedPvp">
+                    <Frame parentKey="whatsOn">
                         <Anchors>
                             <Anchor point="BOTTOMLEFT" relativeKey="$parent.suggestedZone" relativePoint="BOTTOMRIGHT" x="60" y="0"/>
                         </Anchors>
@@ -307,13 +307,44 @@
 
                                 </Texture>
                             </Layer>
-                            <Layer level="BORDER">
+                            <Layer level="ARTWORK" textureSubLevel="1">
+                                <Texture parentKey="icon">
+                                    <Size x="66" y="66"/>
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" x="-4" y="5"/>
+                                    </Anchors>
+                                </Texture>
+                                <MaskTexture parentKey="mask" file="Interface/CHARACTERFRAME/TempPortraitAlphaMask" hWrapMode="CLAMPTOBLACKADDITIVE" vWrapMode="CLAMPTOBLACKADDITIVE">
+                                    <Size x="66" y="66"/>
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" x="1" y="5"/>
+                                    </Anchors>
+                                    <MaskedTextures>
+                                        <MaskedTexture childKey="icon"/>
+                                    </MaskedTextures>
+                                </MaskTexture>
+                            </Layer>
+                            <Layer level="ARTWORK" textureSubLevel="2">
                                 <Texture atlas="adventureguide-ring">
                                     <Size x="100" y="100"/>
                                     <Anchors>
                                         <Anchor point="TOPLEFT" x="-20" y="20"/>
                                     </Anchors>
                                 </Texture>
+                            </Layer>
+                            <Layer level="OVERLAY">
+                                <FontString parentKey="header" inherits="SuggestedZoneHeaderFont_Smaller">
+                                    <Size x="300" y="50"/>
+                                    <Anchors>
+                                        <Anchor point="TOP" x="0" y="-6"/>
+                                    </Anchors>
+                                </FontString>
+                                <FontString parentKey="info" inherits="SuggestedZoneInfoFont">
+                                    <Size x="300" y="160"/>
+                                    <Anchors>
+                                        <Anchor point="TOP" x="0" y="-20"/>
+                                    </Anchors>
+                                </FontString>
                             </Layer>
                         </Layers>
                     </Frame>

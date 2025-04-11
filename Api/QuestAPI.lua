@@ -379,17 +379,13 @@ function Quest:GetQuestData(questID)
     end
 end
 
-function Quest:GetQuestsForMapID(mapID, questTypes)
+function Quest:GetQuestsForMapID(mapID)
     local t = {}
     local mapName = AdventureGuide.Constants.MapZoneIdToName[mapID]
     if mapName then
         for k, questData in pairs(QuestDataProvider) do
             if questData.SubCategory == mapName then
-                if questTypes and (questTypes[questData.Type]) then
-                    table.insert(t, questData)
-                else
-                    table.insert(t, questData)
-                end
+                table.insert(t, questData)
             end
         end
     end
@@ -588,17 +584,36 @@ function Quest:GetQuestGiverForQuestAndMapID(questID, mapID, profile)
 end
 
 
+function Quest:IsWorldEventActive(event, mapID)
+
+    if event == "darkmoon-faire" then
+        local isDarkmoonFaireActive, lastSundayofFaireMonth = self:IsDarkmoonFaireActive()
+        if mapID == nil then
+            return isDarkmoonFaireActive, lastSundayofFaireMonth
+
+        else
+            local includeDMF = false
+            if (lastSundayofFaireMonth % 2) == 0 and (mapID == 1412) then
+                includeDMF = true
+            elseif (lastSundayofFaireMonth % 2) ~= 0 and (mapID == 1429) then
+                includeDMF = true
+            end
+
+            return includeDMF
+        end
+
+    end
+
+end
+
+
 --[[
     get quest givers for the mapID using the provider profile data to determine if a quest can be available and accepted
 ]]
-function Quest:GetQuestGiversForMapID(mapID, profile, questTypes)
+function Quest:GetQuestGiversForMapID(mapID, profile)
 
     local t = {}
 
-    --local quests = self:GetQuestsForMapID(mapID, questTypes)
-
-    --print("getting quest givers for mapID: "..mapID)
-    --print(unitLevel, unitClass, unitRace, unitFaction)
 
     local unitLevel, unitClass, unitRace, unitFaction = profile:GetQuestEligibilityData()
     --local questLog = profile:GetQuestLog()
@@ -606,7 +621,7 @@ function Quest:GetQuestGiversForMapID(mapID, profile, questTypes)
     for questID, questData in pairs(QuestDataProvider) do
 
         --some odd quests can be filtered out
-        if (questData.Category ~= "") and (questData.Category ~= "professions") and (questData.Category ~= "world-events") and (questData.SubCategory ~= "uncategorized") and self:CanFactionDoQuest(unitFaction, questID) and (questData.RequiresLevel <= unitLevel) and IsRequiredQuestComplete(questID) and self:CanClassDoQuest(unitClass, questData.QuestID) and self:CanRaceDoQuest(unitRace, questData.QuestID) then
+        if (((questData.Category == "world-events") and (self:IsWorldEventActive(questData.SubCategory, mapID))) or questData.Category ~= "world-events") and (questData.Category ~= "") and (questData.Category ~= "professions") and (questData.SubCategory ~= "uncategorized") and self:CanFactionDoQuest(unitFaction, questID) and (questData.RequiresLevel <= unitLevel) and IsRequiredQuestComplete(questID) and self:CanClassDoQuest(unitClass, questData.QuestID) and self:CanRaceDoQuest(unitRace, questData.QuestID) then
 
             --if (C_QuestLog.IsQuestFlaggedCompleted(questID) == false) and (C_QuestLog.IsOnQuest(questID) == false) then
             if (profile:IsQuestTurnedIn(questID) == false) and (profile.data.questLog[questID] == nil) then
@@ -720,7 +735,7 @@ function Quest:BuildQuestSeriesTreeDataProvider(mapID, category, subCategory, pr
 
     local quests;
     if mapID then
-        quests = self:GetQuestsForMapID(mapID, {[""] = true, })
+        quests = self:GetQuestsForMapID(mapID)
     else
         if category and subCategory then
             quests = self:GetAllQuestsBySubCategory(category, subCategory)
@@ -732,12 +747,49 @@ function Quest:BuildQuestSeriesTreeDataProvider(mapID, category, subCategory, pr
     end
 
 
+
     local unitLevel, unitClass, unitRace, unitFaction = profile:GetQuestEligibilityData()
 
     local questTreeDataProvider = CreateTreeDataProvider()
     questTreeDataProvider:Init({})
 
     local questsAdded = {}
+
+
+    if mapID == 1412 or mapID == 1429 then
+        local isDarkmoonFaireActive, lastSundayofFaireMonth = self:IsDarkmoonFaireActive()
+        if isDarkmoonFaireActive then
+
+            local includeDMF = false
+            if (lastSundayofFaireMonth % 2) == 0 and (mapID == 1412) then
+                includeDMF = true
+            elseif (lastSundayofFaireMonth % 2) ~= 0 and (mapID == 1429) then
+                includeDMF = true
+            end
+
+            if includeDMF == true then
+                local dmfQuests = self:GetAllQuestsBySubCategory("world-events", "darkmoon-faire")
+
+                local dmfNode = questTreeDataProvider:Insert({
+                    label = "Darkmoon Faire",
+                    isParent = true,
+                })
+
+                for _, questData in ipairs(dmfQuests) do
+                    if (questsAdded[questData.QuestID] == nil) and self:CanClassDoQuest(unitClass, questData.QuestID) and self:CanRaceDoQuest(unitRace, questData.QuestID) and self:CanFactionDoQuest(unitFaction, questData.QuestID) then
+
+                        dmfNode:Insert({
+                            questID = questData.QuestID,
+                        })
+
+                    end
+                end
+            end
+
+        end
+    end
+
+
 
     local dungeonCategoriesAdded = {}
     for k, v in ipairs(AdventureGuide.Instances.Classic) do
@@ -831,6 +883,49 @@ function Quest:BuildQuestSeriesTreeDataProvider(mapID, category, subCategory, pr
     end
 
     return questTreeDataProvider;
+end
+
+
+
+function Quest:IsDarkmoonFaireActive()
+
+        local now = date("*t")
+        local year, month = now.year, now.month
+      
+        -- Step 1: Find the first Friday of the month
+        local first_friday
+        for day = 1, 7 do
+            local t = time({year = year, month = month, day = day})
+                if date("*t", t).wday == 6 then  -- Friday = 6
+                    first_friday = t
+                break
+            end
+        end
+      
+        -- Step 2: Find the first Sunday *after* that Friday
+        local first_sunday_after_friday
+        for offset = 1, 7 do
+            local t = first_friday + offset * 86400  -- 86400 seconds in a day
+                if date("*t", t).wday == 1 then  -- Sunday = 1
+                    first_sunday_after_friday = t
+                break
+            end
+        end
+      
+        -- Step 3: Define the end of the range (next Sunday)
+        local second_sunday = first_sunday_after_friday + 7 * 86400
+
+
+        local endSundayMonth = date("*t", second_sunday).month
+      
+        -- Step 4: Get today's timestamp
+        local today = time({year = now.year, month = now.month, day = now.day})
+      
+        -- Step 5: Check if today is in the range [first_sunday, second_sunday)
+        local isDmfWeek = today >= first_sunday_after_friday and today < second_sunday
+
+        return isDmfWeek, endSundayMonth
+
 end
 
 
